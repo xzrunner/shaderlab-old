@@ -1,0 +1,5 @@
+ematerial/
+projects/*
+
+!projects/ematerial.vcxproj
+!projects/ematerial.vcxproj.filters

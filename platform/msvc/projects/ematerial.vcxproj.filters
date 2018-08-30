@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="dataset">
+      <UniqueIdentifier>{fd271f54-25a3-4500-a563-32e00b7efc1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dataset\model">
+      <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dataset\const">
+      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script">
+      <UniqueIdentifier>{a15173f4-3823-4295-bb77-2ad20edc2fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{ddff1455-9c65-4f7e-b378-10916c492fb5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\ematerial\NodeFactory.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\PhongModel.h">
+      <Filter>dataset\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\Constant2.h">
+      <Filter>dataset\const</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\Constant1.h">
+      <Filter>dataset\const</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\Constant3.h">
+      <Filter>dataset\const</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\Constant4.h">
+      <Filter>dataset\const</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\CalcNodeVal.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\NodeFactory.cpp">
+      <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\PhongModel.cpp">
+      <Filter>dataset\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Constant2.cpp">
+      <Filter>dataset\const</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Constant1.cpp">
+      <Filter>dataset\const</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Constant3.cpp">
+      <Filter>dataset\const</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Constant4.cpp">
+      <Filter>dataset\const</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\wrap_Material.cpp">
+      <Filter>script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CalcNodeVal.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

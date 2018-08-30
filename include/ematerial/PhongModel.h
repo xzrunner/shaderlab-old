@@ -1,0 +1,38 @@
+#pragma once
+
+#include <blueprint/Node.h>
+
+namespace ematerial
+{
+
+class PhongModel : public bp::node::Node
+{
+public:
+	PhongModel();
+
+	virtual bp::NodeTypeID  TypeID() const override {
+		return bp::GetNodeTypeID<PhongModel>();
+	}
+	virtual std::string TypeName() const override {
+		return "mat_phong_model";
+	}
+	virtual std::shared_ptr<Node> Create() const override {
+		return std::make_shared<PhongModel>();
+	}
+
+	auto& GetAmbient() const { return m_ambient; }
+	auto& GetDiffuse() const { return m_diffuse; }
+	auto& GetSpecular() const { return m_specular; }
+	auto& GetShininess() const { return m_shininess; }
+	auto& GetDiffuseTex() const { return m_diffuse_tex; }
+
+private:
+	std::shared_ptr<bp::node::Pins> m_ambient;
+	std::shared_ptr<bp::node::Pins> m_diffuse;
+	std::shared_ptr<bp::node::Pins> m_specular;
+	std::shared_ptr<bp::node::Pins> m_shininess;
+	std::shared_ptr<bp::node::Pins> m_diffuse_tex;
+
+}; // PhongModel
+
+}
