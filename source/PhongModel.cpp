@@ -15,7 +15,7 @@ PhongModel::PhongModel()
 	AddPins(m_specular = std::make_shared<bp::node::Pins>(
 		true, 2, bp::node::PINS_VECTOR, "specular", *this));
 	AddPins(m_shininess = std::make_shared<bp::node::Pins>(
-		true, 3, bp::node::PINS_FLOAT, "shininess", *this));
+		true, 3, bp::node::PINS_VECTOR, "shininess", *this));
 	AddPins(m_diffuse_tex = std::make_shared<bp::node::Pins>(
 		true, 4, bp::node::PINS_OBJECT, "diffuse_tex", *this));
 

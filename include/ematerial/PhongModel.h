@@ -1,22 +1,22 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "ematerial/Node.h"
 
 namespace ematerial
 {
 
-class PhongModel : public bp::node::Node
+class PhongModel : public Node
 {
 public:
 	PhongModel();
 
-	virtual bp::NodeTypeID  TypeID() const override {
+	virtual bp::NodeTypeID TypeID() const override {
 		return bp::GetNodeTypeID<PhongModel>();
 	}
 	virtual std::string TypeName() const override {
 		return "mat_phong_model";
 	}
-	virtual std::shared_ptr<Node> Create() const override {
+	virtual std::shared_ptr<bp::node::Node> Create() const override {
 		return std::make_shared<PhongModel>();
 	}
 

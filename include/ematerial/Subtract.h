@@ -5,34 +5,29 @@
 namespace ematerial
 {
 
-class Constant2 : public Node
+class Subtract : public Node
 {
 public:
-	Constant2();
+	Subtract();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Constant2>();
+		return bp::GetNodeTypeID<Subtract>();
 	}
 	virtual std::string TypeName() const override {
-		return "mat_constant2";
+		return "mat_sub";
 	}
 	virtual std::shared_ptr<bp::node::Node> Create() const override {
-		return std::make_shared<Constant2>();
+		return std::make_shared<Subtract>();
 	}
 
 	virtual sm::vec3 ToVec3() const override;
 
-	auto& GetValue() const { return m_val; }
-	void SetValue(const sm::vec2& val);
-
 private:
-	void UpdateTitle();
+	std::shared_ptr<bp::node::Pins> m_input0;
+	std::shared_ptr<bp::node::Pins> m_input1;
 
-private:
 	std::shared_ptr<bp::node::Pins> m_output;
 
-	sm::vec2 m_val;
-
-}; // Constant2
+}; // Subtract
 
 }

@@ -1,27 +1,32 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "ematerial/Node.h"
 
 namespace ematerial
 {
 
-class Constant4 : public bp::node::Node
+class Constant4 : public Node
 {
 public:
 	Constant4();
 
-	virtual bp::NodeTypeID  TypeID() const override {
+	virtual bp::NodeTypeID TypeID() const override {
 		return bp::GetNodeTypeID<Constant4>();
 	}
 	virtual std::string TypeName() const override {
-		return "bp_constant4";
+		return "mat_constant4";
 	}
-	virtual std::shared_ptr<Node> Create() const override {
+	virtual std::shared_ptr<bp::node::Node> Create() const override {
 		return std::make_shared<Constant4>();
 	}
 
+	virtual sm::vec3 ToVec3() const override;
+
 	auto& GetValue() const { return m_val; }
-	void SetValue(const sm::vec4& val) { m_val = val; }
+	void SetValue(const sm::vec4& val);
+
+private:
+	void UpdateTitle();
 
 private:
 	std::shared_ptr<bp::node::Pins> m_output;

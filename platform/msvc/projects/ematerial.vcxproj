@@ -11,23 +11,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\ematerial\CalcNodeVal.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Add.h" />
     <ClInclude Include="..\..\..\include\ematerial\Constant1.h" />
     <ClInclude Include="..\..\..\include\ematerial\Constant2.h" />
     <ClInclude Include="..\..\..\include\ematerial\Constant3.h" />
     <ClInclude Include="..\..\..\include\ematerial\Constant4.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Divide.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Multiply.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Node.h" />
     <ClInclude Include="..\..\..\include\ematerial\NodeFactory.h" />
     <ClInclude Include="..\..\..\include\ematerial\PhongModel.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Subtract.h" />
+    <ClInclude Include="..\..\..\include\ematerial\TextureObject.h" />
+    <ClInclude Include="..\..\..\include\ematerial\TextureSample.h" />
+    <ClInclude Include="..\..\..\include\ematerial\Utility.h" />
+    <ClInclude Include="..\..\..\include\ematerial\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\CalcNodeVal.cpp" />
+    <ClCompile Include="..\..\..\source\Add.cpp" />
     <ClCompile Include="..\..\..\source\Constant1.cpp" />
     <ClCompile Include="..\..\..\source\Constant2.cpp" />
     <ClCompile Include="..\..\..\source\Constant3.cpp" />
     <ClCompile Include="..\..\..\source\Constant4.cpp" />
+    <ClCompile Include="..\..\..\source\Divide.cpp" />
+    <ClCompile Include="..\..\..\source\Multiply.cpp" />
     <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\source\PhongModel.cpp" />
+    <ClCompile Include="..\..\..\source\Subtract.cpp" />
+    <ClCompile Include="..\..\..\source\TextureObject.cpp" />
+    <ClCompile Include="..\..\..\source\TextureSample.cpp" />
+    <ClCompile Include="..\..\..\source\Utility.cpp" />
     <ClCompile Include="..\..\..\source\wrap_Material.cpp" />
+    <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>5.ematerial</ProjectName>
@@ -72,7 +87,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,7 +101,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
