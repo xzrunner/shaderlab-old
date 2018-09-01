@@ -31,9 +31,11 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 		return;
 	}
 
+	const float LEN = m_style.width;
+
 	sm::rect r;
-	r.xmin = 0; r.xmax = m_img->GetWidth();
-	r.ymin = static_cast<float>(-m_img->GetHeight()); r.ymax = 0;
+	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
+	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
 	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
 }
 
