@@ -19,7 +19,7 @@ TextureObject::TextureObject()
 	Layout();
 }
 
-void TextureObject::SetTexture(const std::string& filepath)
+void TextureObject::SetImage(const std::string& filepath)
 {
 	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 }

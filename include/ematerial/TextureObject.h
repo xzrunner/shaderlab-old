@@ -25,8 +25,8 @@ public:
 	}
 	virtual void Draw(const sm::Matrix2D& mt) const override;
 
-	void SetTexture(const std::string& filepath);
-	auto& GetTexture() const { return m_img; }
+	void SetImage(const std::string& filepath);
+	auto& GetImage() const { return m_img; }
 
 private:
 	std::shared_ptr<bp::node::Pins> m_output;

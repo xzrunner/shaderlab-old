@@ -64,13 +64,13 @@ void WxNodeProperty::LoadFromNode(const std::shared_ptr<bp::node::Node>& node)
 	{
 		auto& to = dynamic_cast<const ematerial::TextureObject&>(*node);
 		std::string filepath;
-		if (auto& tex = to.GetTexture()) {
+		if (auto& tex = to.GetImage()) {
 			filepath = tex->GetResPath();
 		}
 		auto prop = new ee0::WxOpenFileProp("Filepath", wxPG_LABEL, filepath);
 		prop->SetFilter("*.png");
 		prop->SetCallback([&](const std::string& filepath) {
-			const_cast<ematerial::TextureObject&>(to).SetTexture(filepath);
+			const_cast<ematerial::TextureObject&>(to).SetImage(filepath);
 		});
 		m_pg->Append(prop);
 	}
