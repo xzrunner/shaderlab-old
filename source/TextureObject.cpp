@@ -5,7 +5,6 @@
 #include <blueprint/Pins.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
-#include <facade/Texture.h>
 
 namespace ematerial
 {
@@ -32,7 +31,7 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 
 	sm::rect r;
 	r.xmin = 0; r.xmax = m_img->GetWidth();
-	r.ymin = -m_img->GetHeight(); r.ymax = 0;
+	r.ymin = static_cast<float>(-m_img->GetHeight()); r.ymax = 0;
 	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
 }
 
