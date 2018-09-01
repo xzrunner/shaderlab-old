@@ -30,4 +30,24 @@ PhongModel::PhongModel()
 	Layout();
 }
 
+void PhongModel::CalcMaterial(pt3::Material& mat) const
+{
+	mat.ambient   = Utility::CalcNodeInputVal(*m_ambient);
+	mat.diffuse   = Utility::CalcNodeInputVal(*m_diffuse);
+	mat.specular  = Utility::CalcNodeInputVal(*m_specular);
+	mat.shininess = Utility::CalcNodeInputVal(*m_shininess).x;
+
+	auto& d_tex_conn = m_diffuse_tex->GetConnecting();
+	if (d_tex_conn.size() == 1)
+	{
+		auto from = d_tex_conn[0]->GetFrom();
+		if (from) {
+			auto& to = static_cast<const TextureObject&>(from->GetParent());
+			if (auto& img = to.GetImage()) {
+				mat.diffuse_tex = std::const_pointer_cast<pt2::Texture>(img->GetTexture());
+			}
+		}
+	}
+}
+
 }

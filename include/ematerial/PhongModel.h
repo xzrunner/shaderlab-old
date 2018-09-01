@@ -22,11 +22,7 @@ public:
 		return std::make_shared<PhongModel>();
 	}
 
-	auto& GetAmbient() const { return m_ambient; }
-	auto& GetDiffuse() const { return m_diffuse; }
-	auto& GetSpecular() const { return m_specular; }
-	auto& GetShininess() const { return m_shininess; }
-	auto& GetDiffuseTex() const { return m_diffuse_tex; }
+	void CalcMaterial(pt3::Material& mat) const;
 
 	static const std::string TYPE_NAME;
 
