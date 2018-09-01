@@ -71,6 +71,7 @@ void WxNodeProperty::LoadFromNode(const std::shared_ptr<bp::node::Node>& node)
 		prop->SetFilter("*.png");
 		prop->SetCallback([&](const std::string& filepath) {
 			const_cast<ematerial::TextureObject&>(to).SetImage(filepath);
+			m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 		});
 		m_pg->Append(prop);
 	}
@@ -149,7 +150,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 
 	// todo
-	m_sub_mgr->NotifyObservers(bp::MSG_CONNECTION_CHANGED);
+	m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 }
 
 }
