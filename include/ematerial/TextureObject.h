@@ -17,8 +17,8 @@ public:
 	virtual bp::NodeTypeID TypeID() const override {
 		return bp::GetNodeTypeID<TextureObject>();
 	}
-	virtual std::string TypeName() const override {
-		return "mat_tex_obj";
+	virtual const std::string& TypeName() const override {
+		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::node::Node> Create() const override {
 		return std::make_shared<TextureObject>();
@@ -27,6 +27,8 @@ public:
 
 	void SetImage(const std::string& filepath);
 	auto& GetImage() const { return m_img; }
+
+	static const std::string TYPE_NAME;
 
 private:
 	std::shared_ptr<bp::node::Pins> m_output;

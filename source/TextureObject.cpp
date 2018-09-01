@@ -9,6 +9,8 @@
 namespace ematerial
 {
 
+const std::string TextureObject::TYPE_NAME = "mat_tex_obj";
+
 TextureObject::TextureObject()
 	: Node("TextureObject")
 {

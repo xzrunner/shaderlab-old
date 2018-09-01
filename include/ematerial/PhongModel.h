@@ -13,8 +13,8 @@ public:
 	virtual bp::NodeTypeID TypeID() const override {
 		return bp::GetNodeTypeID<PhongModel>();
 	}
-	virtual std::string TypeName() const override {
-		return "mat_phong_model";
+	virtual const std::string& TypeName() const override {
+		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::node::Node> Create() const override {
 		return std::make_shared<PhongModel>();
@@ -25,6 +25,9 @@ public:
 	auto& GetSpecular() const { return m_specular; }
 	auto& GetShininess() const { return m_shininess; }
 	auto& GetDiffuseTex() const { return m_diffuse_tex; }
+
+	static const std::string TYPE_NAME;
+
 
 private:
 	std::shared_ptr<bp::node::Pins> m_ambient;

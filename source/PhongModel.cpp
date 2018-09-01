@@ -5,6 +5,8 @@
 namespace ematerial
 {
 
+const std::string PhongModel::TYPE_NAME = "mat_phong_model";
+
 PhongModel::PhongModel()
 	: Node("PhongModel")
 {

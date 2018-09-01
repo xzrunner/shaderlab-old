@@ -6,6 +6,8 @@
 namespace ematerial
 {
 
+const std::string Divide::TYPE_NAME = "mat_divide";
+
 Divide::Divide()
 	: Node("Divide")
 {

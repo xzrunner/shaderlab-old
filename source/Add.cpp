@@ -6,6 +6,8 @@
 namespace ematerial
 {
 
+const std::string Add::TYPE_NAME = "mat_add";
+
 Add::Add()
 	: Node("Add")
 {

@@ -6,6 +6,8 @@
 namespace ematerial
 {
 
+const std::string Subtract::TYPE_NAME = "mat_sub";
+
 Subtract::Subtract()
 	: Node("Subtract")
 {

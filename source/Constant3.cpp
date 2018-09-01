@@ -6,6 +6,8 @@
 namespace ematerial
 {
 
+const std::string Constant3::TYPE_NAME = "mat_constant3";
+
 Constant3::Constant3()
 	: Node("Constant3")
 {

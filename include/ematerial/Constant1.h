@@ -13,8 +13,8 @@ public:
 	virtual bp::NodeTypeID TypeID() const override {
 		return bp::GetNodeTypeID<Constant1>();
 	}
-	virtual std::string TypeName() const override {
-		return "mat_constant1";
+	virtual const std::string& TypeName() const override {
+		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::node::Node> Create() const override {
 		return std::make_shared<Constant1>();
@@ -24,6 +24,8 @@ public:
 
 	auto& GetValue() const { return m_val; }
 	void SetValue(float val);
+
+	static const std::string TYPE_NAME;
 
 private:
 	void UpdateTitle();

@@ -6,6 +6,8 @@
 namespace ematerial
 {
 
+const std::string Multiply::TYPE_NAME = "mat_mul";
+
 Multiply::Multiply()
 	: Node("Multiply")
 {
