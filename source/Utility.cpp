@@ -18,7 +18,7 @@ sm::vec3 Utility::CalcNodeInputVal(const bp::node::Pins& pin)
 	if (!from) {
 		return ret;
 	}
-	return static_cast<const ematerial::Node&>(from->GetParent()).ToVec3();
+	return static_cast<const Node&>(from->GetParent()).ToVec3();
 }
 
 }
