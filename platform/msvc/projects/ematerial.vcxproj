@@ -19,6 +19,7 @@
     <ClInclude Include="..\..\..\include\ematerial\Divide.h" />
     <ClInclude Include="..\..\..\include\ematerial\Multiply.h" />
     <ClInclude Include="..\..\..\include\ematerial\Node.h" />
+    <ClInclude Include="..\..\..\include\ematerial\NodeBuilder.h" />
     <ClInclude Include="..\..\..\include\ematerial\NodeFactory.h" />
     <ClInclude Include="..\..\..\include\ematerial\PhongModel.h" />
     <ClInclude Include="..\..\..\include\ematerial\Subtract.h" />
@@ -35,6 +36,7 @@
     <ClCompile Include="..\..\..\source\Constant4.cpp" />
     <ClCompile Include="..\..\..\source\Divide.cpp" />
     <ClCompile Include="..\..\..\source\Multiply.cpp" />
+    <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
     <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\source\PhongModel.cpp" />
     <ClCompile Include="..\..\..\source\Subtract.cpp" />
@@ -87,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +103,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

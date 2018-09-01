@@ -72,6 +72,9 @@
     <ClInclude Include="..\..\..\include\ematerial\WxNodeProperty.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ematerial\NodeBuilder.h">
+      <Filter>utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\NodeFactory.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
       <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
+      <Filter>utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

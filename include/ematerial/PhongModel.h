@@ -2,6 +2,8 @@
 
 #include "ematerial/Node.h"
 
+namespace pt3 { class Material; }
+
 namespace ematerial
 {
 
@@ -28,6 +30,15 @@ public:
 
 	static const std::string TYPE_NAME;
 
+public:
+	enum InputId
+	{
+		ID_AMBIENT = 0,
+		ID_DIFFUSE,
+		ID_SPECULAR,
+		ID_SHININESS,
+		ID_DIFFUSE_TEX,
+	};
 
 private:
 	std::shared_ptr<bp::node::Pins> m_ambient;
