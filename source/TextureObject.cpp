@@ -1,4 +1,4 @@
-#include "ematerial/TextureObject.h"
+#include "shadergraph/TextureObject.h"
 
 #include <SM_Rect.h>
 #include <painting2/RenderSystem.h>
@@ -6,7 +6,7 @@
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string TextureObject::TYPE_NAME = "mat_tex_obj";

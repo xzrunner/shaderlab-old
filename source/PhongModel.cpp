@@ -1,6 +1,6 @@
-#include "ematerial/PhongModel.h"
-#include "ematerial/Utility.h"
-#include "ematerial/TextureObject.h"
+#include "shadergraph/PhongModel.h"
+#include "shadergraph/Utility.h"
+#include "shadergraph/TextureObject.h"
 
 #include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
@@ -8,7 +8,7 @@
 #include <painting3/Material.h>
 #include <facade/Image.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string PhongModel::TYPE_NAME = "mat_phong_model";

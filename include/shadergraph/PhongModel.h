@@ -1,10 +1,10 @@
 #pragma once
 
-#include "ematerial/Node.h"
+#include "shadergraph/Node.h"
 
 namespace pt3 { class Material; }
 
-namespace ematerial
+namespace shadergraph
 {
 
 class PhongModel : public Node

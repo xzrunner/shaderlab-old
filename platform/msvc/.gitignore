@@ -1,5 +1,5 @@
-ematerial/
+shadergraph/
 projects/*
 
-!projects/ematerial.vcxproj
-!projects/ematerial.vcxproj.filters
+!projects/shadergraph.vcxproj
+!projects/shadergraph.vcxproj.filters

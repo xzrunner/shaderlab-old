@@ -1,9 +1,9 @@
-#include "ematerial/Utility.h"
-#include "ematerial/Node.h"
+#include "shadergraph/Utility.h"
+#include "shadergraph/Node.h"
 
 #include <blueprint/Connecting.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 sm::vec3 Utility::CalcNodeInputVal(const bp::node::Pins& pin)

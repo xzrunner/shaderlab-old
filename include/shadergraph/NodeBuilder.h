@@ -8,7 +8,7 @@
 
 namespace bp { namespace node { class Node; } }
 
-namespace ematerial
+namespace shadergraph
 {
 
 class NodeBuilder

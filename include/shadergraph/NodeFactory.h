@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace ematerial
+namespace shadergraph
 {
 
 class NodeFactory

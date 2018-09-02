@@ -1,9 +1,9 @@
-#include "ematerial/WxNodeProperty.h"
-#include "ematerial/Constant1.h"
-#include "ematerial/Constant2.h"
-#include "ematerial/Constant3.h"
-#include "ematerial/Constant4.h"
-#include "ematerial/TextureObject.h"
+#include "shadergraph/WxNodeProperty.h"
+#include "shadergraph/Constant1.h"
+#include "shadergraph/Constant2.h"
+#include "shadergraph/Constant3.h"
+#include "shadergraph/Constant4.h"
+#include "shadergraph/TextureObject.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxOpenFileProp.h>
@@ -14,7 +14,7 @@
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 WxNodeProperty::WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)

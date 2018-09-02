@@ -1,3 +1,3 @@
-# ematerial
+# shadergraph
 
-Material editor library.
+Visible shader editor.

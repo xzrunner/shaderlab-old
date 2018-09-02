@@ -1,9 +1,9 @@
-#include "ematerial/Constant4.h"
+#include "shadergraph/Constant4.h"
 
 #include <blueprint/Pins.h>
 #include <cpputil/StringHelper.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Constant4::TYPE_NAME = "mat_constant4";

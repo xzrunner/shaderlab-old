@@ -1,9 +1,9 @@
-#include "ematerial/Subtract.h"
-#include "ematerial/Utility.h"
+#include "shadergraph/Subtract.h"
+#include "shadergraph/Utility.h"
 
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Subtract::TYPE_NAME = "mat_sub";

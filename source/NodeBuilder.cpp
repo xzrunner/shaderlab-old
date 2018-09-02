@@ -1,8 +1,8 @@
-#include "ematerial/NodeBuilder.h"
-#include "ematerial/PhongModel.h"
-#include "ematerial/NodeFactory.h"
-#include "ematerial/Constant1.h"
-#include "ematerial/Constant3.h"
+#include "shadergraph/NodeBuilder.h"
+#include "shadergraph/PhongModel.h"
+#include "shadergraph/NodeFactory.h"
+#include "shadergraph/Constant1.h"
+#include "shadergraph/Constant3.h"
 
 #include <painting3/Material.h>
 #include <node0/SceneNode.h>
@@ -12,7 +12,7 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/Connecting.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 std::shared_ptr<bp::node::Node> NodeBuilder::Create(const std::string& type,

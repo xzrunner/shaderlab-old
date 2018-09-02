@@ -1,4 +1,4 @@
-#include "ematerial/NodeFactory.h"
+#include "shadergraph/NodeFactory.h"
 
 #include <ee0/MsgHelper.h>
 #include <blueprint/CompNode.h>
@@ -41,7 +41,7 @@ int w_new_node(lua_State* L)
 	auto bb = moon::Blackboard::Instance();
 
 	const char* type = luaL_checkstring(L, 1);
-	auto mat_node = ematerial::NodeFactory::Instance()->Create(type);
+	auto mat_node = shadergraph::NodeFactory::Instance()->Create(type);
 	if (!mat_node) {
 		luaL_error(L, "fail to create node %s\n", type);
 	}

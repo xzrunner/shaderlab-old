@@ -1,12 +1,12 @@
 #pragma once
 
-#include "ematerial/Node.h"
+#include "shadergraph/Node.h"
 
 #include <SM_Matrix2D.h>
 
 namespace facade { class Image; }
 
-namespace ematerial
+namespace shadergraph
 {
 
 class TextureObject : public Node

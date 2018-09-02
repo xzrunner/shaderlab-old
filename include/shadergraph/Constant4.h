@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ematerial/Node.h"
+#include "shadergraph/Node.h"
 
-namespace ematerial
+namespace shadergraph
 {
 
 class Constant4 : public Node

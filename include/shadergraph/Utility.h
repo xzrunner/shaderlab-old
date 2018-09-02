@@ -3,7 +3,7 @@
 #include <SM_Vector.h>
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 class Utility

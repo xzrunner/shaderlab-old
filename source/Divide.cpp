@@ -1,9 +1,9 @@
-#include "ematerial/Divide.h"
-#include "ematerial/Utility.h"
+#include "shadergraph/Divide.h"
+#include "shadergraph/Utility.h"
 
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Divide::TYPE_NAME = "mat_divide";

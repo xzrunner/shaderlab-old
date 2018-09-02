@@ -1,9 +1,9 @@
-#include "ematerial/Add.h"
-#include "ematerial/Utility.h"
+#include "shadergraph/Add.h"
+#include "shadergraph/Utility.h"
 
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Add::TYPE_NAME = "mat_add";

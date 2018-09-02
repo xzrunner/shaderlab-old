@@ -1,8 +1,8 @@
-#include "ematerial/TextureSample.h"
+#include "shadergraph/TextureSample.h"
 
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string TextureSample::TYPE_NAME = "mat_tex_sample";

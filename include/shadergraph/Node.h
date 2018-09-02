@@ -2,7 +2,7 @@
 
 #include <blueprint/Node.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 class Node : public bp::node::Node

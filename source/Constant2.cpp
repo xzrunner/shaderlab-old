@@ -1,9 +1,9 @@
-#include "ematerial/Constant2.h"
+#include "shadergraph/Constant2.h"
 
 #include <blueprint/Pins.h>
 #include <cpputil/StringHelper.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Constant2::TYPE_NAME = "mat_constant2";

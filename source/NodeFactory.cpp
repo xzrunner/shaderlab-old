@@ -1,18 +1,18 @@
-#include "ematerial/NodeFactory.h"
+#include "shadergraph/NodeFactory.h"
 
-#include "ematerial/Constant1.h"
-#include "ematerial/Constant2.h"
-#include "ematerial/Constant3.h"
-#include "ematerial/Constant4.h"
-#include "ematerial/Add.h"
-#include "ematerial/Subtract.h"
-#include "ematerial/Multiply.h"
-#include "ematerial/Divide.h"
-#include "ematerial/PhongModel.h"
-#include "ematerial/TextureObject.h"
-#include "ematerial/TextureSample.h"
+#include "shadergraph/Constant1.h"
+#include "shadergraph/Constant2.h"
+#include "shadergraph/Constant3.h"
+#include "shadergraph/Constant4.h"
+#include "shadergraph/Add.h"
+#include "shadergraph/Subtract.h"
+#include "shadergraph/Multiply.h"
+#include "shadergraph/Divide.h"
+#include "shadergraph/PhongModel.h"
+#include "shadergraph/TextureObject.h"
+#include "shadergraph/TextureSample.h"
 
-namespace ematerial
+namespace shadergraph
 {
 
 CU_SINGLETON_DEFINITION(NodeFactory);

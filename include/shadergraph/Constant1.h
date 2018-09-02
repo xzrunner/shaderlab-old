@@ -1,35 +1,40 @@
 #pragma once
 
-#include "ematerial/Node.h"
+#include "shadergraph/Node.h"
 
-namespace ematerial
+namespace shadergraph
 {
 
-class Add : public Node
+class Constant1 : public Node
 {
 public:
-	Add();
+	Constant1();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Add>();
+		return bp::GetNodeTypeID<Constant1>();
 	}
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::node::Node> Create() const override {
-		return std::make_shared<Add>();
+		return std::make_shared<Constant1>();
 	}
 
 	virtual sm::vec3 ToVec3() const override;
 
+	auto& GetValue() const { return m_val; }
+	void SetValue(float val);
+
 	static const std::string TYPE_NAME;
 
 private:
-	std::shared_ptr<bp::node::Pins> m_input0;
-	std::shared_ptr<bp::node::Pins> m_input1;
+	void UpdateTitle();
 
+private:
 	std::shared_ptr<bp::node::Pins> m_output;
 
-}; // Add
+	float m_val = 0;
+
+}; // Constant1
 
 }

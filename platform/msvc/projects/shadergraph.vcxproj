@@ -11,22 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\ematerial\Add.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Constant1.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Constant2.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Constant3.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Constant4.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Divide.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Multiply.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Node.h" />
-    <ClInclude Include="..\..\..\include\ematerial\NodeBuilder.h" />
-    <ClInclude Include="..\..\..\include\ematerial\NodeFactory.h" />
-    <ClInclude Include="..\..\..\include\ematerial\PhongModel.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Subtract.h" />
-    <ClInclude Include="..\..\..\include\ematerial\TextureObject.h" />
-    <ClInclude Include="..\..\..\include\ematerial\TextureSample.h" />
-    <ClInclude Include="..\..\..\include\ematerial\Utility.h" />
-    <ClInclude Include="..\..\..\include\ematerial\WxNodeProperty.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Add.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Constant1.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Constant2.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Constant3.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Constant4.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Divide.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\NodeFactory.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\PhongModel.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Subtract.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\TextureObject.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\TextureSample.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Utility.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Add.cpp" />
@@ -43,13 +43,13 @@
     <ClCompile Include="..\..\..\source\TextureObject.cpp" />
     <ClCompile Include="..\..\..\source\TextureSample.cpp" />
     <ClCompile Include="..\..\..\source\Utility.cpp" />
-    <ClCompile Include="..\..\..\source\wrap_Material.cpp" />
+    <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>5.ematerial</ProjectName>
+    <ProjectName>5.shadergraph</ProjectName>
     <ProjectGuid>{EC5783F3-431B-4FF0-BC6D-00137CAC8810}</ProjectGuid>
-    <RootNamespace>ematerial</RootNamespace>
+    <RootNamespace>shadergraph</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -79,12 +79,12 @@
     <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\ematerial\x86\Debug\</OutDir>
-    <IntDir>..\ematerial\x86\Debug\obj\</IntDir>
+    <OutDir>..\shadergraph\x86\Debug\</OutDir>
+    <IntDir>..\shadergraph\x86\Debug\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\ematerial\x86\Release\</OutDir>
-    <IntDir>..\ematerial\x86\Release\obj\</IntDir>
+    <OutDir>..\shadergraph\x86\Release\</OutDir>
+    <IntDir>..\shadergraph\x86\Release\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

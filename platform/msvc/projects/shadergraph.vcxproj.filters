@@ -27,52 +27,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\ematerial\NodeFactory.h">
+    <ClInclude Include="..\..\..\include\shadergraph\NodeFactory.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\PhongModel.h">
+    <ClInclude Include="..\..\..\include\shadergraph\PhongModel.h">
       <Filter>nodes\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Constant2.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Constant2.h">
       <Filter>nodes\const</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Constant1.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Constant1.h">
       <Filter>nodes\const</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Constant3.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Constant3.h">
       <Filter>nodes\const</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Constant4.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Constant4.h">
       <Filter>nodes\const</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Add.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Add.h">
       <Filter>nodes\calc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Subtract.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Subtract.h">
       <Filter>nodes\calc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Multiply.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Multiply.h">
       <Filter>nodes\calc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Divide.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Divide.h">
       <Filter>nodes\calc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Node.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Node.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\Utility.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Utility.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\TextureSample.h">
+    <ClInclude Include="..\..\..\include\shadergraph\TextureSample.h">
       <Filter>nodes\texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\TextureObject.h">
+    <ClInclude Include="..\..\..\include\shadergraph\TextureObject.h">
       <Filter>nodes\texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\WxNodeProperty.h">
+    <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ematerial\NodeBuilder.h">
+    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>utility</Filter>
     </ClInclude>
   </ItemGroup>
@@ -94,9 +94,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Constant4.cpp">
       <Filter>nodes\const</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\wrap_Material.cpp">
-      <Filter>script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Add.cpp">
       <Filter>nodes\calc</Filter>
@@ -124,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
       <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp">
+      <Filter>script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

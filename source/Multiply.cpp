@@ -1,9 +1,9 @@
-#include "ematerial/Multiply.h"
-#include "ematerial/Utility.h"
+#include "shadergraph/Multiply.h"
+#include "shadergraph/Utility.h"
 
 #include <blueprint/Pins.h>
 
-namespace ematerial
+namespace shadergraph
 {
 
 const std::string Multiply::TYPE_NAME = "mat_mul";
