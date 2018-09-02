@@ -1,7 +1,8 @@
 #pragma once
 
 #include <SM_Vector.h>
-#include <blueprint/Pins.h>
+
+namespace bp { namespace node { class Pins; } }
 
 namespace shadergraph
 {

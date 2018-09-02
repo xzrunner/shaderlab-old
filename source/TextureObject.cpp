@@ -1,9 +1,8 @@
 #include "shadergraph/TextureObject.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/Pins.h"
 
 #include <SM_Rect.h>
 #include <painting2/RenderSystem.h>
-#include <blueprint/Pins.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 
@@ -15,8 +14,7 @@ const std::string TextureObject::TYPE_NAME = "mat_tex_obj";
 TextureObject::TextureObject()
 	: Node("TextureObject")
 {
-	AddPins(m_output = std::make_shared<bp::node::Pins>(
-		false, 0, PINS_TEXTURE2D, "", *this));
+	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
 
 	Layout();
 }

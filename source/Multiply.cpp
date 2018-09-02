@@ -1,6 +1,6 @@
 #include "shadergraph/Multiply.h"
 #include "shadergraph/Utility.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/Pins.h"
 
 namespace shadergraph
 {
@@ -10,13 +10,10 @@ const std::string Multiply::TYPE_NAME = "mat_mul";
 Multiply::Multiply()
 	: Node("Multiply")
 {
-	AddPins(m_input0 = std::make_shared<bp::node::Pins>(
-		true, 0, PINS_VECTOR1, "", *this, true));
-	AddPins(m_input1 = std::make_shared<bp::node::Pins>(
-		true, 1, PINS_VECTOR1, "", *this, true));
+	AddPins(m_input0 = std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this, true));
+	AddPins(m_input1 = std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this, true));
 
-	AddPins(m_output = std::make_shared<bp::node::Pins>(
-		false, 0, PINS_VECTOR1, "", *this, true));
+	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this, true));
 
 	Layout();
 }

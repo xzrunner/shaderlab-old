@@ -1,8 +1,7 @@
 #include "shadergraph/Constant3.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/Pins.h"
 
 #include <cpputil/StringHelper.h>
-#include <blueprint/Pins.h>
 
 namespace shadergraph
 {
@@ -12,8 +11,7 @@ const std::string Constant3::TYPE_NAME = "mat_constant3";
 Constant3::Constant3()
 	: Node("Constant3")
 {
-	AddPins(m_output = std::make_shared<bp::node::Pins>(
-		false, 0, PINS_VECTOR3, "", *this));
+	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR3, "Out", *this));
 
 	Layout();
 

@@ -78,10 +78,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\PinsType.h">
+    <ClInclude Include="..\..\..\include\shadergraph\Pins.h">
       <Filter>dataset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\NodeFactory.cpp">
@@ -132,6 +131,8 @@
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp">
       <Filter>script</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
+    <ClCompile Include="..\..\..\source\Pins.cpp">
+      <Filter>dataset</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
