@@ -21,10 +21,12 @@ class Pins : public bp::node::Pins
 {
 public:
 	Pins(bool is_input, int pos, int type, const std::string& name,
-		const bp::node::Node& parent, bool type_cast = false);
+		const bp::node::Node& parent);
 
 	virtual std::string GetDesc() const;
 	virtual const pt2::Color& GetColor() const;
+
+	virtual bool CanTypeCast(int type) const;
 
 }; // Pins
 

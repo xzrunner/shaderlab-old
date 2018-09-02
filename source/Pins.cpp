@@ -18,8 +18,8 @@ const pt2::Color COL_BOOLEAN   = pt2::Color(148, 129, 230);
 namespace shadergraph
 {
 
-Pins::Pins(bool is_input, int pos, int type, const std::string& name, const bp::node::Node& parent, bool type_cast)
-	: bp::node::Pins(is_input, pos, type, name, parent, type_cast)
+Pins::Pins(bool is_input, int pos, int type, const std::string& name, const bp::node::Node& parent)
+	: bp::node::Pins(is_input, pos, type, name, parent)
 {
 }
 
@@ -74,6 +74,49 @@ const pt2::Color& Pins::GetColor() const
 	default:
 		return COL_DEFAULT;
 	}
+}
+
+bool Pins::CanTypeCast(int type) const
+{
+	if (GetType() == type) {
+		return true;
+	}
+
+	switch (GetType())
+	{
+	case PINS_VECTOR1:
+		return type == PINS_VECTOR2
+			|| type == PINS_VECTOR3
+			|| type == PINS_VECTOR4
+			|| type == PINS_COLOR
+			|| type == PINS_BOOLEAN;
+	case PINS_VECTOR2:
+		return type == PINS_VECTOR1
+			|| type == PINS_VECTOR3
+			|| type == PINS_VECTOR4
+			|| type == PINS_COLOR;
+	case PINS_VECTOR3:
+		return type == PINS_VECTOR1
+			|| type == PINS_VECTOR2
+			|| type == PINS_VECTOR4
+			|| type == PINS_COLOR;
+	case PINS_VECTOR4:
+		return type == PINS_VECTOR1
+			|| type == PINS_VECTOR2
+			|| type == PINS_VECTOR3
+			|| type == PINS_COLOR;
+	case PINS_COLOR:
+		return type == PINS_VECTOR1
+			|| type == PINS_VECTOR2
+			|| type == PINS_VECTOR3
+			|| type == PINS_VECTOR4;
+	case PINS_TEXTURE2D:
+		return false;
+	case PINS_BOOLEAN:
+		return type == PINS_VECTOR1;
+	}
+
+	return false;
 }
 
 }

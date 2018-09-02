@@ -10,10 +10,10 @@ const std::string Divide::TYPE_NAME = "mat_divide";
 Divide::Divide()
 	: Node("Divide")
 {
-	AddPins(m_input0 = std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this, true));
-	AddPins(m_input1 = std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this, true));
+	AddPins(m_input0 = std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this));
+	AddPins(m_input1 = std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this));
 
-	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this, true));
+	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
 
 	Layout();
 }

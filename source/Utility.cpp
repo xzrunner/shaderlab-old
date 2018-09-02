@@ -2,6 +2,7 @@
 #include "shadergraph/Node.h"
 
 #include <blueprint/Connecting.h>
+#include <blueprint/Pins.h>
 
 namespace shadergraph
 {
