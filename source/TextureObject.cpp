@@ -1,4 +1,5 @@
 #include "shadergraph/TextureObject.h"
+#include "shadergraph/PinsType.h"
 
 #include <SM_Rect.h>
 #include <painting2/RenderSystem.h>
@@ -15,7 +16,7 @@ TextureObject::TextureObject()
 	: Node("TextureObject")
 {
 	AddPins(m_output = std::make_shared<bp::node::Pins>(
-		false, 0, bp::node::PINS_OBJECT, "", *this));
+		false, 0, PINS_TEXTURE2D, "", *this));
 
 	Layout();
 }

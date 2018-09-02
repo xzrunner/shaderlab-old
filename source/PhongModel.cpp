@@ -1,8 +1,8 @@
 #include "shadergraph/PhongModel.h"
 #include "shadergraph/Utility.h"
 #include "shadergraph/TextureObject.h"
+#include "shadergraph/PinsType.h"
 
-#include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
 #include <painting2/Texture.h>
 #include <painting3/Material.h>
@@ -17,15 +17,15 @@ PhongModel::PhongModel()
 	: Node("PhongModel")
 {
 	AddPins(m_ambient = std::make_shared<bp::node::Pins>(
-		true, ID_AMBIENT, bp::node::PINS_VECTOR, "ambient", *this));
+		true, ID_AMBIENT, PINS_VECTOR3, "ambient", *this));
 	AddPins(m_diffuse = std::make_shared<bp::node::Pins>(
-		true, ID_DIFFUSE, bp::node::PINS_VECTOR, "diffuse", *this));
+		true, ID_DIFFUSE, PINS_VECTOR3, "diffuse", *this));
 	AddPins(m_specular = std::make_shared<bp::node::Pins>(
-		true, ID_SPECULAR, bp::node::PINS_VECTOR, "specular", *this));
+		true, ID_SPECULAR, PINS_VECTOR3, "specular", *this));
 	AddPins(m_shininess = std::make_shared<bp::node::Pins>(
-		true, ID_SHININESS, bp::node::PINS_VECTOR, "shininess", *this));
+		true, ID_SHININESS, PINS_VECTOR1, "shininess", *this));
 	AddPins(m_diffuse_tex = std::make_shared<bp::node::Pins>(
-		true, ID_DIFFUSE_TEX, bp::node::PINS_OBJECT, "diffuse_tex", *this));
+		true, ID_DIFFUSE_TEX, PINS_TEXTURE2D, "diffuse_tex", *this));
 
 	Layout();
 }

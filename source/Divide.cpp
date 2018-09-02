@@ -1,7 +1,6 @@
 #include "shadergraph/Divide.h"
 #include "shadergraph/Utility.h"
-
-#include <blueprint/Pins.h>
+#include "shadergraph/PinsType.h"
 
 namespace shadergraph
 {
@@ -12,12 +11,12 @@ Divide::Divide()
 	: Node("Divide")
 {
 	AddPins(m_input0 = std::make_shared<bp::node::Pins>(
-		true, 0, bp::node::PINS_VECTOR, "", *this));
+		true, 0, PINS_VECTOR1, "", *this, true));
 	AddPins(m_input1 = std::make_shared<bp::node::Pins>(
-		true, 1, bp::node::PINS_VECTOR, "", *this));
+		true, 1, PINS_VECTOR1, "", *this, true));
 
 	AddPins(m_output = std::make_shared<bp::node::Pins>(
-		false, 0, bp::node::PINS_VECTOR, "", *this));
+		false, 0, PINS_VECTOR1, "", *this, true));
 
 	Layout();
 }
