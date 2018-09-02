@@ -20,11 +20,6 @@ TextureObject::TextureObject()
 	Layout();
 }
 
-void TextureObject::SetImage(const std::string& filepath)
-{
-	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
-}
-
 void TextureObject::Draw(const sm::Matrix2D& mt) const
 {
 	if (!m_img) {
@@ -37,6 +32,11 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
 	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
 	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
+}
+
+void TextureObject::SetImage(const std::string& filepath)
+{
+	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 }
 
 }

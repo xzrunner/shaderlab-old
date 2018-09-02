@@ -42,7 +42,7 @@ void PhongModel::CalcMaterial(pt3::Material& mat) const
 	{
 		auto from = d_tex_conn[0]->GetFrom();
 		if (from) {
-			auto& to = static_cast<const TextureObject&>(from->GetParent());
+			auto& to = dynamic_cast<const TextureObject&>(from->GetParent());
 			if (auto& img = to.GetImage()) {
 				mat.diffuse_tex = std::const_pointer_cast<pt2::Texture>(img->GetTexture());
 			}

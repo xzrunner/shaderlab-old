@@ -10,6 +10,7 @@
 #include "ematerial/Divide.h"
 #include "ematerial/PhongModel.h"
 #include "ematerial/TextureObject.h"
+#include "ematerial/TextureSample.h"
 
 namespace ematerial
 {
@@ -44,6 +45,7 @@ void NodeFactory::RegistAllNode()
 	m_nodes.push_back(std::make_shared<Divide>());
 
 	m_nodes.push_back(std::make_shared<TextureObject>());
+	m_nodes.push_back(std::make_shared<TextureSample>());
 
 	m_nodes.push_back(std::make_shared<PhongModel>());
 }
