@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
     <ClInclude Include="..\..\..\include\shadergraph\PhongModel.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Subtract.h" />
     <ClInclude Include="..\..\..\include\shadergraph\TextureObject.h" />
     <ClInclude Include="..\..\..\include\shadergraph\TextureSample.h" />
@@ -39,6 +40,7 @@
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
     <ClCompile Include="..\..\..\source\PhongModel.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
+    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\Subtract.cpp" />
     <ClCompile Include="..\..\..\source\TextureObject.cpp" />
     <ClCompile Include="..\..\..\source\TextureSample.cpp" />

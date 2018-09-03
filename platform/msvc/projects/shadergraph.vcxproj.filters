@@ -78,6 +78,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h">
       <Filter>dataset</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\PhongModel.cpp">
@@ -128,5 +129,6 @@
     <ClCompile Include="..\..\..\source\Pins.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
   </ItemGroup>
 </Project>
