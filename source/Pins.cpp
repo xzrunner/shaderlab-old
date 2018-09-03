@@ -18,8 +18,8 @@ const pt2::Color COL_BOOLEAN   = pt2::Color(148, 129, 230);
 namespace shadergraph
 {
 
-Pins::Pins(bool is_input, int pos, int type, const std::string& name, const bp::node::Node& parent)
-	: bp::node::Pins(is_input, pos, type, name, parent)
+Pins::Pins(bool is_input, int pos, int type, const std::string& name, const bp::Node& parent)
+	: bp::Pins(is_input, pos, type, name, parent)
 {
 }
 

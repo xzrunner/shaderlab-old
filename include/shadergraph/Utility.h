@@ -2,7 +2,7 @@
 
 #include <SM_Vector.h>
 
-namespace bp { namespace node { class Pins; } }
+namespace bp { class Pins; }
 
 namespace shadergraph
 {
@@ -10,7 +10,7 @@ namespace shadergraph
 class Utility
 {
 public:
-	static sm::vec3 CalcNodeInputVal(const bp::node::Pins& pin);
+	static sm::vec3 CalcNodeInputVal(const bp::Pins& pin);
 
 }; // Utility
 

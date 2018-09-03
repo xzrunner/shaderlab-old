@@ -7,7 +7,7 @@
 namespace shadergraph
 {
 
-sm::vec3 Utility::CalcNodeInputVal(const bp::node::Pins& pin)
+sm::vec3 Utility::CalcNodeInputVal(const bp::Pins& pin)
 {
 	sm::vec3 ret;
 	auto& conn = pin.GetConnecting();

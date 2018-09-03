@@ -24,7 +24,7 @@ WxNodeProperty::WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 	InitLayout();
 }
 
-void WxNodeProperty::LoadFromNode(const std::shared_ptr<bp::node::Node>& node)
+void WxNodeProperty::LoadFromNode(const std::shared_ptr<bp::Node>& node)
 {
 	m_node = node;
 

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace bp { namespace node { class Node; } }
+namespace bp { class Node; }
 
 namespace shadergraph
 {
@@ -14,10 +14,8 @@ namespace shadergraph
 class NodeBuilder
 {
 public:
-	static std::shared_ptr<bp::node::Node>
-		Create(const std::string& type,
-			   std::vector<n0::SceneNodePtr>& nodes,
-			   const sm::vec2& pos = sm::vec2(0, 0));
+	static std::shared_ptr<bp::Node>
+		Create(const std::string& type, std::vector<n0::SceneNodePtr>& nodes, const sm::vec2& pos = sm::vec2(0, 0));
 
 }; // NodeBuilder
 

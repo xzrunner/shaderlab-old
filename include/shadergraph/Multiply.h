@@ -16,7 +16,7 @@ public:
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
-	virtual std::shared_ptr<bp::node::Node> Create() const override {
+	virtual std::shared_ptr<bp::Node> Create() const override {
 		return std::make_shared<Multiply>();
 	}
 
@@ -25,10 +25,10 @@ public:
 	static const std::string TYPE_NAME;
 
 private:
-	std::shared_ptr<bp::node::Pins> m_input0;
-	std::shared_ptr<bp::node::Pins> m_input1;
+	std::shared_ptr<bp::Pins> m_input0;
+	std::shared_ptr<bp::Pins> m_input1;
 
-	std::shared_ptr<bp::node::Pins> m_output;
+	std::shared_ptr<bp::Pins> m_output;
 
 }; // Multiply
 

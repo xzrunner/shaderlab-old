@@ -17,11 +17,11 @@ enum PinsType
 
 }; // PinsType
 
-class Pins : public bp::node::Pins
+class Pins : public bp::Pins
 {
 public:
 	Pins(bool is_input, int pos, int type, const std::string& name,
-		const bp::node::Node& parent);
+		const bp::Node& parent);
 
 	virtual std::string GetDesc() const;
 	virtual const pt2::Color& GetColor() const;

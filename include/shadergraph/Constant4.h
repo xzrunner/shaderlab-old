@@ -16,7 +16,7 @@ public:
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
-	virtual std::shared_ptr<bp::node::Node> Create() const override {
+	virtual std::shared_ptr<bp::Node> Create() const override {
 		return std::make_shared<Constant4>();
 	}
 
@@ -31,7 +31,7 @@ private:
 	void UpdateTitle();
 
 private:
-	std::shared_ptr<bp::node::Pins> m_output;
+	std::shared_ptr<bp::Pins> m_output;
 
 	sm::vec4 m_val;
 

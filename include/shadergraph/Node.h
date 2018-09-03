@@ -5,11 +5,11 @@
 namespace shadergraph
 {
 
-class Node : public bp::node::Node
+class Node : public bp::Node
 {
 public:
 	Node(const std::string& title)
-		: bp::node::Node(title) {}
+		: bp::Node(title) {}
 
 	virtual sm::vec3 ToVec3() const { return sm::vec3(); }
 

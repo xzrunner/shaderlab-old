@@ -18,7 +18,7 @@ public:
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
-	virtual std::shared_ptr<bp::node::Node> Create() const override {
+	virtual std::shared_ptr<bp::Node> Create() const override {
 		return std::make_shared<PhongModel>();
 	}
 
@@ -37,11 +37,11 @@ public:
 	};
 
 private:
-	std::shared_ptr<bp::node::Pins> m_ambient;
-	std::shared_ptr<bp::node::Pins> m_diffuse;
-	std::shared_ptr<bp::node::Pins> m_specular;
-	std::shared_ptr<bp::node::Pins> m_shininess;
-	std::shared_ptr<bp::node::Pins> m_diffuse_tex;
+	std::shared_ptr<bp::Pins> m_ambient;
+	std::shared_ptr<bp::Pins> m_diffuse;
+	std::shared_ptr<bp::Pins> m_specular;
+	std::shared_ptr<bp::Pins> m_shininess;
+	std::shared_ptr<bp::Pins> m_diffuse_tex;
 
 }; // PhongModel
 
