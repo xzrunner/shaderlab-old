@@ -1,7 +1,6 @@
-#include "shadergraph/NodeFactory.h"
-
 #include <ee0/MsgHelper.h>
 #include <blueprint/CompNode.h>
+#include <blueprint/NodeFactory.h>
 
 #include <node0/CompIdentity.h>
 #include <node0/SceneNode.h>
@@ -41,17 +40,17 @@ int w_new_node(lua_State* L)
 	auto bb = moon::Blackboard::Instance();
 
 	const char* type = luaL_checkstring(L, 1);
-	auto mat_node = shadergraph::NodeFactory::Instance()->Create(type);
+	auto mat_node = bp::NodeFactory::Instance()->Create(type);
 	if (!mat_node) {
 		luaL_error(L, "fail to create node %s\n", type);
 	}
 
 	auto node = std::make_shared<n0::SceneNode>();
-	auto& cnode = node->AddSharedComp<bp::CompNode>(mat_node);
-	cnode.GetNode()->SetParent(node);
+	auto& cnode = node->AddUniqueComp<bp::CompNode>();
+	cnode.SetNode(mat_node);
 	node->AddUniqueComp<n2::CompTransform>();
 	node->AddUniqueComp<n0::CompIdentity>();
-	auto& style = cnode.GetNode()->GetStyle();
+	auto& style = mat_node->GetStyle();
 	node->AddUniqueComp<n2::CompBoundingBox>(
 		sm::rect(style.width, style.height)
 	);

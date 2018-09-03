@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\NodeFactory.h">
-      <Filter>nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\PhongModel.h">
       <Filter>nodes\model</Filter>
     </ClInclude>
@@ -83,9 +80,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\NodeFactory.cpp">
-      <Filter>nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\PhongModel.cpp">
       <Filter>nodes\model</Filter>
     </ClCompile>
