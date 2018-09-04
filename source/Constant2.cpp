@@ -18,6 +18,23 @@ Constant2::Constant2()
 	UpdateTitle();
 }
 
+void Constant2::StoreToJson(const std::string& dir, rapidjson::Value& val,
+	                        rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	val.SetObject();
+	val.AddMember("x", m_val.x, alloc);
+	val.AddMember("y", m_val.y, alloc);
+}
+
+void Constant2::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
+	                         const rapidjson::Value& val)
+{
+	assert(val.IsObject() && val.HasMember("x") && val.HasMember("y"));
+	float x = val["x"].GetFloat();
+	float y = val["y"].GetFloat();
+	SetValue(sm::vec2(x, y));
+}
+
 sm::vec3 Constant2::ToVec3() const
 {
 	return sm::vec3(m_val.x, m_val.y, 0);

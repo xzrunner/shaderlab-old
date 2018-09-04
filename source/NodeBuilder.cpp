@@ -16,8 +16,8 @@ namespace shadergraph
 {
 
 std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
-	                                                std::vector<n0::SceneNodePtr>& nodes,
-	                                                const sm::vec2& pos)
+	                                          std::vector<n0::SceneNodePtr>& nodes,
+	                                          const sm::vec2& pos)
 {
 	auto bp_node = bp::NodeFactory::Instance()->Create(type);
 	if (!bp_node) {
