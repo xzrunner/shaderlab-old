@@ -1,8 +1,10 @@
-#include "shadergraph/Divide.h"
+#include "shadergraph/node/Divide.h"
 #include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string Divide::TYPE_NAME = "mat_divide";
@@ -44,4 +46,5 @@ sm::vec3 Divide::ToVec3() const
 	return ret;
 }
 
+}
 }

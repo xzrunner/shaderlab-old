@@ -1,8 +1,8 @@
 #include "shadergraph/NodeBuilder.h"
-#include "shadergraph/Sprite.h"
-#include "shadergraph/PhongModel.h"
-#include "shadergraph/Constant1.h"
-#include "shadergraph/Constant3.h"
+#include "shadergraph/node/Sprite.h"
+#include "shadergraph/node/PhongModel.h"
+#include "shadergraph/node/Constant1.h"
+#include "shadergraph/node/Constant3.h"
 
 #include <painting3/Material.h>
 #include <node0/SceneNode.h>
@@ -36,64 +36,64 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		sm::rect(style.width, style.height)
 	);
 
-	if (type == Sprite::TYPE_NAME)
+	if (type == node::Sprite::TYPE_NAME)
 	{
 
 		float x = -150, y = -50;
 		const float dx = 0, dy = -50;
 
-		auto mul = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant3>(mul)->SetValue(sm::vec3(1, 1, 1));
+		auto mul = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(mul)->SetValue(sm::vec3(1, 1, 1));
 		bp::make_connecting(
 			mul->GetAllOutput()[0],
-			bp_node->GetAllInput()[Sprite::ID_COL_MUL]
+			bp_node->GetAllInput()[node::Sprite::ID_COL_MUL]
 		);
 		x += dx, y += dy;
 
-		auto add = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant3>(add)->SetValue(sm::vec3(0, 0, 0));
+		auto add = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(add)->SetValue(sm::vec3(0, 0, 0));
 		bp::make_connecting(
 			add->GetAllOutput()[0],
-			bp_node->GetAllInput()[Sprite::ID_COL_ADD]
+			bp_node->GetAllInput()[node::Sprite::ID_COL_ADD]
 		);
 		x += dx, y += dy;
 	}
-	else if (type == PhongModel::TYPE_NAME)
+	else if (type == node::PhongModel::TYPE_NAME)
 	{
 		pt3::Material mat;
 
 		float x = -150, y = 100;
 		const float dx = 0, dy = -50;
 
-		auto ambient = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant3>(ambient)->SetValue(mat.ambient);
+		auto ambient = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(ambient)->SetValue(mat.ambient);
 		bp::make_connecting(
 			ambient->GetAllOutput()[0],
-			bp_node->GetAllInput()[PhongModel::ID_AMBIENT]
+			bp_node->GetAllInput()[node::PhongModel::ID_AMBIENT]
 		);
 		x += dx, y += dy;
 
-		auto diffuse = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant3>(diffuse)->SetValue(mat.diffuse);
+		auto diffuse = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(diffuse)->SetValue(mat.diffuse);
 		bp::make_connecting(
 			diffuse->GetAllOutput()[0],
-			bp_node->GetAllInput()[PhongModel::ID_DIFFUSE]
+			bp_node->GetAllInput()[node::PhongModel::ID_DIFFUSE]
 		);
 		x += dx, y += dy;
 
-		auto specular = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant3>(specular)->SetValue(mat.specular);
+		auto specular = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(specular)->SetValue(mat.specular);
 		bp::make_connecting(
 			specular->GetAllOutput()[0],
-			bp_node->GetAllInput()[PhongModel::ID_SPECULAR]
+			bp_node->GetAllInput()[node::PhongModel::ID_SPECULAR]
 		);
 		x += dx, y += dy;
 
-		auto shininess = Create(Constant1::TYPE_NAME, nodes, pos + sm::vec2(x, y));
-		std::static_pointer_cast<Constant1>(shininess)->SetValue(mat.shininess);
+		auto shininess = Create(node::Constant1::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant1>(shininess)->SetValue(mat.shininess);
 		bp::make_connecting(
 			shininess->GetAllOutput()[0],
-			bp_node->GetAllInput()[PhongModel::ID_SHININESS]
+			bp_node->GetAllInput()[node::PhongModel::ID_SHININESS]
 		);
 		x += dx, y += dy;
 	}

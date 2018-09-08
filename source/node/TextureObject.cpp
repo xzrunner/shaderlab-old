@@ -1,4 +1,4 @@
-#include "shadergraph/TextureObject.h"
+#include "shadergraph/node/TextureObject.h"
 #include "shadergraph/Pins.h"
 
 #include <SM_Rect.h>
@@ -9,6 +9,8 @@
 #include <boost/filesystem.hpp>
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string TextureObject::TYPE_NAME = "mat_tex_obj";
@@ -64,4 +66,5 @@ void TextureObject::SetImage(const std::string& filepath)
 	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 }
 
+}
 }

@@ -6,6 +6,8 @@ namespace pt3 { class Material; }
 
 namespace shadergraph
 {
+namespace node
+{
 
 class PhongModel : public Node
 {
@@ -45,4 +47,5 @@ private:
 
 }; // PhongModel
 
+}
 }

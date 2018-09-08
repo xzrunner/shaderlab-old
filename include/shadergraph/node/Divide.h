@@ -4,20 +4,22 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
-class Subtract : public Node
+class Divide : public Node
 {
 public:
-	Subtract();
+	Divide();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Subtract>();
+		return bp::GetNodeTypeID<Divide>();
 	}
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::Node> Create() const override {
-		return std::make_shared<Subtract>();
+		return std::make_shared<Divide>();
 	}
 
 	virtual sm::vec3 ToVec3() const override;
@@ -30,6 +32,7 @@ private:
 
 	std::shared_ptr<bp::Pins> m_output;
 
-}; // Subtract
+}; // Divide
 
+}
 }

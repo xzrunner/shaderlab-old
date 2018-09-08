@@ -1,8 +1,10 @@
-#include "shadergraph/Multiply.h"
+#include "shadergraph/node/Multiply.h"
 #include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string Multiply::TYPE_NAME = "mat_mul";
@@ -35,4 +37,5 @@ sm::vec3 Multiply::ToVec3() const
 	return ret;
 }
 
+}
 }

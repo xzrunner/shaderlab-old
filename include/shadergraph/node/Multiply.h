@@ -4,6 +4,8 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
 class Multiply : public Node
 {
@@ -32,4 +34,5 @@ private:
 
 }; // Multiply
 
+}
 }

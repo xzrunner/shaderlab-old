@@ -4,20 +4,22 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
-class Constant3 : public Node
+class Constant4 : public Node
 {
 public:
-	Constant3();
+	Constant4();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Constant3>();
+		return bp::GetNodeTypeID<Constant4>();
 	}
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::Node> Create() const override {
-		return std::make_shared<Constant3>();
+		return std::make_shared<Constant4>();
 	}
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -28,7 +30,7 @@ public:
 	virtual sm::vec3 ToVec3() const override;
 
 	auto& GetValue() const { return m_val; }
-	void SetValue(const sm::vec3& val);
+	void SetValue(const sm::vec4& val);
 
 	static const std::string TYPE_NAME;
 
@@ -38,8 +40,9 @@ private:
 private:
 	std::shared_ptr<bp::Pins> m_output;
 
-	sm::vec3 m_val;
+	sm::vec4 m_val;
 
-}; // Constant3
+}; // Constant4
 
+}
 }

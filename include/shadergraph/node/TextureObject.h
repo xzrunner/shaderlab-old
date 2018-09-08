@@ -2,44 +2,47 @@
 
 #include "shadergraph/Node.h"
 
+#include <SM_Matrix2D.h>
+
+namespace facade { class Image; }
+
 namespace shadergraph
 {
+namespace node
+{
 
-class Constant1 : public Node
+class TextureObject : public Node
 {
 public:
-	Constant1();
+	TextureObject();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Constant1>();
+		return bp::GetNodeTypeID<TextureObject>();
 	}
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::Node> Create() const override {
-		return std::make_shared<Constant1>();
+		return std::make_shared<TextureObject>();
 	}
+	virtual void Draw(const sm::Matrix2D& mt) const override;
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
 	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 		const rapidjson::Value& val) override;
 
-	virtual sm::vec3 ToVec3() const override;
-
-	auto& GetValue() const { return m_val; }
-	void SetValue(float val);
+	void SetImage(const std::string& filepath);
+	auto& GetImage() const { return m_img; }
 
 	static const std::string TYPE_NAME;
 
 private:
-	void UpdateTitle();
-
-private:
 	std::shared_ptr<bp::Pins> m_output;
 
-	float m_val = 0;
+	std::shared_ptr<facade::Image> m_img = nullptr;
 
-}; // Constant1
+}; // TextureObject
 
+}
 }

@@ -1,9 +1,11 @@
-#include "shadergraph/Constant2.h"
+#include "shadergraph/node/Constant2.h"
 #include "shadergraph/Pins.h"
 
 #include <cpputil/StringHelper.h>
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string Constant2::TYPE_NAME = "mat_constant2";
@@ -53,4 +55,5 @@ void Constant2::UpdateTitle()
 		      cpputil::StringHelper::ToString(m_val.y, 2);
 }
 
+}
 }

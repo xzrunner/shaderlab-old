@@ -1,7 +1,9 @@
-#include "shadergraph/TextureSample.h"
+#include "shadergraph/node/TextureSample.h"
 #include "shadergraph/Pins.h"
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string TextureSample::TYPE_NAME = "mat_tex_sample";
@@ -21,4 +23,5 @@ TextureSample::TextureSample()
 	Layout();
 }
 
+}
 }

@@ -4,6 +4,8 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
 class Constant2 : public Node
 {
@@ -42,4 +44,5 @@ private:
 
 }; // Constant2
 
+}
 }

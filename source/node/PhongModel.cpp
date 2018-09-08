@@ -1,6 +1,6 @@
-#include "shadergraph/PhongModel.h"
+#include "shadergraph/node/PhongModel.h"
+#include "shadergraph/node/TextureObject.h"
 #include "shadergraph/Utility.h"
-#include "shadergraph/TextureObject.h"
 #include "shadergraph/Pins.h"
 
 #include <blueprint/Connecting.h>
@@ -9,6 +9,8 @@
 #include <facade/Image.h>
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string PhongModel::TYPE_NAME = "mat_phong_model";
@@ -45,4 +47,5 @@ void PhongModel::CalcMaterial(pt3::Material& mat) const
 	}
 }
 
+}
 }

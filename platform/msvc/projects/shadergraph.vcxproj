@@ -11,41 +11,41 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\Add.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Constant1.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Constant2.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Constant3.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Constant4.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Divide.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Constant1.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Constant2.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Constant3.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\PhongModel.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\PhongModel.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Sprite.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Subtract.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\TextureObject.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\TextureSample.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\TextureObject.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Utility.h" />
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\Add.cpp" />
-    <ClCompile Include="..\..\..\source\Constant1.cpp" />
-    <ClCompile Include="..\..\..\source\Constant2.cpp" />
-    <ClCompile Include="..\..\..\source\Constant3.cpp" />
-    <ClCompile Include="..\..\..\source\Constant4.cpp" />
-    <ClCompile Include="..\..\..\source\Divide.cpp" />
-    <ClCompile Include="..\..\..\source\Multiply.cpp" />
+    <ClCompile Include="..\..\..\source\node\Add.cpp" />
+    <ClCompile Include="..\..\..\source\node\Constant1.cpp" />
+    <ClCompile Include="..\..\..\source\node\Constant2.cpp" />
+    <ClCompile Include="..\..\..\source\node\Constant3.cpp" />
+    <ClCompile Include="..\..\..\source\node\Constant4.cpp" />
+    <ClCompile Include="..\..\..\source\node\Divide.cpp" />
+    <ClCompile Include="..\..\..\source\node\Multiply.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
-    <ClCompile Include="..\..\..\source\PhongModel.cpp" />
+    <ClCompile Include="..\..\..\source\node\PhongModel.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
-    <ClCompile Include="..\..\..\source\Sprite.cpp" />
-    <ClCompile Include="..\..\..\source\Subtract.cpp" />
-    <ClCompile Include="..\..\..\source\TextureObject.cpp" />
-    <ClCompile Include="..\..\..\source\TextureSample.cpp" />
+    <ClCompile Include="..\..\..\source\node\Sprite.cpp" />
+    <ClCompile Include="..\..\..\source\node\Subtract.cpp" />
+    <ClCompile Include="..\..\..\source\node\TextureObject.cpp" />
+    <ClCompile Include="..\..\..\source\node\TextureSample.cpp" />
     <ClCompile Include="..\..\..\source\Utility.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />

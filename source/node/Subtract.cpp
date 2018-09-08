@@ -1,14 +1,16 @@
-#include "shadergraph/Add.h"
+#include "shadergraph/node/Subtract.h"
 #include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
 
 namespace shadergraph
 {
+namespace node
+{
 
-const std::string Add::TYPE_NAME = "mat_add";
+const std::string Subtract::TYPE_NAME = "mat_sub";
 
-Add::Add()
-	: Node("Add")
+Subtract::Subtract()
+	: Node("Subtract")
 {
 	AddPins(m_input0 = std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this));
 	AddPins(m_input1 = std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this));
@@ -18,16 +20,17 @@ Add::Add()
 	Layout();
 }
 
-sm::vec3 Add::ToVec3() const
+sm::vec3 Subtract::ToVec3() const
 {
-	sm::vec3 add0, add1;
+	sm::vec3 sub0, sub1;
 	if (m_input0) {
-		add0 = Utility::CalcNodeInputVal(*m_input0);
+		sub0 = Utility::CalcNodeInputVal(*m_input0);
 	}
 	if (m_input1) {
-		add1 = Utility::CalcNodeInputVal(*m_input1);
+		sub1 = Utility::CalcNodeInputVal(*m_input1);
 	}
-	return add0 + add1;
+	return sub0 - sub1;
 }
 
+}
 }

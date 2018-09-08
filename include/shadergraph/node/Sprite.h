@@ -4,6 +4,8 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
 class Sprite : public Node
 {
@@ -37,4 +39,5 @@ private:
 
 }; // Sprite
 
+}
 }

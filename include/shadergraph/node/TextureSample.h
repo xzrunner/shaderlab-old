@@ -4,6 +4,8 @@
 
 namespace shadergraph
 {
+namespace node
+{
 
 class TextureSample : public Node
 {
@@ -36,4 +38,5 @@ private:
 
 }; // TextureSample
 
+}
 }

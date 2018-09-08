@@ -1,7 +1,9 @@
-#include "shadergraph/Sprite.h"
+#include "shadergraph/node/Sprite.h"
 #include "shadergraph/Pins.h"
 
 namespace shadergraph
+{
+namespace node
 {
 
 const std::string Sprite::TYPE_NAME = "mat_sprite";
@@ -16,4 +18,5 @@ Sprite::Sprite()
 	Layout();
 }
 
+}
 }
