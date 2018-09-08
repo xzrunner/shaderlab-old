@@ -9,19 +9,19 @@ namespace shadergraph
 namespace node
 {
 
-class PhongModel : public Node
+class Phong : public Node
 {
 public:
-	PhongModel();
+	Phong();
 
 	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<PhongModel>();
+		return bp::GetNodeTypeID<Phong>();
 	}
 	virtual const std::string& TypeName() const override {
 		return TYPE_NAME;
 	}
 	virtual std::shared_ptr<bp::Node> Create() const override {
-		return std::make_shared<PhongModel>();
+		return std::make_shared<Phong>();
 	}
 
 	void CalcMaterial(pt3::Material& mat) const;
@@ -45,7 +45,7 @@ private:
 	std::shared_ptr<bp::Pins> m_shininess;
 	std::shared_ptr<bp::Pins> m_diffuse_tex;
 
-}; // PhongModel
+}; // Phong
 
 }
 }

@@ -7,7 +7,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Subtract::TYPE_NAME = "mat_sub";
+const std::string Subtract::TYPE_NAME = "sg_sub";
 
 Subtract::Subtract()
 	: Node("Subtract")

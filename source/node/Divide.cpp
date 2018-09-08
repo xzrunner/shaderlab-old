@@ -7,7 +7,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Divide::TYPE_NAME = "mat_divide";
+const std::string Divide::TYPE_NAME = "sg_divide";
 
 Divide::Divide()
 	: Node("Divide")

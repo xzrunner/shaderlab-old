@@ -8,7 +8,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Constant2::TYPE_NAME = "mat_constant2";
+const std::string Constant2::TYPE_NAME = "sg_constant2";
 
 Constant2::Constant2()
 	: Node("Constant2")

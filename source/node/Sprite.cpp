@@ -6,7 +6,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Sprite::TYPE_NAME = "mat_sprite";
+const std::string Sprite::TYPE_NAME = "sg_sprite";
 
 Sprite::Sprite()
 	: Node("Sprite")

@@ -7,7 +7,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Add::TYPE_NAME = "mat_add";
+const std::string Add::TYPE_NAME = "sg_add";
 
 Add::Add()
 	: Node("Add")

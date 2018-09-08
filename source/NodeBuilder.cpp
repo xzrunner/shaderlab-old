@@ -1,6 +1,6 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/node/Sprite.h"
-#include "shadergraph/node/PhongModel.h"
+#include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Constant1.h"
 #include "shadergraph/node/Constant3.h"
 
@@ -58,7 +58,7 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		);
 		x += dx, y += dy;
 	}
-	else if (type == node::PhongModel::TYPE_NAME)
+	else if (type == node::Phong::TYPE_NAME)
 	{
 		pt3::Material mat;
 
@@ -69,7 +69,7 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		std::static_pointer_cast<node::Constant3>(ambient)->SetValue(mat.ambient);
 		bp::make_connecting(
 			ambient->GetAllOutput()[0],
-			bp_node->GetAllInput()[node::PhongModel::ID_AMBIENT]
+			bp_node->GetAllInput()[node::Phong::ID_AMBIENT]
 		);
 		x += dx, y += dy;
 
@@ -77,7 +77,7 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		std::static_pointer_cast<node::Constant3>(diffuse)->SetValue(mat.diffuse);
 		bp::make_connecting(
 			diffuse->GetAllOutput()[0],
-			bp_node->GetAllInput()[node::PhongModel::ID_DIFFUSE]
+			bp_node->GetAllInput()[node::Phong::ID_DIFFUSE]
 		);
 		x += dx, y += dy;
 
@@ -85,7 +85,7 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		std::static_pointer_cast<node::Constant3>(specular)->SetValue(mat.specular);
 		bp::make_connecting(
 			specular->GetAllOutput()[0],
-			bp_node->GetAllInput()[node::PhongModel::ID_SPECULAR]
+			bp_node->GetAllInput()[node::Phong::ID_SPECULAR]
 		);
 		x += dx, y += dy;
 
@@ -93,7 +93,7 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		std::static_pointer_cast<node::Constant1>(shininess)->SetValue(mat.shininess);
 		bp::make_connecting(
 			shininess->GetAllOutput()[0],
-			bp_node->GetAllInput()[node::PhongModel::ID_SHININESS]
+			bp_node->GetAllInput()[node::Phong::ID_SHININESS]
 		);
 		x += dx, y += dy;
 	}

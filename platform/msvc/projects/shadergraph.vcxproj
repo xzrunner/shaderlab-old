@@ -20,7 +20,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\PhongModel.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h" />
@@ -39,7 +39,7 @@
     <ClCompile Include="..\..\..\source\node\Divide.cpp" />
     <ClCompile Include="..\..\..\source\node\Multiply.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
-    <ClCompile Include="..\..\..\source\node\PhongModel.cpp" />
+    <ClCompile Include="..\..\..\source\node\Phong.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\node\Sprite.cpp" />

@@ -13,7 +13,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string TextureObject::TYPE_NAME = "mat_tex_obj";
+const std::string TextureObject::TYPE_NAME = "sg_tex_obj";
 
 TextureObject::TextureObject()
 	: Node("TextureObject")

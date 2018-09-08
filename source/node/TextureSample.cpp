@@ -6,7 +6,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string TextureSample::TYPE_NAME = "mat_tex_sample";
+const std::string TextureSample::TYPE_NAME = "sg_tex_sample";
 
 TextureSample::TextureSample()
 	: Node("TextureSample")

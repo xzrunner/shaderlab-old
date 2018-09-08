@@ -1,4 +1,4 @@
-#include "shadergraph/node/PhongModel.h"
+#include "shadergraph/node/Phong.h"
 #include "shadergraph/node/TextureObject.h"
 #include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
@@ -13,10 +13,10 @@ namespace shadergraph
 namespace node
 {
 
-const std::string PhongModel::TYPE_NAME = "mat_phong_model";
+const std::string Phong::TYPE_NAME = "sg_phong";
 
-PhongModel::PhongModel()
-	: Node("PhongModel")
+Phong::Phong()
+	: Node("Phong")
 {
 	AddPins(m_ambient     = std::make_shared<Pins>(true, ID_AMBIENT, PINS_VECTOR3, "Ambient", *this));
 	AddPins(m_diffuse     = std::make_shared<Pins>(true, ID_DIFFUSE, PINS_VECTOR3, "Diffuse", *this));
@@ -27,7 +27,7 @@ PhongModel::PhongModel()
 	Layout();
 }
 
-void PhongModel::CalcMaterial(pt3::Material& mat) const
+void Phong::CalcMaterial(pt3::Material& mat) const
 {
 	mat.ambient   = Utility::CalcNodeInputVal(*m_ambient);
 	mat.diffuse   = Utility::CalcNodeInputVal(*m_diffuse);

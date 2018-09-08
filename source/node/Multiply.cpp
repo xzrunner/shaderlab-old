@@ -7,7 +7,7 @@ namespace shadergraph
 namespace node
 {
 
-const std::string Multiply::TYPE_NAME = "mat_mul";
+const std::string Multiply::TYPE_NAME = "sg_mul";
 
 Multiply::Multiply()
 	: Node("Multiply")

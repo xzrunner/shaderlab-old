@@ -12,7 +12,7 @@
 #include "shadergraph/node/TextureObject.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/Sprite.h"
-#include "shadergraph/node/PhongModel.h"
+#include "shadergraph/node/Phong.h"
 
 #include <blueprint/NodeFactory.h>
 
@@ -37,7 +37,7 @@ void ShaderGraph::Init()
 	nodes.push_back(std::make_shared<node::TextureSample>());
 
 	nodes.push_back(std::make_shared<node::Sprite>());
-	nodes.push_back(std::make_shared<node::PhongModel>());
+	nodes.push_back(std::make_shared<node::Phong>());
 
 	bp::NodeFactory::Instance()->RegistNodes(nodes);
 }
