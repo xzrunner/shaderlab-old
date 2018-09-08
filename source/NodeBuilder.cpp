@@ -1,4 +1,5 @@
 #include "shadergraph/NodeBuilder.h"
+#include "shadergraph/Sprite.h"
 #include "shadergraph/PhongModel.h"
 #include "shadergraph/Constant1.h"
 #include "shadergraph/Constant3.h"
@@ -35,7 +36,29 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		sm::rect(style.width, style.height)
 	);
 
-	if (type == PhongModel::TYPE_NAME)
+	if (type == Sprite::TYPE_NAME)
+	{
+
+		float x = -150, y = -50;
+		const float dx = 0, dy = -50;
+
+		auto mul = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<Constant3>(mul)->SetValue(sm::vec3(1, 1, 1));
+		bp::make_connecting(
+			mul->GetAllOutput()[0],
+			bp_node->GetAllInput()[Sprite::ID_COL_MUL]
+		);
+		x += dx, y += dy;
+
+		auto add = Create(Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<Constant3>(add)->SetValue(sm::vec3(0, 0, 0));
+		bp::make_connecting(
+			add->GetAllOutput()[0],
+			bp_node->GetAllInput()[Sprite::ID_COL_ADD]
+		);
+		x += dx, y += dy;
+	}
+	else if (type == PhongModel::TYPE_NAME)
 	{
 		pt3::Material mat;
 

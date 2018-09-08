@@ -9,6 +9,7 @@
 #include "shadergraph/Subtract.h"
 #include "shadergraph/Multiply.h"
 #include "shadergraph/Divide.h"
+#include "shadergraph/Sprite.h"
 #include "shadergraph/PhongModel.h"
 #include "shadergraph/TextureObject.h"
 #include "shadergraph/TextureSample.h"
@@ -35,6 +36,7 @@ void ShaderGraph::Init()
 	nodes.push_back(std::make_shared<TextureObject>());
 	nodes.push_back(std::make_shared<TextureSample>());
 
+	nodes.push_back(std::make_shared<Sprite>());
 	nodes.push_back(std::make_shared<PhongModel>());
 
 	bp::NodeFactory::Instance()->RegistNodes(nodes);
