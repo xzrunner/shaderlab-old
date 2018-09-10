@@ -1,6 +1,7 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/Phong.h"
+#include "shadergraph/node/Phong2.h"
 #include "shadergraph/node/Constant1.h"
 #include "shadergraph/node/Constant3.h"
 
@@ -94,6 +95,101 @@ std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,
 		bp::make_connecting(
 			shininess->GetAllOutput()[0],
 			bp_node->GetAllInput()[node::Phong::ID_SHININESS]
+		);
+		x += dx, y += dy;
+	}
+	else if (type == node::Phong2::TYPE_NAME)
+	{
+		sm::vec3 light_pos(1.2f, 1.0f, 2.0f);
+		sm::vec3 light_ambient(0.2f, 0.2f, 0.2f);
+		sm::vec3 light_diffuse(0.5f, 0.5f, 0.5f);
+		sm::vec3 light_specular(1.0f, 1.0f, 1.0f);
+
+		sm::vec3 material_diffuse(1, 0, 0);
+		sm::vec3 material_specular(0, 0.5f, 0);
+		float material_shininess(64.0f);
+		sm::vec3 material_emission(0, 0, 0);
+
+		sm::vec3 view_pos(1.2f, 1.0f, 2.0f);
+
+		float x = -150, y = 200;
+		const float dx = 0, dy = -50;
+
+		// light
+
+		auto lit_pos = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(lit_pos)->SetValue(light_pos);
+		bp::make_connecting(
+			lit_pos->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_LIT_POSITION]
+		);
+		x += dx, y += dy;
+
+		auto lit_ambient = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(lit_ambient)->SetValue(light_ambient);
+		bp::make_connecting(
+			lit_ambient->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_LIT_AMBIENT]
+		);
+		x += dx, y += dy;
+
+		auto lit_diffuse = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(lit_diffuse)->SetValue(light_diffuse);
+		bp::make_connecting(
+			lit_diffuse->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_LIT_DIFFUSE]
+		);
+		x += dx, y += dy;
+
+		auto lit_specular = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(lit_specular)->SetValue(light_specular);
+		bp::make_connecting(
+			lit_specular->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_LIT_SPECULAR]
+		);
+		x += dx, y += dy;
+
+		// material
+
+		auto mat_diffuse = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(mat_diffuse)->SetValue(material_diffuse);
+		bp::make_connecting(
+			mat_diffuse->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_MAT_DIFFUSE]
+		);
+		x += dx, y += dy;
+
+		auto mat_specular = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(mat_specular)->SetValue(material_specular);
+		bp::make_connecting(
+			mat_specular->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_MAT_SPECULAR]
+		);
+		x += dx, y += dy;
+
+		auto mat_shininess = Create(node::Constant1::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant1>(mat_shininess)->SetValue(material_shininess);
+		bp::make_connecting(
+			mat_shininess->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_MAT_SHININESS]
+		);
+		x += dx, y += dy;
+
+		auto mat_emission = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(mat_emission)->SetValue(material_emission);
+		bp::make_connecting(
+			mat_emission->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_MAT_EMISSION]
+		);
+		x += dx, y += dy;
+
+		// view
+
+		auto vp = Create(node::Constant3::TYPE_NAME, nodes, pos + sm::vec2(x, y));
+		std::static_pointer_cast<node::Constant3>(vp)->SetValue(view_pos);
+		bp::make_connecting(
+			vp->GetAllOutput()[0],
+			bp_node->GetAllInput()[node::Phong2::ID_VIEW_POS]
 		);
 		x += dx, y += dy;
 	}

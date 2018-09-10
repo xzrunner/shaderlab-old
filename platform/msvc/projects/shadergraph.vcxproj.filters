@@ -82,6 +82,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h">
       <Filter>nodes\model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Phong2.h">
+      <Filter>nodes\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\node\Constant2.cpp">
@@ -134,6 +137,9 @@
       <Filter>nodes\model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Phong.cpp">
+      <Filter>nodes\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Phong2.cpp">
       <Filter>nodes\model</Filter>
     </ClCompile>
   </ItemGroup>
