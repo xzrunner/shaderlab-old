@@ -4,7 +4,7 @@
 
 namespace bp { class Pins; }
 
-namespace shadergraph
+namespace sg
 {
 
 class Utility

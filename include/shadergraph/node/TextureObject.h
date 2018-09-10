@@ -6,7 +6,7 @@
 
 namespace facade { class Image; }
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

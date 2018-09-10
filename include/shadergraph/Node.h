@@ -2,7 +2,7 @@
 
 #include <blueprint/Node.h>
 
-namespace shadergraph
+namespace sg
 {
 
 class Node : public bp::Node

@@ -4,7 +4,7 @@
 #include <blueprint/Connecting.h>
 #include <blueprint/Pins.h>
 
-namespace shadergraph
+namespace sg
 {
 
 sm::vec3 Utility::CalcNodeInputVal(const bp::Pins& pin)

@@ -8,7 +8,7 @@
 #include <painting3/Material.h>
 #include <facade/Image.h>
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

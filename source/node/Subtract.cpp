@@ -2,7 +2,7 @@
 #include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

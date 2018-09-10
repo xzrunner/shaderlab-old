@@ -1,7 +1,7 @@
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/Pins.h"
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

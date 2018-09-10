@@ -13,7 +13,7 @@
 #include <blueprint/Connecting.h>
 #include <blueprint/NodeFactory.h>
 
-namespace shadergraph
+namespace sg
 {
 
 std::shared_ptr<bp::Node> NodeBuilder::Create(const std::string& type,

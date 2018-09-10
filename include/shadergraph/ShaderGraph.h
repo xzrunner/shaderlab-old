@@ -1,6 +1,6 @@
 #pragma once
 
-namespace shadergraph
+namespace sg
 {
 
 class ShaderGraph

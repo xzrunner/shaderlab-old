@@ -8,7 +8,7 @@
 
 namespace bp { class Node; }
 
-namespace shadergraph
+namespace sg
 {
 
 class NodeBuilder

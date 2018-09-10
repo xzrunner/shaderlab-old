@@ -3,7 +3,7 @@
 
 #include <cpputil/StringHelper.h>
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

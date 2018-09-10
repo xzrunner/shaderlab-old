@@ -8,7 +8,7 @@
 
 #include <boost/filesystem.hpp>
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

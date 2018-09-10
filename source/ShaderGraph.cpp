@@ -16,7 +16,7 @@
 
 #include <blueprint/NodeFactory.h>
 
-namespace shadergraph
+namespace sg
 {
 
 void ShaderGraph::Init()

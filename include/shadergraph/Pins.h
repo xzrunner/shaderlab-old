@@ -2,7 +2,7 @@
 
 #include <blueprint/Pins.h>
 
-namespace shadergraph
+namespace sg
 {
 
 enum PinsType

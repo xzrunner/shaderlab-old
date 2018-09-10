@@ -2,7 +2,7 @@
 
 #include "shadergraph/Node.h"
 
-namespace shadergraph
+namespace sg
 {
 namespace node
 {

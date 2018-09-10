@@ -9,7 +9,7 @@
 class wxPropertyGrid;
 class wxPropertyGridEvent;
 
-namespace shadergraph
+namespace sg
 {
 
 class WxNodeProperty : public wxPanel
