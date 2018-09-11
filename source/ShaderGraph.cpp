@@ -1,4 +1,6 @@
 #include "shadergraph/ShaderGraph.h"
+#include "shadergraph/NodeBuilder.h"
+#include "shadergraph/NodeHelper.h"
 
 // register nodes to factory
 #include "shadergraph/node/Constant1.h"
@@ -16,13 +18,15 @@
 #include "shadergraph/node/Phong2.h"
 
 #include <blueprint/NodeFactory.h>
+#include <blueprint/NodeBuilder.h>
+#include <blueprint/Pins.h>
 
 namespace sg
 {
 
 void ShaderGraph::Init()
 {
-	std::vector<std::shared_ptr<bp::Node>> nodes;
+	std::vector<bp::NodePtr> nodes;
 
 	nodes.push_back(std::make_shared<node::Constant1>());
 	nodes.push_back(std::make_shared<node::Constant2>());
@@ -42,6 +46,20 @@ void ShaderGraph::Init()
 	nodes.push_back(std::make_shared<node::Phong2>());
 
 	bp::NodeFactory::Instance()->RegistNodes(nodes);
+
+	bp::NodeBuilder::Callback cb;
+	cb.after_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
+		NodeBuilder::CreateDefaultInputs(nodes, node);
+	};
+	cb.before_connected = [](bp::Pins& from, bp::Pins& to) {
+		NodeHelper::RemoveDefaultNode(to);
+	};
+	cb.after_connected = [](bp::Pins& from, bp::Pins& to) {
+		NodeHelper::TypePromote(from, to);
+		NodeHelper::TypePromote(from.GetParent());
+		NodeHelper::TypePromote(to.GetParent());
+	};
+	bp::NodeBuilder::Instance()->RegistCB(cb);
 }
 
 }
