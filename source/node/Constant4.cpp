@@ -49,7 +49,7 @@ void Constant4::SetValue(const sm::vec4& val)
 
 void Constant4::UpdateTitle()
 {
-	m_style.small_title = true;
+	SetStyleSmallTitleFont(true);
 	m_title = cpputil::StringHelper::ToString(m_val.x, 2) + ", " +
 		      cpputil::StringHelper::ToString(m_val.y, 2) + ", " +
 		      cpputil::StringHelper::ToString(m_val.z, 2) + ", " +

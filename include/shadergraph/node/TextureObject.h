@@ -38,6 +38,9 @@ public:
 	static const std::string TYPE_NAME;
 
 private:
+	void DrawImage(const sm::Matrix2D& mt) const;
+
+private:
 	std::shared_ptr<bp::Pins> m_output;
 
 	std::shared_ptr<facade::Image> m_img = nullptr;

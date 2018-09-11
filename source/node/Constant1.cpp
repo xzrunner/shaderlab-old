@@ -43,7 +43,7 @@ void Constant1::SetValue(float val)
 
 void Constant1::UpdateTitle()
 {
-	m_style.small_title = true;
+	SetStyleSmallTitleFont(true);
 	m_title = cpputil::StringHelper::ToString(m_val, 2);
 }
 

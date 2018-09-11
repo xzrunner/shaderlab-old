@@ -25,16 +25,9 @@ TextureObject::TextureObject()
 
 void TextureObject::Draw(const sm::Matrix2D& mt) const
 {
-	if (!m_img) {
-		return;
-	}
+	Node::Draw(mt);
 
-	const float LEN = m_style.width;
-
-	sm::rect r;
-	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
-	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
-	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
+	DrawImage(mt);
 }
 
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -64,6 +57,20 @@ void TextureObject::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 void TextureObject::SetImage(const std::string& filepath)
 {
 	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+}
+
+void TextureObject::DrawImage(const sm::Matrix2D& mt) const
+{
+	if (!m_img) {
+		return;
+	}
+
+	const float LEN = m_style.width;
+
+	sm::rect r;
+	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
+	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
+	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
 }
 
 }
