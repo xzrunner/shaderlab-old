@@ -17,7 +17,7 @@ class WxNodeProperty : public wxPanel
 public:
 	WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
-	void LoadFromNode(const std::shared_ptr<bp::Node>& node);
+	void LoadFromNode(const bp::NodePtr& node);
 
 private:
 	void InitLayout();
@@ -29,7 +29,7 @@ private:
 
 	wxPropertyGrid* m_pg;
 
-	std::shared_ptr<bp::Node> m_node = nullptr;
+	bp::NodePtr m_node = nullptr;
 
 }; // WxNodeProperty
 
