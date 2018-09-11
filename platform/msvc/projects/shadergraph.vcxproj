@@ -28,7 +28,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\TextureObject.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\Utility.h" />
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +47,6 @@
     <ClCompile Include="..\..\..\source\node\Subtract.cpp" />
     <ClCompile Include="..\..\..\source\node\TextureObject.cpp" />
     <ClCompile Include="..\..\..\source\node\TextureSample.cpp" />
-    <ClCompile Include="..\..\..\source\Utility.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
   </ItemGroup>

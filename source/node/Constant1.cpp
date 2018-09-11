@@ -35,11 +35,6 @@ void Constant1::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 	SetValue(x);
 }
 
-sm::vec3 Constant1::ToVec3() const
-{
-	return sm::vec3(m_val, m_val, m_val);
-}
-
 void Constant1::SetValue(float val)
 {
 	m_val = val;

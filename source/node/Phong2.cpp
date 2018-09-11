@@ -1,6 +1,5 @@
 #include "shadergraph/node/Phong2.h"
 #include "shadergraph/node/TextureObject.h"
-#include "shadergraph/Utility.h"
 #include "shadergraph/Pins.h"
 
 #include <blueprint/Connecting.h>

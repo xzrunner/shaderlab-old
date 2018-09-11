@@ -24,8 +24,6 @@ public:
 		return std::make_shared<Phong>();
 	}
 
-	void CalcMaterial(pt3::Material& mat) const;
-
 	static const std::string TYPE_NAME;
 
 public:

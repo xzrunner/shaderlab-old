@@ -4,9 +4,6 @@
     <Filter Include="script">
       <UniqueIdentifier>{a15173f4-3823-4295-bb77-2ad20edc2fdc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="utility">
-      <UniqueIdentifier>{99c7db57-27b2-4a43-a2c2-a17c398af0e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nodes">
       <UniqueIdentifier>{fd271f54-25a3-4500-a563-32e00b7efc1a}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h">
       <Filter>nodes\calc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\Utility.h">
-      <Filter>utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h">
       <Filter>nodes\texture</Filter>
     </ClInclude>
@@ -65,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
       <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
-      <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h">
       <Filter>dataset</Filter>
@@ -84,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Phong2.h">
       <Filter>nodes\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
+      <Filter>dataset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +105,6 @@
     <ClCompile Include="..\..\..\source\node\Divide.cpp">
       <Filter>nodes\calc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Utility.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\node\TextureSample.cpp">
       <Filter>nodes\texture</Filter>
     </ClCompile>
@@ -122,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
       <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
-      <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp">
       <Filter>script</Filter>
@@ -141,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Phong2.cpp">
       <Filter>nodes\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
+      <Filter>dataset</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

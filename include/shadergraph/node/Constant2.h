@@ -27,8 +27,6 @@ public:
 	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 		const rapidjson::Value& val) override;
 
-	virtual sm::vec3 ToVec3() const override;
-
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec2& val);
 

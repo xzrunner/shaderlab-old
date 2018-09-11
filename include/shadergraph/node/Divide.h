@@ -22,8 +22,6 @@ public:
 		return std::make_shared<Divide>();
 	}
 
-	virtual sm::vec3 ToVec3() const override;
-
 	static const std::string TYPE_NAME;
 
 private:
