@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include <blueprint/Node.h>
 
 namespace pt3 { class Material; }
 
@@ -9,7 +9,7 @@ namespace sg
 namespace node
 {
 
-class Phong : public Node
+class Phong : public bp::Node
 {
 public:
 	Phong();

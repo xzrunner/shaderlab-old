@@ -1,13 +1,13 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include <blueprint/Node.h>
 
 namespace sg
 {
 namespace node
 {
 
-class Multiply : public Node
+class Multiply : public bp::Node
 {
 public:
 	Multiply();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include <blueprint/Node.h>
 
 #include <SM_Matrix2D.h>
 
@@ -11,7 +11,7 @@ namespace sg
 namespace node
 {
 
-class TextureObject : public Node
+class TextureObject : public bp::Node
 {
 public:
 	TextureObject();

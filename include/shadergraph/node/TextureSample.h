@@ -1,13 +1,13 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include <blueprint/Node.h>
 
 namespace sg
 {
 namespace node
 {
 
-class TextureSample : public Node
+class TextureSample : public bp::Node
 {
 public:
 	TextureSample();

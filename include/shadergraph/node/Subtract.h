@@ -1,13 +1,13 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include <blueprint/Node.h>
 
 namespace sg
 {
 namespace node
 {
 
-class Subtract : public Node
+class Subtract : public bp::Node
 {
 public:
 	Subtract();

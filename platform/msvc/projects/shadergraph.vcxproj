@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant1.h" />
@@ -32,7 +31,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\Node.cpp" />
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\node\Add.cpp" />
     <ClCompile Include="..\..\..\source\node\Constant1.cpp" />
