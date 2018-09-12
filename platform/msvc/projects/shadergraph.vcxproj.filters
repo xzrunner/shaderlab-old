@@ -10,9 +10,6 @@
     <Filter Include="nodes\model">
       <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes\const">
-      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nodes\calc">
       <UniqueIdentifier>{2416c320-06f1-4f0e-b4b3-322a1826c557}</UniqueIdentifier>
     </Filter>
@@ -25,19 +22,22 @@
     <Filter Include="dataset">
       <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\value">
+      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant2.h">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant1.h">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant3.h">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h">
       <Filter>nodes\calc</Filter>
@@ -79,19 +79,22 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h">
       <Filter>dataset</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Input.h">
+      <Filter>nodes\value</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\node\Constant2.cpp">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Constant1.cpp">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Constant3.cpp">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Constant4.cpp">
-      <Filter>nodes\const</Filter>
+      <Filter>nodes\value</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Add.cpp">
       <Filter>nodes\calc</Filter>
@@ -135,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodeHelper.cpp">
       <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Input.cpp">
+      <Filter>nodes\value</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

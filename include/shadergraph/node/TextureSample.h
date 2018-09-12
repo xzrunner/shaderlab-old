@@ -24,6 +24,13 @@ public:
 
 	static const std::string TYPE_NAME;
 
+public:
+	enum InputId
+	{
+		ID_TEX = 0,
+		ID_UV,
+	};
+
 private:
 	// input
 	std::shared_ptr<bp::Pins> m_tex;

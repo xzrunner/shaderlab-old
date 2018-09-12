@@ -7,6 +7,7 @@
 #include "shadergraph/node/Constant2.h"
 #include "shadergraph/node/Constant3.h"
 #include "shadergraph/node/Constant4.h"
+#include "shadergraph/node/Input.h"
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
@@ -32,6 +33,7 @@ void ShaderGraph::Init()
 	nodes.push_back(std::make_shared<node::Constant2>());
 	nodes.push_back(std::make_shared<node::Constant3>());
 	nodes.push_back(std::make_shared<node::Constant4>());
+	nodes.push_back(std::make_shared<node::Input>());
 
 	nodes.push_back(std::make_shared<node::Add>());
 	nodes.push_back(std::make_shared<node::Subtract>());

@@ -18,6 +18,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant3.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Input.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="..\..\..\source\node\Constant3.cpp" />
     <ClCompile Include="..\..\..\source\node\Constant4.cpp" />
     <ClCompile Include="..\..\..\source\node\Divide.cpp" />
+    <ClCompile Include="..\..\..\source\node\Input.cpp" />
     <ClCompile Include="..\..\..\source\node\Multiply.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
     <ClCompile Include="..\..\..\source\node\Phong.cpp" />

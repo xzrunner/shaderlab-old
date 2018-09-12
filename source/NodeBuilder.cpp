@@ -5,11 +5,16 @@
 #include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Phong2.h"
 #include "shadergraph/node/Constant1.h"
+#include "shadergraph/node/Constant2.h"
 #include "shadergraph/node/Constant3.h"
+#include "shadergraph/node/Constant4.h"
+#include "shadergraph/node/Input.h"
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
+#include "shadergraph/node/TextureSample.h"
+#include "shadergraph/node/TextureObject.h"
 
 #include <painting3/Material.h>
 #include <node0/SceneNode.h>
@@ -124,6 +129,13 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	{
 		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
 		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+	}
+	else if (type == node::TextureSample::TYPE_NAME)
+	{
+		std::static_pointer_cast<node::TextureObject>(CreateDefault(nodes, node, node::TextureSample::ID_TEX,
+			node::TextureObject::TYPE_NAME));
+		std::static_pointer_cast<node::Input>(CreateDefault(nodes, node, node::TextureSample::ID_UV,
+			node::Input::TYPE_NAME))->SetName("v_texcoord").SetType(sg::PINS_VECTOR2);
 	}
 }
 
