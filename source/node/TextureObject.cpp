@@ -33,11 +33,11 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                            rapidjson::MemoryPoolAllocator<>& alloc) const
 {
+	bp::Node::StoreToJson(dir, val, alloc);
+
 	if (!m_img) {
 		return;
 	}
-
-	val.SetObject();
 
 	std::string relative = boost::filesystem::relative(m_img->GetResPath(), dir).string();
 	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
@@ -46,6 +46,8 @@ void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
 void TextureObject::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 	                             const rapidjson::Value& val)
 {
+	bp::Node::LoadFromJson(alloc, dir, val);
+
 	if (val.IsObject() && val.HasMember("filepath"))
 	{
 		auto filepath = val["filepath"].GetString();
