@@ -29,10 +29,10 @@ public:
 	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 		const rapidjson::Value& val) override;
 
-	auto& SetName(const std::string& name) { m_name = name; return *this; }
+	Input& SetName(const std::string& name);
 	auto& GetName() const { return m_name; }
 
-	auto& SetType(sg::PinsType type) { m_type = type; return *this; }
+	Input& SetType(sg::PinsType type);
 	sg::PinsType GetType() const { return m_type; }
 
 	static const std::string TYPE_NAME;

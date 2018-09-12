@@ -4,6 +4,7 @@
 #include "shadergraph/node/Constant3.h"
 #include "shadergraph/node/Constant4.h"
 #include "shadergraph/node/TextureObject.h"
+#include "shadergraph/node/Input.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxOpenFileProp.h>
@@ -13,6 +14,14 @@
 #include <wx/sizer.h>
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
+
+namespace
+{
+
+const wxChar* PIN_TYPES[] = {
+	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool") };
+
+}
 
 namespace sg
 {
@@ -62,18 +71,32 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	}
 	else if (type_id == bp::GetNodeTypeID<node::TextureObject>())
 	{
-		auto& to = dynamic_cast<const node::TextureObject&>(*node);
+		auto& tobj = dynamic_cast<const node::TextureObject&>(*node);
+
+		m_pg->Append(new wxStringProperty("name", wxPG_LABEL, tobj.GetName()));
+
 		std::string filepath;
-		if (auto& tex = to.GetImage()) {
+		if (auto& tex = tobj.GetImage()) {
 			filepath = tex->GetResPath();
 		}
 		auto prop = new ee0::WxOpenFileProp("Filepath", wxPG_LABEL, filepath);
 		prop->SetFilter("*.png");
 		prop->SetCallback([&](const std::string& filepath) {
-			const_cast<node::TextureObject&>(to).SetImage(filepath);
+			const_cast<node::TextureObject&>(tobj).SetImage(filepath);
 			m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 		});
+
 		m_pg->Append(prop);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Input>())
+	{
+		auto& input = dynamic_cast<const node::Input&>(*node);
+
+		m_pg->Append(new wxStringProperty("name", wxPG_LABEL, input.GetName()));
+
+		auto type_prop = new wxEnumProperty("type", wxPG_LABEL, PIN_TYPES);
+		type_prop->SetValue(PIN_TYPES[input.GetType() - PINS_VECTOR1]);
+		m_pg->Append(type_prop);
 	}
 }
 
@@ -147,6 +170,22 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			v.w = wxANY_AS(val, float);
 		}
 		c4->SetValue(v);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::TextureObject>())
+	{
+		auto& tobj = std::dynamic_pointer_cast<node::TextureObject>(m_node);
+		if (key == "name") {
+			tobj->SetName(wxANY_AS(val, wxString).ToStdString());
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Input>())
+	{
+		auto& input = std::dynamic_pointer_cast<node::Input>(m_node);
+		if (key == "name") {
+			input->SetName(wxANY_AS(val, wxString).ToStdString());
+		} else if (key == "type") {
+			input->SetType(static_cast<PinsType>(PINS_VECTOR1 + wxANY_AS(val, int)));
+		}
 	}
 
 	// todo

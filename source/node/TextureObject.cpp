@@ -17,6 +17,7 @@ const std::string TextureObject::TYPE_NAME = "sg_tex_obj";
 
 TextureObject::TextureObject()
 	: bp::Node("TextureObject")
+	, m_name("tex")
 {
 	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
 
@@ -35,6 +36,8 @@ void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
 {
 	bp::Node::StoreToJson(dir, val, alloc);
 
+	val.AddMember("name", rapidjson::Value(m_name.c_str(), alloc), alloc);
+
 	if (!m_img) {
 		return;
 	}
@@ -48,12 +51,20 @@ void TextureObject::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 {
 	bp::Node::LoadFromJson(alloc, dir, val);
 
-	if (val.IsObject() && val.HasMember("filepath"))
+	SetName(val["name"].GetString());
+
+	if (val.HasMember("filepath"))
 	{
 		auto filepath = val["filepath"].GetString();
 		auto absolute = boost::filesystem::absolute(filepath, dir).string();
 		SetImage(absolute);
 	}
+}
+
+void TextureObject::SetName(const std::string& name)
+{
+	m_name = name;
+	m_title = m_name;
 }
 
 void TextureObject::SetImage(const std::string& filepath)

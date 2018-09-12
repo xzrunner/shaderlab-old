@@ -30,8 +30,22 @@ void Input::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 {
 	bp::Node::LoadFromJson(alloc, dir, val);
 
-	m_name = val["name"].GetString();
-	m_type = static_cast<PinsType>(val["type"].GetInt());
+	SetName(val["name"].GetString());
+	SetType(static_cast<PinsType>(val["type"].GetInt()));
+}
+
+Input& Input::SetName(const std::string& name)
+{
+	m_name = name;
+	m_title = m_name;
+
+	return *this;
+}
+
+Input& Input::SetType(sg::PinsType type)
+{
+	m_type = type;
+	return *this;
 }
 
 }

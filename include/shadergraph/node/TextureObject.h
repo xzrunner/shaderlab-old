@@ -32,7 +32,10 @@ public:
 	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 		const rapidjson::Value& val) override;
 
-	void SetImage(const std::string& filepath);
+	void  SetName(const std::string& name);
+	auto& GetName() const { return m_name; }
+
+	void  SetImage(const std::string& filepath);
 	auto& GetImage() const { return m_img; }
 
 	static const std::string TYPE_NAME;
@@ -41,6 +44,8 @@ private:
 	void DrawImage(const sm::Matrix2D& mt) const;
 
 private:
+	std::string m_name;
+
 	std::shared_ptr<bp::Pins> m_output;
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
