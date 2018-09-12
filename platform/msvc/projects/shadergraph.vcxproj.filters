@@ -67,12 +67,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h">
       <Filter>nodes\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h">
-      <Filter>nodes\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Phong2.h">
-      <Filter>nodes\model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>dataset</Filter>
     </ClInclude>
@@ -81,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Input.h">
       <Filter>nodes\value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h">
+      <Filter>nodes\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,12 +124,6 @@
     <ClCompile Include="..\..\..\source\node\Sprite.cpp">
       <Filter>nodes\model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Phong.cpp">
-      <Filter>nodes\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Phong2.cpp">
-      <Filter>nodes\model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
@@ -141,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Input.cpp">
       <Filter>nodes\value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Phong.cpp">
+      <Filter>nodes\model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

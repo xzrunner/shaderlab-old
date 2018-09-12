@@ -3,7 +3,6 @@
 
 #include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/Phong.h"
-#include "shadergraph/node/Phong2.h"
 #include "shadergraph/node/Constant1.h"
 #include "shadergraph/node/Constant2.h"
 #include "shadergraph/node/Constant3.h"
@@ -76,38 +75,26 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	}
 	else if (type == node::Phong::TYPE_NAME)
 	{
-		pt3::Material mat;
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_AMBIENT,
-			node::Constant3::TYPE_NAME, "ambient"))->SetValue(mat.ambient);
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_DIFFUSE,
-			node::Constant3::TYPE_NAME, "diffuse"))->SetValue(mat.diffuse);
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_SPECULAR,
-			node::Constant3::TYPE_NAME, "specular"))->SetValue(mat.specular);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Phong::ID_SHININESS,
-			node::Constant1::TYPE_NAME, "shininess"))->SetValue(mat.shininess);
-	}
-	else if (type == node::Phong2::TYPE_NAME)
-	{
 		// light
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_LIT_POSITION,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_POSITION,
 			node::Constant3::TYPE_NAME, "lit_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_LIT_AMBIENT,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_AMBIENT,
 			node::Constant3::TYPE_NAME, "lit_ambient"))->SetValue(sm::vec3(0.2f, 0.2f, 0.2f));
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_LIT_DIFFUSE,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_DIFFUSE,
 			node::Constant3::TYPE_NAME, "lit_diffuse"))->SetValue(sm::vec3(0.5f, 0.5f, 0.5f));
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_LIT_SPECULAR,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_SPECULAR,
 			node::Constant3::TYPE_NAME, "lit_specular"))->SetValue(sm::vec3(1.0f, 1.0f, 1.0f));
 		// material
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_MAT_DIFFUSE,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_DIFFUSE,
 			node::Constant3::TYPE_NAME, "mat_diffuse"))->SetValue(sm::vec3(1, 0, 0));
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_MAT_SPECULAR,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_SPECULAR,
 			node::Constant3::TYPE_NAME, "mat_specular"))->SetValue(sm::vec3(0, 0.5f, 0));
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Phong2::ID_MAT_SHININESS,
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Phong::ID_MAT_SHININESS,
 			node::Constant1::TYPE_NAME, "mat_shininess"))->SetValue(64.0f);
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_MAT_EMISSION,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_EMISSION,
 			node::Constant3::TYPE_NAME, "mat_emission"))->SetValue(sm::vec3(0, 0, 0));
 		// view
-		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong2::ID_VIEW_POS,
+		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_VIEW_POS,
 			node::Constant3::TYPE_NAME, "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 	}
 	else if (type == node::Add::TYPE_NAME)

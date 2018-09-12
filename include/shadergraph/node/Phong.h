@@ -29,19 +29,34 @@ public:
 public:
 	enum InputId
 	{
-		ID_AMBIENT = 0,
-		ID_DIFFUSE,
-		ID_SPECULAR,
-		ID_SHININESS,
-		ID_DIFFUSE_TEX,
+		ID_LIT_POSITION = 0,
+		ID_LIT_AMBIENT,
+		ID_LIT_DIFFUSE,
+		ID_LIT_SPECULAR,
+
+		ID_MAT_DIFFUSE,
+		ID_MAT_SPECULAR,
+		ID_MAT_SHININESS,
+		ID_MAT_EMISSION,
+
+		ID_VIEW_POS,
 	};
 
 private:
-	std::shared_ptr<bp::Pins> m_ambient;
-	std::shared_ptr<bp::Pins> m_diffuse;
-	std::shared_ptr<bp::Pins> m_specular;
-	std::shared_ptr<bp::Pins> m_shininess;
-	std::shared_ptr<bp::Pins> m_diffuse_tex;
+	// light
+	std::shared_ptr<bp::Pins> m_lit_position;
+	std::shared_ptr<bp::Pins> m_lit_ambient;
+	std::shared_ptr<bp::Pins> m_lit_diffuse;
+	std::shared_ptr<bp::Pins> m_lit_specular;
+
+	// material
+	std::shared_ptr<bp::Pins> m_mat_diffuse;
+	std::shared_ptr<bp::Pins> m_mat_specular;
+	std::shared_ptr<bp::Pins> m_mat_shininess;
+	std::shared_ptr<bp::Pins> m_mat_emission;
+
+	// view
+	std::shared_ptr<bp::Pins> m_view_pos;
 
 }; // Phong
 

@@ -16,7 +16,6 @@
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/Phong.h"
-#include "shadergraph/node/Phong2.h"
 
 #include <blueprint/NodeFactory.h>
 #include <blueprint/NodeBuilder.h>
@@ -45,7 +44,6 @@ void ShaderGraph::Init()
 
 	nodes.push_back(std::make_shared<node::Sprite>());
 	nodes.push_back(std::make_shared<node::Phong>());
-	nodes.push_back(std::make_shared<node::Phong2>());
 
 	bp::NodeFactory::Instance()->RegistNodes(nodes);
 
