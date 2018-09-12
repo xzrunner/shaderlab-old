@@ -9,7 +9,7 @@ namespace node
 const std::string Multiply::TYPE_NAME = "sg_mul";
 
 Multiply::Multiply()
-	: Node("Multiply")
+	: bp::Node("Multiply")
 {
 	AddPins(m_input0 = std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this));
 	AddPins(m_input1 = std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this));

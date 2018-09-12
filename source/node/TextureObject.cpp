@@ -16,7 +16,7 @@ namespace node
 const std::string TextureObject::TYPE_NAME = "sg_tex_obj";
 
 TextureObject::TextureObject()
-	: Node("TextureObject")
+	: bp::Node("TextureObject")
 {
 	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
 
@@ -25,7 +25,7 @@ TextureObject::TextureObject()
 
 void TextureObject::Draw(const sm::Matrix2D& mt) const
 {
-	Node::Draw(mt);
+	bp::Node::Draw(mt);
 
 	DrawImage(mt);
 }

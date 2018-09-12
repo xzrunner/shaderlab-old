@@ -15,7 +15,7 @@ namespace node
 const std::string Phong::TYPE_NAME = "sg_phong";
 
 Phong::Phong()
-	: Node("Phong")
+	: bp::Node("Phong")
 {
 	AddPins(m_ambient     = std::make_shared<Pins>(true, ID_AMBIENT, PINS_VECTOR3, "Ambient", *this));
 	AddPins(m_diffuse     = std::make_shared<Pins>(true, ID_DIFFUSE, PINS_VECTOR3, "Diffuse", *this));
