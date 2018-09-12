@@ -28,8 +28,8 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 		type1 >= PINS_VECTOR1 && type1 <= PINS_VECTOR4)
 	{
 		int type = std::max(type0, type1);
-		const_cast<bp::Pins&>(p0).SetType(type);
-		const_cast<bp::Pins&>(p1).SetType(type);
+		SetPinsType(const_cast<bp::Pins&>(p0), type);
+		SetPinsType(const_cast<bp::Pins&>(p1), type);
 	}
 }
 
@@ -56,10 +56,10 @@ void NodeHelper::TypePromote(const bp::Node& node)
 		assert(type <= PINS_VECTOR4);
 
 		for (auto& p : node.GetAllInput()) {
-			p->SetType(type);
+			SetPinsType(*p, type);
 		}
 		for (auto& p : node.GetAllOutput()) {
-			p->SetType(type);
+			SetPinsType(*p, type);
 		}
 	}
 }
@@ -72,6 +72,18 @@ void NodeHelper::RemoveDefaultNode(const bp::Pins& p)
 	}
 	auto& pair = conns[0]->GetFrom();
 	pair->GetParent().SetLifeDeleteLater(true);
+}
+
+void NodeHelper::SetPinsType(bp::Pins& pins, int type)
+{
+	if (pins.GetType() == type) {
+		return;
+	}
+
+	pins.SetType(type);
+	for (auto& conn : pins.GetConnecting()) {
+		conn->UpdateCurve();
+	}
 }
 
 }

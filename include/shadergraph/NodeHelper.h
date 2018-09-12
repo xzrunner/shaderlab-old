@@ -1,6 +1,6 @@
 #pragma once
 
-namespace bp { class Pins; class Node; }
+namespace bp { class Node; class Pins; }
 
 namespace sg
 {
@@ -12,6 +12,9 @@ public:
 	static void TypePromote(const bp::Node& node);
 
 	static void RemoveDefaultNode(const bp::Pins& p);
+
+private:
+	static void SetPinsType(bp::Pins& pins, int type);
 
 }; // NodeHelper
 
