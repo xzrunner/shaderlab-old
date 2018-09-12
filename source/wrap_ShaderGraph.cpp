@@ -17,19 +17,19 @@
 namespace
 {
 
-class Material : public moon::Module
+class ShaderGraph : public moon::Module
 {
 public:
 	virtual moon::ModuleTypeID TypeID() const override {
-		return moon::GetModuleTypeID<Material>();
+		return moon::GetModuleTypeID<ShaderGraph>();
 	}
 	virtual const char* GetName() const override {
-		return "moon.mat";
+		return "moon.sg";
 	}
 
-}; // Material
+}; // ShaderGraph
 
-#define INSTANCE() (moon::Blackboard::Instance()->GetContext()->GetModuleMgr().GetModule<Material>())
+#define INSTANCE() (moon::Blackboard::Instance()->GetContext()->GetModuleMgr().GetModule<ShaderGraph>())
 
 moon::SceneNode* luax_checknode(lua_State* L, int idx)
 {
@@ -41,17 +41,17 @@ int w_new_node(lua_State* L)
 	auto bb = moon::Blackboard::Instance();
 
 	const char* type = luaL_checkstring(L, 1);
-	auto mat_node = bp::NodeFactory::Instance()->Create(type);
-	if (!mat_node) {
+	auto bp_node = bp::NodeFactory::Instance()->Create(type);
+	if (!bp_node) {
 		luaL_error(L, "fail to create node %s\n", type);
 	}
 
 	auto node = std::make_shared<n0::SceneNode>();
 	auto& cnode = node->AddUniqueComp<bp::CompNode>();
-	cnode.SetNode(mat_node);
+	cnode.SetNode(bp_node);
 	node->AddUniqueComp<n2::CompTransform>();
 	node->AddUniqueComp<n0::CompIdentity>();
-	auto& style = mat_node->GetStyle();
+	auto& style = bp_node->GetStyle();
 	node->AddUniqueComp<n2::CompBoundingBox>(
 		sm::rect(style.width, style.height)
 	);
@@ -99,18 +99,18 @@ static const lua_CFunction types[] =
 	0
 };
 
-extern "C" int luaopen_moon_mat(lua_State* L)
+extern "C" int luaopen_moon_sg(lua_State* L)
 {
-	Material* instance = INSTANCE();
+	ShaderGraph* instance = INSTANCE();
 	if (instance == nullptr) {
-		luax_catchexcept(L, [&](){ instance = new Material(); });
+		luax_catchexcept(L, [&](){ instance = new ShaderGraph(); });
 	} else {
 		instance->Retain();
 	}
 
 	WrappedModule w;
 	w.module = instance;
-	w.name = "mat";
+	w.name = "sg";
 	w.type = MODULE_ID;
 	w.functions = functions;
 	w.types = types;

@@ -15,7 +15,6 @@
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/TextureObject.h"
 
-#include <painting3/Material.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
 #include <node2/CompTransform.h>

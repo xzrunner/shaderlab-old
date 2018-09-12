@@ -4,7 +4,6 @@
 
 #include <blueprint/Connecting.h>
 #include <painting2/Texture.h>
-#include <painting3/Material.h>
 #include <facade/Image.h>
 
 namespace sg

@@ -2,8 +2,6 @@
 
 #include <blueprint/Node.h>
 
-namespace pt3 { class Material; }
-
 namespace sg
 {
 namespace node

@@ -6,7 +6,7 @@ namespace sg
 namespace node
 {
 
-const std::string Divide::TYPE_NAME = "sg_divide";
+const std::string Divide::TYPE_NAME = "sg_div";
 
 Divide::Divide()
 	: bp::Node("Divide")
