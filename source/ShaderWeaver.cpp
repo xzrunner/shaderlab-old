@@ -11,6 +11,7 @@
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
 #include "shadergraph/node/Phong.h"
+#include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/TextureObject.h"
 
@@ -32,7 +33,8 @@
 #include <sw/node/Input.h>
 #include <sw/node/Output.h>
 #include <sw/node/Uniform.h>
-#include <sw/node/PositionTrans2.h>
+#include <sw/node/PositionTransOld.h>
+#include <sw/node/PositionTrans.h>
 #include <sw/node/FragPosTrans.h>
 #include <sw/node/NormalTrans.h>
 #include <sw/node/Tex2DSample.h>
@@ -83,20 +85,13 @@ void debug_print(const sw::Evaluator& vert, const sw::Evaluator& frag)
 namespace sg
 {
 
-ShaderWeaver::ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
-	                       const std::string& type)
+ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
+	: m_debug_print(debug_print)
 {
-	bp::NodePtr final_node = nullptr;
-	for (auto& node : nodes)
-	{
-		assert(node->HasUniqueComp<bp::CompNode>());
-		auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
-		assert(bp_node);
-		if (bp_node->TypeName() == type) {
-			final_node = bp_node;
-		}
+	std::string type = node.TypeName();
+	if (type == node::Constant3::TYPE_NAME) {
+		type = node::Sprite::TYPE_NAME;
 	}
-	assert(final_node);
 
 	if (type == node::Phong::TYPE_NAME)
 	{
@@ -114,16 +109,16 @@ ShaderWeaver::ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
 		m_cached_nodes.push_back(view);
 		m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::Input>("position", sw::t_flt4);
+		auto position = std::make_shared<sw::node::Input>("position", sw::t_flt3);
 		auto normal   = std::make_shared<sw::node::Input>("normal",   sw::t_nor3);
 		m_cached_nodes.push_back(position);
 		m_cached_nodes.push_back(normal);
 
-		auto pos_trans = std::make_shared<sw::node::PositionTrans2>();
-		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans2::IN_PROJ });
-		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans2::IN_VIEW });
-		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans2::IN_MODEL });
-		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans2::IN_POS });
+		auto pos_trans = std::make_shared<sw::node::PositionTrans>(3);
+		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::IN_PROJ });
+		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::IN_VIEW });
+		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::IN_MODEL });
+		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::IN_POS });
 		m_vert_nodes.push_back(pos_trans);
 
 		auto frag_pos_trans = std::make_shared<sw::node::FragPosTrans>();
@@ -142,7 +137,7 @@ ShaderWeaver::ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
 
 		// frag
 
-		auto phong = CreateWeaverNode(*final_node);
+		auto phong = CreateWeaverNode(node);
 
 		auto frag_in_pos = std::make_shared<sw::node::Input>("v_frag_pos", sw::t_flt3);
 		auto frag_in_nor = std::make_shared<sw::node::Input>("v_normal", sw::t_nor3);
@@ -152,6 +147,36 @@ ShaderWeaver::ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
 		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::IN_NORMAL });
 
 		m_frag_node = phong;
+	}
+	else
+	{
+		// layout
+		m_layout.push_back(ur::VertexAttrib("position", 2, 4, 16, 0));
+		m_layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 16, 8));
+
+		// vert
+
+		auto proj  = std::make_shared<sw::node::Uniform>("u_proj",  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::Uniform>("u_view",  sw::t_mat4);
+		auto model = std::make_shared<sw::node::Uniform>("u_model", sw::t_mat4);
+		m_cached_nodes.push_back(proj);
+		m_cached_nodes.push_back(view);
+		m_cached_nodes.push_back(model);
+
+		auto position = std::make_shared<sw::node::Input>("position", sw::t_pos2);
+		m_cached_nodes.push_back(position);
+
+		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
+		sw::make_connecting({ proj, 0 },  { pos_trans, sw::node::PositionTrans::IN_PROJ });
+		sw::make_connecting({ view, 0 },  { pos_trans, sw::node::PositionTrans::IN_VIEW });
+		sw::make_connecting({ model, 0 }, { pos_trans, sw::node::PositionTrans::IN_MODEL });
+		sw::make_connecting({ position,   0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
+		m_vert_nodes.push_back(pos_trans);
+
+		add_vert_varying(m_vert_nodes, m_cached_nodes, "texcoord", sw::t_uv);
+
+		// frag
+		m_frag_node = CreateWeaverNode(node);
 	}
 }
 
@@ -170,7 +195,6 @@ std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader() const
 
 	shader->SetUsedTextures(m_texture_ids);
 
-	assert(shader);
 	return shader;
 }
 

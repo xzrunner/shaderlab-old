@@ -1,6 +1,5 @@
 #pragma once
 
-#include <node0/typedef.h>
 #include <sw/typedef.h>
 #include <unirender/VertexAttrib.h>
 
@@ -17,8 +16,7 @@ namespace sg
 class ShaderWeaver
 {
 public:
-	ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
-		const std::string& type);
+	ShaderWeaver(const bp::Node& node, bool debug_print = false);
 
 	std::shared_ptr<ur::Shader> CreateShader() const;
 
