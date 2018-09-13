@@ -1,5 +1,11 @@
 #include "shadergraph/node/TextureObject.h"
+#include "shadergraph/node/TextureSample.h"
+#include "shadergraph/node/Input.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ShaderWeaver.h"
+
+#include <blueprint/Connecting.h>
+#include <blueprint/NodeFactory.h>
 
 #include <SM_Rect.h>
 #include <painting2/RenderSystem.h>
@@ -29,6 +35,21 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 	bp::Node::Draw(mt);
 
 	DrawImage(mt);
+}
+
+void TextureObject::Update()
+{
+	bp::Node::Update();
+
+	auto tex_sample = bp::NodeFactory::Instance()->Create(node::TextureSample::TYPE_NAME);
+	bp::make_connecting(m_output, tex_sample->GetAllInput()[TextureSample::ID_TEX]);
+
+	auto tex_coord = bp::NodeFactory::Instance()->Create(node::Input::TYPE_NAME);
+	std::static_pointer_cast<node::Input>(tex_coord)->SetName("v_texcoord").SetType(sg::PINS_VECTOR2);
+	bp::make_connecting(tex_coord->GetAllOutput()[0], tex_sample->GetAllInput()[TextureSample::ID_UV]);
+
+	ShaderWeaver sw(*tex_sample, true);
+	m_shader = sw.CreateShader();
 }
 
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -83,7 +104,7 @@ void TextureObject::DrawImage(const sm::Matrix2D& mt) const
 	sm::rect r;
 	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
 	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
-	pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), r, mt);
+	pt2::RenderSystem::DrawTexture(m_shader, *m_img->GetTexture(), r, mt);
 }
 
 }

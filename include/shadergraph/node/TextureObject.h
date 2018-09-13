@@ -5,6 +5,7 @@
 #include <SM_Matrix2D.h>
 
 namespace facade { class Image; }
+namespace ur { class Shader; }
 
 namespace sg
 {
@@ -26,6 +27,7 @@ public:
 		return std::make_shared<TextureObject>();
 	}
 	virtual void Draw(const sm::Matrix2D& mt) const override;
+	virtual void Update() override;
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
@@ -49,6 +51,8 @@ private:
 	std::shared_ptr<bp::Pins> m_output;
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
+
+	std::shared_ptr<ur::Shader> m_shader;
 
 }; // TextureObject
 
