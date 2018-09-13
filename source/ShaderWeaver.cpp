@@ -160,7 +160,9 @@ std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader() const
 	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
 	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
 
-	debug_print(vert, frag);
+	if (m_debug_print) {
+		debug_print(vert, frag);
+	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	auto shader = std::make_shared<ur::Shader>(&rc, vert.GetShaderStr().c_str(),

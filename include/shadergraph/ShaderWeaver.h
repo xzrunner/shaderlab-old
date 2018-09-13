@@ -27,6 +27,8 @@ private:
 	sw::NodePtr CreateInputChild(const bp::Node& node, int input_idx);
 
 private:
+	bool m_debug_print;
+
 	std::vector<sw::NodePtr> m_cached_nodes;
 
 	std::vector<sw::NodePtr> m_vert_nodes;
