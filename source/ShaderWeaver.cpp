@@ -41,7 +41,8 @@
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
-#include <unirender/Shader.h>
+#include <painting2/Shader.h>
+#include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <facade/Image.h>
 
@@ -180,7 +181,7 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 	}
 }
 
-std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader() const
+std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) const
 {
 	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
 	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
@@ -190,8 +191,26 @@ std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader() const
 	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<ur::Shader>(&rc, vert.GetShaderStr().c_str(),
-		frag.GetShaderStr().c_str(), m_texture_names, m_layout);
+	auto shader = std::make_shared<pt2::Shader>(wc, &rc, vert.GetShaderStr().c_str(),
+		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_proj");
+
+	shader->SetUsedTextures(m_texture_ids);
+
+	return shader;
+}
+
+std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) const
+{
+	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
+	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
+
+	if (m_debug_print) {
+		debug_print(vert, frag);
+	}
+
+	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+	auto shader = std::make_shared<pt3::Shader>(wc, &rc, vert.GetShaderStr().c_str(),
+		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_proj");
 
 	shader->SetUsedTextures(m_texture_ids);
 

@@ -27,7 +27,7 @@ public:
 		return std::make_shared<TextureObject>();
 	}
 	virtual void Draw(const sm::Matrix2D& mt) const override;
-	virtual void Update() override;
+	virtual void Update(const bp::UpdateParams& params) override;
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;

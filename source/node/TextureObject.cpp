@@ -8,7 +8,11 @@
 #include <blueprint/NodeFactory.h>
 
 #include <SM_Rect.h>
+#include <SM_Matrix.h>
+#include <unirender/Shader.h>
 #include <painting2/RenderSystem.h>
+#include <painting2/Blackboard.h>
+#include <painting2/WindowContext.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 
@@ -37,9 +41,9 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 	DrawImage(mt);
 }
 
-void TextureObject::Update()
+void TextureObject::Update(const bp::UpdateParams& params)
 {
-	bp::Node::Update();
+	bp::Node::Update(params);
 
 	auto tex_sample = bp::NodeFactory::Instance()->Create(node::TextureSample::TYPE_NAME);
 	bp::make_connecting(m_output, tex_sample->GetAllInput()[TextureSample::ID_TEX]);
@@ -49,7 +53,7 @@ void TextureObject::Update()
 	bp::make_connecting(tex_coord->GetAllOutput()[0], tex_sample->GetAllInput()[TextureSample::ID_UV]);
 
 	ShaderWeaver sw(*tex_sample, true);
-	m_shader = sw.CreateShader();
+	m_shader = sw.CreateShader(*params.wc2);
 }
 
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,

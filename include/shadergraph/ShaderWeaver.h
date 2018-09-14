@@ -8,6 +8,8 @@
 namespace ur { class Shader; }
 namespace sw { class Node; }
 namespace bp { class Node; }
+namespace pt2 { class WindowContext; }
+namespace pt3 { class WindowContext; }
 
 namespace sg
 {
@@ -18,7 +20,8 @@ class ShaderWeaver
 public:
 	ShaderWeaver(const bp::Node& node, bool debug_print = false);
 
-	std::shared_ptr<ur::Shader> CreateShader() const;
+	std::shared_ptr<ur::Shader> CreateShader(pt2::WindowContext& wc) const;
+	std::shared_ptr<ur::Shader> CreateShader(pt3::WindowContext& wc) const;
 
 private:
 	sw::NodePtr CreateWeaverNode(const bp::Node& node);
