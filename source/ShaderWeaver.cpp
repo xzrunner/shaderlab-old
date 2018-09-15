@@ -181,7 +181,7 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 	}
 }
 
-std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) const
+std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) const
 {
 	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
 	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
@@ -191,15 +191,20 @@ std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) c
 	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<pt2::Shader>(wc, &rc, vert.GetShaderStr().c_str(),
-		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_proj");
+	pt2::Shader::ShaderParams sp(m_texture_names, m_layout);
+	sp.vs = vert.GetShaderStr().c_str();
+	sp.fs = frag.GetShaderStr().c_str();
+	sp.model_name = "u_model";
+	sp.view_name  = "u_view";
+	sp.proj_name  = "u_proj";
+	auto shader = std::make_shared<pt2::Shader>(wc, &rc, sp);
 
 	shader->SetUsedTextures(m_texture_ids);
 
 	return shader;
 }
 
-std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) const
+std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) const
 {
 	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
 	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);

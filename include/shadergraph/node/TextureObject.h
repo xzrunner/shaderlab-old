@@ -5,7 +5,7 @@
 #include <SM_Matrix2D.h>
 
 namespace facade { class Image; }
-namespace ur { class Shader; }
+namespace pt2 { class Shader; }
 
 namespace sg
 {
@@ -52,7 +52,7 @@ private:
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
 
-	std::shared_ptr<ur::Shader> m_shader;
+	std::shared_ptr<pt2::Shader> m_shader;
 
 }; // TextureObject
 
