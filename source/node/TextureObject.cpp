@@ -106,11 +106,19 @@ void TextureObject::DrawImage(const sm::Matrix2D& mt) const
 	}
 
 	const float LEN = m_style.width;
-
 	sm::rect r;
 	r.xmin = -m_style.width * 0.5f; r.xmax = r.xmin + LEN;
 	r.ymax = -m_style.height * 0.5f; r.ymin = r.ymax - LEN;
-	pt2::RenderSystem::DrawTexture(m_shader, *m_img->GetTexture(), r, mt);
+
+	sm::mat4 model_mat;
+	model_mat.x[0]  = mt.x[0] * r.Width();
+	model_mat.x[1]  = mt.x[1];
+	model_mat.x[4]  = mt.x[2];
+	model_mat.x[5]  = mt.x[3] * r.Height();
+	model_mat.x[12] = mt.x[4] + r.Center().x;
+	model_mat.x[13] = mt.x[5] + r.Center().y;
+
+	pt2::RenderSystem::DrawTexture(m_shader, *m_img->GetTexture(), model_mat);
 }
 
 }
