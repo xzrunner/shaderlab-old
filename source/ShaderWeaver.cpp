@@ -157,9 +157,9 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 
 		// vert
 
-		auto proj  = std::make_shared<sw::node::Uniform>("u_proj",  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::Uniform>("u_view",  sw::t_mat4);
-		auto model = std::make_shared<sw::node::Uniform>("u_model", sw::t_mat4);
+		auto proj  = std::make_shared<sw::node::Uniform>("u_projection",  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::Uniform>("u_view",        sw::t_mat4);
+		auto model = std::make_shared<sw::node::Uniform>("u_model",       sw::t_mat4);
 		m_cached_nodes.push_back(proj);
 		m_cached_nodes.push_back(view);
 		m_cached_nodes.push_back(model);
@@ -196,7 +196,7 @@ std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) 
 	sp.fs = frag.GetShaderStr().c_str();
 	sp.model_name = "u_model";
 	sp.view_name  = "u_view";
-	sp.proj_name  = "u_proj";
+	sp.proj_name  = "u_projection";
 	auto shader = std::make_shared<pt2::Shader>(wc, &rc, sp);
 
 	shader->SetUsedTextures(m_texture_ids);
@@ -215,7 +215,7 @@ std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) 
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	auto shader = std::make_shared<pt3::Shader>(wc, &rc, vert.GetShaderStr().c_str(),
-		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_proj");
+		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_projection");
 
 	shader->SetUsedTextures(m_texture_ids);
 
