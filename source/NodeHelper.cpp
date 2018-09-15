@@ -71,6 +71,7 @@ void NodeHelper::RemoveDefaultNode(const bp::Pins& p)
 		return;
 	}
 	auto& pair = conns[0]->GetFrom();
+	assert(pair);
 	pair->GetParent().SetLifeDeleteLater(true);
 }
 
