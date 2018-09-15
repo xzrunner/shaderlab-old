@@ -41,7 +41,7 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 	DrawImage(mt);
 }
 
-void TextureObject::Update(const bp::UpdateParams& params)
+bool TextureObject::Update(const bp::UpdateParams& params)
 {
 	bp::Node::Update(params);
 
@@ -54,6 +54,8 @@ void TextureObject::Update(const bp::UpdateParams& params)
 
 	ShaderWeaver sw(*tex_sample, true);
 	m_shader = sw.CreateShader(*params.wc2);
+
+	return true;
 }
 
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
