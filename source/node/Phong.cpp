@@ -11,7 +11,7 @@ namespace sg
 namespace node
 {
 
-const std::string Phong::TYPE_NAME = "sg_phong2";
+const std::string Phong::TYPE_NAME = "sg_phong";
 
 Phong::Phong()
 	: bp::Node("Phong")
