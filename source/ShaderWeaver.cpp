@@ -51,15 +51,13 @@
 namespace
 {
 
-const bp::Node& get_input_node(const bp::Node& src, int idx)
+void debug_print(const sw::Evaluator& vert, const sw::Evaluator& frag)
 {
-	auto& to_port = src.GetAllInput()[idx];
-	auto& conns = to_port->GetConnecting();
-	assert(conns.size() == 1);
-	auto& from_port = conns[0]->GetFrom();
-	assert(from_port);
-
-	return from_port->GetParent();
+	printf("//////////////////////////////////////////////////////////////////////////\n");
+	printf("%s\n", vert.GetShaderStr().c_str());
+	printf("//////////////////////////////////////////////////////////////////////////\n");
+	printf("%s\n", frag.GetShaderStr().c_str());
+	printf("//////////////////////////////////////////////////////////////////////////\n");
 }
 
 void add_vert_varying(std::vector<sw::NodePtr>& nodes, std::vector<sw::NodePtr>& cache_nodes, const std::string& name, uint32_t type)
@@ -72,29 +70,76 @@ void add_vert_varying(std::vector<sw::NodePtr>& nodes, std::vector<sw::NodePtr>&
 	cache_nodes.push_back(vert_in);
 }
 
-void debug_print(const sw::Evaluator& vert, const sw::Evaluator& frag)
-{
-	printf("//////////////////////////////////////////////////////////////////////////\n");
-	printf("%s\n", vert.GetShaderStr().c_str());
-	printf("//////////////////////////////////////////////////////////////////////////\n");
-	printf("%s\n", frag.GetShaderStr().c_str());
-	printf("//////////////////////////////////////////////////////////////////////////\n");
-}
-
 }
 
 namespace sg
 {
 
-ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
+ShaderWeaver::ShaderWeaver(VertType vert_type, const bp::Node& frag_node, bool debug_print)
 	: m_debug_print(debug_print)
 {
-	std::string type = node.TypeName();
-	if (type == node::Constant3::TYPE_NAME) {
-		type = node::Sprite::TYPE_NAME;
-	}
+	switch (vert_type)
+	{
+	case VERT_SHAPE:
+	{
+		// layout
+		m_layout.push_back(ur::VertexAttrib("position", 2, 4, 8, 0));
 
-	if (type == node::Phong::TYPE_NAME)
+		// vert
+
+		auto proj  = std::make_shared<sw::node::Uniform>("u_projection",  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::Uniform>("u_view",        sw::t_mat4);
+		auto model = std::make_shared<sw::node::Uniform>("u_model",       sw::t_mat4);
+		m_cached_nodes.push_back(proj);
+		m_cached_nodes.push_back(view);
+		m_cached_nodes.push_back(model);
+
+		auto position = std::make_shared<sw::node::Input>("position", sw::t_pos2);
+		m_cached_nodes.push_back(position);
+
+		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
+		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::IN_PROJ });
+		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::IN_VIEW });
+		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::IN_MODEL });
+		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
+		m_vert_nodes.push_back(pos_trans);
+
+		// frag
+		m_frag_node = CreateWeaverNode(frag_node);
+	}
+		break;
+	case VERT_SPRITE:
+	{
+		// layout
+		m_layout.push_back(ur::VertexAttrib("position", 2, 4, 16, 0));
+		m_layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 16, 8));
+
+		// vert
+
+		auto proj  = std::make_shared<sw::node::Uniform>("u_projection",  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::Uniform>("u_view",        sw::t_mat4);
+		auto model = std::make_shared<sw::node::Uniform>("u_model",       sw::t_mat4);
+		m_cached_nodes.push_back(proj);
+		m_cached_nodes.push_back(view);
+		m_cached_nodes.push_back(model);
+
+		auto position = std::make_shared<sw::node::Input>("position", sw::t_pos2);
+		m_cached_nodes.push_back(position);
+
+		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
+		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::IN_PROJ });
+		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::IN_VIEW });
+		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::IN_MODEL });
+		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
+		m_vert_nodes.push_back(pos_trans);
+
+		add_vert_varying(m_vert_nodes, m_cached_nodes, "texcoord", sw::t_uv);
+
+		// frag
+		m_frag_node = CreateWeaverNode(frag_node);
+	}
+		break;
+	case VERT_PHONG:
 	{
 		// layout
 		m_layout.push_back(ur::VertexAttrib("position", 3, 4, 32, 0));
@@ -128,7 +173,7 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 		m_vert_nodes.push_back(frag_pos_trans);
 
 		auto norm_trans = std::make_shared<sw::node::NormalTrans>();
-		sw::make_connecting({ model, 0 }, { norm_trans, sw::node::NormalTrans::IN_MODEL });
+		sw::make_connecting({ model, 0 },  { norm_trans, sw::node::NormalTrans::IN_MODEL });
 		sw::make_connecting({ normal, 0 }, { norm_trans, sw::node::NormalTrans::IN_NORM });
 		m_vert_nodes.push_back(norm_trans);
 
@@ -138,7 +183,7 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 
 		// frag
 
-		auto phong = CreateWeaverNode(node);
+		auto phong = CreateWeaverNode(frag_node);
 
 		auto frag_in_pos = std::make_shared<sw::node::Input>("v_frag_pos", sw::t_flt3);
 		auto frag_in_nor = std::make_shared<sw::node::Input>("v_normal", sw::t_nor3);
@@ -149,35 +194,9 @@ ShaderWeaver::ShaderWeaver(const bp::Node& node, bool debug_print)
 
 		m_frag_node = phong;
 	}
-	else
-	{
-		// layout
-		m_layout.push_back(ur::VertexAttrib("position", 2, 4, 16, 0));
-		m_layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 16, 8));
-
-		// vert
-
-		auto proj  = std::make_shared<sw::node::Uniform>("u_projection",  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::Uniform>("u_view",        sw::t_mat4);
-		auto model = std::make_shared<sw::node::Uniform>("u_model",       sw::t_mat4);
-		m_cached_nodes.push_back(proj);
-		m_cached_nodes.push_back(view);
-		m_cached_nodes.push_back(model);
-
-		auto position = std::make_shared<sw::node::Input>("position", sw::t_pos2);
-		m_cached_nodes.push_back(position);
-
-		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
-		sw::make_connecting({ proj, 0 },  { pos_trans, sw::node::PositionTrans::IN_PROJ });
-		sw::make_connecting({ view, 0 },  { pos_trans, sw::node::PositionTrans::IN_VIEW });
-		sw::make_connecting({ model, 0 }, { pos_trans, sw::node::PositionTrans::IN_MODEL });
-		sw::make_connecting({ position,   0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
-		m_vert_nodes.push_back(pos_trans);
-
-		add_vert_varying(m_vert_nodes, m_cached_nodes, "texcoord", sw::t_uv);
-
-		// frag
-		m_frag_node = CreateWeaverNode(node);
+		break;
+	default:
+		assert(0);
 	}
 }
 

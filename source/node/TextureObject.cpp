@@ -52,7 +52,7 @@ bool TextureObject::Update(const bp::UpdateParams& params)
 	std::static_pointer_cast<node::Input>(tex_coord)->SetName("v_texcoord").SetType(sg::PINS_VECTOR2);
 	bp::make_connecting(tex_coord->GetAllOutput()[0], tex_sample->GetAllInput()[TextureSample::ID_UV]);
 
-	ShaderWeaver sw(*tex_sample, true);
+	ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *tex_sample);
 	m_shader = sw.CreateShader(*params.wc2);
 
 	return true;

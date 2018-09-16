@@ -5,7 +5,6 @@
 
 #include <vector>
 
-namespace sw { class Node; }
 namespace bp { class Node; }
 namespace pt2 { class WindowContext; class Shader; }
 namespace pt3 { class WindowContext; class Shader; }
@@ -17,7 +16,16 @@ namespace sg
 class ShaderWeaver
 {
 public:
-	ShaderWeaver(const bp::Node& node, bool debug_print = false);
+	enum VertType
+	{
+		VERT_SHAPE = 0,
+		VERT_SPRITE,
+		VERT_PHONG
+	};
+
+public:
+	ShaderWeaver(VertType vert_type, const bp::Node& frag_node,
+		bool debug_print = false);
 
 	std::shared_ptr<pt2::Shader> CreateShader(pt2::WindowContext& wc) const;
 	std::shared_ptr<pt3::Shader> CreateShader(pt3::WindowContext& wc) const;
