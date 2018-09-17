@@ -45,10 +45,10 @@ bool Remap::Update(const bp::UpdateParams& params)
 
 	m_draw_tex = NodeHelper::HasInputTexture(*this);
 	if (m_draw_tex) {
-		ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *this, true);
+		ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *this);
 		m_shader = sw.CreateShader(*params.wc2);
 	} else {
-		ShaderWeaver sw(ShaderWeaver::VERT_SHAPE, *this, true);
+		ShaderWeaver sw(ShaderWeaver::VERT_SHAPE, *this);
 		m_shader = sw.CreateShader(*params.wc2);
 	}
 
