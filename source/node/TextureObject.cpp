@@ -4,6 +4,7 @@
 #include "shadergraph/Pins.h"
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/NodeHelper.h"
+#include "shadergraph/NodePreview.h"
 
 #include <blueprint/Connecting.h>
 #include <blueprint/NodeFactory.h>
@@ -25,7 +26,7 @@ namespace node
 const std::string TextureObject::TYPE_NAME = "sg_tex_obj";
 
 TextureObject::TextureObject()
-	: bp::Node("TextureObject")
+	: Node("TextureObject", false)
 	, m_name("tex")
 {
 	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
@@ -37,23 +38,11 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 {
 	bp::Node::Draw(mt);
 
-	DrawImage(mt);
-}
-
-bool TextureObject::Update(const bp::UpdateParams& params)
-{
-	bp::Node::Update(params);
-
-	auto tex_sample = bp::NodeFactory::Instance()->Create(node::TextureSample::TYPE_NAME);
-	bp::make_connecting(m_output, tex_sample->GetAllInput()[TextureSample::ID_TEX]);
-
-	auto tex_coord = bp::NodeFactory::Instance()->Create(node::UV::TYPE_NAME);
-	bp::make_connecting(tex_coord->GetAllOutput()[0], tex_sample->GetAllInput()[TextureSample::ID_UV]);
-
-	ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *tex_sample);
-	m_shader = sw.CreateShader(*params.wc2);
-
-	return true;
+	if (m_img)
+	{
+		auto model_mat = NodePreview::CalcNodePreviewMat(*this, mt);
+		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), model_mat);
+	}
 }
 
 void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -95,15 +84,6 @@ void TextureObject::SetName(const std::string& name)
 void TextureObject::SetImage(const std::string& filepath)
 {
 	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
-}
-
-void TextureObject::DrawImage(const sm::Matrix2D& mt) const
-{
-	if (m_img)
-	{
-		auto model_mat = NodeHelper::CalcNodePreviewMat(*this, mt);
-		pt2::RenderSystem::DrawTexture(m_shader, model_mat);
-	}
 }
 
 }

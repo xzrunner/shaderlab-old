@@ -1,18 +1,17 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "shadergraph/Node.h"
 
 #include <SM_Matrix2D.h>
 
 namespace facade { class Image; }
-namespace pt2 { class Shader; }
 
 namespace sg
 {
 namespace node
 {
 
-class TextureObject : public bp::Node
+class TextureObject : public Node
 {
 public:
 	TextureObject();
@@ -27,7 +26,6 @@ public:
 		return std::make_shared<TextureObject>();
 	}
 	virtual void Draw(const sm::Matrix2D& mt) const override;
-	virtual bool Update(const bp::UpdateParams& params) override;
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
@@ -43,16 +41,11 @@ public:
 	static const std::string TYPE_NAME;
 
 private:
-	void DrawImage(const sm::Matrix2D& mt) const;
-
-private:
 	std::string m_name;
 
 	std::shared_ptr<bp::Pins> m_output;
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
-
-	std::shared_ptr<pt2::Shader> m_shader;
 
 }; // TextureObject
 

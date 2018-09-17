@@ -1,13 +1,13 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "shadergraph/Node.h"
 
 namespace sg
 {
 namespace node
 {
 
-class Constant2 : public bp::Node
+class Constant2 : public Node
 {
 public:
 	Constant2();

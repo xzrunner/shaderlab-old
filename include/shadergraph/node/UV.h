@@ -1,13 +1,13 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "shadergraph/Node.h"
 
 namespace sg
 {
 namespace node
 {
 
-class UV : public bp::Node
+class UV : public Node
 {
 public:
 	UV();

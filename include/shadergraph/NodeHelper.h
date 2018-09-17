@@ -16,10 +16,6 @@ public:
 
 	static void RemoveDefaultNode(const bp::Pins& p);
 
-	static bool HasInputTexture(const bp::Node& node);
-
-	static sm::mat4 CalcNodePreviewMat(const bp::Node& node, const sm::Matrix2D& mt);
-
 private:
 	static void SetPinsType(bp::Pins& pins, int type);
 

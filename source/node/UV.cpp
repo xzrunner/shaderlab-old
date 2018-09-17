@@ -9,7 +9,7 @@ namespace node
 const std::string UV::TYPE_NAME = "sg_uv";
 
 UV::UV()
-	: bp::Node("UV")
+	: Node("UV", false)
 {
 	// todo channel
 	SetName("v_texcoord");

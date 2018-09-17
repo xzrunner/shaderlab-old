@@ -106,6 +106,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\UV.h">
       <Filter>nodes\input</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\Node.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\node\Constant2.cpp">
@@ -177,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\UV.cpp">
       <Filter>nodes\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Node.cpp">
+      <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\NodePreview.cpp">
+      <Filter>dataset</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

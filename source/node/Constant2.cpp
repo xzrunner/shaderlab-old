@@ -11,7 +11,7 @@ namespace node
 const std::string Constant2::TYPE_NAME = "sg_constant2";
 
 Constant2::Constant2()
-	: bp::Node("Constant2")
+	: Node("Constant2", false)
 {
 	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR2, "Out", *this));
 

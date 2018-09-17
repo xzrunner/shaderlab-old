@@ -1,6 +1,6 @@
 #pragma once
 
-#include <blueprint/Node.h>
+#include "shadergraph/Node.h"
 
 namespace pt2 { class Shader; }
 
@@ -9,7 +9,7 @@ namespace sg
 namespace node
 {
 
-class Subtract : public bp::Node
+class Subtract : public Node
 {
 public:
 	Subtract();
@@ -23,8 +23,6 @@ public:
 	virtual bp::NodePtr Create() const override {
 		return std::make_shared<Subtract>();
 	}
-	virtual void Draw(const sm::Matrix2D& mt) const override;
-	virtual bool Update(const bp::UpdateParams& params) override;
 
 	static const std::string TYPE_NAME;
 
@@ -33,9 +31,6 @@ private:
 	std::shared_ptr<bp::Pins> m_input1;
 
 	std::shared_ptr<bp::Pins> m_output;
-
-	std::shared_ptr<pt2::Shader> m_shader;
-	bool m_draw_tex = false;
 
 }; // Subtract
 
