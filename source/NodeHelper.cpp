@@ -5,7 +5,7 @@
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
-#include "shadergraph/node/TextureObject.h"
+#include "shadergraph/node/UV.h"
 
 #include <blueprint/Pins.h>
 #include <blueprint/Node.h>
@@ -81,8 +81,6 @@ void NodeHelper::RemoveDefaultNode(const bp::Pins& p)
 
 bool NodeHelper::HasInputTexture(const bp::Node& node)
 {
-	bool input_tex = false;
-
 	auto& src_inputs = node.GetAllInput();
 	std::queue<std::shared_ptr<bp::Pins>> inputs;
 	for (auto& src : src_inputs) {
@@ -98,14 +96,8 @@ bool NodeHelper::HasInputTexture(const bp::Node& node)
 		assert(conns.size() == 1);
 
 		auto& node = conns[0]->GetFrom()->GetParent();
-		if (node.TypeID() == bp::GetNodeTypeID<node::TextureObject>())
-		{
-			input_tex = true;
-			auto& tex_obj = static_cast<const node::TextureObject&>(node);
-			auto& img = tex_obj.GetImage();
-			if (img) {
-				continue;
-			}
+		if (node.TypeID() == bp::GetNodeTypeID<node::UV>()) {
+			return true;
 		}
 
 		for (auto& from : node.GetAllInput()) {
@@ -113,7 +105,7 @@ bool NodeHelper::HasInputTexture(const bp::Node& node)
 		}
 	}
 
-	return input_tex;
+	return false;
 }
 
 sm::mat4 NodeHelper::CalcNodePreviewMat(const bp::Node& node, const sm::Matrix2D& mt)

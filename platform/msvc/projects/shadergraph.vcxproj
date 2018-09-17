@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Remap.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\UV.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
     <ClCompile Include="..\..\..\source\node\Phong.cpp" />
     <ClCompile Include="..\..\..\source\node\Remap.cpp" />
+    <ClCompile Include="..\..\..\source\node\UV.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\node\Sprite.cpp" />

@@ -5,7 +5,7 @@
 #include "shadergraph/node/Constant2.h"
 #include "shadergraph/node/Constant3.h"
 #include "shadergraph/node/Constant4.h"
-#include "shadergraph/node/Input.h"
+#include "shadergraph/node/UV.h"
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
@@ -28,6 +28,7 @@
 #include <sw/node/Vector2.h>
 #include <sw/node/Vector3.h>
 #include <sw/node/Vector4.h>
+#include <sw/node/UV.h>
 #include <sw/node/Add.h>
 #include <sw/node/Subtract.h>
 #include <sw/node/Multiply.h>
@@ -314,24 +315,29 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::Constant4&>(node);
 		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Input>())
+	else if (id == bp::GetNodeTypeID<node::UV>())
 	{
-		auto& src = static_cast<const node::Input&>(node);
-		uint32_t type = 0;
-		switch (src.GetType())
-		{
-		case PINS_TEXTURE2D:
-			type = sw::t_tex2d;
-			break;
-		case PINS_VECTOR2:
-			type = sw::t_flt2;
-			break;
-		default:
-			// todo
-			assert(0);
-		}
-		dst = std::make_shared<sw::node::Input>(src.GetName(), type);
+		auto& src = static_cast<const node::UV&>(node);
+		dst = std::make_shared<sw::node::UV>(src.GetName());
 	}
+	//else if (id == bp::GetNodeTypeID<node::Input>())
+	//{
+	//	auto& src = static_cast<const node::Input&>(node);
+	//	uint32_t type = 0;
+	//	switch (src.GetType())
+	//	{
+	//	case PINS_TEXTURE2D:
+	//		type = sw::t_tex2d;
+	//		break;
+	//	case PINS_VECTOR2:
+	//		type = sw::t_flt2;
+	//		break;
+	//	default:
+	//		// todo
+	//		assert(0);
+	//	}
+	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
+	//}
 	else if (id == bp::GetNodeTypeID<node::Add>())
 	{
 		auto& src = static_cast<const node::Add&>(node);

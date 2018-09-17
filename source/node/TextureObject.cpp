@@ -1,6 +1,6 @@
 #include "shadergraph/node/TextureObject.h"
 #include "shadergraph/node/TextureSample.h"
-#include "shadergraph/node/Input.h"
+#include "shadergraph/node/UV.h"
 #include "shadergraph/Pins.h"
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/NodeHelper.h"
@@ -47,8 +47,7 @@ bool TextureObject::Update(const bp::UpdateParams& params)
 	auto tex_sample = bp::NodeFactory::Instance()->Create(node::TextureSample::TYPE_NAME);
 	bp::make_connecting(m_output, tex_sample->GetAllInput()[TextureSample::ID_TEX]);
 
-	auto tex_coord = bp::NodeFactory::Instance()->Create(node::Input::TYPE_NAME);
-	std::static_pointer_cast<node::Input>(tex_coord)->SetName("v_texcoord").SetType(sg::PINS_VECTOR2);
+	auto tex_coord = bp::NodeFactory::Instance()->Create(node::UV::TYPE_NAME);
 	bp::make_connecting(tex_coord->GetAllOutput()[0], tex_sample->GetAllInput()[TextureSample::ID_UV]);
 
 	ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *tex_sample);

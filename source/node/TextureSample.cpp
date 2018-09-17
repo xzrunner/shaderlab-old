@@ -1,5 +1,9 @@
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ShaderWeaver.h"
+#include "shadergraph/NodeHelper.h"
+
+#include <painting2/RenderSystem.h>
 
 namespace sg
 {
@@ -21,6 +25,25 @@ TextureSample::TextureSample()
 	AddPins(m_a    = std::make_shared<Pins>(false, 4, PINS_VECTOR1, "A", *this));
 
 	Layout();
+}
+
+
+void TextureSample::Draw(const sm::Matrix2D& mt) const
+{
+	bp::Node::Draw(mt);
+
+	auto model_mat = NodeHelper::CalcNodePreviewMat(*this, mt);
+	pt2::RenderSystem::DrawTexture(m_shader, model_mat);
+}
+
+bool TextureSample::Update(const bp::UpdateParams& params)
+{
+	bp::Node::Update(params);
+
+	ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, *this);
+	m_shader = sw.CreateShader(*params.wc2);
+
+	return true;
 }
 
 }
