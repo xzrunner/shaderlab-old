@@ -12,6 +12,9 @@
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
+#include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/InverseLerp.h"
+#include "shadergraph/node/Remap.h"
 #include "shadergraph/node/TextureObject.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/Sprite.h"
@@ -38,6 +41,9 @@ void ShaderGraph::Init()
 	nodes.push_back(std::make_shared<node::Subtract>());
 	nodes.push_back(std::make_shared<node::Multiply>());
 	nodes.push_back(std::make_shared<node::Divide>());
+	nodes.push_back(std::make_shared<node::Lerp>());
+	nodes.push_back(std::make_shared<node::InverseLerp>());
+	nodes.push_back(std::make_shared<node::Remap>());
 
 	nodes.push_back(std::make_shared<node::TextureObject>());
 	nodes.push_back(std::make_shared<node::TextureSample>());

@@ -10,6 +10,9 @@
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
+#include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/InverseLerp.h"
+#include "shadergraph/node/Remap.h"
 #include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/TextureSample.h"
@@ -29,6 +32,9 @@
 #include <sw/node/Subtract.h>
 #include <sw/node/Multiply.h>
 #include <sw/node/Divide.h>
+#include <sw/node/Lerp.h>
+#include <sw/node/InverseLerp.h>
+#include <sw/node/Remap.h>
 #include <sw/node/Phong.h>
 #include <sw/node/Input.h>
 #include <sw/node/Output.h>
@@ -353,6 +359,57 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Divide>();
 		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Divide::IN_A });
 		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Divide::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::Lerp>())
+	{
+		auto& src = static_cast<const node::Lerp&>(node);
+		dst = std::make_shared<sw::node::Lerp>();
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Lerp::ID_A), 0 },
+			{ dst, sw::node::Lerp::IN_A }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Lerp::ID_B), 0 },
+			{ dst, sw::node::Lerp::IN_B }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Lerp::ID_T), 0 },
+			{ dst, sw::node::Lerp::IN_T }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
+	{
+		auto& src = static_cast<const node::InverseLerp&>(node);
+		dst = std::make_shared<sw::node::InverseLerp>();
+		sw::make_connecting(
+			{ CreateInputChild(src, node::InverseLerp::ID_A), 0 },
+			{ dst, sw::node::InverseLerp::IN_A }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::InverseLerp::ID_B), 0 },
+			{ dst, sw::node::InverseLerp::IN_B }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::InverseLerp::ID_T), 0 },
+			{ dst, sw::node::InverseLerp::IN_T }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Remap>())
+	{
+		auto& src = static_cast<const node::Remap&>(node);
+		dst = std::make_shared<sw::node::Remap>();
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Remap::ID_IN), 0 },
+			{ dst, sw::node::Remap::IN_IN }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Remap::ID_FROM), 0 },
+			{ dst, sw::node::Remap::IN_FROM }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, node::Remap::ID_TO), 0 },
+			{ dst, sw::node::Remap::IN_TO }
+		);
 	}
 	else if (id == bp::GetNodeTypeID<node::TextureSample>())
 	{

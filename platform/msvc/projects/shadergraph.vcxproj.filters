@@ -10,9 +10,6 @@
     <Filter Include="nodes\model">
       <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes\calc">
-      <UniqueIdentifier>{2416c320-06f1-4f0e-b4b3-322a1826c557}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nodes\texture">
       <UniqueIdentifier>{b3d97966-d447-46c6-a04b-14772a35baa9}</UniqueIdentifier>
     </Filter>
@@ -24,6 +21,18 @@
     </Filter>
     <Filter Include="nodes\value">
       <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math">
+      <UniqueIdentifier>{2416c320-06f1-4f0e-b4b3-322a1826c557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\basic">
+      <UniqueIdentifier>{4039e1eb-0da3-4401-901d-8368a528ba1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\interp">
+      <UniqueIdentifier>{6168da2d-83e6-444b-9b78-a7243c656705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\range">
+      <UniqueIdentifier>{01678a38-5e42-429f-850f-ddebd7a2b103}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,18 +47,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h">
       <Filter>nodes\value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Add.h">
-      <Filter>nodes\calc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h">
-      <Filter>nodes\calc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h">
-      <Filter>nodes\calc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h">
-      <Filter>nodes\calc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h">
       <Filter>nodes\texture</Filter>
@@ -82,6 +79,27 @@
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
       <Filter>dataset</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Add.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Lerp.h">
+      <Filter>nodes\math\interp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\InverseLerp.h">
+      <Filter>nodes\math\interp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Remap.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\node\Constant2.cpp">
@@ -95,18 +113,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Constant4.cpp">
       <Filter>nodes\value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Add.cpp">
-      <Filter>nodes\calc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Subtract.cpp">
-      <Filter>nodes\calc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Multiply.cpp">
-      <Filter>nodes\calc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Divide.cpp">
-      <Filter>nodes\calc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\TextureSample.cpp">
       <Filter>nodes\texture</Filter>
@@ -141,6 +147,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp">
       <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Add.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Divide.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Multiply.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Subtract.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\InverseLerp.cpp">
+      <Filter>nodes\math\interp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Lerp.cpp">
+      <Filter>nodes\math\interp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Remap.cpp">
+      <Filter>nodes\math\range</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

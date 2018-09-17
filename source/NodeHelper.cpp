@@ -138,7 +138,7 @@ sm::mat4 NodeHelper::CalcNodePreviewMat(const bp::Node& node, const sm::Matrix2D
 
 void NodeHelper::SetPinsType(bp::Pins& pins, int type)
 {
-	if (pins.GetType() == type) {
+	if (pins.IsTypeStatic() || pins.GetType() == type) {
 		return;
 	}
 

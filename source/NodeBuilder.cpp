@@ -12,6 +12,9 @@
 #include "shadergraph/node/Subtract.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Divide.h"
+#include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/InverseLerp.h"
+#include "shadergraph/node/Remap.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/TextureObject.h"
 
@@ -115,6 +118,24 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	{
 		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
 		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+	}
+	else if (type == node::Lerp::TYPE_NAME)
+	{
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_A, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_B, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_T, node::Constant1::TYPE_NAME))->SetValue(0);
+	}
+	else if (type == node::InverseLerp::TYPE_NAME)
+	{
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_A, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_B, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_T, node::Constant1::TYPE_NAME))->SetValue(0);
+	}
+	else if (type == node::Remap::TYPE_NAME)
+	{
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Remap::ID_IN,   node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_FROM, node::Constant2::TYPE_NAME))->SetValue(sm::vec2(-1, 1));
+		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_TO,   node::Constant2::TYPE_NAME))->SetValue(sm::vec2(0, 1));
 	}
 	else if (type == node::TextureSample::TYPE_NAME)
 	{
