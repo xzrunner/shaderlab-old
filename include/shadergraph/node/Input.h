@@ -1,25 +1,24 @@
 //#pragma once
 //
+//#include "shadergraph/Node.h"
 //#include "shadergraph/Pins.h"
-//#include "shadergraph/Pins.h"
-//
-//#include <blueprint/Node.h>
 //
 //namespace sg
 //{
 //namespace node
 //{
 //
-//class Input : public bp::Node
+//class Input : public Node
 //{
 //public:
 //	Input()
-//		: bp::Node("Input")
+//		: Node("Input", false)
 //		, m_type(PINS_VECTOR1)
 //	{
-//		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
-//
-//		Layout();
+//		InitPins({
+//		},{
+//			{ PINS_VECTOR1, "Out" }
+//		});
 //	}
 //
 //	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,

@@ -14,16 +14,16 @@ public:
 	TextureSample()
 		: Node("TextureSample", true)
 	{
-		AddPins(std::make_shared<Pins>(true, 0, PINS_TEXTURE2D, "Tex", *this));
-		AddPins(std::make_shared<Pins>(true, 1, PINS_VECTOR2,   "UV", *this));
-
-		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR4, "RGBA", *this));
-		AddPins(std::make_shared<Pins>(false, 1, PINS_VECTOR1, "R", *this));
-		AddPins(std::make_shared<Pins>(false, 2, PINS_VECTOR1, "G", *this));
-		AddPins(std::make_shared<Pins>(false, 3, PINS_VECTOR1, "B", *this));
-		AddPins(std::make_shared<Pins>(false, 4, PINS_VECTOR1, "A", *this));
-
-		Layout();
+		InitPins({
+			{ PINS_TEXTURE2D, "Tex" },
+			{ PINS_VECTOR2,   "UV" },
+		},{
+			{ PINS_VECTOR4, "RGBA" },
+			{ PINS_VECTOR1, "R" },
+			{ PINS_VECTOR1, "G" },
+			{ PINS_VECTOR1, "B" },
+			{ PINS_VECTOR1, "A" },
+		});
 	}
 
 public:

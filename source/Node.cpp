@@ -1,5 +1,6 @@
 #include "shadergraph/Node.h"
 #include "shadergraph/NodePreview.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -29,6 +30,31 @@ bool Node::Update(const bp::UpdateParams& params)
 		}
 	}
 	return ret;
+}
+
+void Node::InitPins(const std::vector<PinsDesc>& input,
+	                const std::vector<PinsDesc>& output)
+{
+	InitPinsImpl(input, true);
+	InitPinsImpl(output, false);
+	Layout();
+}
+
+void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
+{
+	auto& dst = is_input ? m_all_input : m_all_output;
+	dst.clear();
+	dst.reserve(pins.size());
+	int idx = 0;
+	for (auto& d : pins)
+	{
+		auto p = std::make_shared<Pins>(is_input, idx++, d.type, d.name, *this);
+		if (!CheckPinsName(*p, dst)) {
+			assert(0);
+			return;
+		}
+		dst.push_back(p);
+	}
 }
 
 }

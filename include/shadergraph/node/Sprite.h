@@ -14,11 +14,12 @@ public:
 	Sprite()
 		: Node("Sprite", false)
 	{
-		AddPins(std::make_shared<Pins>(true, ID_TEX,     PINS_TEXTURE2D, "Tex", *this));
-		AddPins(std::make_shared<Pins>(true, ID_COL_MUL, PINS_VECTOR3,   "Mul", *this));
-		AddPins(std::make_shared<Pins>(true, ID_COL_ADD, PINS_VECTOR3,   "Add", *this));
-
-		Layout();
+		InitPins({
+			{ PINS_TEXTURE2D, "Tex" },
+			{ PINS_VECTOR3,   "Mul" },
+			{ PINS_VECTOR3,   "Add" },
+		},{
+		});
 	}
 
 public:

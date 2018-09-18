@@ -14,18 +14,16 @@ public:
 	Remap()
 		: Node("Remap", true)
 	{
-		std::shared_ptr<bp::Pins> from, to;
+		InitPins({
+			{ PINS_VECTOR1, "In" },
+			{ PINS_VECTOR2, "From" },
+			{ PINS_VECTOR2, "To" },
+		},{
+			{ PINS_VECTOR1, "Out", }
+		});
 
-		AddPins(       std::make_shared<Pins>(true, 0, PINS_VECTOR1, "In",   *this));
-		AddPins(from = std::make_shared<Pins>(true, 1, PINS_VECTOR2, "From", *this));
-		AddPins(to   = std::make_shared<Pins>(true, 2, PINS_VECTOR2, "To",   *this));
-
-		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
-
-		from->SetTypeStatic(true);
-		to->SetTypeStatic(true);
-
-		Layout();
+		GetAllInput()[ID_FROM]->SetTypeStatic(true);
+		GetAllInput()[ID_TO]->SetTypeStatic(true);
 	}
 
 public:

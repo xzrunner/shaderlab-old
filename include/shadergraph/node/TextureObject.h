@@ -17,9 +17,10 @@ public:
 		: Node("TextureObject", false)
 		, m_name("tex")
 	{
-		AddPins(std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
-
-		Layout();
+		InitPins({
+		},{
+			{ PINS_TEXTURE2D, "Tex" }
+		});
 	}
 
 	virtual void Draw(const sm::Matrix2D& mt) const override;

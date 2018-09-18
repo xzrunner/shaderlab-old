@@ -14,9 +14,10 @@ public:
 	Constant2()
 		: Node("Constant2", false)
 	{
-		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR2, "Out", *this));
-
-		Layout();
+		InitPins({
+		},{
+			{ PINS_VECTOR2, "Out" }
+		});
 
 		UpdateTitle();
 	}

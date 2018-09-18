@@ -14,12 +14,12 @@ public:
 	Divide()
 		: Node("Divide", true)
 	{
-		AddPins(std::make_shared<Pins>(true,  0, PINS_VECTOR1, "A", *this));
-		AddPins(std::make_shared<Pins>(true,  1, PINS_VECTOR1, "B", *this));
-
-		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
-
-		Layout();
+		InitPins({
+			{ PINS_VECTOR1, "A" },
+			{ PINS_VECTOR1, "B" },
+		},{
+			{ PINS_VECTOR1, "Out", }
+		});
 	}
 
 	DECLARE_NODE_CLASS(Divide)

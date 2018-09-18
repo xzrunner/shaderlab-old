@@ -17,9 +17,10 @@ public:
 		// todo channel
 		SetName("v_texcoord");
 
-		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR2, "Out", *this));
-
-		Layout();
+		InitPins({
+		},{
+			{ PINS_VECTOR2, "Out", }
+		});
 	}
 
 	DECLARE_NODE_CLASS(UV)
