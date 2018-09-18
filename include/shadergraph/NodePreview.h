@@ -25,9 +25,6 @@ public:
 		const sm::Matrix2D& mt);
 
 private:
-	bool HasInputTexture() const;
-
-private:
 	const Node& m_node;
 	bool m_debug_print;
 

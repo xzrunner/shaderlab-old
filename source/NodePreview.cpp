@@ -5,7 +5,7 @@
 
 #include <painting2/RenderSystem.h>
 #include <blueprint/Pins.h>
-#include <blueprint/Connecting.h>
+#include <blueprint/NodeHelper.h>
 
 #include <queue>
 
@@ -34,7 +34,7 @@ void NodePreview::Draw(const sm::Matrix2D& mt) const
 
 bool NodePreview::Update(const bp::UpdateParams& params)
 {
-	m_draw_tex = HasInputTexture();
+	m_draw_tex = bp::NodeHelper::HasInputNode<node::UV>(m_node);
 	if (m_draw_tex) {
 		ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, m_node, m_debug_print);
 		m_shader = sw.CreateShader(*params.wc2);
@@ -63,35 +63,6 @@ sm::mat4 NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2D& m
 	model_mat.x[13] = mt.x[5] + r.Center().y;
 
 	return model_mat;
-}
-
-bool NodePreview::HasInputTexture() const
-{
-	auto& src_inputs = m_node.GetAllInput();
-	std::queue<std::shared_ptr<bp::Pins>> inputs;
-	for (auto& src : src_inputs) {
-		inputs.push(src);
-	}
-	while (!inputs.empty())
-	{
-		auto input = inputs.front(); inputs.pop();
-		auto& conns = input->GetConnecting();
-		if (conns.empty()) {
-			continue;
-		}
-		assert(conns.size() == 1);
-
-		auto& node = conns[0]->GetFrom()->GetParent();
-		if (node.TypeID() == bp::GetNodeTypeID<node::UV>()) {
-			return true;
-		}
-
-		for (auto& from : node.GetAllInput()) {
-			inputs.push(from);
-		}
-	}
-
-	return false;
 }
 
 }
