@@ -5,11 +5,11 @@
 namespace sg
 {
 
-Node::Node(const std::string& title, bool preview)
+Node::Node(const std::string& title, bool preview, bool debug_print)
 	: bp::Node(title)
 {
 	if (preview) {
-		m_preview = std::make_unique<NodePreview>(*this);
+		m_preview = std::make_unique<NodePreview>(*this, debug_print);
 	}
 }
 

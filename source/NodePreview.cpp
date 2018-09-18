@@ -12,8 +12,9 @@
 namespace sg
 {
 
-NodePreview::NodePreview(const Node& node)
+NodePreview::NodePreview(const Node& node, bool debug_print)
 	: m_node(node)
+	, m_debug_print(debug_print)
 {
 }
 
@@ -35,10 +36,10 @@ bool NodePreview::Update(const bp::UpdateParams& params)
 {
 	m_draw_tex = HasInputTexture();
 	if (m_draw_tex) {
-		ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, m_node);
+		ShaderWeaver sw(ShaderWeaver::VERT_SPRITE, m_node, m_debug_print);
 		m_shader = sw.CreateShader(*params.wc2);
 	} else {
-		ShaderWeaver sw(ShaderWeaver::VERT_SHAPE, m_node);
+		ShaderWeaver sw(ShaderWeaver::VERT_SHAPE, m_node, m_debug_print);
 		m_shader = sw.CreateShader(*params.wc2);
 	}
 	return true;

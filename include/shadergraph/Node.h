@@ -10,7 +10,8 @@ namespace sg
 class Node : public bp::Node
 {
 public:
-	Node(const std::string& title, bool preview);
+	Node(const std::string& title, bool preview,
+		bool debug_print = false);
 
 	virtual void Draw(const sm::Matrix2D& mt) const override;
 	virtual bool Update(const bp::UpdateParams& params) override;
