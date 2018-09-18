@@ -1,24 +1,13 @@
 #include "shadergraph/node/Constant4.h"
-#include "shadergraph/Pins.h"
 
 #include <cpputil/StringHelper.h>
+
+IMPLEMENT_NODE_CLASS(sg::node::Constant4, sg_constant4)
 
 namespace sg
 {
 namespace node
 {
-
-const std::string Constant4::TYPE_NAME = "sg_constant4";
-
-Constant4::Constant4()
-	: Node("Constant4", false)
-{
-	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR4, "Out", *this));
-
-	Layout();
-
-	UpdateTitle();
-}
 
 void Constant4::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const

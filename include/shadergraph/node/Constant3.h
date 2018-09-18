@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,16 +11,14 @@ namespace node
 class Constant3 : public Node
 {
 public:
-	Constant3();
+	Constant3()
+		: Node("Constant3", false)
+	{
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR3, "Out", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Constant3>();
-	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Constant3>();
+		Layout();
+
+		UpdateTitle();
 	}
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -30,15 +29,13 @@ public:
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec3& val);
 
-	static const std::string TYPE_NAME;
-
 private:
 	void UpdateTitle();
 
 private:
-	std::shared_ptr<bp::Pins> m_output;
-
 	sm::vec3 m_val;
+
+	DECLARE_NODE_CLASS(Constant3)
 
 }; // Constant3
 

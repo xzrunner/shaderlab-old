@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,19 +11,15 @@ namespace node
 class Sprite : public Node
 {
 public:
-	Sprite();
+	Sprite()
+		: Node("Sprite", false)
+	{
+		AddPins(std::make_shared<Pins>(true, ID_TEX,     PINS_TEXTURE2D, "Tex", *this));
+		AddPins(std::make_shared<Pins>(true, ID_COL_MUL, PINS_VECTOR3,   "Mul", *this));
+		AddPins(std::make_shared<Pins>(true, ID_COL_ADD, PINS_VECTOR3,   "Add", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Sprite>();
+		Layout();
 	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Sprite>();
-	}
-
-	static const std::string TYPE_NAME;
 
 public:
 	enum InputId
@@ -32,10 +29,7 @@ public:
 		ID_COL_ADD,
 	};
 
-private:
-	std::shared_ptr<bp::Pins> m_tex;
-	std::shared_ptr<bp::Pins> m_col_mul;
-	std::shared_ptr<bp::Pins> m_col_add;
+	DECLARE_NODE_CLASS(Sprite)
 
 }; // Sprite
 

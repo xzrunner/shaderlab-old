@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,25 +11,18 @@ namespace node
 class UV : public Node
 {
 public:
-	UV();
+	UV()
+		: Node("UV", false)
+	{
+		// todo channel
+		SetName("v_texcoord");
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<UV>();
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR2, "Out", *this));
+
+		Layout();
 	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<UV>();
-	}
 
-	static const std::string TYPE_NAME;
-
-private:
-	// todo
-	// int m_channel;
-
-	std::shared_ptr<bp::Pins> m_output;
+	DECLARE_NODE_CLASS(UV)
 
 }; // UV
 

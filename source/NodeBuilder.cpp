@@ -67,82 +67,82 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 
 void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::Node& node)
 {
-	auto type = node.TypeName();
-	if (type == node::Sprite::TYPE_NAME)
+	auto type = node.GetClassInfo().GetClassName();
+	if (type == node::Sprite::GetClassName())
 	{
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Sprite::ID_COL_MUL,
-			node::Constant3::TYPE_NAME, "mul"))->SetValue(sm::vec3(1, 1, 1));
+			node::Constant3::GetClassName(), "mul"))->SetValue(sm::vec3(1, 1, 1));
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Sprite::ID_COL_ADD,
-			node::Constant3::TYPE_NAME, "add"))->SetValue(sm::vec3(0, 0, 0));
+			node::Constant3::GetClassName(), "add"))->SetValue(sm::vec3(0, 0, 0));
 	}
-	else if (type == node::Phong::TYPE_NAME)
+	else if (type == node::Phong::GetClassName())
 	{
 		// light
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_POSITION,
-			node::Constant3::TYPE_NAME, "lit_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
+			node::Constant3::GetClassName(), "lit_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_AMBIENT,
-			node::Constant3::TYPE_NAME, "lit_ambient"))->SetValue(sm::vec3(0.2f, 0.2f, 0.2f));
+			node::Constant3::GetClassName(), "lit_ambient"))->SetValue(sm::vec3(0.2f, 0.2f, 0.2f));
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_DIFFUSE,
-			node::Constant3::TYPE_NAME, "lit_diffuse"))->SetValue(sm::vec3(0.5f, 0.5f, 0.5f));
+			node::Constant3::GetClassName(), "lit_diffuse"))->SetValue(sm::vec3(0.5f, 0.5f, 0.5f));
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_LIT_SPECULAR,
-			node::Constant3::TYPE_NAME, "lit_specular"))->SetValue(sm::vec3(1.0f, 1.0f, 1.0f));
+			node::Constant3::GetClassName(), "lit_specular"))->SetValue(sm::vec3(1.0f, 1.0f, 1.0f));
 		// material
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_DIFFUSE,
-			node::Constant3::TYPE_NAME, "mat_diffuse"))->SetValue(sm::vec3(1, 0, 0));
+			node::Constant3::GetClassName(), "mat_diffuse"))->SetValue(sm::vec3(1, 0, 0));
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_SPECULAR,
-			node::Constant3::TYPE_NAME, "mat_specular"))->SetValue(sm::vec3(0, 0.5f, 0));
+			node::Constant3::GetClassName(), "mat_specular"))->SetValue(sm::vec3(0, 0.5f, 0));
 		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Phong::ID_MAT_SHININESS,
-			node::Constant1::TYPE_NAME, "mat_shininess"))->SetValue(64.0f);
+			node::Constant1::GetClassName(), "mat_shininess"))->SetValue(64.0f);
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_MAT_EMISSION,
-			node::Constant3::TYPE_NAME, "mat_emission"))->SetValue(sm::vec3(0, 0, 0));
+			node::Constant3::GetClassName(), "mat_emission"))->SetValue(sm::vec3(0, 0, 0));
 		// view
 		std::static_pointer_cast<node::Constant3>(CreateDefault(nodes, node, node::Phong::ID_VIEW_POS,
-			node::Constant3::TYPE_NAME, "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
+			node::Constant3::GetClassName(), "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 	}
-	else if (type == node::TextureSample::TYPE_NAME)
+	else if (type == node::TextureSample::GetClassName())
 	{
 		std::static_pointer_cast<node::TextureObject>(CreateDefault(nodes, node, node::TextureSample::ID_TEX,
-			node::TextureObject::TYPE_NAME));
+			node::TextureObject::GetClassName()));
 		std::static_pointer_cast<node::TextureObject>(CreateDefault(nodes, node, node::TextureSample::ID_UV,
-			node::UV::TYPE_NAME));
+			node::UV::GetClassName()));
 	}
-	else if (type == node::Add::TYPE_NAME)
+	else if (type == node::Add::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Subtract::TYPE_NAME)
+	else if (type == node::Subtract::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Multiply::TYPE_NAME)
+	else if (type == node::Multiply::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Divide::TYPE_NAME)
+	else if (type == node::Divide::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 0, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, 1, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Lerp::TYPE_NAME)
+	else if (type == node::Lerp::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_A, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_B, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_T, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_A, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_B, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Lerp::ID_T, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::InverseLerp::TYPE_NAME)
+	else if (type == node::InverseLerp::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_A, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_B, node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_T, node::Constant1::TYPE_NAME))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_A, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_B, node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::InverseLerp::ID_T, node::Constant1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Remap::TYPE_NAME)
+	else if (type == node::Remap::GetClassName())
 	{
-		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Remap::ID_IN,   node::Constant1::TYPE_NAME))->SetValue(0);
-		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_FROM, node::Constant2::TYPE_NAME))->SetValue(sm::vec2(-1, 1));
-		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_TO,   node::Constant2::TYPE_NAME))->SetValue(sm::vec2(0, 1));
+		std::static_pointer_cast<node::Constant1>(CreateDefault(nodes, node, node::Remap::ID_IN,   node::Constant1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_FROM, node::Constant2::GetClassName()))->SetValue(sm::vec2(-1, 1));
+		std::static_pointer_cast<node::Constant2>(CreateDefault(nodes, node, node::Remap::ID_TO,   node::Constant2::GetClassName()))->SetValue(sm::vec2(0, 1));
 	}
 }
 

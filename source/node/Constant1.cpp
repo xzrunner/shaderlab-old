@@ -1,24 +1,13 @@
 #include "shadergraph/node/Constant1.h"
-#include "shadergraph/Pins.h"
 
 #include <cpputil/StringHelper.h>
+
+IMPLEMENT_NODE_CLASS(sg::node::Constant1, sg_constant1)
 
 namespace sg
 {
 namespace node
 {
-
-const std::string Constant1::TYPE_NAME = "sg_constant1";
-
-Constant1::Constant1()
-	: Node("Constant1", false)
-{
-	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
-
-	Layout();
-
-	UpdateTitle();
-}
 
 void Constant1::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const

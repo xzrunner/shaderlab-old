@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,19 +11,20 @@ namespace node
 class TextureSample : public Node
 {
 public:
-	TextureSample();
+	TextureSample()
+		: Node("TextureSample", true)
+	{
+		AddPins(std::make_shared<Pins>(true, 0, PINS_TEXTURE2D, "Tex", *this));
+		AddPins(std::make_shared<Pins>(true, 1, PINS_VECTOR2,   "UV", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<TextureSample>();
-	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<TextureSample>();
-	}
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR4, "RGBA", *this));
+		AddPins(std::make_shared<Pins>(false, 1, PINS_VECTOR1, "R", *this));
+		AddPins(std::make_shared<Pins>(false, 2, PINS_VECTOR1, "G", *this));
+		AddPins(std::make_shared<Pins>(false, 3, PINS_VECTOR1, "B", *this));
+		AddPins(std::make_shared<Pins>(false, 4, PINS_VECTOR1, "A", *this));
 
-	static const std::string TYPE_NAME;
+		Layout();
+	}
 
 public:
 	enum InputId
@@ -31,17 +33,16 @@ public:
 		ID_UV,
 	};
 
-private:
-	// input
-	std::shared_ptr<bp::Pins> m_tex;
-	std::shared_ptr<bp::Pins> m_uv;
+	enum OutputId
+	{
+		ID_RGBA = 0,
+		ID_R,
+		ID_G,
+		ID_B,
+		ID_A,
+	};
 
-	// output
-	std::shared_ptr<bp::Pins> m_rgba;
-	std::shared_ptr<bp::Pins> m_r;
-	std::shared_ptr<bp::Pins> m_g;
-	std::shared_ptr<bp::Pins> m_b;
-	std::shared_ptr<bp::Pins> m_a;
+	DECLARE_NODE_CLASS(TextureSample)
 
 }; // TextureSample
 

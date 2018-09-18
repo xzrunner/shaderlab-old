@@ -34,11 +34,11 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 
 void NodeHelper::TypePromote(const bp::Node& node)
 {
-	auto type = node.TypeName();
-	if (type == node::Add::TYPE_NAME ||
-		type == node::Subtract::TYPE_NAME ||
-		type == node::Multiply::TYPE_NAME ||
-		type == node::Divide::TYPE_NAME)
+	auto type = node.TypeID();
+	if (type == bp::GetNodeTypeID<node::Add>() ||
+		type == bp::GetNodeTypeID<node::Subtract>() ||
+		type == bp::GetNodeTypeID<node::Multiply>() ||
+		type == bp::GetNodeTypeID<node::Divide>())
 	{
 		PinsType type = PINS_VECTOR1;
 

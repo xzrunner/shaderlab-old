@@ -1,8 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
-
-#include <SM_Matrix2D.h>
+#include "shadergraph/Pins.h"
 
 namespace facade { class Image; }
 
@@ -14,17 +13,15 @@ namespace node
 class TextureObject : public Node
 {
 public:
-	TextureObject();
+	TextureObject()
+		: Node("TextureObject", false)
+		, m_name("tex")
+	{
+		AddPins(std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<TextureObject>();
+		Layout();
 	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<TextureObject>();
-	}
+
 	virtual void Draw(const sm::Matrix2D& mt) const override;
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -38,14 +35,12 @@ public:
 	void  SetImage(const std::string& filepath);
 	auto& GetImage() const { return m_img; }
 
-	static const std::string TYPE_NAME;
-
 private:
 	std::string m_name;
 
-	std::shared_ptr<bp::Pins> m_output;
-
 	std::shared_ptr<facade::Image> m_img = nullptr;
+
+	DECLARE_NODE_CLASS(TextureObject)
 
 }; // TextureObject
 

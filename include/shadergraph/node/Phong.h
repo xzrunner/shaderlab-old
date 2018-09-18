@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,19 +11,23 @@ namespace node
 class Phong : public Node
 {
 public:
-	Phong();
+	Phong()
+		: Node("Phong", false)
+	{
+		AddPins(std::make_shared<Pins>(true, ID_LIT_POSITION,  PINS_VECTOR3, "Light Position", *this));
+		AddPins(std::make_shared<Pins>(true, ID_LIT_AMBIENT,   PINS_VECTOR3, "Light Ambient", *this));
+		AddPins(std::make_shared<Pins>(true, ID_LIT_DIFFUSE,   PINS_VECTOR3, "Light Diffuse", *this));
+		AddPins(std::make_shared<Pins>(true, ID_LIT_SPECULAR,  PINS_VECTOR3, "Light Specular", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Phong>();
-	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Phong>();
-	}
+		AddPins(std::make_shared<Pins>(true, ID_MAT_DIFFUSE,   PINS_VECTOR3, "Material Diffuse", *this));
+		AddPins(std::make_shared<Pins>(true, ID_MAT_SPECULAR,  PINS_VECTOR3, "Material Specular", *this));
+		AddPins(std::make_shared<Pins>(true, ID_MAT_SHININESS, PINS_VECTOR1, "Material Shininess", *this));
+		AddPins(std::make_shared<Pins>(true, ID_MAT_EMISSION,  PINS_VECTOR3, "Material Emission", *this));
 
-	static const std::string TYPE_NAME;
+		AddPins(std::make_shared<Pins>(true, ID_VIEW_POS,      PINS_VECTOR3, "View pos", *this));
+
+		Layout();
+	}
 
 public:
 	enum InputId
@@ -40,21 +45,7 @@ public:
 		ID_VIEW_POS,
 	};
 
-private:
-	// light
-	std::shared_ptr<bp::Pins> m_lit_position;
-	std::shared_ptr<bp::Pins> m_lit_ambient;
-	std::shared_ptr<bp::Pins> m_lit_diffuse;
-	std::shared_ptr<bp::Pins> m_lit_specular;
-
-	// material
-	std::shared_ptr<bp::Pins> m_mat_diffuse;
-	std::shared_ptr<bp::Pins> m_mat_specular;
-	std::shared_ptr<bp::Pins> m_mat_shininess;
-	std::shared_ptr<bp::Pins> m_mat_emission;
-
-	// view
-	std::shared_ptr<bp::Pins> m_view_pos;
+	DECLARE_NODE_CLASS(Phong)
 
 }; // Phong
 

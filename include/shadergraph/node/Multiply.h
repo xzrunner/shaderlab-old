@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,25 +11,18 @@ namespace node
 class Multiply : public Node
 {
 public:
-	Multiply();
+	Multiply()
+		: Node("Multiply", true)
+	{
+		AddPins(std::make_shared<Pins>(true,  0, PINS_VECTOR1, "A", *this));
+		AddPins(std::make_shared<Pins>(true,  1, PINS_VECTOR1, "B", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Multiply>();
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
+
+		Layout();
 	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Multiply>();
-	}
 
-	static const std::string TYPE_NAME;
-
-private:
-	std::shared_ptr<bp::Pins> m_input0;
-	std::shared_ptr<bp::Pins> m_input1;
-
-	std::shared_ptr<bp::Pins> m_output;
+	DECLARE_NODE_CLASS(Multiply)
 
 }; // Multiply
 

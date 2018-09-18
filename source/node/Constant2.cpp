@@ -3,22 +3,12 @@
 
 #include <cpputil/StringHelper.h>
 
+IMPLEMENT_NODE_CLASS(sg::node::Constant2, sg_constant2)
+
 namespace sg
 {
 namespace node
 {
-
-const std::string Constant2::TYPE_NAME = "sg_constant2";
-
-Constant2::Constant2()
-	: Node("Constant2", false)
-{
-	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_VECTOR2, "Out", *this));
-
-	Layout();
-
-	UpdateTitle();
-}
 
 void Constant2::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const

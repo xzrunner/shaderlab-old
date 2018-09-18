@@ -1,6 +1,7 @@
 //#pragma once
 //
 //#include "shadergraph/Pins.h"
+//#include "shadergraph/Pins.h"
 //
 //#include <blueprint/Node.h>
 //
@@ -12,16 +13,13 @@
 //class Input : public bp::Node
 //{
 //public:
-//	Input();
+//	Input()
+//		: bp::Node("Input")
+//		, m_type(PINS_VECTOR1)
+//	{
+//		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
 //
-//	virtual bp::NodeTypeID TypeID() const override {
-//		return bp::GetNodeTypeID<Input>();
-//	}
-//	virtual const std::string& TypeName() const override {
-//		return TYPE_NAME;
-//	}
-//	virtual bp::NodePtr Create() const override {
-//		return std::make_shared<Input>();
+//		Layout();
 //	}
 //
 //	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
@@ -35,12 +33,12 @@
 //	Input& SetType(sg::PinsType type);
 //	sg::PinsType GetType() const { return m_type; }
 //
-//	static const std::string TYPE_NAME;
-//
 //private:
 //	std::string m_name;
 //
 //	sg::PinsType m_type;
+//
+//	DECLARE_NODE_CLASS(Input)
 //
 //}; // Input
 //

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,19 +11,22 @@ namespace node
 class Remap : public Node
 {
 public:
-	Remap();
+	Remap()
+		: Node("Remap", true)
+	{
+		std::shared_ptr<bp::Pins> from, to;
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Remap>();
-	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Remap>();
-	}
+		AddPins(       std::make_shared<Pins>(true, 0, PINS_VECTOR1, "In",   *this));
+		AddPins(from = std::make_shared<Pins>(true, 1, PINS_VECTOR2, "From", *this));
+		AddPins(to   = std::make_shared<Pins>(true, 2, PINS_VECTOR2, "To",   *this));
 
-	static const std::string TYPE_NAME;
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
+
+		from->SetTypeStatic(true);
+		to->SetTypeStatic(true);
+
+		Layout();
+	}
 
 public:
 	enum InputId
@@ -32,12 +36,7 @@ public:
 		ID_TO
 	};
 
-private:
-	std::shared_ptr<bp::Pins> m_in;
-	std::shared_ptr<bp::Pins> m_from;
-	std::shared_ptr<bp::Pins> m_to;
-
-	std::shared_ptr<bp::Pins> m_output;
+	DECLARE_NODE_CLASS(Remap)
 
 }; // Remap
 

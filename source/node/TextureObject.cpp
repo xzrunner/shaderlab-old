@@ -1,38 +1,17 @@
 #include "shadergraph/node/TextureObject.h"
-#include "shadergraph/node/TextureSample.h"
-#include "shadergraph/node/UV.h"
-#include "shadergraph/Pins.h"
-#include "shadergraph/ShaderWeaver.h"
-#include "shadergraph/NodeHelper.h"
-#include "shadergraph/NodePreview.h"
 
-#include <blueprint/Connecting.h>
-#include <blueprint/NodeFactory.h>
-
-#include <unirender/Shader.h>
 #include <painting2/RenderSystem.h>
-#include <painting2/Blackboard.h>
-#include <painting2/WindowContext.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 
 #include <boost/filesystem.hpp>
 
+IMPLEMENT_NODE_CLASS(sg::node::TextureObject, sg_tex_obj)
+
 namespace sg
 {
 namespace node
 {
-
-const std::string TextureObject::TYPE_NAME = "sg_tex_obj";
-
-TextureObject::TextureObject()
-	: Node("TextureObject", false)
-	, m_name("tex")
-{
-	AddPins(m_output = std::make_shared<Pins>(false, 0, PINS_TEXTURE2D, "Tex", *this));
-
-	Layout();
-}
 
 void TextureObject::Draw(const sm::Matrix2D& mt) const
 {

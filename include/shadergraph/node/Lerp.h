@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
+#include "shadergraph/Pins.h"
 
 namespace sg
 {
@@ -10,19 +11,17 @@ namespace node
 class Lerp : public Node
 {
 public:
-	Lerp();
+	Lerp()
+		: Node("Lerp", true)
+	{
+		AddPins(std::make_shared<Pins>(true, 0, PINS_VECTOR1, "A", *this));
+		AddPins(std::make_shared<Pins>(true, 1, PINS_VECTOR1, "B", *this));
+		AddPins(std::make_shared<Pins>(true, 2, PINS_VECTOR1, "T", *this));
 
-	virtual bp::NodeTypeID TypeID() const override {
-		return bp::GetNodeTypeID<Lerp>();
-	}
-	virtual const std::string& TypeName() const override {
-		return TYPE_NAME;
-	}
-	virtual bp::NodePtr Create() const override {
-		return std::make_shared<Lerp>();
-	}
+		AddPins(std::make_shared<Pins>(false, 0, PINS_VECTOR1, "Out", *this));
 
-	static const std::string TYPE_NAME;
+		Layout();
+	}
 
 public:
 	enum InputId
@@ -32,12 +31,7 @@ public:
 		ID_T
 	};
 
-private:
-	std::shared_ptr<bp::Pins> m_a;
-	std::shared_ptr<bp::Pins> m_b;
-	std::shared_ptr<bp::Pins> m_t;
-
-	std::shared_ptr<bp::Pins> m_output;
+	DECLARE_NODE_CLASS(Lerp)
 
 }; // Lerp
 
