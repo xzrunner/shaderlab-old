@@ -10,6 +10,8 @@ namespace sg
 
 void ShaderGraph::Init()
 {
+	NodeBuilder::Init();
+
 	bp::NodeBuilder::Callback cb;
 	cb.after_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
 		NodeBuilder::CreateDefaultInputs(nodes, node);

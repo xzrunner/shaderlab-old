@@ -17,6 +17,8 @@
 #include "shadergraph/node/Remap.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/TextureObject.h"
+// input
+#include "shadergraph/node/Time.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -30,6 +32,12 @@
 
 namespace sg
 {
+
+void NodeBuilder::Init()
+{
+	// trigger class static init
+	sg::node::Time::GetClassName();
+}
 
 bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 	                            const std::string& type, const std::string& name,

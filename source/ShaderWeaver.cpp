@@ -17,6 +17,8 @@
 #include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/TextureSample.h"
 #include "shadergraph/node/TextureObject.h"
+// input
+#include "shadergraph/node/Time.h"
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -45,6 +47,8 @@
 #include <sw/node/FragPosTrans.h>
 #include <sw/node/NormalTrans.h>
 #include <sw/node/Tex2DSample.h>
+// input
+#include <sw/node/Time.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -217,13 +221,7 @@ std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) 
 	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	pt2::Shader::ShaderParams sp(m_texture_names, m_layout);
-	sp.vs = vert.GetShaderStr().c_str();
-	sp.fs = frag.GetShaderStr().c_str();
-	sp.model_name = "u_model";
-	sp.view_name  = "u_view";
-	sp.proj_name  = "u_projection";
-	auto shader = std::make_shared<pt2::Shader>(wc, &rc, sp);
+	auto shader = std::make_shared<pt2::Shader>(wc, &rc, CreateShaderParams(vert, frag));
 
 	shader->SetUsedTextures(m_texture_ids);
 
@@ -240,8 +238,7 @@ std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) 
 	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<pt3::Shader>(wc, &rc, vert.GetShaderStr().c_str(),
-		frag.GetShaderStr().c_str(), m_texture_names, m_layout, "u_view", "u_projection");
+	auto shader = std::make_shared<pt3::Shader>(wc, &rc, CreateShaderParams(vert, frag));
 
 	shader->SetUsedTextures(m_texture_ids);
 
@@ -439,6 +436,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			m_texture_ids.push_back(img->GetTexID());
 		}
 		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
+	}
+	// input
+	else if (id == bp::GetNodeTypeID<node::Time>())
+	{
+		dst = std::make_shared<sw::node::Time>();
 	}
 	else
 	{
