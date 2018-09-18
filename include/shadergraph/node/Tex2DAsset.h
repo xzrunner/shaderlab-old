@@ -10,11 +10,11 @@ namespace sg
 namespace node
 {
 
-class TextureObject : public Node
+class Tex2DAsset : public Node
 {
 public:
-	TextureObject()
-		: Node("TextureObject", false)
+	Tex2DAsset()
+		: Node("Tex2DAsset", false)
 		, m_name("tex")
 	{
 		InitPins({
@@ -41,9 +41,9 @@ private:
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
 
-	DECLARE_NODE_CLASS(TextureObject)
+	DECLARE_NODE_CLASS(Tex2DAsset)
 
-}; // TextureObject
+}; // Tex2DAsset
 
 }
 }

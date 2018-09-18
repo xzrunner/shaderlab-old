@@ -8,11 +8,11 @@ namespace sg
 namespace node
 {
 
-class TextureSample : public Node
+class SampleTex2D : public Node
 {
 public:
-	TextureSample()
-		: Node("TextureSample", true)
+	SampleTex2D()
+		: Node("SampleTex2D", true)
 	{
 		InitPins({
 			{ PINS_TEXTURE2D, "Tex" },
@@ -42,9 +42,9 @@ public:
 		ID_A,
 	};
 
-	DECLARE_NODE_CLASS(TextureSample)
+	DECLARE_NODE_CLASS(SampleTex2D)
 
-}; // TextureSample
+}; // SampleTex2D
 
 }
 }

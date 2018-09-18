@@ -1,7 +1,7 @@
 #pragma once
 
-#include <sw/typedef.h>
-#include <sw/Node.h>
+#include <shaderweaver/typedef.h>
+#include <shaderweaver/Node.h>
 #include <unirender/VertexAttrib.h>
 #include <painting0/Shader.h>
 

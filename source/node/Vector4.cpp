@@ -1,15 +1,15 @@
-#include "shadergraph/node/Constant4.h"
+#include "shadergraph/node/Vector4.h"
 
 #include <cpputil/StringHelper.h>
 
-IMPLEMENT_NODE_CLASS(sg::node::Constant4, sg_constant4)
+IMPLEMENT_NODE_CLASS(sg::node::Vector4, sg_vec4)
 
 namespace sg
 {
 namespace node
 {
 
-void Constant4::StoreToJson(const std::string& dir, rapidjson::Value& val,
+void Vector4::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	bp::Node::StoreToJson(dir, val, alloc);
@@ -20,7 +20,7 @@ void Constant4::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	val.AddMember("w", m_val.w, alloc);
 }
 
-void Constant4::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
+void Vector4::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 	                         const rapidjson::Value& val)
 {
 	bp::Node::LoadFromJson(alloc, dir, val);
@@ -33,13 +33,13 @@ void Constant4::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 	SetValue(sm::vec4(x, y, z, w));
 }
 
-void Constant4::SetValue(const sm::vec4& val)
+void Vector4::SetValue(const sm::vec4& val)
 {
 	m_val = val;
 	UpdateTitle();
 }
 
-void Constant4::UpdateTitle()
+void Vector4::UpdateTitle()
 {
 	SetStyleSmallTitleFont(true);
 	m_title = cpputil::StringHelper::ToString(m_val.x, 2) + ", " +

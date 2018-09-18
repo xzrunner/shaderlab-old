@@ -1,10 +1,10 @@
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/Pins.h"
 
-#include "shadergraph/node/Constant1.h"
-#include "shadergraph/node/Constant2.h"
-#include "shadergraph/node/Constant3.h"
-#include "shadergraph/node/Constant4.h"
+#include "shadergraph/node/Vector1.h"
+#include "shadergraph/node/Vector2.h"
+#include "shadergraph/node/Vector3.h"
+#include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/UV.h"
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Subtract.h"
@@ -15,8 +15,8 @@
 #include "shadergraph/node/Remap.h"
 #include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Sprite.h"
-#include "shadergraph/node/TextureSample.h"
-#include "shadergraph/node/TextureObject.h"
+#include "shadergraph/node/SampleTex2D.h"
+#include "shadergraph/node/Tex2DAsset.h"
 // input
 #include "shadergraph/node/Time.h"
 
@@ -25,30 +25,30 @@
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
 
-#include <sw/Evaluator.h>
-#include <sw/node/Vector1.h>
-#include <sw/node/Vector2.h>
-#include <sw/node/Vector3.h>
-#include <sw/node/Vector4.h>
-#include <sw/node/UV.h>
-#include <sw/node/Add.h>
-#include <sw/node/Subtract.h>
-#include <sw/node/Multiply.h>
-#include <sw/node/Divide.h>
-#include <sw/node/Lerp.h>
-#include <sw/node/InverseLerp.h>
-#include <sw/node/Remap.h>
-#include <sw/node/Phong.h>
-#include <sw/node/Input.h>
-#include <sw/node/Output.h>
-#include <sw/node/Uniform.h>
-#include <sw/node/PositionTransOld.h>
-#include <sw/node/PositionTrans.h>
-#include <sw/node/FragPosTrans.h>
-#include <sw/node/NormalTrans.h>
-#include <sw/node/Tex2DSample.h>
+#include <shaderweaver/Evaluator.h>
+#include <shaderweaver/node/Vector1.h>
+#include <shaderweaver/node/Vector2.h>
+#include <shaderweaver/node/Vector3.h>
+#include <shaderweaver/node/Vector4.h>
+#include <shaderweaver/node/UV.h>
+#include <shaderweaver/node/Add.h>
+#include <shaderweaver/node/Subtract.h>
+#include <shaderweaver/node/Multiply.h>
+#include <shaderweaver/node/Divide.h>
+#include <shaderweaver/node/Lerp.h>
+#include <shaderweaver/node/InverseLerp.h>
+#include <shaderweaver/node/Remap.h>
+#include <shaderweaver/node/Phong.h>
+#include <shaderweaver/node/Input.h>
+#include <shaderweaver/node/Output.h>
+#include <shaderweaver/node/Uniform.h>
+#include <shaderweaver/node/PositionTransOld.h>
+#include <shaderweaver/node/PositionTrans.h>
+#include <shaderweaver/node/FragPosTrans.h>
+#include <shaderweaver/node/NormalTrans.h>
+#include <shaderweaver/node/SampleTex2D.h>
 // input
-#include <sw/node/Time.h>
+#include <shaderweaver/node/Time.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -292,24 +292,24 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Phong::IN_VIEW_POS }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Constant1>())
+	else if (id == bp::GetNodeTypeID<node::Vector1>())
 	{
-		auto& src = static_cast<const node::Constant1&>(node);
+		auto& src = static_cast<const node::Vector1&>(node);
 		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Constant2>())
+	else if (id == bp::GetNodeTypeID<node::Vector2>())
 	{
-		auto& src = static_cast<const node::Constant2&>(node);
+		auto& src = static_cast<const node::Vector2&>(node);
 		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Constant3>())
+	else if (id == bp::GetNodeTypeID<node::Vector3>())
 	{
-		auto& src = static_cast<const node::Constant3&>(node);
+		auto& src = static_cast<const node::Vector3&>(node);
 		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Constant4>())
+	else if (id == bp::GetNodeTypeID<node::Vector4>())
 	{
-		auto& src = static_cast<const node::Constant4&>(node);
+		auto& src = static_cast<const node::Vector4&>(node);
 		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
 	}
 	else if (id == bp::GetNodeTypeID<node::UV>())
@@ -414,22 +414,22 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Remap::IN_TO }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::TextureSample>())
+	else if (id == bp::GetNodeTypeID<node::SampleTex2D>())
 	{
-		auto& src = static_cast<const node::TextureSample&>(node);
-		dst = std::make_shared<sw::node::Tex2DSample>();
+		auto& src = static_cast<const node::SampleTex2D&>(node);
+		dst = std::make_shared<sw::node::SampleTex2D>();
 		sw::make_connecting(
-			CreateInputChild(src, node::TextureSample::ID_TEX),
-			{ dst, sw::node::Tex2DSample::IN_TEX }
+			CreateInputChild(src, node::SampleTex2D::ID_TEX),
+			{ dst, sw::node::SampleTex2D::IN_TEX }
 		);
 		sw::make_connecting(
-			CreateInputChild(src, node::TextureSample::ID_UV),
-			{ dst, sw::node::Tex2DSample::IN_UV }
+			CreateInputChild(src, node::SampleTex2D::ID_UV),
+			{ dst, sw::node::SampleTex2D::IN_UV }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::TextureObject>())
+	else if (id == bp::GetNodeTypeID<node::Tex2DAsset>())
 	{
-		auto& src = static_cast<const node::TextureObject&>(node);
+		auto& src = static_cast<const node::Tex2DAsset&>(node);
 		m_texture_names.push_back(src.GetName());
 		auto& img = src.GetImage();
 		if (img) {

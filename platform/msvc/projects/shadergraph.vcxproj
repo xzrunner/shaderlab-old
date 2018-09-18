@@ -15,10 +15,10 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant1.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant2.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant3.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector3.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector4.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Input.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\InverseLerp.h" />
@@ -33,8 +33,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\TextureObject.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\SampleTex2D.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h" />
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
@@ -43,10 +43,10 @@
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
     <ClCompile Include="..\..\..\source\node\Add.cpp" />
-    <ClCompile Include="..\..\..\source\node\Constant1.cpp" />
-    <ClCompile Include="..\..\..\source\node\Constant2.cpp" />
-    <ClCompile Include="..\..\..\source\node\Constant3.cpp" />
-    <ClCompile Include="..\..\..\source\node\Constant4.cpp" />
+    <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
+    <ClCompile Include="..\..\..\source\node\Vector2.cpp" />
+    <ClCompile Include="..\..\..\source\node\Vector3.cpp" />
+    <ClCompile Include="..\..\..\source\node\Vector4.cpp" />
     <ClCompile Include="..\..\..\source\node\Divide.cpp" />
     <ClCompile Include="..\..\..\source\node\Input.cpp" />
     <ClCompile Include="..\..\..\source\node\InverseLerp.cpp" />
@@ -61,8 +61,8 @@
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\node\Sprite.cpp" />
     <ClCompile Include="..\..\..\source\node\Subtract.cpp" />
-    <ClCompile Include="..\..\..\source\node\TextureObject.cpp" />
-    <ClCompile Include="..\..\..\source\node\TextureSample.cpp" />
+    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
+    <ClCompile Include="..\..\..\source\node\SampleTex2D.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />

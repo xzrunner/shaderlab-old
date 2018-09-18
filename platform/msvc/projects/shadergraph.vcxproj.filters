@@ -7,29 +7,17 @@
     <Filter Include="nodes">
       <UniqueIdentifier>{fd271f54-25a3-4500-a563-32e00b7efc1a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes\model">
-      <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\texture">
-      <UniqueIdentifier>{b3d97966-d447-46c6-a04b-14772a35baa9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="view">
       <UniqueIdentifier>{9519954e-3cff-4973-a1e7-02f18fde0c70}</UniqueIdentifier>
     </Filter>
     <Filter Include="dataset">
       <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes\value">
-      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nodes\math">
       <UniqueIdentifier>{2416c320-06f1-4f0e-b4b3-322a1826c557}</UniqueIdentifier>
     </Filter>
     <Filter Include="nodes\math\basic">
       <UniqueIdentifier>{4039e1eb-0da3-4401-901d-8368a528ba1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\interp">
-      <UniqueIdentifier>{6168da2d-83e6-444b-9b78-a7243c656705}</UniqueIdentifier>
     </Filter>
     <Filter Include="nodes\math\range">
       <UniqueIdentifier>{01678a38-5e42-429f-850f-ddebd7a2b103}</UniqueIdentifier>
@@ -40,26 +28,23 @@
     <Filter Include="nodes\input\basic">
       <UniqueIdentifier>{d99db16b-86b3-4d6c-8b79-257fed1f967f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\master">
+      <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\utility">
+      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\input\geometry">
+      <UniqueIdentifier>{4aa4ed37-e942-49b2-b72e-e898ca98fadb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\interplation">
+      <UniqueIdentifier>{6168da2d-83e6-444b-9b78-a7243c656705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\input\texture">
+      <UniqueIdentifier>{b3d97966-d447-46c6-a04b-14772a35baa9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant2.h">
-      <Filter>nodes\value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant1.h">
-      <Filter>nodes\value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant3.h">
-      <Filter>nodes\value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Constant4.h">
-      <Filter>nodes\value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\TextureSample.h">
-      <Filter>nodes\texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\TextureObject.h">
-      <Filter>nodes\texture</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -68,7 +53,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h">
-      <Filter>nodes\model</Filter>
+      <Filter>nodes\master</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>dataset</Filter>
@@ -76,11 +61,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h">
       <Filter>dataset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Input.h">
-      <Filter>nodes\value</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h">
-      <Filter>nodes\model</Filter>
+      <Filter>nodes\master</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
       <Filter>dataset</Filter>
@@ -98,16 +80,13 @@
       <Filter>nodes\math\basic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Lerp.h">
-      <Filter>nodes\math\interp</Filter>
+      <Filter>nodes\math\interplation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\InverseLerp.h">
-      <Filter>nodes\math\interp</Filter>
+      <Filter>nodes\math\interplation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Remap.h">
       <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\UV.h">
-      <Filter>nodes\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Node.h">
       <Filter>dataset</Filter>
@@ -118,26 +97,32 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Time.h">
       <Filter>nodes\input\basic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Input.h">
+      <Filter>nodes\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\UV.h">
+      <Filter>nodes\input\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h">
+      <Filter>nodes\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h">
+      <Filter>nodes\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector3.h">
+      <Filter>nodes\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Vector4.h">
+      <Filter>nodes\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\SampleTex2D.h">
+      <Filter>nodes\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
+      <Filter>nodes\input\texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\node\Constant2.cpp">
-      <Filter>nodes\value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Constant1.cpp">
-      <Filter>nodes\value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Constant3.cpp">
-      <Filter>nodes\value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Constant4.cpp">
-      <Filter>nodes\value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\TextureSample.cpp">
-      <Filter>nodes\texture</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\TextureObject.cpp">
-      <Filter>nodes\texture</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -149,7 +134,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\node\Sprite.cpp">
-      <Filter>nodes\model</Filter>
+      <Filter>nodes\master</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
       <Filter>dataset</Filter>
@@ -157,11 +142,8 @@
     <ClCompile Include="..\..\..\source\NodeHelper.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Input.cpp">
-      <Filter>nodes\value</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\node\Phong.cpp">
-      <Filter>nodes\model</Filter>
+      <Filter>nodes\master</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp">
       <Filter>dataset</Filter>
@@ -179,16 +161,13 @@
       <Filter>nodes\math\basic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\InverseLerp.cpp">
-      <Filter>nodes\math\interp</Filter>
+      <Filter>nodes\math\interplation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Lerp.cpp">
-      <Filter>nodes\math\interp</Filter>
+      <Filter>nodes\math\interplation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Remap.cpp">
       <Filter>nodes\math\range</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\UV.cpp">
-      <Filter>nodes\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Node.cpp">
       <Filter>dataset</Filter>
@@ -198,6 +177,30 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Time.cpp">
       <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Input.cpp">
+      <Filter>nodes\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\UV.cpp">
+      <Filter>nodes\input\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Vector1.cpp">
+      <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Vector2.cpp">
+      <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Vector3.cpp">
+      <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Vector4.cpp">
+      <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\SampleTex2D.cpp">
+      <Filter>nodes\input\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
+      <Filter>nodes\input\texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

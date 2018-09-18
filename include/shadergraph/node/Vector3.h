@@ -8,15 +8,15 @@ namespace sg
 namespace node
 {
 
-class Constant2 : public Node
+class Vector3 : public Node
 {
 public:
-	Constant2()
-		: Node("Constant2", false)
+	Vector3()
+		: Node("Vector3", false)
 	{
 		InitPins({
 		},{
-			{ PINS_VECTOR2, "Out" }
+			{ PINS_VECTOR3, "Out" }
 		});
 
 		UpdateTitle();
@@ -28,17 +28,17 @@ public:
 		const rapidjson::Value& val) override;
 
 	auto& GetValue() const { return m_val; }
-	void SetValue(const sm::vec2& val);
+	void SetValue(const sm::vec3& val);
 
 private:
 	void UpdateTitle();
 
 private:
-	sm::vec2 m_val;
+	sm::vec3 m_val;
 
-	DECLARE_NODE_CLASS(Constant2)
+	DECLARE_NODE_CLASS(Vector3)
 
-}; // Constant2
+}; // Vector3
 
 }
 }

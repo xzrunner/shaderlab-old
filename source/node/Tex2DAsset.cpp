@@ -1,4 +1,4 @@
-#include "shadergraph/node/TextureObject.h"
+#include "shadergraph/node/Tex2DAsset.h"
 
 #include <painting2/RenderSystem.h>
 #include <facade/ResPool.h>
@@ -6,14 +6,14 @@
 
 #include <boost/filesystem.hpp>
 
-IMPLEMENT_NODE_CLASS(sg::node::TextureObject, sg_tex_obj)
+IMPLEMENT_NODE_CLASS(sg::node::Tex2DAsset, sg_tex2d_asset)
 
 namespace sg
 {
 namespace node
 {
 
-void TextureObject::Draw(const sm::Matrix2D& mt) const
+void Tex2DAsset::Draw(const sm::Matrix2D& mt) const
 {
 	bp::Node::Draw(mt);
 
@@ -24,7 +24,7 @@ void TextureObject::Draw(const sm::Matrix2D& mt) const
 	}
 }
 
-void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
+void Tex2DAsset::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                            rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	bp::Node::StoreToJson(dir, val, alloc);
@@ -39,7 +39,7 @@ void TextureObject::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
 }
 
-void TextureObject::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
+void Tex2DAsset::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
 	                             const rapidjson::Value& val)
 {
 	bp::Node::LoadFromJson(alloc, dir, val);
@@ -54,13 +54,13 @@ void TextureObject::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	}
 }
 
-void TextureObject::SetName(const std::string& name)
+void Tex2DAsset::SetName(const std::string& name)
 {
 	m_name = name;
 	m_title = m_name;
 }
 
-void TextureObject::SetImage(const std::string& filepath)
+void Tex2DAsset::SetImage(const std::string& filepath)
 {
 	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 }
