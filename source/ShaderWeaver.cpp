@@ -256,39 +256,39 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 
 		auto& src = static_cast<const node::Phong&>(node);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_LIT_POSITION), 0 },
+			CreateInputChild(src, node::Phong::ID_LIT_POSITION),
 			{ dst, sw::node::Phong::IN_LIGHT_POSITION }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_LIT_AMBIENT), 0 },
+			CreateInputChild(src, node::Phong::ID_LIT_AMBIENT),
 			{ dst, sw::node::Phong::IN_LIGHT_AMBIENT }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_LIT_DIFFUSE), 0 },
+			CreateInputChild(src, node::Phong::ID_LIT_DIFFUSE),
 			{ dst, sw::node::Phong::IN_LIGHT_DIFFUSE }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_LIT_SPECULAR), 0 },
+			CreateInputChild(src, node::Phong::ID_LIT_SPECULAR),
 			{ dst, sw::node::Phong::IN_LIGHT_SPECULAR }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_MAT_DIFFUSE), 0 },
+			CreateInputChild(src, node::Phong::ID_MAT_DIFFUSE),
 			{ dst, sw::node::Phong::IN_MATERIAL_DIFFUSE }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_MAT_SPECULAR), 0 },
+			CreateInputChild(src, node::Phong::ID_MAT_SPECULAR),
 			{ dst, sw::node::Phong::IN_MATERIAL_SPECULAR }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_MAT_SHININESS), 0 },
+			CreateInputChild(src, node::Phong::ID_MAT_SHININESS),
 			{ dst, sw::node::Phong::IN_MATERIAL_SHININESS }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_MAT_EMISSION), 0 },
+			CreateInputChild(src, node::Phong::ID_MAT_EMISSION),
 			{ dst, sw::node::Phong::IN_MATERIAL_EMISSION }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Phong::ID_VIEW_POS), 0 },
+			CreateInputChild(src, node::Phong::ID_VIEW_POS),
 			{ dst, sw::node::Phong::IN_VIEW_POS }
 		);
 	}
@@ -339,44 +339,44 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const node::Add&>(node);
 		dst = std::make_shared<sw::node::Add>();
-		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Add::IN_A });
-		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Add::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Subtract>())
 	{
 		auto& src = static_cast<const node::Subtract&>(node);
 		dst = std::make_shared<sw::node::Subtract>();
-		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Subtract::IN_A });
-		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Subtract::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Multiply>())
 	{
 		auto& src = static_cast<const node::Multiply&>(node);
 		dst = std::make_shared<sw::node::Multiply>();
-		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Multiply::IN_A });
-		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Multiply::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Divide>())
 	{
 		auto& src = static_cast<const node::Divide&>(node);
 		dst = std::make_shared<sw::node::Divide>();
-		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Divide::IN_A });
-		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Divide::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Lerp>())
 	{
 		auto& src = static_cast<const node::Lerp&>(node);
 		dst = std::make_shared<sw::node::Lerp>();
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Lerp::ID_A), 0 },
+			CreateInputChild(src, node::Lerp::ID_A),
 			{ dst, sw::node::Lerp::IN_A }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Lerp::ID_B), 0 },
+			CreateInputChild(src, node::Lerp::ID_B),
 			{ dst, sw::node::Lerp::IN_B }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Lerp::ID_T), 0 },
+			CreateInputChild(src, node::Lerp::ID_T),
 			{ dst, sw::node::Lerp::IN_T }
 		);
 	}
@@ -385,15 +385,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::InverseLerp&>(node);
 		dst = std::make_shared<sw::node::InverseLerp>();
 		sw::make_connecting(
-			{ CreateInputChild(src, node::InverseLerp::ID_A), 0 },
+			CreateInputChild(src, node::InverseLerp::ID_A),
 			{ dst, sw::node::InverseLerp::IN_A }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::InverseLerp::ID_B), 0 },
+			CreateInputChild(src, node::InverseLerp::ID_B),
 			{ dst, sw::node::InverseLerp::IN_B }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::InverseLerp::ID_T), 0 },
+			CreateInputChild(src, node::InverseLerp::ID_T),
 			{ dst, sw::node::InverseLerp::IN_T }
 		);
 	}
@@ -402,15 +402,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::Remap&>(node);
 		dst = std::make_shared<sw::node::Remap>();
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Remap::ID_IN), 0 },
+			CreateInputChild(src, node::Remap::ID_IN),
 			{ dst, sw::node::Remap::IN_IN }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Remap::ID_FROM), 0 },
+			CreateInputChild(src, node::Remap::ID_FROM),
 			{ dst, sw::node::Remap::IN_FROM }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::Remap::ID_TO), 0 },
+			CreateInputChild(src, node::Remap::ID_TO),
 			{ dst, sw::node::Remap::IN_TO }
 		);
 	}
@@ -419,11 +419,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::TextureSample&>(node);
 		dst = std::make_shared<sw::node::Tex2DSample>();
 		sw::make_connecting(
-			{ CreateInputChild(src, node::TextureSample::ID_TEX), 0 },
+			CreateInputChild(src, node::TextureSample::ID_TEX),
 			{ dst, sw::node::Tex2DSample::IN_TEX }
 		);
 		sw::make_connecting(
-			{ CreateInputChild(src, node::TextureSample::ID_UV), 0 },
+			CreateInputChild(src, node::TextureSample::ID_UV),
 			{ dst, sw::node::Tex2DSample::IN_UV }
 		);
 	}
@@ -454,14 +454,33 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	return dst;
 }
 
-sw::NodePtr ShaderWeaver::CreateInputChild(const bp::Node& node, int input_idx)
+sw::Node::PortAddr ShaderWeaver::CreateInputChild(const bp::Node& node, int input_idx)
 {
 	auto& to_port = node.GetAllInput()[input_idx];
 	auto& conns = to_port->GetConnecting();
 	assert(conns.size() == 1);
 	auto& from_port = conns[0]->GetFrom();
 	assert(from_port);
-	return CreateWeaverNode(from_port->GetParent());
+
+	auto ret_node = CreateWeaverNode(from_port->GetParent());
+	int  ret_idx  = from_port->GetPosIdx();
+	return sw::Node::PortAddr(ret_node, ret_idx);
+}
+
+pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const
+{
+	pt0::Shader::Params sp(m_texture_names, m_layout);
+	sp.vs = vert.GetShaderStr().c_str();
+	sp.fs = frag.GetShaderStr().c_str();
+	// todo
+	sp.uniform_names.model_mat  = "u_model";
+	sp.uniform_names.view_mat   = "u_view";
+	sp.uniform_names.proj_mat   = "u_projection";
+	sp.uniform_names.time       = "u_time";
+	sp.uniform_names.sine_time  = "u_sine_time";
+	sp.uniform_names.cos_time   = "u_cos_time";
+	sp.uniform_names.delta_time = "u_delta_time";
+	return sp;
 }
 
 }

@@ -1,13 +1,16 @@
 #pragma once
 
 #include <sw/typedef.h>
+#include <sw/Node.h>
 #include <unirender/VertexAttrib.h>
+#include <painting0/Shader.h>
 
 #include <vector>
 
 namespace bp { class Node; }
 namespace pt2 { class WindowContext; class Shader; }
 namespace pt3 { class WindowContext; class Shader; }
+namespace sw { class Evaluator; }
 
 namespace sg
 {
@@ -32,7 +35,9 @@ public:
 
 private:
 	sw::NodePtr CreateWeaverNode(const bp::Node& node);
-	sw::NodePtr CreateInputChild(const bp::Node& node, int input_idx);
+	sw::Node::PortAddr CreateInputChild(const bp::Node& node, int input_idx);
+
+	pt0::Shader::Params CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const;
 
 private:
 	bool m_debug_print;
