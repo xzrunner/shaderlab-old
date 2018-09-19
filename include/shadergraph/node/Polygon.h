@@ -8,19 +8,19 @@ namespace sg
 namespace node
 {
 
-class Twirl : public Node
+class Polygon : public Node
 {
 public:
-	Twirl()
-		: Node("Twirl", true)
+	Polygon()
+		: Node("Polygon", true)
 	{
 		InitPins({
 			{ PINS_VECTOR2, "UV" },
-			{ PINS_VECTOR2, "Center" },
-			{ PINS_VECTOR1, "Strength" },
-			{ PINS_VECTOR2, "Offset" },
+			{ PINS_VECTOR1, "Sides" },
+			{ PINS_VECTOR1, "Width" },
+			{ PINS_VECTOR1, "Height" },
 		},{
-			{ PINS_VECTOR2, "Out", }
+			{ PINS_VECTOR1, "Out", }
 		});
 
 		for (auto& p : GetAllInput()) {
@@ -35,14 +35,14 @@ public:
 	enum InputId
 	{
 		ID_UV = 0,
-		ID_CENTER,
-		ID_STRENGTH,
-		ID_OFFSET,
+		ID_SIDES,
+		ID_WIDTH,
+		ID_HEIGHT,
 	};
 
-	DECLARE_NODE_CLASS(Twirl)
+	DECLARE_NODE_CLASS(Polygon)
 
-}; // Twirl
+}; // Polygon
 
 }
 }

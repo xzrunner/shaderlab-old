@@ -23,6 +23,9 @@
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
+// procedural
+#include "shadergraph/node/SimpleNoise.h"
+#include "shadergraph/node/Polygon.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -173,6 +176,23 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(-1, 1));
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_TO,
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
+	}
+	// procedural
+	else if (type == node::SimpleNoise::GetClassName())
+	{
+		CreateDefault(nodes, node, node::SimpleNoise::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::SimpleNoise::ID_SCALE,
+			node::Vector1::GetClassName()))->SetValue(500);
+	}
+	else if (type == node::Polygon::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Polygon::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_SIDES,
+			node::Vector1::GetClassName()))->SetValue(6);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_WIDTH,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_HEIGHT,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
 	}
 	// uv
 	else if (type == node::Rotate::GetClassName())

@@ -23,6 +23,9 @@
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
+// procedural
+#include "shadergraph/node/SimpleNoise.h"
+#include "shadergraph/node/Polygon.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -53,6 +56,9 @@
 #include <shaderweaver/node/InverseLerp.h>
 #include <shaderweaver/node/Lerp.h>
 #include <shaderweaver/node/Remap.h>
+// procedural
+#include <shaderweaver/node/SimpleNoise.h>
+#include <shaderweaver/node/Polygon.h>
 // utility
 #include <shaderweaver/node/Input.h>
 #include <shaderweaver/node/Output.h>
@@ -446,6 +452,41 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::Remap::ID_TO),
 			{ dst, sw::node::Remap::IN_TO }
+		);
+	}
+	// procedural
+	else if (id == bp::GetNodeTypeID<node::SimpleNoise>())
+	{
+		auto& src = static_cast<const node::SimpleNoise&>(node);
+		dst = std::make_shared<sw::node::SimpleNoise>();
+		sw::make_connecting(
+			CreateInputChild(src, node::SimpleNoise::ID_UV),
+			{ dst, sw::node::SimpleNoise::IN_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::SimpleNoise::ID_SCALE),
+			{ dst, sw::node::SimpleNoise::IN_SCALE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Polygon>())
+	{
+		auto& src = static_cast<const node::Polygon&>(node);
+		dst = std::make_shared<sw::node::Polygon>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Polygon::ID_UV),
+			{ dst, sw::node::Polygon::IN_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Polygon::ID_SIDES),
+			{ dst, sw::node::Polygon::IN_SIDES }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Polygon::ID_WIDTH),
+			{ dst, sw::node::Polygon::ID_WIDTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Polygon::ID_HEIGHT),
+			{ dst, sw::node::Polygon::ID_HEIGHT }
 		);
 	}
 	// utility

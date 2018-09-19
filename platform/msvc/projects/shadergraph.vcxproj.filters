@@ -52,6 +52,9 @@
     <Filter Include="nodes\uv">
       <UniqueIdentifier>{004d4cd4-5a39-4712-9bb8-f40585399de8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\procedural">
+      <UniqueIdentifier>{30c75c1b-054f-4d3f-99b6-c1e2b48774de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -138,6 +141,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Twirl.h">
       <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\SimpleNoise.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Polygon.h">
+      <Filter>nodes\procedural</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +237,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Twirl.cpp">
       <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\SimpleNoise.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Polygon.cpp">
+      <Filter>nodes\procedural</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
