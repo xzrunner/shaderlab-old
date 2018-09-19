@@ -148,6 +148,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Polygon.h">
       <Filter>nodes\procedural</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Voronoi.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -242,6 +245,9 @@
       <Filter>nodes\procedural</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Polygon.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Voronoi.cpp">
       <Filter>nodes\procedural</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,6 +25,7 @@
 #include "shadergraph/node/Remap.h"
 // procedural
 #include "shadergraph/node/SimpleNoise.h"
+#include "shadergraph/node/Voronoi.h"
 #include "shadergraph/node/Polygon.h"
 // uv
 #include "shadergraph/node/Rotate.h"
@@ -58,6 +59,7 @@
 #include <shaderweaver/node/Remap.h>
 // procedural
 #include <shaderweaver/node/SimpleNoise.h>
+#include <shaderweaver/node/Voronoi.h>
 #include <shaderweaver/node/Polygon.h>
 // utility
 #include <shaderweaver/node/Input.h>
@@ -466,6 +468,23 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::SimpleNoise::ID_SCALE),
 			{ dst, sw::node::SimpleNoise::IN_SCALE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Voronoi>())
+	{
+		auto& src = static_cast<const node::Voronoi&>(node);
+		dst = std::make_shared<sw::node::Voronoi>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Voronoi::ID_UV),
+			{ dst, sw::node::Voronoi::IN_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Voronoi::ID_ANGLE_OFFSET),
+			{ dst, sw::node::Voronoi::IN_ANGLE_OFFSET }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Voronoi::ID_CELL_DENSITY),
+			{ dst, sw::node::Voronoi::IN_CELL_DENSITY }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Polygon>())

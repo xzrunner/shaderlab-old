@@ -25,6 +25,7 @@
 #include "shadergraph/node/Remap.h"
 // procedural
 #include "shadergraph/node/SimpleNoise.h"
+#include "shadergraph/node/Voronoi.h"
 #include "shadergraph/node/Polygon.h"
 // uv
 #include "shadergraph/node/Rotate.h"
@@ -183,6 +184,14 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		CreateDefault(nodes, node, node::SimpleNoise::ID_UV, node::UV::GetClassName());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::SimpleNoise::ID_SCALE,
 			node::Vector1::GetClassName()))->SetValue(500);
+	}
+	else if (type == node::Voronoi::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Voronoi::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Voronoi::ID_ANGLE_OFFSET,
+			node::Vector1::GetClassName()))->SetValue(2);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Voronoi::ID_CELL_DENSITY,
+			node::Vector1::GetClassName()))->SetValue(5);
 	}
 	else if (type == node::Polygon::GetClassName())
 	{
