@@ -43,6 +43,15 @@
     <Filter Include="nodes\input\texture">
       <UniqueIdentifier>{b3d97966-d447-46c6-a04b-14772a35baa9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\artistic">
+      <UniqueIdentifier>{456c2381-455d-4578-aa90-8b0987d90fe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\artistic\filter">
+      <UniqueIdentifier>{05847c17-d359-442f-921d-dafed62c0e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\uv">
+      <UniqueIdentifier>{004d4cd4-5a39-4712-9bb8-f40585399de8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -120,6 +129,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
       <Filter>nodes\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h">
+      <Filter>nodes\artistic\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h">
+      <Filter>nodes\uv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +216,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
       <Filter>nodes\input\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Gray.cpp">
+      <Filter>nodes\artistic\filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Rotate.cpp">
+      <Filter>nodes\uv</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

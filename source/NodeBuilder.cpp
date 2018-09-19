@@ -1,24 +1,30 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/Pins.h"
 
-#include "shadergraph/node/Sprite.h"
-#include "shadergraph/node/Phong.h"
+// artistic
+#include "shadergraph/node/Gray.h"
+// input
+#include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/UV.h"
-#include "shadergraph/node/Add.h"
-#include "shadergraph/node/Subtract.h"
-#include "shadergraph/node/Multiply.h"
-#include "shadergraph/node/Divide.h"
-#include "shadergraph/node/Lerp.h"
-#include "shadergraph/node/InverseLerp.h"
-#include "shadergraph/node/Remap.h"
 #include "shadergraph/node/SampleTex2D.h"
 #include "shadergraph/node/Tex2DAsset.h"
-// input
-#include "shadergraph/node/Time.h"
+// master
+#include "shadergraph/node/Phong.h"
+#include "shadergraph/node/Sprite.h"
+// math
+#include "shadergraph/node/Add.h"
+#include "shadergraph/node/Divide.h"
+#include "shadergraph/node/Multiply.h"
+#include "shadergraph/node/Subtract.h"
+#include "shadergraph/node/InverseLerp.h"
+#include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/Remap.h"
+// uv
+#include "shadergraph/node/Rotate.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -76,13 +82,18 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::Node& node)
 {
 	auto type = node.GetClassInfo().GetClassName();
-	if (type == node::Sprite::GetClassName())
+	// artistic
+	if (type == node::Gray::GetClassName())
 	{
-		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_MUL,
-			node::Vector3::GetClassName(), "mul"))->SetValue(sm::vec3(1, 1, 1));
-		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_ADD,
-			node::Vector3::GetClassName(), "add"))->SetValue(sm::vec3(0, 0, 0));
+		CreateDefault(nodes, node, 0, node::Vector4::GetClassName());
 	}
+	// input
+	else if (type == node::SampleTex2D::GetClassName())
+	{
+		CreateDefault(nodes, node, node::SampleTex2D::ID_TEX, node::Tex2DAsset::GetClassName());
+		CreateDefault(nodes, node, node::SampleTex2D::ID_UV, node::UV::GetClassName());
+	}
+	// master
 	else if (type == node::Phong::GetClassName())
 	{
 		// light
@@ -107,24 +118,15 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_VIEW_POS,
 			node::Vector3::GetClassName(), "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 	}
-	else if (type == node::SampleTex2D::GetClassName())
+	else if (type == node::Sprite::GetClassName())
 	{
-		std::static_pointer_cast<node::Tex2DAsset>(CreateDefault(nodes, node, node::SampleTex2D::ID_TEX,
-			node::Tex2DAsset::GetClassName()));
-		std::static_pointer_cast<node::Tex2DAsset>(CreateDefault(nodes, node, node::SampleTex2D::ID_UV,
-			node::UV::GetClassName()));
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_MUL,
+			node::Vector3::GetClassName(), "mul"))->SetValue(sm::vec3(1, 1, 1));
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_ADD,
+			node::Vector3::GetClassName(), "add"))->SetValue(sm::vec3(0, 0, 0));
 	}
+	// math
 	else if (type == node::Add::GetClassName())
-	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
-	}
-	else if (type == node::Subtract::GetClassName())
-	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
-	}
-	else if (type == node::Multiply::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
@@ -134,23 +136,51 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
 	}
-	else if (type == node::Lerp::GetClassName())
+	else if (type == node::Multiply::GetClassName())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_A, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_B, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_T, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Subtract::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
 	}
 	else if (type == node::InverseLerp::GetClassName())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_A, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_B, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_T, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_T,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Lerp::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_T,
+			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	else if (type == node::Remap::GetClassName())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Remap::ID_IN,   node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_FROM, node::Vector2::GetClassName()))->SetValue(sm::vec2(-1, 1));
-		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_TO,   node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Remap::ID_IN,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_FROM,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(-1, 1));
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_TO,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
+	}
+	// uv
+	else if (type == node::Rotate::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Rotate::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Rotate::ID_CENTER,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rotate::ID_ROTATION,
+			node::Vector1::GetClassName()))->SetValue(0);
 	}
 }
 

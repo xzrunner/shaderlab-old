@@ -1,10 +1,13 @@
 #include "shadergraph/WxNodeProperty.h"
+
+// input
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/Tex2DAsset.h"
-#include "shadergraph/node/Input.h"
+// uv
+#include "shadergraph/node/Rotate.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxOpenFileProp.h>
@@ -20,6 +23,8 @@ namespace
 
 const wxChar* PIN_TYPES[] = {
 	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool") };
+
+const wxChar* ROTATE_TYPES[] = { wxT("rad"), wxT("deg") };
 
 }
 
@@ -40,6 +45,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	m_pg->Clear();
 
 	auto type_id = node->TypeID();
+	// input
 	if (type_id == bp::GetNodeTypeID<node::Vector1>())
 	{
 		auto& c1 = dynamic_cast<const node::Vector1&>(*node);
@@ -71,23 +77,24 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	}
 	else if (type_id == bp::GetNodeTypeID<node::Tex2DAsset>())
 	{
-		auto& tobj = dynamic_cast<const node::Tex2DAsset&>(*node);
+		auto& t2d = dynamic_cast<const node::Tex2DAsset&>(*node);
 
-		m_pg->Append(new wxStringProperty("name", wxPG_LABEL, tobj.GetName()));
+		m_pg->Append(new wxStringProperty("name", wxPG_LABEL, t2d.GetName()));
 
 		std::string filepath;
-		if (auto& tex = tobj.GetImage()) {
+		if (auto& tex = t2d.GetImage()) {
 			filepath = tex->GetResPath();
 		}
 		auto prop = new ee0::WxOpenFileProp("Filepath", wxPG_LABEL, filepath);
 		prop->SetFilter("*.png");
 		prop->SetCallback([&](const std::string& filepath) {
-			const_cast<node::Tex2DAsset&>(tobj).SetImage(filepath);
+			const_cast<node::Tex2DAsset&>(t2d).SetImage(filepath);
 			m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 		});
 
 		m_pg->Append(prop);
 	}
+	// utility
 	//else if (type_id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& input = dynamic_cast<const node::Input&>(*node);
@@ -98,6 +105,15 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	//	type_prop->SetValue(PIN_TYPES[input.GetType() - PINS_VECTOR1]);
 	//	m_pg->Append(type_prop);
 	//}
+	// uv
+	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
+	{
+		auto& rot = dynamic_cast<const node::Rotate&>(*node);
+
+		auto type_prop = new wxEnumProperty("Unit", wxPG_LABEL, ROTATE_TYPES);
+		type_prop->SetValue(rot.IsRadians() ? 0 : 1);
+		m_pg->Append(type_prop);
+	}
 }
 
 void WxNodeProperty::InitLayout()
@@ -125,6 +141,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	wxAny val = property->GetValue();
 
 	auto type_id = m_node->TypeID();
+	// input
 	if (type_id == bp::GetNodeTypeID<node::Vector1>())
 	{
 		auto& c1 = std::dynamic_pointer_cast<node::Vector1>(m_node);
@@ -173,11 +190,12 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 	else if (type_id == bp::GetNodeTypeID<node::Tex2DAsset>())
 	{
-		auto& tobj = std::dynamic_pointer_cast<node::Tex2DAsset>(m_node);
+		auto& t2d = std::dynamic_pointer_cast<node::Tex2DAsset>(m_node);
 		if (key == "name") {
-			tobj->SetName(wxANY_AS(val, wxString).ToStdString());
+			t2d->SetName(wxANY_AS(val, wxString).ToStdString());
 		}
 	}
+	// utility
 	//else if (type_id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& input = std::dynamic_pointer_cast<node::Input>(m_node);
@@ -187,6 +205,14 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	//		input->SetType(static_cast<PinsType>(PINS_VECTOR1 + wxANY_AS(val, int)));
 	//	}
 	//}
+	// uv
+	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
+	{
+		auto& rot = std::dynamic_pointer_cast<node::Rotate>(m_node);
+		if (key == "Unit") {
+			rot->SetRadians(wxANY_AS(val, int) == 0);
+		}
+	}
 
 	// todo
 	m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);

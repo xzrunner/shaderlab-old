@@ -15,6 +15,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector3.h" />
@@ -43,6 +45,8 @@
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
     <ClCompile Include="..\..\..\source\node\Add.cpp" />
+    <ClCompile Include="..\..\..\source\node\Gray.cpp" />
+    <ClCompile Include="..\..\..\source\node\Rotate.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector2.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector3.cpp" />

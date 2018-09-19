@@ -1,24 +1,30 @@
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/Pins.h"
 
+// artistic
+#include "shadergraph/node/Gray.h"
+// input
+#include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/UV.h"
-#include "shadergraph/node/Add.h"
-#include "shadergraph/node/Subtract.h"
-#include "shadergraph/node/Multiply.h"
-#include "shadergraph/node/Divide.h"
-#include "shadergraph/node/Lerp.h"
-#include "shadergraph/node/InverseLerp.h"
-#include "shadergraph/node/Remap.h"
-#include "shadergraph/node/Phong.h"
-#include "shadergraph/node/Sprite.h"
 #include "shadergraph/node/SampleTex2D.h"
 #include "shadergraph/node/Tex2DAsset.h"
-// input
-#include "shadergraph/node/Time.h"
+// master
+#include "shadergraph/node/Phong.h"
+#include "shadergraph/node/Sprite.h"
+// math
+#include "shadergraph/node/Add.h"
+#include "shadergraph/node/Divide.h"
+#include "shadergraph/node/Multiply.h"
+#include "shadergraph/node/Subtract.h"
+#include "shadergraph/node/InverseLerp.h"
+#include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/Remap.h"
+// uv
+#include "shadergraph/node/Rotate.h"
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -26,19 +32,27 @@
 #include <blueprint/CompNode.h>
 
 #include <shaderweaver/Evaluator.h>
+// artistic
+#include <shaderweaver/node/Gray.h>
+// input
+#include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Vector1.h>
 #include <shaderweaver/node/Vector2.h>
 #include <shaderweaver/node/Vector3.h>
 #include <shaderweaver/node/Vector4.h>
 #include <shaderweaver/node/UV.h>
-#include <shaderweaver/node/Add.h>
-#include <shaderweaver/node/Subtract.h>
-#include <shaderweaver/node/Multiply.h>
-#include <shaderweaver/node/Divide.h>
-#include <shaderweaver/node/Lerp.h>
-#include <shaderweaver/node/InverseLerp.h>
-#include <shaderweaver/node/Remap.h>
+#include <shaderweaver/node/SampleTex2D.h>
+// master
 #include <shaderweaver/node/Phong.h>
+// math
+#include <shaderweaver/node/Add.h>
+#include <shaderweaver/node/Divide.h>
+#include <shaderweaver/node/Multiply.h>
+#include <shaderweaver/node/Subtract.h>
+#include <shaderweaver/node/InverseLerp.h>
+#include <shaderweaver/node/Lerp.h>
+#include <shaderweaver/node/Remap.h>
+// utility
 #include <shaderweaver/node/Input.h>
 #include <shaderweaver/node/Output.h>
 #include <shaderweaver/node/Uniform.h>
@@ -46,9 +60,8 @@
 #include <shaderweaver/node/PositionTrans.h>
 #include <shaderweaver/node/FragPosTrans.h>
 #include <shaderweaver/node/NormalTrans.h>
-#include <shaderweaver/node/SampleTex2D.h>
-// input
-#include <shaderweaver/node/Time.h>
+// uv
+#include <shaderweaver/node/Rotate.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -250,7 +263,68 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	sw::NodePtr dst = nullptr;
 
 	int id = node.TypeID();
-	if (id == bp::GetNodeTypeID<node::Phong>())
+	// artistic
+	if (id == bp::GetNodeTypeID<node::Gray>())
+	{
+		auto& src = static_cast<const node::Gray&>(node);
+		dst = std::make_shared<sw::node::Gray>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	// input
+	else if (id == bp::GetNodeTypeID<node::Time>())
+	{
+		dst = std::make_shared<sw::node::Time>();
+	}
+	else if (id == bp::GetNodeTypeID<node::Vector1>())
+	{
+		auto& src = static_cast<const node::Vector1&>(node);
+		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::Vector2>())
+	{
+		auto& src = static_cast<const node::Vector2&>(node);
+		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::Vector3>())
+	{
+		auto& src = static_cast<const node::Vector3&>(node);
+		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::Vector4>())
+	{
+		auto& src = static_cast<const node::Vector4&>(node);
+		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::UV>())
+	{
+		auto& src = static_cast<const node::UV&>(node);
+		dst = std::make_shared<sw::node::UV>(src.GetName());
+	}
+	else if (id == bp::GetNodeTypeID<node::SampleTex2D>())
+	{
+		auto& src = static_cast<const node::SampleTex2D&>(node);
+		dst = std::make_shared<sw::node::SampleTex2D>();
+		sw::make_connecting(
+			CreateInputChild(src, node::SampleTex2D::ID_TEX),
+			{ dst, sw::node::SampleTex2D::IN_TEX }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::SampleTex2D::ID_UV),
+			{ dst, sw::node::SampleTex2D::IN_UV }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Tex2DAsset>())
+	{
+		auto& src = static_cast<const node::Tex2DAsset&>(node);
+		m_texture_names.push_back(src.GetName());
+		auto& img = src.GetImage();
+		if (img) {
+			m_texture_ids.push_back(img->GetTexID());
+		}
+		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
+	}
+	// master
+	else if (id == bp::GetNodeTypeID<node::Phong>())
 	{
 		dst = std::make_shared<sw::node::Phong>();
 
@@ -292,69 +366,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Phong::IN_VIEW_POS }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Vector1>())
-	{
-		auto& src = static_cast<const node::Vector1&>(node);
-		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
-	}
-	else if (id == bp::GetNodeTypeID<node::Vector2>())
-	{
-		auto& src = static_cast<const node::Vector2&>(node);
-		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
-	}
-	else if (id == bp::GetNodeTypeID<node::Vector3>())
-	{
-		auto& src = static_cast<const node::Vector3&>(node);
-		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
-	}
-	else if (id == bp::GetNodeTypeID<node::Vector4>())
-	{
-		auto& src = static_cast<const node::Vector4&>(node);
-		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
-	}
-	else if (id == bp::GetNodeTypeID<node::UV>())
-	{
-		auto& src = static_cast<const node::UV&>(node);
-		dst = std::make_shared<sw::node::UV>(src.GetName());
-	}
-	//else if (id == bp::GetNodeTypeID<node::Input>())
-	//{
-	//	auto& src = static_cast<const node::Input&>(node);
-	//	uint32_t type = 0;
-	//	switch (src.GetType())
-	//	{
-	//	case PINS_TEXTURE2D:
-	//		type = sw::t_tex2d;
-	//		break;
-	//	case PINS_VECTOR2:
-	//		type = sw::t_flt2;
-	//		break;
-	//	default:
-	//		// todo
-	//		assert(0);
-	//	}
-	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
-	//}
+	// math
 	else if (id == bp::GetNodeTypeID<node::Add>())
 	{
 		auto& src = static_cast<const node::Add&>(node);
 		dst = std::make_shared<sw::node::Add>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::IN_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::IN_B });
-	}
-	else if (id == bp::GetNodeTypeID<node::Subtract>())
-	{
-		auto& src = static_cast<const node::Subtract&>(node);
-		dst = std::make_shared<sw::node::Subtract>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::IN_B });
-	}
-	else if (id == bp::GetNodeTypeID<node::Multiply>())
-	{
-		auto& src = static_cast<const node::Multiply&>(node);
-		dst = std::make_shared<sw::node::Multiply>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Divide>())
 	{
@@ -363,22 +381,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::IN_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::IN_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Lerp>())
+	else if (id == bp::GetNodeTypeID<node::Multiply>())
 	{
-		auto& src = static_cast<const node::Lerp&>(node);
-		dst = std::make_shared<sw::node::Lerp>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_A),
-			{ dst, sw::node::Lerp::IN_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_B),
-			{ dst, sw::node::Lerp::IN_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_T),
-			{ dst, sw::node::Lerp::IN_T }
-		);
+		auto& src = static_cast<const node::Multiply&>(node);
+		dst = std::make_shared<sw::node::Multiply>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::Subtract>())
+	{
+		auto& src = static_cast<const node::Subtract&>(node);
+		dst = std::make_shared<sw::node::Subtract>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::IN_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::IN_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
 	{
@@ -395,6 +410,23 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::InverseLerp::ID_T),
 			{ dst, sw::node::InverseLerp::IN_T }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Lerp>())
+	{
+		auto& src = static_cast<const node::Lerp&>(node);
+		dst = std::make_shared<sw::node::Lerp>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Lerp::ID_A),
+			{ dst, sw::node::Lerp::IN_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Lerp::ID_B),
+			{ dst, sw::node::Lerp::IN_B }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Lerp::ID_T),
+			{ dst, sw::node::Lerp::IN_T }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Remap>())
@@ -414,33 +446,42 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Remap::IN_TO }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::SampleTex2D>())
+	// utility
+	//else if (id == bp::GetNodeTypeID<node::Input>())
+	//{
+	//	auto& src = static_cast<const node::Input&>(node);
+	//	uint32_t type = 0;
+	//	switch (src.GetType())
+	//	{
+	//	case PINS_TEXTURE2D:
+	//		type = sw::t_tex2d;
+	//		break;
+	//	case PINS_VECTOR2:
+	//		type = sw::t_flt2;
+	//		break;
+	//	default:
+	//		// todo
+	//		assert(0);
+	//	}
+	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
+	//}
+	// UV
+	else if (id == bp::GetNodeTypeID<node::Rotate>())
 	{
-		auto& src = static_cast<const node::SampleTex2D&>(node);
-		dst = std::make_shared<sw::node::SampleTex2D>();
+		auto& src = static_cast<const node::Rotate&>(node);
+		dst = std::make_shared<sw::node::Rotate>(src.IsRadians());
 		sw::make_connecting(
-			CreateInputChild(src, node::SampleTex2D::ID_TEX),
-			{ dst, sw::node::SampleTex2D::IN_TEX }
+			CreateInputChild(src, node::Rotate::ID_UV),
+			{ dst, sw::node::Rotate::IN_UV }
 		);
 		sw::make_connecting(
-			CreateInputChild(src, node::SampleTex2D::ID_UV),
-			{ dst, sw::node::SampleTex2D::IN_UV }
+			CreateInputChild(src, node::Rotate::ID_CENTER),
+			{ dst, sw::node::Rotate::IN_CENTER }
 		);
-	}
-	else if (id == bp::GetNodeTypeID<node::Tex2DAsset>())
-	{
-		auto& src = static_cast<const node::Tex2DAsset&>(node);
-		m_texture_names.push_back(src.GetName());
-		auto& img = src.GetImage();
-		if (img) {
-			m_texture_ids.push_back(img->GetTexID());
-		}
-		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
-	}
-	// input
-	else if (id == bp::GetNodeTypeID<node::Time>())
-	{
-		dst = std::make_shared<sw::node::Time>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Rotate::ID_ROTATION),
+			{ dst, sw::node::Rotate::IN_ROTATION }
+		);
 	}
 	else
 	{
