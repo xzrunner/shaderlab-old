@@ -132,10 +132,10 @@ ShaderWeaver::ShaderWeaver(VertType vert_type, const bp::Node& frag_node, bool d
 		m_cached_nodes.push_back(position);
 
 		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
-		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::IN_PROJ });
-		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::IN_VIEW });
-		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::IN_MODEL });
-		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
+		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
+		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
+		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
+		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
 		m_vert_nodes.push_back(pos_trans);
 
 		// frag
@@ -161,10 +161,10 @@ ShaderWeaver::ShaderWeaver(VertType vert_type, const bp::Node& frag_node, bool d
 		m_cached_nodes.push_back(position);
 
 		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
-		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::IN_PROJ });
-		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::IN_VIEW });
-		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::IN_MODEL });
-		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::IN_POS });
+		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
+		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
+		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
+		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
 		m_vert_nodes.push_back(pos_trans);
 
 		add_vert_varying(m_vert_nodes, m_cached_nodes, "texcoord", sw::t_uv);
@@ -195,20 +195,20 @@ ShaderWeaver::ShaderWeaver(VertType vert_type, const bp::Node& frag_node, bool d
 		m_cached_nodes.push_back(normal);
 
 		auto pos_trans = std::make_shared<sw::node::PositionTrans>(3);
-		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::IN_PROJ });
-		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::IN_VIEW });
-		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::IN_MODEL });
-		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::IN_POS });
+		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::ID_PROJ });
+		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
+		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
+		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
 		m_vert_nodes.push_back(pos_trans);
 
 		auto frag_pos_trans = std::make_shared<sw::node::FragPosTrans>();
-		sw::make_connecting({ model, 0 },    { frag_pos_trans, sw::node::FragPosTrans::IN_MODEL });
-		sw::make_connecting({ position, 0 }, { frag_pos_trans, sw::node::FragPosTrans::IN_POS });
+		sw::make_connecting({ model, 0 },    { frag_pos_trans, sw::node::FragPosTrans::ID_MODEL });
+		sw::make_connecting({ position, 0 }, { frag_pos_trans, sw::node::FragPosTrans::ID_POS });
 		m_vert_nodes.push_back(frag_pos_trans);
 
 		auto norm_trans = std::make_shared<sw::node::NormalTrans>();
-		sw::make_connecting({ model, 0 },  { norm_trans, sw::node::NormalTrans::IN_MODEL });
-		sw::make_connecting({ normal, 0 }, { norm_trans, sw::node::NormalTrans::IN_NORM });
+		sw::make_connecting({ model, 0 },  { norm_trans, sw::node::NormalTrans::ID_MODEL });
+		sw::make_connecting({ normal, 0 }, { norm_trans, sw::node::NormalTrans::ID_NORM });
 		m_vert_nodes.push_back(norm_trans);
 
 		add_vert_varying(m_vert_nodes, m_cached_nodes, "frag_pos", sw::t_flt3);
@@ -223,8 +223,8 @@ ShaderWeaver::ShaderWeaver(VertType vert_type, const bp::Node& frag_node, bool d
 		auto frag_in_nor = std::make_shared<sw::node::Input>("v_normal", sw::t_nor3);
 		m_cached_nodes.push_back(frag_in_pos);
 		m_cached_nodes.push_back(frag_in_nor);
-		sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::IN_FRAG_POS });
-		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::IN_NORMAL });
+		sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::ID_FRAG_POS });
+		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::ID_NORMAL });
 
 		m_frag_node = phong;
 	}
@@ -316,11 +316,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::SampleTex2D>();
 		sw::make_connecting(
 			CreateInputChild(src, node::SampleTex2D::ID_TEX),
-			{ dst, sw::node::SampleTex2D::IN_TEX }
+			{ dst, sw::node::SampleTex2D::ID_TEX }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::SampleTex2D::ID_UV),
-			{ dst, sw::node::SampleTex2D::IN_UV }
+			{ dst, sw::node::SampleTex2D::ID_UV }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Tex2DAsset>())
@@ -341,39 +341,39 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::Phong&>(node);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_LIT_POSITION),
-			{ dst, sw::node::Phong::IN_LIGHT_POSITION }
+			{ dst, sw::node::Phong::ID_LIGHT_POSITION }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_LIT_AMBIENT),
-			{ dst, sw::node::Phong::IN_LIGHT_AMBIENT }
+			{ dst, sw::node::Phong::ID_LIGHT_AMBIENT }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_LIT_DIFFUSE),
-			{ dst, sw::node::Phong::IN_LIGHT_DIFFUSE }
+			{ dst, sw::node::Phong::ID_LIGHT_DIFFUSE }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_LIT_SPECULAR),
-			{ dst, sw::node::Phong::IN_LIGHT_SPECULAR }
+			{ dst, sw::node::Phong::ID_LIGHT_SPECULAR }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_MAT_DIFFUSE),
-			{ dst, sw::node::Phong::IN_MATERIAL_DIFFUSE }
+			{ dst, sw::node::Phong::ID_MATERIAL_DIFFUSE }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_MAT_SPECULAR),
-			{ dst, sw::node::Phong::IN_MATERIAL_SPECULAR }
+			{ dst, sw::node::Phong::ID_MATERIAL_SPECULAR }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_MAT_SHININESS),
-			{ dst, sw::node::Phong::IN_MATERIAL_SHININESS }
+			{ dst, sw::node::Phong::ID_MATERIAL_SHININESS }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_MAT_EMISSION),
-			{ dst, sw::node::Phong::IN_MATERIAL_EMISSION }
+			{ dst, sw::node::Phong::ID_MATERIAL_EMISSION }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_VIEW_POS),
-			{ dst, sw::node::Phong::IN_VIEW_POS }
+			{ dst, sw::node::Phong::ID_VIEW_POS }
 		);
 	}
 	// math
@@ -381,29 +381,29 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const node::Add&>(node);
 		dst = std::make_shared<sw::node::Add>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::ID_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Divide>())
 	{
 		auto& src = static_cast<const node::Divide&>(node);
 		dst = std::make_shared<sw::node::Divide>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::ID_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Multiply>())
 	{
 		auto& src = static_cast<const node::Multiply&>(node);
 		dst = std::make_shared<sw::node::Multiply>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::ID_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::Subtract>())
 	{
 		auto& src = static_cast<const node::Subtract&>(node);
 		dst = std::make_shared<sw::node::Subtract>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::IN_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::IN_B });
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::ID_B });
 	}
 	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
 	{
@@ -411,15 +411,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::InverseLerp>();
 		sw::make_connecting(
 			CreateInputChild(src, node::InverseLerp::ID_A),
-			{ dst, sw::node::InverseLerp::IN_A }
+			{ dst, sw::node::InverseLerp::ID_A }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::InverseLerp::ID_B),
-			{ dst, sw::node::InverseLerp::IN_B }
+			{ dst, sw::node::InverseLerp::ID_B }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::InverseLerp::ID_T),
-			{ dst, sw::node::InverseLerp::IN_T }
+			{ dst, sw::node::InverseLerp::ID_T }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Lerp>())
@@ -428,15 +428,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Lerp>();
 		sw::make_connecting(
 			CreateInputChild(src, node::Lerp::ID_A),
-			{ dst, sw::node::Lerp::IN_A }
+			{ dst, sw::node::Lerp::ID_A }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Lerp::ID_B),
-			{ dst, sw::node::Lerp::IN_B }
+			{ dst, sw::node::Lerp::ID_B }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Lerp::ID_T),
-			{ dst, sw::node::Lerp::IN_T }
+			{ dst, sw::node::Lerp::ID_T }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Remap>())
@@ -445,15 +445,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Remap>();
 		sw::make_connecting(
 			CreateInputChild(src, node::Remap::ID_IN),
-			{ dst, sw::node::Remap::IN_IN }
+			{ dst, sw::node::Remap::ID_IN }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Remap::ID_FROM),
-			{ dst, sw::node::Remap::IN_FROM }
+			{ dst, sw::node::Remap::ID_FROM }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Remap::ID_TO),
-			{ dst, sw::node::Remap::IN_TO }
+			{ dst, sw::node::Remap::ID_TO }
 		);
 	}
 	// procedural
@@ -463,11 +463,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::SimpleNoise>();
 		sw::make_connecting(
 			CreateInputChild(src, node::SimpleNoise::ID_UV),
-			{ dst, sw::node::SimpleNoise::IN_UV }
+			{ dst, sw::node::SimpleNoise::ID_UV }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::SimpleNoise::ID_SCALE),
-			{ dst, sw::node::SimpleNoise::IN_SCALE }
+			{ dst, sw::node::SimpleNoise::ID_SCALE }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Voronoi>())
@@ -476,15 +476,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Voronoi>();
 		sw::make_connecting(
 			CreateInputChild(src, node::Voronoi::ID_UV),
-			{ dst, sw::node::Voronoi::IN_UV }
+			{ dst, sw::node::Voronoi::ID_UV }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Voronoi::ID_ANGLE_OFFSET),
-			{ dst, sw::node::Voronoi::IN_ANGLE_OFFSET }
+			{ dst, sw::node::Voronoi::ID_ANGLE_OFFSET }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Voronoi::ID_CELL_DENSITY),
-			{ dst, sw::node::Voronoi::IN_CELL_DENSITY }
+			{ dst, sw::node::Voronoi::ID_CELL_DENSITY }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Polygon>())
@@ -493,11 +493,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Polygon>();
 		sw::make_connecting(
 			CreateInputChild(src, node::Polygon::ID_UV),
-			{ dst, sw::node::Polygon::IN_UV }
+			{ dst, sw::node::Polygon::ID_UV }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Polygon::ID_SIDES),
-			{ dst, sw::node::Polygon::IN_SIDES }
+			{ dst, sw::node::Polygon::ID_SIDES }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Polygon::ID_WIDTH),
@@ -534,15 +534,15 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Rotate>(src.IsRadians());
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_UV),
-			{ dst, sw::node::Rotate::IN_UV }
+			{ dst, sw::node::Rotate::ID_UV }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_CENTER),
-			{ dst, sw::node::Rotate::IN_CENTER }
+			{ dst, sw::node::Rotate::ID_CENTER }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_ROTATION),
-			{ dst, sw::node::Rotate::IN_ROTATION }
+			{ dst, sw::node::Rotate::ID_ROTATION }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Twirl>())
@@ -551,19 +551,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Twirl>();
 		sw::make_connecting(
 			CreateInputChild(src, node::Twirl::ID_UV),
-			{ dst, sw::node::Twirl::IN_UV }
+			{ dst, sw::node::Twirl::ID_UV }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Twirl::ID_CENTER),
-			{ dst, sw::node::Twirl::IN_CENTER }
+			{ dst, sw::node::Twirl::ID_CENTER }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Twirl::ID_STRENGTH),
-			{ dst, sw::node::Twirl::IN_STRENGTH }
+			{ dst, sw::node::Twirl::ID_STRENGTH }
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Twirl::ID_OFFSET),
-			{ dst, sw::node::Twirl::IN_OFFSET }
+			{ dst, sw::node::Twirl::ID_OFFSET }
 		);
 	}
 	else

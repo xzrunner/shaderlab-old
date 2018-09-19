@@ -29,7 +29,7 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_LIT_POSITION = 0,
 		ID_LIT_AMBIENT,

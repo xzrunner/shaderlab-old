@@ -27,7 +27,7 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_IN = 0,
 		ID_FROM,

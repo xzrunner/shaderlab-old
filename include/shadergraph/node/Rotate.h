@@ -32,7 +32,7 @@ public:
 	void SetRadians(bool rad) { m_is_radians = rad; }
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_UV = 0,
 		ID_CENTER,

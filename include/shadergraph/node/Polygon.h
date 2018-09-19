@@ -25,7 +25,7 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_UV = 0,
 		ID_SIDES,

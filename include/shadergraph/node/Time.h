@@ -25,7 +25,7 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_TIME = 0,
 		ID_SINE_TIME,

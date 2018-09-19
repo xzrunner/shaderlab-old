@@ -27,13 +27,13 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_TEX = 0,
 		ID_UV,
 	};
 
-	enum OutputId
+	enum OutputID
 	{
 		ID_RGBA = 0,
 		ID_R,

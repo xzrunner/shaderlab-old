@@ -25,14 +25,14 @@ public:
 	}
 
 public:
-	enum InputId
+	enum InputID
 	{
 		ID_UV = 0,
 		ID_ANGLE_OFFSET,
 		ID_CELL_DENSITY,
 	};
 
-	enum OutputId
+	enum OutputID
 	{
 		ID_OUT,
 		ID_CELLS,
