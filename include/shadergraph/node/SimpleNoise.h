@@ -19,14 +19,7 @@ public:
 			{ PINS_VECTOR1, "Scale" },
 		},{
 			{ PINS_VECTOR1, "Out", }
-		});
-
-		for (auto& p : GetAllInput()) {
-			p->SetTypeStatic(true);
-		}
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
+		}, true);
 	}
 
 public:

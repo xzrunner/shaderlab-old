@@ -20,7 +20,7 @@ public:
 			{ PINS_VECTOR2, "To" },
 		},{
 			{ PINS_VECTOR1, "Out", }
-		});
+		}, true);
 
 		GetAllInput()[ID_FROM]->SetTypeStatic(true);
 		GetAllInput()[ID_TO]->SetTypeStatic(true);

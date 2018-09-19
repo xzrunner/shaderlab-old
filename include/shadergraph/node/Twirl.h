@@ -21,14 +21,7 @@ public:
 			{ PINS_VECTOR2, "Offset" },
 		},{
 			{ PINS_VECTOR2, "Out", }
-		});
-
-		for (auto& p : GetAllInput()) {
-			p->SetTypeStatic(true);
-		}
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
+		}, true);
 	}
 
 public:

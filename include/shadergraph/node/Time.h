@@ -21,11 +21,7 @@ public:
 			{ PINS_VECTOR1, "Cosine Time", },
 			{ PINS_VECTOR1, "Delta Time", },
 			{ PINS_VECTOR1, "Smooth Delta", },
-		});
-
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
+		}, true);
 	}
 
 public:

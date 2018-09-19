@@ -20,14 +20,7 @@ public:
 			{ PINS_VECTOR1, "Rotation" },
 		},{
 			{ PINS_VECTOR2, "Out", }
-		});
-
-		for (auto& p : GetAllInput()) {
-			p->SetTypeStatic(true);
-		}
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
+		}, true);
 	}
 
 	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,

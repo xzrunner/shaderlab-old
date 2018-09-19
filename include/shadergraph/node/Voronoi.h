@@ -21,14 +21,7 @@ public:
 		},{
 			{ PINS_VECTOR1, "Out", },
 			{ PINS_VECTOR1, "Cells", },
-		});
-
-		for (auto& p : GetAllInput()) {
-			p->SetTypeStatic(true);
-		}
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
+		}, true);
 	}
 
 public:
