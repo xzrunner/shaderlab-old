@@ -25,6 +25,7 @@
 #include "shadergraph/node/Remap.h"
 // uv
 #include "shadergraph/node/Rotate.h"
+#include "shadergraph/node/Twirl.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -181,6 +182,15 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rotate::ID_ROTATION,
 			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Twirl::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Twirl::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Twirl::ID_CENTER,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Twirl::ID_STRENGTH,
+			node::Vector1::GetClassName()))->SetValue(10);
+		CreateDefault(nodes, node, node::Twirl::ID_OFFSET, node::Vector2::GetClassName());
 	}
 }
 

@@ -25,6 +25,7 @@
 #include "shadergraph/node/Remap.h"
 // uv
 #include "shadergraph/node/Rotate.h"
+#include "shadergraph/node/Twirl.h"
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -62,6 +63,7 @@
 #include <shaderweaver/node/NormalTrans.h>
 // uv
 #include <shaderweaver/node/Rotate.h>
+#include <shaderweaver/node/Twirl.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -481,6 +483,27 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_ROTATION),
 			{ dst, sw::node::Rotate::IN_ROTATION }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Twirl>())
+	{
+		auto& src = static_cast<const node::Twirl&>(node);
+		dst = std::make_shared<sw::node::Twirl>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Twirl::ID_UV),
+			{ dst, sw::node::Twirl::IN_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Twirl::ID_CENTER),
+			{ dst, sw::node::Twirl::IN_CENTER }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Twirl::ID_STRENGTH),
+			{ dst, sw::node::Twirl::IN_STRENGTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Twirl::ID_OFFSET),
+			{ dst, sw::node::Twirl::IN_OFFSET }
 		);
 	}
 	else

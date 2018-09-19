@@ -17,6 +17,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Twirl.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector3.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="..\..\..\source\node\Add.cpp" />
     <ClCompile Include="..\..\..\source\node\Gray.cpp" />
     <ClCompile Include="..\..\..\source\node\Rotate.cpp" />
+    <ClCompile Include="..\..\..\source\node\Twirl.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector2.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector3.cpp" />

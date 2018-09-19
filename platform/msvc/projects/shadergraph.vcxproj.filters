@@ -136,6 +136,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h">
       <Filter>nodes\uv</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Twirl.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -221,6 +224,9 @@
       <Filter>nodes\artistic\filter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Rotate.cpp">
+      <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Twirl.cpp">
       <Filter>nodes\uv</Filter>
     </ClCompile>
   </ItemGroup>
