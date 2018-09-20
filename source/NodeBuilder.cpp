@@ -24,9 +24,14 @@
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
 // procedural
+#include "shadergraph/node/Checkerboard.h"
+#include "shadergraph/node/GradientNoise.h"
 #include "shadergraph/node/SimpleNoise.h"
 #include "shadergraph/node/Voronoi.h"
+#include "shadergraph/node/Ellipse.h"
 #include "shadergraph/node/Polygon.h"
+#include "shadergraph/node/Rectangle.h"
+#include "shadergraph/node/RoundedRectangle.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -179,6 +184,22 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
 	}
 	// procedural
+	else if (type == node::Checkerboard::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Checkerboard::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Checkerboard::ID_COLOR_A,
+			node::Vector3::GetClassName()))->SetValue({ 0.2f, 0.2f, 0.2f });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Checkerboard::ID_COLOR_B,
+			node::Vector3::GetClassName()))->SetValue({ 0.7f, 0.7f, 0.7f });
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Checkerboard::ID_FREQUENCY,
+			node::Vector2::GetClassName()))->SetValue({ 1, 1 });
+	}
+	else if (type == node::GradientNoise::GetClassName())
+	{
+		CreateDefault(nodes, node, node::GradientNoise::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::GradientNoise::ID_SCALE,
+			node::Vector1::GetClassName()))->SetValue(10);
+	}
 	else if (type == node::SimpleNoise::GetClassName())
 	{
 		CreateDefault(nodes, node, node::SimpleNoise::ID_UV, node::UV::GetClassName());
@@ -193,6 +214,14 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Voronoi::ID_CELL_DENSITY,
 			node::Vector1::GetClassName()))->SetValue(5);
 	}
+	else if (type == node::Ellipse::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Ellipse::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Ellipse::ID_WIDTH,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Ellipse::ID_HEIGHT,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+	}
 	else if (type == node::Polygon::GetClassName())
 	{
 		CreateDefault(nodes, node, node::Polygon::ID_UV, node::UV::GetClassName());
@@ -202,6 +231,24 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_HEIGHT,
 			node::Vector1::GetClassName()))->SetValue(0.5f);
+	}
+	else if (type == node::Rectangle::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Rectangle::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rectangle::ID_WIDTH,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rectangle::ID_HEIGHT,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+	}
+	else if (type == node::RoundedRectangle::GetClassName())
+	{
+		CreateDefault(nodes, node, node::RoundedRectangle::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_WIDTH,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_HEIGHT,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_RADIUS,
+			node::Vector1::GetClassName()))->SetValue(0.1f);
 	}
 	// uv
 	else if (type == node::Rotate::GetClassName())

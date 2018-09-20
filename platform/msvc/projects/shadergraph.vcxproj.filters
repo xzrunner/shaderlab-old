@@ -151,6 +151,21 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Voronoi.h">
       <Filter>nodes\procedural</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Checkerboard.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\GradientNoise.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Ellipse.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Rectangle.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\RoundedRectangle.h">
+      <Filter>nodes\procedural</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -248,6 +263,21 @@
       <Filter>nodes\procedural</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Voronoi.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Checkerboard.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\GradientNoise.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Ellipse.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Rectangle.cpp">
+      <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\RoundedRectangle.cpp">
       <Filter>nodes\procedural</Filter>
     </ClCompile>
   </ItemGroup>

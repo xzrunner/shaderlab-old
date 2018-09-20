@@ -24,9 +24,14 @@
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
 // procedural
+#include "shadergraph/node/Checkerboard.h"
+#include "shadergraph/node/GradientNoise.h"
 #include "shadergraph/node/SimpleNoise.h"
 #include "shadergraph/node/Voronoi.h"
+#include "shadergraph/node/Ellipse.h"
 #include "shadergraph/node/Polygon.h"
+#include "shadergraph/node/Rectangle.h"
+#include "shadergraph/node/RoundedRectangle.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -58,9 +63,14 @@
 #include <shaderweaver/node/Lerp.h>
 #include <shaderweaver/node/Remap.h>
 // procedural
+#include <shaderweaver/node/Checkerboard.h>
+#include <shaderweaver/node/GradientNoise.h>
 #include <shaderweaver/node/SimpleNoise.h>
 #include <shaderweaver/node/Voronoi.h>
+#include <shaderweaver/node/Ellipse.h>
 #include <shaderweaver/node/Polygon.h>
+#include <shaderweaver/node/Rectangle.h>
+#include <shaderweaver/node/RoundedRectangle.h>
 // utility
 #include <shaderweaver/node/Input.h>
 #include <shaderweaver/node/Output.h>
@@ -457,6 +467,40 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 	// procedural
+	else if (id == bp::GetNodeTypeID<node::Checkerboard>())
+	{
+		auto& src = static_cast<const node::Checkerboard&>(node);
+		dst = std::make_shared<sw::node::Checkerboard>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Checkerboard::ID_UV),
+			{ dst, sw::node::Checkerboard::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Checkerboard::ID_COLOR_A),
+			{ dst, sw::node::Checkerboard::ID_COLOR_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Checkerboard::ID_COLOR_B),
+			{ dst, sw::node::Checkerboard::ID_COLOR_B }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Checkerboard::ID_FREQUENCY),
+			{ dst, sw::node::Checkerboard::ID_FREQUENCY }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::GradientNoise>())
+	{
+		auto& src = static_cast<const node::GradientNoise&>(node);
+		dst = std::make_shared<sw::node::GradientNoise>();
+		sw::make_connecting(
+			CreateInputChild(src, node::GradientNoise::ID_UV),
+			{ dst, sw::node::GradientNoise::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::GradientNoise::ID_SCALE),
+			{ dst, sw::node::GradientNoise::ID_SCALE }
+		);
+	}
 	else if (id == bp::GetNodeTypeID<node::SimpleNoise>())
 	{
 		auto& src = static_cast<const node::SimpleNoise&>(node);
@@ -487,6 +531,23 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Voronoi::ID_CELL_DENSITY }
 		);
 	}
+	else if (id == bp::GetNodeTypeID<node::Ellipse>())
+	{
+		auto& src = static_cast<const node::Ellipse&>(node);
+		dst = std::make_shared<sw::node::Ellipse>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Ellipse::ID_UV),
+			{ dst, sw::node::Ellipse::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Ellipse::ID_WIDTH),
+			{ dst, sw::node::Ellipse::ID_WIDTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Ellipse::ID_HEIGHT),
+			{ dst, sw::node::Ellipse::ID_HEIGHT }
+		);
+	}
 	else if (id == bp::GetNodeTypeID<node::Polygon>())
 	{
 		auto& src = static_cast<const node::Polygon&>(node);
@@ -506,6 +567,44 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::Polygon::ID_HEIGHT),
 			{ dst, sw::node::Polygon::ID_HEIGHT }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Rectangle>())
+	{
+		auto& src = static_cast<const node::Rectangle&>(node);
+		dst = std::make_shared<sw::node::Rectangle>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Rectangle::ID_UV),
+			{ dst, sw::node::Rectangle::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Rectangle::ID_WIDTH),
+			{ dst, sw::node::Rectangle::ID_WIDTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Rectangle::ID_HEIGHT),
+			{ dst, sw::node::Rectangle::ID_HEIGHT }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::RoundedRectangle>())
+	{
+		auto& src = static_cast<const node::RoundedRectangle&>(node);
+		dst = std::make_shared<sw::node::RoundedRectangle>();
+		sw::make_connecting(
+			CreateInputChild(src, node::RoundedRectangle::ID_UV),
+			{ dst, sw::node::RoundedRectangle::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RoundedRectangle::ID_WIDTH),
+			{ dst, sw::node::RoundedRectangle::ID_WIDTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RoundedRectangle::ID_HEIGHT),
+			{ dst, sw::node::RoundedRectangle::ID_HEIGHT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RoundedRectangle::ID_RADIUS),
+			{ dst, sw::node::RoundedRectangle::ID_RADIUS }
 		);
 	}
 	// utility
