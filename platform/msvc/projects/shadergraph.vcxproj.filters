@@ -55,6 +55,15 @@
     <Filter Include="nodes\procedural">
       <UniqueIdentifier>{30c75c1b-054f-4d3f-99b6-c1e2b48774de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\artistic\trans">
+      <UniqueIdentifier>{aa386c92-26c7-44d4-9d57-401afc5da0b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\artistic\adjustment">
+      <UniqueIdentifier>{43f15eeb-ae7b-4e69-8ea4-dbd0f0d2d29a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\artistic\mask">
+      <UniqueIdentifier>{adcc7a7c-c781-4dab-b023-006b2cf5c284}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -165,6 +174,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\RoundedRectangle.h">
       <Filter>nodes\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ColorAddMul.h">
+      <Filter>nodes\artistic\trans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ColorMap.h">
+      <Filter>nodes\artistic\trans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ReplaceColor.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ColorMask.h">
+      <Filter>nodes\artistic\mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ChannelMask.h">
+      <Filter>nodes\artistic\mask</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +303,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\RoundedRectangle.cpp">
       <Filter>nodes\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ColorAddMul.cpp">
+      <Filter>nodes\artistic\trans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ColorMap.cpp">
+      <Filter>nodes\artistic\trans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ReplaceColor.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ColorMask.cpp">
+      <Filter>nodes\artistic\mask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ChannelMask.cpp">
+      <Filter>nodes\artistic\mask</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

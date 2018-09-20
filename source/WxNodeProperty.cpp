@@ -1,5 +1,7 @@
 #include "shadergraph/WxNodeProperty.h"
 
+// artistic
+#include "shadergraph/node/ChannelMask.h"
 // input
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
@@ -21,10 +23,18 @@
 namespace
 {
 
-const wxChar* PIN_TYPES[] = {
-	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool") };
+const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
+const long    CHANNEL_VALUES[] = {
+	sg::node::ChannelMask::CHANNEL_R,
+	sg::node::ChannelMask::CHANNEL_G,
+	sg::node::ChannelMask::CHANNEL_B,
+	sg::node::ChannelMask::CHANNEL_A
+};
 
-const wxChar* ROTATE_TYPES[] = { wxT("rad"), wxT("deg") };
+const wxChar* PIN_TYPES[] = {
+	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool"), NULL };
+
+const wxChar* ROTATE_TYPES[] = { wxT("rad"), wxT("deg"), NULL };
 
 }
 
@@ -45,8 +55,14 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	m_pg->Clear();
 
 	auto type_id = node->TypeID();
+	// artistic
+	if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
+	{
+		auto& cm = dynamic_cast<const node::ChannelMask&>(*node);
+		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, cm.GetChannels()));
+	}
 	// input
-	if (type_id == bp::GetNodeTypeID<node::Vector1>())
+	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
 	{
 		auto& c1 = dynamic_cast<const node::Vector1&>(*node);
 		m_pg->Append(new wxFloatProperty("Value", wxPG_LABEL, c1.GetValue()));
@@ -141,11 +157,19 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	wxAny val = property->GetValue();
 
 	auto type_id = m_node->TypeID();
-	// input
-	if (type_id == bp::GetNodeTypeID<node::Vector1>())
+	// artistic
+	if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
 	{
-		auto& c1 = std::dynamic_pointer_cast<node::Vector1>(m_node);
+		if (key == "Channels") {
+			auto& cm = std::dynamic_pointer_cast<node::ChannelMask>(m_node);
+			cm->SetChannels(wxANY_AS(val, int));
+		}
+	}
+	// input
+	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
+	{
 		if (key == "Value") {
+			auto& c1 = std::dynamic_pointer_cast<node::Vector1>(m_node);
 			c1->SetValue(wxANY_AS(val, float));
 		}
 	}
@@ -190,8 +214,8 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 	else if (type_id == bp::GetNodeTypeID<node::Tex2DAsset>())
 	{
-		auto& t2d = std::dynamic_pointer_cast<node::Tex2DAsset>(m_node);
 		if (key == "name") {
+			auto& t2d = std::dynamic_pointer_cast<node::Tex2DAsset>(m_node);
 			t2d->SetName(wxANY_AS(val, wxString).ToStdString());
 		}
 	}
@@ -208,8 +232,8 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	// uv
 	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
 	{
-		auto& rot = std::dynamic_pointer_cast<node::Rotate>(m_node);
 		if (key == "Unit") {
+			auto& rot = std::dynamic_pointer_cast<node::Rotate>(m_node);
 			rot->SetRadians(wxANY_AS(val, int) == 0);
 		}
 	}

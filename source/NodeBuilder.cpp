@@ -2,7 +2,12 @@
 #include "shadergraph/Pins.h"
 
 // artistic
+#include "shadergraph/node/ColorAddMul.h"
+#include "shadergraph/node/ColorMap.h"
+#include "shadergraph/node/ReplaceColor.h"
 #include "shadergraph/node/Gray.h"
+#include "shadergraph/node/ChannelMask.h"
+#include "shadergraph/node/ColorMask.h"
 // input
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
@@ -93,9 +98,57 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 {
 	auto type = node.GetClassInfo().GetClassName();
 	// artistic
-	if (type == node::Gray::GetClassName())
+	if (type == node::ColorAddMul::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_COL,
+			node::Vector4::GetClassName(), "col"))->SetValue({ 0, 0, 0, 1 });
+		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_MUL,
+			node::Vector4::GetClassName(), "mul"))->SetValue({ 1, 1, 1, 1 });
+		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_ADD,
+			node::Vector4::GetClassName(), "add"))->SetValue({ 0, 0, 0, 0 });
+	}
+	else if (type == node::ColorMap::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_COL,
+			node::Vector3::GetClassName(), "col"))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_RMAP,
+			node::Vector3::GetClassName(), "rmap"))->SetValue({ 1, 0, 0});
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_GMAP,
+			node::Vector3::GetClassName(), "gmap"))->SetValue({ 0, 1, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_BMAP,
+			node::Vector3::GetClassName(), "bmap"))->SetValue({ 0, 0, 1 });
+	}
+	else if (type == node::ReplaceColor::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_COL,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_FROM,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_TO,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ReplaceColor::ID_RANGE,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ReplaceColor::ID_FUZZINESS,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Gray::GetClassName())
 	{
 		CreateDefault(nodes, node, 0, node::Vector4::GetClassName());
+	}
+	else if (type == node::ChannelMask::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+	}
+	else if (type == node::ColorMask::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMask::ID_COL,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMask::ID_MASK,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_RANGE,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_FUZZINESS,
+			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	// input
 	else if (type == node::SampleTex2D::GetClassName())

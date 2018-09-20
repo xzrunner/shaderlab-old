@@ -2,7 +2,12 @@
 #include "shadergraph/Pins.h"
 
 // artistic
+#include "shadergraph/node/ColorAddMul.h"
+#include "shadergraph/node/ColorMap.h"
+#include "shadergraph/node/ReplaceColor.h"
 #include "shadergraph/node/Gray.h"
+#include "shadergraph/node/ChannelMask.h"
+#include "shadergraph/node/ColorMask.h"
 // input
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
@@ -43,7 +48,12 @@
 
 #include <shaderweaver/Evaluator.h>
 // artistic
+#include <shaderweaver/node/ColorAddMul.h>
+#include <shaderweaver/node/ColorMap.h>
+#include <shaderweaver/node/ReplaceColor.h>
 #include <shaderweaver/node/Gray.h>
+#include <shaderweaver/node/ChannelMask.h>
+#include <shaderweaver/node/ColorMask.h>
 // input
 #include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Vector1.h>
@@ -284,11 +294,101 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 
 	int id = node.TypeID();
 	// artistic
-	if (id == bp::GetNodeTypeID<node::Gray>())
+	if (id == bp::GetNodeTypeID<node::ColorAddMul>())
+	{
+		auto& src = static_cast<const node::ColorAddMul&>(node);
+		dst = std::make_shared<sw::node::ColorAddMul>();
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorAddMul::ID_COL),
+			{ dst, sw::node::ColorAddMul::ID_COL }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorAddMul::ID_MUL),
+			{ dst, sw::node::ColorAddMul::ID_MUL }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorAddMul::ID_ADD),
+			{ dst, sw::node::ColorAddMul::ID_ADD }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::ColorMap>())
+	{
+		auto& src = static_cast<const node::ColorMap&>(node);
+		dst = std::make_shared<sw::node::ColorMap>();
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMap::ID_COL),
+			{ dst, sw::node::ColorMap::ID_COL }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMap::ID_RMAP),
+			{ dst, sw::node::ColorMap::ID_RMAP }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMap::ID_GMAP),
+			{ dst, sw::node::ColorMap::ID_GMAP }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMap::ID_BMAP),
+			{ dst, sw::node::ColorMap::ID_BMAP }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::ReplaceColor>())
+	{
+		auto& src = static_cast<const node::ReplaceColor&>(node);
+		dst = std::make_shared<sw::node::ReplaceColor>();
+		sw::make_connecting(
+			CreateInputChild(src, node::ReplaceColor::ID_COL),
+			{ dst, sw::node::ReplaceColor::ID_COL }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ReplaceColor::ID_FROM),
+			{ dst, sw::node::ReplaceColor::ID_FROM }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ReplaceColor::ID_TO),
+			{ dst, sw::node::ReplaceColor::ID_TO }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ReplaceColor::ID_RANGE),
+			{ dst, sw::node::ReplaceColor::ID_RANGE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ReplaceColor::ID_FUZZINESS),
+			{ dst, sw::node::ReplaceColor::ID_FUZZINESS }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Gray>())
 	{
 		auto& src = static_cast<const node::Gray&>(node);
 		dst = std::make_shared<sw::node::Gray>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::ChannelMask>())
+	{
+		auto& src = static_cast<const node::ChannelMask&>(node);
+		dst = std::make_shared<sw::node::ChannelMask>(src.GetChannels());
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::ColorMask>())
+	{
+		auto& src = static_cast<const node::ColorMask&>(node);
+		dst = std::make_shared<sw::node::ColorMask>();
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMask::ID_COL),
+			{ dst, sw::node::ColorMask::ID_COL }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMask::ID_MASK),
+			{ dst, sw::node::ColorMask::ID_MASK }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMask::ID_RANGE),
+			{ dst, sw::node::ColorMask::ID_RANGE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::ColorMask::ID_FUZZINESS),
+			{ dst, sw::node::ColorMask::ID_FUZZINESS }
+		);
 	}
 	// input
 	else if (id == bp::GetNodeTypeID<node::Time>())

@@ -2,6 +2,8 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/NodeHelper.h"
 
+#include "shadergraph/Pins.h"
+
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pins.h>
 
