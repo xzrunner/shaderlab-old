@@ -1,11 +1,6 @@
 #include "shadergraph/NodeHelper.h"
 #include "shadergraph/Pins.h"
-
-#include "shadergraph/node/Add.h"
-#include "shadergraph/node/Subtract.h"
-#include "shadergraph/node/Multiply.h"
-#include "shadergraph/node/Divide.h"
-#include "shadergraph/node/UV.h"
+#include "shadergraph/Node.h"
 
 #include <blueprint/Connecting.h>
 
@@ -22,9 +17,17 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 	if (type0 == type1) {
 		return;
 	}
-
-	if (type0 >= PINS_VECTOR1 && type0 <= PINS_VECTOR4 &&
-		type1 >= PINS_VECTOR1 && type1 <= PINS_VECTOR4)
+	if (type0 >= PINS_DYNAMIC_VECTOR && type0 <= PINS_VECTOR4 &&
+		type1 >= PINS_DYNAMIC_VECTOR && type1 <= PINS_VECTOR4 &&
+		(type0 == PINS_DYNAMIC_VECTOR || type1 == PINS_DYNAMIC_VECTOR))
+	{
+		int type = std::max(type0, type1);
+		SetPinsType(const_cast<bp::Pins&>(p0), type);
+		SetPinsType(const_cast<bp::Pins&>(p1), type);
+	}
+	if (type0 >= PINS_DYNAMIC_MATRIX && type0 <= PINS_MATRIX4 &&
+		type1 >= PINS_DYNAMIC_MATRIX && type1 <= PINS_MATRIX4 &&
+		(type0 == PINS_DYNAMIC_MATRIX || type1 == PINS_DYNAMIC_MATRIX))
 	{
 		int type = std::max(type0, type1);
 		SetPinsType(const_cast<bp::Pins&>(p0), type);
@@ -34,31 +37,67 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 
 void NodeHelper::TypePromote(const bp::Node& node)
 {
-	auto type = node.TypeID();
-	if (type == bp::GetNodeTypeID<node::Add>() ||
-		type == bp::GetNodeTypeID<node::Subtract>() ||
-		type == bp::GetNodeTypeID<node::Multiply>() ||
-		type == bp::GetNodeTypeID<node::Divide>())
+	bool has_dynamic_vec = false;
+	PinsType max_vec = PINS_DYNAMIC_VECTOR;
+	bool has_dynamic_mat = false;
+	PinsType max_mat = PINS_DYNAMIC_MATRIX;
+	for (auto& p : node.GetAllInput())
 	{
-		PinsType type = PINS_VECTOR1;
+		PinsType t = static_cast<PinsType>(p->GetType());
+		if (t == PINS_DYNAMIC_VECTOR) {
+			has_dynamic_vec = true;
+		}
+		if (t == PINS_DYNAMIC_MATRIX) {
+			has_dynamic_mat = true;
+		}
+		if (t >= PINS_DYNAMIC_VECTOR && t <= PINS_VECTOR4) {
+			max_vec = std::max(t, max_vec);
+		}
+		if (t >= PINS_DYNAMIC_MATRIX && t <= PINS_MATRIX4) {
+			max_mat = std::max(t, max_mat);
+		}
+	}
+	for (auto& p : node.GetAllOutput())
+	{
+		PinsType t = static_cast<PinsType>(p->GetType());
+		if (t == PINS_DYNAMIC_VECTOR) {
+			has_dynamic_vec = true;
+		}
+		if (t == PINS_DYNAMIC_MATRIX) {
+			has_dynamic_mat = true;
+		}
+		if (t >= PINS_DYNAMIC_VECTOR && t <= PINS_VECTOR4) {
+			max_vec = std::max(t, max_vec);
+		}
+		if (t >= PINS_DYNAMIC_MATRIX && t <= PINS_MATRIX4) {
+			max_mat = std::max(t, max_mat);
+		}
+	}
 
+	if (has_dynamic_vec)
+	{
 		for (auto& p : node.GetAllInput()) {
-			if (p->GetType() > type) {
-				type = static_cast<PinsType>(p->GetType());
+			if (p->GetType() == PINS_DYNAMIC_VECTOR) {
+				p->SetType(max_vec);
 			}
 		}
 		for (auto& p : node.GetAllOutput()) {
-			if (p->GetType() > type) {
-				type = static_cast<PinsType>(p->GetType());
+			if (p->GetType() == PINS_DYNAMIC_VECTOR) {
+				p->SetType(max_vec);
 			}
 		}
-		assert(type <= PINS_VECTOR4);
-
+	}
+	if (has_dynamic_mat)
+	{
 		for (auto& p : node.GetAllInput()) {
-			SetPinsType(*p, type);
+			if (p->GetType() == PINS_DYNAMIC_MATRIX) {
+				p->SetType(max_mat);
+			}
 		}
 		for (auto& p : node.GetAllOutput()) {
-			SetPinsType(*p, type);
+			if (p->GetType() == PINS_DYNAMIC_MATRIX) {
+				p->SetType(max_mat);
+			}
 		}
 	}
 }
@@ -76,7 +115,7 @@ void NodeHelper::RemoveDefaultNode(const bp::Pins& p)
 
 void NodeHelper::SetPinsType(bp::Pins& pins, int type)
 {
-	if (pins.IsTypeStatic() || pins.GetType() == type) {
+	if (pins.GetType() == type) {
 		return;
 	}
 

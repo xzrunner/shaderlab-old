@@ -15,9 +15,9 @@ public:
 		: Node("ChannelMask", true)
 	{
 		InitPins({
-			{ PINS_VECTOR1, "In", }
+			{ PINS_DYNAMIC_VECTOR, "In", }
 		},{
-			{ PINS_VECTOR1, "Out", }
+			{ PINS_DYNAMIC_VECTOR, "Out", }
 		});
 	}
 

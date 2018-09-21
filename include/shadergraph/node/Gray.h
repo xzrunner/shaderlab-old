@@ -15,9 +15,9 @@ public:
 		: Node("Gray", true)
 	{
 		InitPins({
-			{ PINS_VECTOR4, "In" },
+			{ PINS_COLOR, "In" },
 		},{
-			{ PINS_VECTOR4, "Out", }
+			{ PINS_COLOR, "Out", }
 		});
 	}
 

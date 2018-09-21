@@ -23,7 +23,7 @@ protected:
 		std::string name;
 	};
 	void InitPins(const std::vector<PinsDesc>& input,
-		const std::vector<PinsDesc>& output, bool type_static = false);
+		const std::vector<PinsDesc>& output);
 
 private:
 	void InitPinsImpl(const std::vector<PinsDesc>& pins,

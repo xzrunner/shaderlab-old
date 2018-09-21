@@ -21,7 +21,7 @@ public:
 			{ PINS_VECTOR1, "Height" },
 		},{
 			{ PINS_VECTOR1, "Out", }
-		}, true);
+		});
 	}
 
 public:

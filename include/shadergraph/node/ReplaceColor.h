@@ -22,7 +22,7 @@ public:
 			{ PINS_VECTOR1, "Fuzziness" },
 		},{
 			{ PINS_COLOR,   "Out", }
-		}, true);
+		});
 	}
 
 public:

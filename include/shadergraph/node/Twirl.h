@@ -21,7 +21,7 @@ public:
 			{ PINS_VECTOR2, "Offset" },
 		},{
 			{ PINS_VECTOR2, "Out", }
-		}, true);
+		});
 	}
 
 public:

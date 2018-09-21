@@ -15,10 +15,10 @@ public:
 		: Node("Multiply", true)
 	{
 		InitPins({
-			{ PINS_VECTOR1, "A" },
-			{ PINS_VECTOR1, "B" },
+			{ PINS_DYNAMIC_VECTOR, "A" },
+			{ PINS_DYNAMIC_VECTOR, "B" },
 		},{
-			{ PINS_VECTOR1, "Out", }
+			{ PINS_DYNAMIC_VECTOR, "Out", }
 		});
 	}
 

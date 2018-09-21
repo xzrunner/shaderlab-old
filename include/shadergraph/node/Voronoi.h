@@ -21,7 +21,7 @@ public:
 		},{
 			{ PINS_VECTOR1, "Out", },
 			{ PINS_VECTOR1, "Cells", },
-		}, true);
+		});
 	}
 
 public:

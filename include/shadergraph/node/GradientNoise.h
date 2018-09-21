@@ -19,7 +19,7 @@ public:
 			{ PINS_VECTOR1, "Scale" },
 		},{
 			{ PINS_VECTOR1, "Out", }
-		}, true);
+		});
 	}
 
 public:

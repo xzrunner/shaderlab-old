@@ -15,15 +15,12 @@ public:
 		: Node("Remap", true)
 	{
 		InitPins({
-			{ PINS_VECTOR1, "In" },
+			{ PINS_DYNAMIC_VECTOR, "In" },
 			{ PINS_VECTOR2, "From" },
 			{ PINS_VECTOR2, "To" },
 		},{
-			{ PINS_VECTOR1, "Out", }
-		}, true);
-
-		GetAllInput()[ID_FROM]->SetTypeStatic(true);
-		GetAllInput()[ID_TO]->SetTypeStatic(true);
+			{ PINS_DYNAMIC_VECTOR, "Out", }
+		});
 	}
 
 public:

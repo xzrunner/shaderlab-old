@@ -21,7 +21,7 @@ public:
 			{ PINS_COLOR, "MapB" },
 		},{
 			{ PINS_COLOR, "Out", }
-		}, true);
+		});
 	}
 
 public:

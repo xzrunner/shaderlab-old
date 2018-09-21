@@ -33,22 +33,11 @@ bool Node::Update(const bp::UpdateParams& params)
 }
 
 void Node::InitPins(const std::vector<PinsDesc>& input,
-	                const std::vector<PinsDesc>& output,
-	                bool type_static)
+	                const std::vector<PinsDesc>& output)
 {
 	InitPinsImpl(input, true);
 	InitPinsImpl(output, false);
 	Layout();
-
-	if (type_static)
-	{
-		for (auto& p : GetAllInput()) {
-			p->SetTypeStatic(true);
-		}
-		for (auto& p : GetAllOutput()) {
-			p->SetTypeStatic(true);
-		}
-	}
 }
 
 void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
