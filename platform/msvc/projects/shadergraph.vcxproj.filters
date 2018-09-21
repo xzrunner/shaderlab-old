@@ -64,6 +64,9 @@
     <Filter Include="nodes\artistic\mask">
       <UniqueIdentifier>{adcc7a7c-c781-4dab-b023-006b2cf5c284}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\math\advanced">
+      <UniqueIdentifier>{938a9223-115a-4c13-b0f4-23a95feff886}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -189,6 +192,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\ChannelMask.h">
       <Filter>nodes\artistic\mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Power.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\SquareRoot.h">
+      <Filter>nodes\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Absolute.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Exponential.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Length.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Log.h">
+      <Filter>nodes\math\advanced</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +339,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\ChannelMask.cpp">
       <Filter>nodes\artistic\mask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Power.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\SquareRoot.cpp">
+      <Filter>nodes\math\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Absolute.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Exponential.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Length.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Log.cpp">
+      <Filter>nodes\math\advanced</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

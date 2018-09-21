@@ -8,6 +8,9 @@
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/Tex2DAsset.h"
+// math
+#include "shadergraph/node/Exponential.h"
+#include "shadergraph/node/Log.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 
@@ -19,24 +22,6 @@
 #include <wx/sizer.h>
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
-
-namespace
-{
-
-const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
-const long    CHANNEL_VALUES[] = {
-	sg::node::ChannelMask::CHANNEL_R,
-	sg::node::ChannelMask::CHANNEL_G,
-	sg::node::ChannelMask::CHANNEL_B,
-	sg::node::ChannelMask::CHANNEL_A
-};
-
-const wxChar* PIN_TYPES[] = {
-	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool"), NULL };
-
-const wxChar* ROTATE_TYPES[] = { wxT("rad"), wxT("deg"), NULL };
-
-}
 
 namespace sg
 {
@@ -58,6 +43,14 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	// artistic
 	if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
 	{
+		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
+		const long    CHANNEL_VALUES[] = {
+			sg::node::ChannelMask::CHANNEL_R,
+			sg::node::ChannelMask::CHANNEL_G,
+			sg::node::ChannelMask::CHANNEL_B,
+			sg::node::ChannelMask::CHANNEL_A
+		};
+
 		auto& cm = dynamic_cast<const node::ChannelMask&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, cm.GetChannels()));
 	}
@@ -110,12 +103,34 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 		m_pg->Append(prop);
 	}
+	// math
+	else if (type_id == bp::GetNodeTypeID<node::Exponential>())
+	{
+		auto& exp = dynamic_cast<const node::Exponential&>(*node);
+
+		const wxChar* EXP_TYPES[] = { wxT("BaseE"), wxT("Base2"), NULL };
+		auto type_prop = new wxEnumProperty("Base", wxPG_LABEL, EXP_TYPES);
+		type_prop->SetValue(exp.GetType());
+		m_pg->Append(type_prop);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Log>())
+	{
+		auto& log = dynamic_cast<const node::Log&>(*node);
+
+		const wxChar* EXP_TYPES[] = { wxT("BaseE"), wxT("Base2"), wxT("Base10"), NULL };
+		auto type_prop = new wxEnumProperty("Base", wxPG_LABEL, EXP_TYPES);
+		type_prop->SetValue(log.GetType());
+		m_pg->Append(type_prop);
+	}
 	// utility
 	//else if (type_id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& input = dynamic_cast<const node::Input&>(*node);
 
 	//	m_pg->Append(new wxStringProperty("name", wxPG_LABEL, input.GetName()));
+
+	//const wxChar* PIN_TYPES[] = {
+	//	wxT("vec1"), wxT("vec2"), wxT("vec3"), wxT("vec4"), wxT("color"), wxT("tex2d"), wxT("bool"), NULL };
 
 	//	auto type_prop = new wxEnumProperty("type", wxPG_LABEL, PIN_TYPES);
 	//	type_prop->SetValue(PIN_TYPES[input.GetType() - PINS_VECTOR1]);
@@ -126,6 +141,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	{
 		auto& rot = dynamic_cast<const node::Rotate&>(*node);
 
+		const wxChar* ROTATE_TYPES[] = { wxT("Rad"), wxT("Deg"), NULL };
 		auto type_prop = new wxEnumProperty("Unit", wxPG_LABEL, ROTATE_TYPES);
 		type_prop->SetValue(rot.IsRadians() ? 0 : 1);
 		m_pg->Append(type_prop);
@@ -163,6 +179,21 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		if (key == "Channels") {
 			auto& cm = std::dynamic_pointer_cast<node::ChannelMask>(m_node);
 			cm->SetChannels(wxANY_AS(val, int));
+		}
+	}
+	// math
+	else if (type_id == bp::GetNodeTypeID<node::Exponential>())
+	{
+		if (key == "Base") {
+			auto& exp = std::dynamic_pointer_cast<node::Exponential>(m_node);
+			exp->SetType(node::Exponential::BaseType(wxANY_AS(val, int)));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Log>())
+	{
+		if (key == "Base") {
+			auto& log = std::dynamic_pointer_cast<node::Log>(m_node);
+			log->SetType(node::Log::BaseType(wxANY_AS(val, int)));
 		}
 	}
 	// input

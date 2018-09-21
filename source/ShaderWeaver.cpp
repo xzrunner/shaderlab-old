@@ -25,6 +25,12 @@
 #include "shadergraph/node/Divide.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Subtract.h"
+#include "shadergraph/node/Power.h"
+#include "shadergraph/node/SquareRoot.h"
+#include "shadergraph/node/Absolute.h"
+#include "shadergraph/node/Exponential.h"
+#include "shadergraph/node/Length.h"
+#include "shadergraph/node/Log.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
@@ -69,6 +75,12 @@
 #include <shaderweaver/node/Divide.h>
 #include <shaderweaver/node/Multiply.h>
 #include <shaderweaver/node/Subtract.h>
+#include <shaderweaver/node/Power.h>
+#include <shaderweaver/node/SquareRoot.h>
+#include <shaderweaver/node/Absolute.h>
+#include <shaderweaver/node/Exponential.h>
+#include <shaderweaver/node/Length.h>
+#include <shaderweaver/node/Log.h>
 #include <shaderweaver/node/InverseLerp.h>
 #include <shaderweaver/node/Lerp.h>
 #include <shaderweaver/node/Remap.h>
@@ -514,6 +526,47 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Subtract>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::ID_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::Power>())
+	{
+		auto& src = static_cast<const node::Power&>(node);
+		dst = std::make_shared<sw::node::Power>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Power::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Power::ID_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::SquareRoot>())
+	{
+		auto& src = static_cast<const node::SquareRoot&>(node);
+		dst = std::make_shared<sw::node::SquareRoot>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Absolute>())
+	{
+		auto& src = static_cast<const node::Absolute&>(node);
+		dst = std::make_shared<sw::node::Absolute>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Exponential>())
+	{
+		auto& src = static_cast<const node::Exponential&>(node);
+		dst = std::make_shared<sw::node::Exponential>(
+			static_cast<sw::node::Exponential::BaseType>(src.GetType())
+		);
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Length>())
+	{
+		auto& src = static_cast<const node::Length&>(node);
+		dst = std::make_shared<sw::node::Length>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Log>())
+	{
+		auto& src = static_cast<const node::Log&>(node);
+		dst = std::make_shared<sw::node::Log>(
+			static_cast<sw::node::Log::BaseType>(src.GetType())
+		);
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
 	{

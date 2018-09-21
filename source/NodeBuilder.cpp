@@ -25,6 +25,12 @@
 #include "shadergraph/node/Divide.h"
 #include "shadergraph/node/Multiply.h"
 #include "shadergraph/node/Subtract.h"
+#include "shadergraph/node/Power.h"
+#include "shadergraph/node/SquareRoot.h"
+#include "shadergraph/node/Absolute.h"
+#include "shadergraph/node/Exponential.h"
+#include "shadergraph/node/Length.h"
+#include "shadergraph/node/Log.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
@@ -208,6 +214,31 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Power::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::SquareRoot::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Absolute::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Exponential::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Length::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Log::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 	}
 	else if (type == node::InverseLerp::GetClassName())
 	{
