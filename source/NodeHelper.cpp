@@ -110,7 +110,11 @@ void NodeHelper::RemoveDefaultNode(const bp::Pins& p)
 	}
 	auto& pair = conns[0]->GetFrom();
 	assert(pair);
-	pair->GetParent().SetLifeDeleteLater(true);
+	auto& parent = pair->GetParent();
+	// fixme: is default input param
+	if (parent.IsStyleOnlyTitle()) {
+		parent.SetLifeDeleteLater(true);
+	}
 }
 
 void NodeHelper::SetPinsType(bp::Pins& pins, int type)
