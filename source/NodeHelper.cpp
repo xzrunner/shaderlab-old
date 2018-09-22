@@ -19,7 +19,8 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 	}
 	if (type0 >= PINS_DYNAMIC_VECTOR && type0 <= PINS_VECTOR4 &&
 		type1 >= PINS_DYNAMIC_VECTOR && type1 <= PINS_VECTOR4 &&
-		(type0 == PINS_DYNAMIC_VECTOR || type1 == PINS_DYNAMIC_VECTOR))
+		(p0.GetOldType() == PINS_DYNAMIC_VECTOR ||
+		 p1.GetOldType() == PINS_DYNAMIC_VECTOR))
 	{
 		int type = std::max(type0, type1);
 		SetPinsType(const_cast<bp::Pins&>(p0), type);
@@ -27,7 +28,8 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 	}
 	if (type0 >= PINS_DYNAMIC_MATRIX && type0 <= PINS_MATRIX4 &&
 		type1 >= PINS_DYNAMIC_MATRIX && type1 <= PINS_MATRIX4 &&
-		(type0 == PINS_DYNAMIC_MATRIX || type1 == PINS_DYNAMIC_MATRIX))
+		(p0.GetOldType() == PINS_DYNAMIC_MATRIX ||
+		 p1.GetOldType() == PINS_DYNAMIC_MATRIX))
 	{
 		int type = std::max(type0, type1);
 		SetPinsType(const_cast<bp::Pins&>(p0), type);
@@ -43,13 +45,15 @@ void NodeHelper::TypePromote(const bp::Node& node)
 	PinsType max_mat = PINS_DYNAMIC_MATRIX;
 	for (auto& p : node.GetAllInput())
 	{
-		PinsType t = static_cast<PinsType>(p->GetType());
-		if (t == PINS_DYNAMIC_VECTOR) {
+		auto old_t = p->GetOldType();
+		if (old_t == PINS_DYNAMIC_VECTOR) {
 			has_dynamic_vec = true;
 		}
-		if (t == PINS_DYNAMIC_MATRIX) {
+		if (old_t == PINS_DYNAMIC_MATRIX) {
 			has_dynamic_mat = true;
 		}
+
+		PinsType t = static_cast<PinsType>(p->GetType());
 		if (t >= PINS_DYNAMIC_VECTOR && t <= PINS_VECTOR4) {
 			max_vec = std::max(t, max_vec);
 		}
@@ -59,13 +63,15 @@ void NodeHelper::TypePromote(const bp::Node& node)
 	}
 	for (auto& p : node.GetAllOutput())
 	{
-		PinsType t = static_cast<PinsType>(p->GetType());
-		if (t == PINS_DYNAMIC_VECTOR) {
+		auto old_t = p->GetOldType();
+		if (old_t == PINS_DYNAMIC_VECTOR) {
 			has_dynamic_vec = true;
 		}
-		if (t == PINS_DYNAMIC_MATRIX) {
+		if (old_t == PINS_DYNAMIC_MATRIX) {
 			has_dynamic_mat = true;
 		}
+
+		PinsType t = static_cast<PinsType>(p->GetType());
 		if (t >= PINS_DYNAMIC_VECTOR && t <= PINS_VECTOR4) {
 			max_vec = std::max(t, max_vec);
 		}
@@ -77,12 +83,12 @@ void NodeHelper::TypePromote(const bp::Node& node)
 	if (has_dynamic_vec)
 	{
 		for (auto& p : node.GetAllInput()) {
-			if (p->GetType() == PINS_DYNAMIC_VECTOR) {
+			if (p->GetOldType() == PINS_DYNAMIC_VECTOR) {
 				p->SetType(max_vec);
 			}
 		}
 		for (auto& p : node.GetAllOutput()) {
-			if (p->GetType() == PINS_DYNAMIC_VECTOR) {
+			if (p->GetOldType() == PINS_DYNAMIC_VECTOR) {
 				p->SetType(max_vec);
 			}
 		}
@@ -90,12 +96,12 @@ void NodeHelper::TypePromote(const bp::Node& node)
 	if (has_dynamic_mat)
 	{
 		for (auto& p : node.GetAllInput()) {
-			if (p->GetType() == PINS_DYNAMIC_MATRIX) {
+			if (p->GetOldType() == PINS_DYNAMIC_MATRIX) {
 				p->SetType(max_mat);
 			}
 		}
 		for (auto& p : node.GetAllOutput()) {
-			if (p->GetType() == PINS_DYNAMIC_MATRIX) {
+			if (p->GetOldType() == PINS_DYNAMIC_MATRIX) {
 				p->SetType(max_mat);
 			}
 		}
