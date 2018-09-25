@@ -29,6 +29,7 @@ std::string Pins::GetDesc() const
 	switch (GetType())
 	{
 	case PINS_VECTOR1:
+	case PINS_DYNAMIC_VECTOR:
 		ret += "(1)";
 		break;
 	case PINS_VECTOR2:
@@ -58,6 +59,7 @@ const pt2::Color& Pins::GetColor() const
 	switch (GetType())
 	{
 	case PINS_VECTOR1:
+	case PINS_DYNAMIC_VECTOR:
 		return COL_VECTOR1;
 	case PINS_VECTOR2:
 		return COL_VECTOR2;
@@ -84,36 +86,49 @@ bool Pins::CanTypeCast(int type) const
 
 	switch (GetType())
 	{
+	case PINS_DYNAMIC_VECTOR:
+		return type == PINS_VECTOR1
+			|| type == PINS_VECTOR2
+			|| type == PINS_VECTOR3
+			|| type == PINS_VECTOR4
+			|| type == PINS_COLOR
+			|| type == PINS_BOOLEAN;
 	case PINS_VECTOR1:
-		return type == PINS_VECTOR2
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR2
 			|| type == PINS_VECTOR3
 			|| type == PINS_VECTOR4
 			|| type == PINS_COLOR
 			|| type == PINS_BOOLEAN;
 	case PINS_VECTOR2:
-		return type == PINS_VECTOR1
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR1
 			|| type == PINS_VECTOR3
 			|| type == PINS_VECTOR4
 			|| type == PINS_COLOR;
 	case PINS_VECTOR3:
-		return type == PINS_VECTOR1
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR1
 			|| type == PINS_VECTOR2
 			|| type == PINS_VECTOR4
 			|| type == PINS_COLOR;
 	case PINS_VECTOR4:
-		return type == PINS_VECTOR1
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR1
 			|| type == PINS_VECTOR2
 			|| type == PINS_VECTOR3
 			|| type == PINS_COLOR;
 	case PINS_COLOR:
-		return type == PINS_VECTOR1
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR1
 			|| type == PINS_VECTOR2
 			|| type == PINS_VECTOR3
 			|| type == PINS_VECTOR4;
 	case PINS_TEXTURE2D:
 		return false;
 	case PINS_BOOLEAN:
-		return type == PINS_VECTOR1;
+		return type == PINS_DYNAMIC_VECTOR
+			|| type == PINS_VECTOR1;
 	}
 
 	return false;
