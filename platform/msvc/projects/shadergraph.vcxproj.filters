@@ -211,6 +211,24 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Log.h">
       <Filter>nodes\math\advanced</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Modulo.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Negate.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Normalize.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Posterize.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Reciprocal.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ReciprocalSquareRoot.h">
+      <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -356,6 +374,24 @@
       <Filter>nodes\math\advanced</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Log.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Modulo.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Negate.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Normalize.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Posterize.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Reciprocal.cpp">
+      <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ReciprocalSquareRoot.cpp">
       <Filter>nodes\math\advanced</Filter>
     </ClCompile>
   </ItemGroup>

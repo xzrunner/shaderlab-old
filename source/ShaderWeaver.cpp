@@ -31,6 +31,12 @@
 #include "shadergraph/node/Exponential.h"
 #include "shadergraph/node/Length.h"
 #include "shadergraph/node/Log.h"
+#include "shadergraph/node/Modulo.h"
+#include "shadergraph/node/Negate.h"
+#include "shadergraph/node/Normalize.h"
+#include "shadergraph/node/Posterize.h"
+#include "shadergraph/node/Reciprocal.h"
+#include "shadergraph/node/ReciprocalSquareRoot.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
@@ -81,6 +87,12 @@
 #include <shaderweaver/node/Exponential.h>
 #include <shaderweaver/node/Length.h>
 #include <shaderweaver/node/Log.h>
+#include <shaderweaver/node/Modulo.h>
+#include <shaderweaver/node/Negate.h>
+#include <shaderweaver/node/Normalize.h>
+#include <shaderweaver/node/Posterize.h>
+#include <shaderweaver/node/Reciprocal.h>
+#include <shaderweaver/node/ReciprocalSquareRoot.h>
 #include <shaderweaver/node/InverseLerp.h>
 #include <shaderweaver/node/Lerp.h>
 #include <shaderweaver/node/Remap.h>
@@ -566,6 +578,56 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Log>(
 			static_cast<sw::node::Log::BaseType>(src.GetType())
 		);
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Modulo>())
+	{
+		auto& src = static_cast<const node::Modulo&>(node);
+		dst = std::make_shared<sw::node::Modulo>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Modulo::ID_A),
+			{ dst, sw::node::Modulo::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Modulo::ID_B),
+			{ dst, sw::node::Modulo::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Negate>())
+	{
+		auto& src = static_cast<const node::Negate&>(node);
+		dst = std::make_shared<sw::node::Negate>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Normalize>())
+	{
+		auto& src = static_cast<const node::Normalize&>(node);
+		dst = std::make_shared<sw::node::Normalize>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Posterize>())
+	{
+		auto& src = static_cast<const node::Posterize&>(node);
+		dst = std::make_shared<sw::node::Posterize>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Posterize::ID_INPUT),
+			{ dst, sw::node::Posterize::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Posterize::ID_STEPS),
+			{ dst, sw::node::Posterize::ID_STEPS }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Reciprocal>())
+	{
+		auto& src = static_cast<const node::Reciprocal&>(node);
+		dst = std::make_shared<sw::node::Reciprocal>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::ReciprocalSquareRoot>())
+	{
+		auto& src = static_cast<const node::ReciprocalSquareRoot&>(node);
+		dst = std::make_shared<sw::node::ReciprocalSquareRoot>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (id == bp::GetNodeTypeID<node::InverseLerp>())

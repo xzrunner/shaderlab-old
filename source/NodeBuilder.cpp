@@ -31,6 +31,12 @@
 #include "shadergraph/node/Exponential.h"
 #include "shadergraph/node/Length.h"
 #include "shadergraph/node/Log.h"
+#include "shadergraph/node/Modulo.h"
+#include "shadergraph/node/Negate.h"
+#include "shadergraph/node/Normalize.h"
+#include "shadergraph/node/Posterize.h"
+#include "shadergraph/node/Reciprocal.h"
+#include "shadergraph/node/ReciprocalSquareRoot.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
 #include "shadergraph/node/Remap.h"
@@ -237,6 +243,32 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 	}
 	else if (type == node::Log::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Modulo::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Negate::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Normalize::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Posterize::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Reciprocal::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::ReciprocalSquareRoot::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 	}
