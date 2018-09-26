@@ -15,7 +15,7 @@ public:
 		: Node("ColorAddMul", true)
 	{
 		InitPins({
-			{ PINS_COLOR, "Col" },
+			{ PINS_COLOR, "In" },
 			{ PINS_COLOR, "Mul" },
 			{ PINS_COLOR, "Add" },
 		},{

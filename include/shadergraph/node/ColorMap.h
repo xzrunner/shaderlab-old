@@ -15,7 +15,7 @@ public:
 		: Node("ColorMap", true)
 	{
 		InitPins({
-			{ PINS_COLOR, "Col" },
+			{ PINS_COLOR, "In" },
 			{ PINS_COLOR, "MapR" },
 			{ PINS_COLOR, "MapG" },
 			{ PINS_COLOR, "MapB" },
