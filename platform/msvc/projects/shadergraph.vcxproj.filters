@@ -70,6 +70,9 @@
     <Filter Include="nodes\channel">
       <UniqueIdentifier>{fe83b3af-23a6-40e0-8b9b-73ddefb1ec97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\utility\logic">
+      <UniqueIdentifier>{c75b4631-1f1a-4e97-8012-7baa4bfd50aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -243,6 +246,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Swizzle.h">
       <Filter>nodes\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Preview.h">
+      <Filter>nodes\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\And.h">
+      <Filter>nodes\utility\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Or.h">
+      <Filter>nodes\utility\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Not.h">
+      <Filter>nodes\utility\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Boolean.h">
+      <Filter>nodes\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Branch.h">
+      <Filter>nodes\utility\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Comparison.h">
+      <Filter>nodes\utility\logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,6 +444,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Swizzle.cpp">
       <Filter>nodes\channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Preview.cpp">
+      <Filter>nodes\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\And.cpp">
+      <Filter>nodes\utility\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Or.cpp">
+      <Filter>nodes\utility\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Not.cpp">
+      <Filter>nodes\utility\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Boolean.cpp">
+      <Filter>nodes\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Branch.cpp">
+      <Filter>nodes\utility\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Comparison.cpp">
+      <Filter>nodes\utility\logic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

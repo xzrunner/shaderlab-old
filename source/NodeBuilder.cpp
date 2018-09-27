@@ -14,6 +14,7 @@
 #include "shadergraph/node/Split.h"
 #include "shadergraph/node/Swizzle.h"
 // input
+#include "shadergraph/node/Boolean.h"
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
@@ -54,6 +55,13 @@
 #include "shadergraph/node/Polygon.h"
 #include "shadergraph/node/Rectangle.h"
 #include "shadergraph/node/RoundedRectangle.h"
+// utility
+#include "shadergraph/node/Preview.h"
+#include "shadergraph/node/And.h"
+#include "shadergraph/node/Or.h"
+#include "shadergraph/node/Not.h"
+#include "shadergraph/node/Branch.h"
+#include "shadergraph/node/Comparison.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -394,6 +402,41 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_RADIUS,
 			node::Vector1::GetClassName()))->SetValue(0.1f);
+	}
+	// utility
+	else if (type == node::Preview::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::And::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Or::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Not::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Branch::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_PREDICATE,
+			node::Boolean::GetClassName()))->SetValue(true);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_TRUE,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_FALSE,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Comparison::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Comparison::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Comparison::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	// uv
 	else if (type == node::Rotate::GetClassName())

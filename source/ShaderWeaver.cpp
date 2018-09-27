@@ -14,6 +14,7 @@
 #include "shadergraph/node/Split.h"
 #include "shadergraph/node/Swizzle.h"
 // input
+#include "shadergraph/node/Boolean.h"
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
@@ -54,6 +55,13 @@
 #include "shadergraph/node/Polygon.h"
 #include "shadergraph/node/Rectangle.h"
 #include "shadergraph/node/RoundedRectangle.h"
+// utility
+#include "shadergraph/node/Preview.h"
+#include "shadergraph/node/And.h"
+#include "shadergraph/node/Or.h"
+#include "shadergraph/node/Not.h"
+#include "shadergraph/node/Branch.h"
+#include "shadergraph/node/Comparison.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 #include "shadergraph/node/Twirl.h"
@@ -77,6 +85,7 @@
 #include <shaderweaver/node/Split.h>
 #include <shaderweaver/node/Swizzle.h>
 // input
+#include <shaderweaver/node/Boolean.h>
 #include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Vector1.h>
 #include <shaderweaver/node/Vector2.h>
@@ -87,6 +96,7 @@
 // master
 #include <shaderweaver/node/Phong.h>
 // math
+#include <shaderweaver/node/Assign.h>
 #include <shaderweaver/node/Add.h>
 #include <shaderweaver/node/Divide.h>
 #include <shaderweaver/node/Multiply.h>
@@ -123,6 +133,11 @@
 #include <shaderweaver/node/PositionTrans.h>
 #include <shaderweaver/node/FragPosTrans.h>
 #include <shaderweaver/node/NormalTrans.h>
+#include <shaderweaver/node/And.h>
+#include <shaderweaver/node/Or.h>
+#include <shaderweaver/node/Not.h>
+#include <shaderweaver/node/Branch.h>
+#include <shaderweaver/node/Comparison.h>
 // uv
 #include <shaderweaver/node/Rotate.h>
 #include <shaderweaver/node/Twirl.h>
@@ -465,6 +480,12 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		src.GetChannels(channels);
 		dst = std::make_shared<sw::node::Swizzle>(channels);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	// input
+	else if (id == bp::GetNodeTypeID<node::Boolean>())
+	{
+		auto& src = static_cast<const node::Boolean&>(node);
+		dst = std::make_shared<sw::node::Boolean>(src.GetName(), src.GetValue());
 	}
 	else if (id == bp::GetNodeTypeID<node::Time>())
 	{
@@ -874,6 +895,64 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 	// utility
+	else if (id == bp::GetNodeTypeID<node::Preview>())
+	{
+		auto& src = static_cast<const node::Preview&>(node);
+		dst = std::make_shared<sw::node::Assign>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::And>())
+	{
+		auto& src = static_cast<const node::And&>(node);
+		dst = std::make_shared<sw::node::And>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::And::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::And::ID_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::Or>())
+	{
+		auto& src = static_cast<const node::Or&>(node);
+		dst = std::make_shared<sw::node::Or>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Or::ID_A });
+		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Or::ID_B });
+	}
+	else if (id == bp::GetNodeTypeID<node::Not>())
+	{
+		auto& src = static_cast<const node::Not&>(node);
+		dst = std::make_shared<sw::node::Not>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Branch>())
+	{
+		auto& src = static_cast<const node::Branch&>(node);
+		dst = std::make_shared<sw::node::Branch>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Branch::ID_PREDICATE),
+			{ dst, sw::node::Branch::ID_PREDICATE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Branch::ID_TRUE),
+			{ dst, sw::node::Branch::ID_TRUE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Branch::ID_FALSE),
+			{ dst, sw::node::Branch::ID_FALSE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Comparison>())
+	{
+		auto& src = static_cast<const node::Comparison&>(node);
+		dst = std::make_shared<sw::node::Comparison>(
+			static_cast<sw::node::Comparison::CmpType>(src.GetCmpType())
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Comparison::ID_A),
+			{ dst, sw::node::Comparison::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Comparison::ID_B),
+			{ dst, sw::node::Comparison::ID_B }
+		);
+	}
 	//else if (id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& src = static_cast<const node::Input&>(node);

@@ -6,6 +6,7 @@
 #include "shadergraph/node/Flip.h"
 #include "shadergraph/node/Swizzle.h"
 // input
+#include "shadergraph/node/Boolean.h"
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
 #include "shadergraph/node/Vector3.h"
@@ -14,6 +15,8 @@
 // math
 #include "shadergraph/node/Exponential.h"
 #include "shadergraph/node/Log.h"
+// utility
+#include "shadergraph/node/Comparison.h"
 // uv
 #include "shadergraph/node/Rotate.h"
 
@@ -96,6 +99,11 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(a_prop);
 	}
 	// input
+	else if (type_id == bp::GetNodeTypeID<node::Boolean>())
+	{
+		auto& b = dynamic_cast<const node::Boolean&>(*node);
+		m_pg->Append(new wxBoolProperty("Value", wxPG_LABEL, b.GetValue()));
+	}
 	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
 	{
 		auto& c1 = dynamic_cast<const node::Vector1&>(*node);
@@ -164,6 +172,18 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(type_prop);
 	}
 	// utility
+	else if (type_id == bp::GetNodeTypeID<node::Comparison>())
+	{
+		auto& cmp = dynamic_cast<const node::Comparison&>(*node);
+
+		const wxChar* CMP_TYPES[] = {
+			wxT("Equal"), wxT("Not Equal"), wxT("Less"), wxT("Less or Equal"),
+			wxT("Greater"), wxT("Greater or Equal"), NULL
+		};
+		auto type_prop = new wxEnumProperty("Cmp", wxPG_LABEL, CMP_TYPES);
+		type_prop->SetValue(cmp.GetCmpType());
+		m_pg->Append(type_prop);
+	}
 	//else if (type_id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& input = dynamic_cast<const node::Input&>(*node);
@@ -262,6 +282,13 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 	}
 	// input
+	else if (type_id == bp::GetNodeTypeID<node::Boolean>())
+	{
+		if (key == "Value") {
+			auto& b = std::dynamic_pointer_cast<node::Boolean>(m_node);
+			b->SetValue(wxANY_AS(val, bool));
+		}
+	}
 	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
 	{
 		if (key == "Value") {
@@ -316,6 +343,13 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 	}
 	// utility
+	else if (type_id == bp::GetNodeTypeID<node::Comparison>())
+	{
+		if (key == "Cmp") {
+			auto& cmp = std::dynamic_pointer_cast<node::Comparison>(m_node);
+			cmp->SetCmpType(static_cast<node::Comparison::CmpType>(wxANY_AS(val, int)));
+		}
+	}
 	//else if (type_id == bp::GetNodeTypeID<node::Input>())
 	//{
 	//	auto& input = std::dynamic_pointer_cast<node::Input>(m_node);
