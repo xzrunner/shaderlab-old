@@ -18,6 +18,7 @@
 // utility
 #include "shadergraph/node/Comparison.h"
 // uv
+#include "shadergraph/node/Flipbook.h"
 #include "shadergraph/node/Rotate.h"
 
 #include <ee0/SubjectMgr.h>
@@ -198,6 +199,16 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	//	m_pg->Append(type_prop);
 	//}
 	// uv
+	else if (type_id == bp::GetNodeTypeID<node::Flipbook>())
+	{
+		auto& fb = dynamic_cast<const node::Flipbook&>(*node);
+		auto& invert = fb.GetInvert();
+
+		m_pg->Append(new wxBoolProperty("Invert X", wxPG_LABEL, invert.x));
+		m_pg->SetPropertyAttribute("Invert X", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+		m_pg->Append(new wxBoolProperty("Invert Y", wxPG_LABEL, invert.y));
+		m_pg->SetPropertyAttribute("Invert Y", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+	}
 	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
 	{
 		auto& rot = dynamic_cast<const node::Rotate&>(*node);
@@ -360,6 +371,15 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	//	}
 	//}
 	// uv
+	else if (type_id == bp::GetNodeTypeID<node::Flipbook>())
+	{
+		auto& fb = std::dynamic_pointer_cast<node::Flipbook>(m_node);
+		if (key == "Invert X") {
+			fb->SetInvert(sm::bvec2(wxANY_AS(val, bool), fb->GetInvert().y));
+		} else if (key == "Invert Y") {
+			fb->SetInvert(sm::bvec2(fb->GetInvert().x, wxANY_AS(val, bool)));
+		}
+	}
 	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
 	{
 		if (key == "Unit") {

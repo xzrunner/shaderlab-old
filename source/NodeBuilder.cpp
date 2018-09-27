@@ -63,7 +63,12 @@
 #include "shadergraph/node/Branch.h"
 #include "shadergraph/node/Comparison.h"
 // uv
+#include "shadergraph/node/Flipbook.h"
+#include "shadergraph/node/PolarCoordinates.h"
+#include "shadergraph/node/RadialShear.h"
 #include "shadergraph/node/Rotate.h"
+#include "shadergraph/node/Spherize.h"
+#include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
 
 #include <node0/SceneNode.h>
@@ -439,6 +444,36 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	// uv
+	else if (type == node::Flipbook::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Flipbook::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_WIDTH,
+			node::Vector1::GetClassName()))->SetValue(1);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_HEIGHT,
+			node::Vector1::GetClassName()))->SetValue(1);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_TILE,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::PolarCoordinates::GetClassName())
+	{
+		CreateDefault(nodes, node, node::PolarCoordinates::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::PolarCoordinates::ID_CENTER,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::PolarCoordinates::ID_RADIAL_SCALE,
+			node::Vector1::GetClassName()))->SetValue(1);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::PolarCoordinates::ID_LENGTH_SCALE,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::RadialShear::GetClassName())
+	{
+		CreateDefault(nodes, node, node::RadialShear::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_CENTER,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_STRENGTH,
+			node::Vector2::GetClassName()))->SetValue({ 10, 10 });
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_OFFSET,
+			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+	}
 	else if (type == node::Rotate::GetClassName())
 	{
 		CreateDefault(nodes, node, node::Rotate::ID_UV, node::UV::GetClassName());
@@ -446,6 +481,24 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rotate::ID_ROTATION,
 			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Spherize::GetClassName())
+	{
+		CreateDefault(nodes, node, node::Spherize::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_CENTER,
+			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_STRENGTH,
+			node::Vector2::GetClassName()))->SetValue({ 10, 10 });
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_OFFSET,
+			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+	}
+	else if (type == node::TilingAndOffset::GetClassName())
+	{
+		CreateDefault(nodes, node, node::TilingAndOffset::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::TilingAndOffset::ID_TILLING,
+			node::Vector2::GetClassName()))->SetValue({ 1, 1 });
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::TilingAndOffset::ID_OFFSET,
+			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
 	}
 	else if (type == node::Twirl::GetClassName())
 	{

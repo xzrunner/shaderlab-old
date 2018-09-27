@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Ellipse.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Exponential.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Flip.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Flipbook.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\GradientNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Length.h" />
@@ -38,10 +39,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Normalize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Not.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Or.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\PolarCoordinates.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Polygon.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Posterize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Power.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Preview.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\RadialShear.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Reciprocal.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\ReciprocalSquareRoot.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Rectangle.h" />
@@ -49,9 +52,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\RoundedRectangle.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\SimpleNoise.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Spherize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Split.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\SquareRoot.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Swizzle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\TilingAndOffset.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Twirl.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h" />
@@ -96,6 +101,7 @@
     <ClCompile Include="..\..\..\source\node\Ellipse.cpp" />
     <ClCompile Include="..\..\..\source\node\Exponential.cpp" />
     <ClCompile Include="..\..\..\source\node\Flip.cpp" />
+    <ClCompile Include="..\..\..\source\node\Flipbook.cpp" />
     <ClCompile Include="..\..\..\source\node\GradientNoise.cpp" />
     <ClCompile Include="..\..\..\source\node\Gray.cpp" />
     <ClCompile Include="..\..\..\source\node\Length.cpp" />
@@ -105,10 +111,12 @@
     <ClCompile Include="..\..\..\source\node\Normalize.cpp" />
     <ClCompile Include="..\..\..\source\node\Not.cpp" />
     <ClCompile Include="..\..\..\source\node\Or.cpp" />
+    <ClCompile Include="..\..\..\source\node\PolarCoordinates.cpp" />
     <ClCompile Include="..\..\..\source\node\Polygon.cpp" />
     <ClCompile Include="..\..\..\source\node\Posterize.cpp" />
     <ClCompile Include="..\..\..\source\node\Power.cpp" />
     <ClCompile Include="..\..\..\source\node\Preview.cpp" />
+    <ClCompile Include="..\..\..\source\node\RadialShear.cpp" />
     <ClCompile Include="..\..\..\source\node\Reciprocal.cpp" />
     <ClCompile Include="..\..\..\source\node\ReciprocalSquareRoot.cpp" />
     <ClCompile Include="..\..\..\source\node\Rectangle.cpp" />
@@ -116,9 +124,11 @@
     <ClCompile Include="..\..\..\source\node\Rotate.cpp" />
     <ClCompile Include="..\..\..\source\node\RoundedRectangle.cpp" />
     <ClCompile Include="..\..\..\source\node\SimpleNoise.cpp" />
+    <ClCompile Include="..\..\..\source\node\Spherize.cpp" />
     <ClCompile Include="..\..\..\source\node\Split.cpp" />
     <ClCompile Include="..\..\..\source\node\SquareRoot.cpp" />
     <ClCompile Include="..\..\..\source\node\Swizzle.cpp" />
+    <ClCompile Include="..\..\..\source\node\TilingAndOffset.cpp" />
     <ClCompile Include="..\..\..\source\node\Twirl.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector2.cpp" />

@@ -63,7 +63,12 @@
 #include "shadergraph/node/Branch.h"
 #include "shadergraph/node/Comparison.h"
 // uv
+#include "shadergraph/node/Flipbook.h"
+#include "shadergraph/node/PolarCoordinates.h"
+#include "shadergraph/node/RadialShear.h"
 #include "shadergraph/node/Rotate.h"
+#include "shadergraph/node/Spherize.h"
+#include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
 
 #include <blueprint/Node.h>
@@ -139,7 +144,12 @@
 #include <shaderweaver/node/Branch.h>
 #include <shaderweaver/node/Comparison.h>
 // uv
+#include <shaderweaver/node/Flipbook.h>
+#include <shaderweaver/node/PolarCoordinates.h>
+#include <shaderweaver/node/RadialShear.h>
 #include <shaderweaver/node/Rotate.h>
+#include <shaderweaver/node/Spherize.h>
+#include <shaderweaver/node/TilingAndOffset.h>
 #include <shaderweaver/node/Twirl.h>
 
 #include <unirender/Blackboard.h>
@@ -972,6 +982,69 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
 	//}
 	// UV
+	else if (id == bp::GetNodeTypeID<node::Flipbook>())
+	{
+		auto& src = static_cast<const node::Flipbook&>(node);
+		dst = std::make_shared<sw::node::Flipbook>(src.GetInvert());
+		sw::make_connecting(
+			CreateInputChild(src, node::Flipbook::ID_UV),
+			{ dst, sw::node::Flipbook::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Flipbook::ID_WIDTH),
+			{ dst, sw::node::Flipbook::ID_WIDTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Flipbook::ID_HEIGHT),
+			{ dst, sw::node::Flipbook::ID_HEIGHT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Flipbook::ID_TILE),
+			{ dst, sw::node::Flipbook::ID_TILE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::PolarCoordinates>())
+	{
+		auto& src = static_cast<const node::PolarCoordinates&>(node);
+		dst = std::make_shared<sw::node::PolarCoordinates>();
+		sw::make_connecting(
+			CreateInputChild(src, node::PolarCoordinates::ID_UV),
+			{ dst, sw::node::PolarCoordinates::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::PolarCoordinates::ID_CENTER),
+			{ dst, sw::node::PolarCoordinates::ID_CENTER }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::PolarCoordinates::ID_RADIAL_SCALE),
+			{ dst, sw::node::PolarCoordinates::ID_RADIAL_SCALE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::PolarCoordinates::ID_LENGTH_SCALE),
+			{ dst, sw::node::PolarCoordinates::ID_LENGTH_SCALE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::RadialShear>())
+	{
+		auto& src = static_cast<const node::RadialShear&>(node);
+		dst = std::make_shared<sw::node::RadialShear>();
+		sw::make_connecting(
+			CreateInputChild(src, node::RadialShear::ID_UV),
+			{ dst, sw::node::RadialShear::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RadialShear::ID_CENTER),
+			{ dst, sw::node::RadialShear::ID_CENTER }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RadialShear::ID_STRENGTH),
+			{ dst, sw::node::RadialShear::ID_STRENGTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RadialShear::ID_OFFSET),
+			{ dst, sw::node::RadialShear::ID_OFFSET }
+		);
+	}
 	else if (id == bp::GetNodeTypeID<node::Rotate>())
 	{
 		auto& src = static_cast<const node::Rotate&>(node);
@@ -987,6 +1060,44 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_ROTATION),
 			{ dst, sw::node::Rotate::ID_ROTATION }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Spherize>())
+	{
+		auto& src = static_cast<const node::Spherize&>(node);
+		dst = std::make_shared<sw::node::Spherize>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Spherize::ID_UV),
+			{ dst, sw::node::Spherize::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Spherize::ID_CENTER),
+			{ dst, sw::node::Spherize::ID_CENTER }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Spherize::ID_STRENGTH),
+			{ dst, sw::node::Spherize::ID_STRENGTH }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Spherize::ID_OFFSET),
+			{ dst, sw::node::Spherize::ID_OFFSET }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::TilingAndOffset>())
+	{
+		auto& src = static_cast<const node::TilingAndOffset&>(node);
+		dst = std::make_shared<sw::node::TilingAndOffset>();
+		sw::make_connecting(
+			CreateInputChild(src, node::TilingAndOffset::ID_UV),
+			{ dst, sw::node::TilingAndOffset::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::TilingAndOffset::ID_TILLING),
+			{ dst, sw::node::TilingAndOffset::ID_TILLING }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::TilingAndOffset::ID_OFFSET),
+			{ dst, sw::node::TilingAndOffset::ID_OFFSET }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Twirl>())

@@ -268,6 +268,21 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Comparison.h">
       <Filter>nodes\utility\logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Flipbook.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\PolarCoordinates.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\RadialShear.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Spherize.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\TilingAndOffset.h">
+      <Filter>nodes\uv</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -465,6 +480,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Comparison.cpp">
       <Filter>nodes\utility\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Flipbook.cpp">
+      <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\PolarCoordinates.cpp">
+      <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\RadialShear.cpp">
+      <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Spherize.cpp">
+      <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\TilingAndOffset.cpp">
+      <Filter>nodes\uv</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
