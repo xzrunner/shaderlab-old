@@ -21,6 +21,9 @@
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/UV.h"
+#include "shadergraph/node/Matrix2.h"
+#include "shadergraph/node/Matrix3.h"
+#include "shadergraph/node/Matrix4.h"
 #include "shadergraph/node/SampleTex2D.h"
 #include "shadergraph/node/Tex2DAsset.h"
 // master
@@ -43,9 +46,24 @@
 #include "shadergraph/node/Posterize.h"
 #include "shadergraph/node/Reciprocal.h"
 #include "shadergraph/node/ReciprocalSquareRoot.h"
+#include "shadergraph/node/DDX.h"
+#include "shadergraph/node/DDY.h"
+#include "shadergraph/node/DDXY.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/Smoothstep.h"
+#include "shadergraph/node/MatrixConstruction.h"
+#include "shadergraph/node/MatrixDeterminant.h"
+#include "shadergraph/node/MatrixSplit.h"
+#include "shadergraph/node/MatrixTranspose.h"
+#include "shadergraph/node/Clamp.h"
+#include "shadergraph/node/Fraction.h"
+#include "shadergraph/node/Maximum.h"
+#include "shadergraph/node/Minimum.h"
+#include "shadergraph/node/OneMinus.h"
+#include "shadergraph/node/RandomRange.h"
 #include "shadergraph/node/Remap.h"
+#include "shadergraph/node/Saturate.h"
 // procedural
 #include "shadergraph/node/Checkerboard.h"
 #include "shadergraph/node/GradientNoise.h"
@@ -314,6 +332,18 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
 	}
+	else if (type == node::DDX::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::DDY::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::DDXY::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+	}
 	else if (type == node::InverseLerp::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_A,
@@ -332,6 +362,76 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_T,
 			node::Vector1::GetClassName()))->SetValue(0);
 	}
+	else if (type == node::Smoothstep::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_T,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::MatrixConstruction::GetClassName())
+	{
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M0, node::Vector4::GetClassName());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M1, node::Vector4::GetClassName());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M2, node::Vector4::GetClassName());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M3, node::Vector4::GetClassName());
+	}
+	else if (type == node::MatrixDeterminant::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+	}
+	else if (type == node::MatrixSplit::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+	}
+	else if (type == node::MatrixTranspose::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+	}
+	else if (type == node::Clamp::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_IN,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_MIN,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_MAX,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::Fraction::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Maximum::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Maximum::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Maximum::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Minimum::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Minimum::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Minimum::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::OneMinus::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::RandomRange::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RandomRange::ID_SEED,
+			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RandomRange::ID_MIN,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RandomRange::ID_MAX,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
 	else if (type == node::Remap::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Remap::ID_IN,
@@ -340,6 +440,11 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(-1, 1));
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_TO,
 			node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
+	}
+	else if (type == node::Saturate::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	// procedural
 	else if (type == node::Checkerboard::GetClassName())

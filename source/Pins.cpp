@@ -129,6 +129,22 @@ bool Pins::CanTypeCast(int type) const
 	case PINS_BOOLEAN:
 		return type == PINS_DYNAMIC_VECTOR
 			|| type == PINS_VECTOR1;
+	case PINS_DYNAMIC_MATRIX:
+		return type == PINS_MATRIX2
+			|| type == PINS_MATRIX3
+			|| type == PINS_MATRIX4;
+	case PINS_MATRIX2:
+		return type == PINS_DYNAMIC_MATRIX
+			|| type == PINS_MATRIX3
+			|| type == PINS_MATRIX4;
+	case PINS_MATRIX3:
+		return type == PINS_DYNAMIC_MATRIX
+			|| type == PINS_MATRIX2
+			|| type == PINS_MATRIX4;
+	case PINS_MATRIX4:
+		return type == PINS_DYNAMIC_MATRIX
+			|| type == PINS_MATRIX2
+			|| type == PINS_MATRIX3;
 	}
 
 	return false;

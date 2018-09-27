@@ -21,6 +21,9 @@
 #include "shadergraph/node/Vector3.h"
 #include "shadergraph/node/Vector4.h"
 #include "shadergraph/node/UV.h"
+#include "shadergraph/node/Matrix2.h"
+#include "shadergraph/node/Matrix3.h"
+#include "shadergraph/node/Matrix4.h"
 #include "shadergraph/node/SampleTex2D.h"
 #include "shadergraph/node/Tex2DAsset.h"
 // master
@@ -43,9 +46,24 @@
 #include "shadergraph/node/Posterize.h"
 #include "shadergraph/node/Reciprocal.h"
 #include "shadergraph/node/ReciprocalSquareRoot.h"
+#include "shadergraph/node/DDX.h"
+#include "shadergraph/node/DDY.h"
+#include "shadergraph/node/DDXY.h"
 #include "shadergraph/node/InverseLerp.h"
 #include "shadergraph/node/Lerp.h"
+#include "shadergraph/node/Smoothstep.h"
+#include "shadergraph/node/MatrixConstruction.h"
+#include "shadergraph/node/MatrixDeterminant.h"
+#include "shadergraph/node/MatrixSplit.h"
+#include "shadergraph/node/MatrixTranspose.h"
+#include "shadergraph/node/Clamp.h"
+#include "shadergraph/node/Fraction.h"
+#include "shadergraph/node/Maximum.h"
+#include "shadergraph/node/Minimum.h"
+#include "shadergraph/node/OneMinus.h"
+#include "shadergraph/node/RandomRange.h"
 #include "shadergraph/node/Remap.h"
+#include "shadergraph/node/Saturate.h"
 // procedural
 #include "shadergraph/node/Checkerboard.h"
 #include "shadergraph/node/GradientNoise.h"
@@ -97,6 +115,9 @@
 #include <shaderweaver/node/Vector3.h>
 #include <shaderweaver/node/Vector4.h>
 #include <shaderweaver/node/UV.h>
+#include <shaderweaver/node/Matrix2.h>
+#include <shaderweaver/node/Matrix3.h>
+#include <shaderweaver/node/Matrix4.h>
 #include <shaderweaver/node/SampleTex2D.h>
 // master
 #include <shaderweaver/node/Phong.h>
@@ -118,9 +139,24 @@
 #include <shaderweaver/node/Posterize.h>
 #include <shaderweaver/node/Reciprocal.h>
 #include <shaderweaver/node/ReciprocalSquareRoot.h>
+#include <shaderweaver/node/DDX.h>
+#include <shaderweaver/node/DDY.h>
+#include <shaderweaver/node/DDXY.h>
 #include <shaderweaver/node/InverseLerp.h>
 #include <shaderweaver/node/Lerp.h>
+#include <shaderweaver/node/Smoothstep.h>
+#include <shaderweaver/node/MatrixConstruction.h>
+#include <shaderweaver/node/MatrixDeterminant.h>
+#include <shaderweaver/node/MatrixSplit.h>
+#include <shaderweaver/node/MatrixTranspose.h>
+#include <shaderweaver/node/Clamp.h>
+#include <shaderweaver/node/Fraction.h>
+#include <shaderweaver/node/Maximum.h>
+#include <shaderweaver/node/Minimum.h>
+#include <shaderweaver/node/OneMinus.h>
+#include <shaderweaver/node/RandomRange.h>
 #include <shaderweaver/node/Remap.h>
+#include <shaderweaver/node/Saturate.h>
 // procedural
 #include <shaderweaver/node/Checkerboard.h>
 #include <shaderweaver/node/GradientNoise.h>
@@ -526,6 +562,21 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::UV&>(node);
 		dst = std::make_shared<sw::node::UV>(src.GetName());
 	}
+	else if (id == bp::GetNodeTypeID<node::Matrix2>())
+	{
+		auto& src = static_cast<const node::Matrix2&>(node);
+		dst = std::make_shared<sw::node::Matrix2>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::Matrix3>())
+	{
+		auto& src = static_cast<const node::Matrix3&>(node);
+		dst = std::make_shared<sw::node::Matrix3>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<node::Matrix4>())
+	{
+		auto& src = static_cast<const node::Matrix4&>(node);
+		dst = std::make_shared<sw::node::Matrix4>(src.GetName(), src.GetValue());
+	}
 	else if (id == bp::GetNodeTypeID<node::SampleTex2D>())
 	{
 		auto& src = static_cast<const node::SampleTex2D&>(node);
@@ -712,6 +763,24 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::ReciprocalSquareRoot>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
+	else if (id == bp::GetNodeTypeID<node::DDX>())
+	{
+		auto& src = static_cast<const node::DDX&>(node);
+		dst = std::make_shared<sw::node::DDX>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::DDY>())
+	{
+		auto& src = static_cast<const node::DDY&>(node);
+		dst = std::make_shared<sw::node::DDY>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::DDXY>())
+	{
+		auto& src = static_cast<const node::DDXY&>(node);
+		dst = std::make_shared<sw::node::DDXY>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
 	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
 	{
 		auto& src = static_cast<const node::InverseLerp&>(node);
@@ -746,6 +815,134 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Lerp::ID_T }
 		);
 	}
+	else if (id == bp::GetNodeTypeID<node::Smoothstep>())
+	{
+		auto& src = static_cast<const node::Smoothstep&>(node);
+		dst = std::make_shared<sw::node::Smoothstep>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Smoothstep::ID_A),
+			{ dst, sw::node::Smoothstep::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Smoothstep::ID_B),
+			{ dst, sw::node::Smoothstep::ID_B }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Smoothstep::ID_T),
+			{ dst, sw::node::Smoothstep::ID_T }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	{
+		auto& src = static_cast<const node::MatrixConstruction&>(node);
+		dst = std::make_shared<sw::node::MatrixConstruction>(src.IsRow());
+		sw::make_connecting(
+			CreateInputChild(src, node::MatrixConstruction::ID_M0),
+			{ dst, sw::node::MatrixConstruction::ID_M0 }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::MatrixConstruction::ID_M1),
+			{ dst, sw::node::MatrixConstruction::ID_M1 }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::MatrixConstruction::ID_M2),
+			{ dst, sw::node::MatrixConstruction::ID_M2 }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::MatrixConstruction::ID_M3),
+			{ dst, sw::node::MatrixConstruction::ID_M3 }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::MatrixDeterminant>())
+	{
+		auto& src = static_cast<const node::MatrixDeterminant&>(node);
+		dst = std::make_shared<sw::node::MatrixDeterminant>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::MatrixSplit>())
+	{
+		auto& src = static_cast<const node::MatrixSplit&>(node);
+		dst = std::make_shared<sw::node::MatrixSplit>(src.IsRow());
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::MatrixTranspose>())
+	{
+		auto& src = static_cast<const node::MatrixTranspose&>(node);
+		dst = std::make_shared<sw::node::MatrixTranspose>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Clamp>())
+	{
+		auto& src = static_cast<const node::Clamp&>(node);
+		dst = std::make_shared<sw::node::Clamp>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Clamp::ID_IN),
+			{ dst, sw::node::Clamp::ID_IN }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Clamp::ID_MIN),
+			{ dst, sw::node::Clamp::ID_MIN }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Clamp::ID_MAX),
+			{ dst, sw::node::Clamp::ID_MAX }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Fraction>())
+	{
+		auto& src = static_cast<const node::Fraction&>(node);
+		dst = std::make_shared<sw::node::Fraction>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Maximum>())
+	{
+		auto& src = static_cast<const node::Maximum&>(node);
+		dst = std::make_shared<sw::node::Maximum>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Maximum::ID_A),
+			{ dst, sw::node::Maximum::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Maximum::ID_B),
+			{ dst, sw::node::Maximum::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Minimum>())
+	{
+		auto& src = static_cast<const node::Minimum&>(node);
+		dst = std::make_shared<sw::node::Minimum>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Minimum::ID_A),
+			{ dst, sw::node::Minimum::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Minimum::ID_B),
+			{ dst, sw::node::Minimum::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::OneMinus>())
+	{
+		auto& src = static_cast<const node::OneMinus&>(node);
+		dst = std::make_shared<sw::node::OneMinus>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::RandomRange>())
+	{
+		auto& src = static_cast<const node::RandomRange&>(node);
+		dst = std::make_shared<sw::node::RandomRange>();
+		sw::make_connecting(
+			CreateInputChild(src, node::RandomRange::ID_SEED),
+			{ dst, sw::node::RandomRange::ID_SEED }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RandomRange::ID_MIN),
+			{ dst, sw::node::RandomRange::ID_MIN }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::RandomRange::ID_MAX),
+			{ dst, sw::node::RandomRange::ID_MAX }
+		);
+	}
 	else if (id == bp::GetNodeTypeID<node::Remap>())
 	{
 		auto& src = static_cast<const node::Remap&>(node);
@@ -762,6 +959,12 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			CreateInputChild(src, node::Remap::ID_TO),
 			{ dst, sw::node::Remap::ID_TO }
 		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Saturate>())
+	{
+		auto& src = static_cast<const node::Saturate&>(node);
+		dst = std::make_shared<sw::node::Saturate>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	// procedural
 	else if (id == bp::GetNodeTypeID<node::Checkerboard>())

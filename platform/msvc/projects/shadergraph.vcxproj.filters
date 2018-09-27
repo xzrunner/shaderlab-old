@@ -73,6 +73,15 @@
     <Filter Include="nodes\utility\logic">
       <UniqueIdentifier>{c75b4631-1f1a-4e97-8012-7baa4bfd50aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\math\derivative">
+      <UniqueIdentifier>{0b2a573e-d2d4-4ec6-ae42-4d6de3a3b3c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\matrix">
+      <UniqueIdentifier>{7616f85d-34bd-4d21-882d-3d2001b6e904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\input\matrix">
+      <UniqueIdentifier>{ad777cd9-8800-4588-9d1c-fbf65b97a6b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -282,6 +291,60 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\TilingAndOffset.h">
       <Filter>nodes\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Smoothstep.h">
+      <Filter>nodes\math\interplation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\DDX.h">
+      <Filter>nodes\math\derivative</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\DDY.h">
+      <Filter>nodes\math\derivative</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\DDXY.h">
+      <Filter>nodes\math\derivative</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixConstruction.h">
+      <Filter>nodes\math\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixDeterminant.h">
+      <Filter>nodes\math\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixSplit.h">
+      <Filter>nodes\math\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixTranspose.h">
+      <Filter>nodes\math\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix4.h">
+      <Filter>nodes\input\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix3.h">
+      <Filter>nodes\input\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix2.h">
+      <Filter>nodes\input\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Clamp.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Fraction.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Maximum.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Minimum.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\OneMinus.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\RandomRange.h">
+      <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Saturate.h">
+      <Filter>nodes\math\range</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -495,6 +558,60 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\TilingAndOffset.cpp">
       <Filter>nodes\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Smoothstep.cpp">
+      <Filter>nodes\math\interplation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\DDX.cpp">
+      <Filter>nodes\math\derivative</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\DDY.cpp">
+      <Filter>nodes\math\derivative</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\DDXY.cpp">
+      <Filter>nodes\math\derivative</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\MatrixConstruction.cpp">
+      <Filter>nodes\math\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\MatrixDeterminant.cpp">
+      <Filter>nodes\math\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\MatrixSplit.cpp">
+      <Filter>nodes\math\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\MatrixTranspose.cpp">
+      <Filter>nodes\math\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Matrix4.cpp">
+      <Filter>nodes\input\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Matrix3.cpp">
+      <Filter>nodes\input\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Matrix2.cpp">
+      <Filter>nodes\input\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Clamp.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Fraction.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Maximum.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Minimum.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\OneMinus.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\RandomRange.cpp">
+      <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Saturate.cpp">
+      <Filter>nodes\math\range</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

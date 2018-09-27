@@ -15,6 +15,8 @@
 // math
 #include "shadergraph/node/Exponential.h"
 #include "shadergraph/node/Log.h"
+#include "shadergraph/node/MatrixConstruction.h"
+#include "shadergraph/node/MatrixSplit.h"
 // utility
 #include "shadergraph/node/Comparison.h"
 // uv
@@ -172,6 +174,24 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(log.GetType());
 		m_pg->Append(type_prop);
 	}
+	else if (type_id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	{
+		auto& mc = dynamic_cast<const node::MatrixConstruction&>(*node);
+
+		const wxChar* TYPES[] = { wxT("Row"), wxT("Column"), NULL };
+		auto type_prop = new wxEnumProperty("Mat", wxPG_LABEL, TYPES);
+		type_prop->SetValue(mc.IsRow() ? 0 : 1);
+		m_pg->Append(type_prop);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::MatrixSplit>())
+	{
+		auto& ms = dynamic_cast<const node::MatrixSplit&>(*node);
+
+		const wxChar* TYPES[] = { wxT("Row"), wxT("Column"), NULL };
+		auto type_prop = new wxEnumProperty("Mat", wxPG_LABEL, TYPES);
+		type_prop->SetValue(ms.IsRow() ? 0 : 1);
+		m_pg->Append(type_prop);
+	}
 	// utility
 	else if (type_id == bp::GetNodeTypeID<node::Comparison>())
 	{
@@ -290,6 +310,20 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		if (key == "Base") {
 			auto& log = std::dynamic_pointer_cast<node::Log>(m_node);
 			log->SetType(node::Log::BaseType(wxANY_AS(val, int)));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	{
+		if (key == "Mat") {
+			auto& mc = std::dynamic_pointer_cast<node::MatrixConstruction>(m_node);
+			mc->SetRow(wxANY_AS(val, int) == 0);
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::MatrixSplit>())
+	{
+		if (key == "Mat") {
+			auto& ms = std::dynamic_pointer_cast<node::MatrixSplit>(m_node);
+			ms->SetRow(wxANY_AS(val, int) == 0);
 		}
 	}
 	// input
