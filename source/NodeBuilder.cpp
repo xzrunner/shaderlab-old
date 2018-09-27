@@ -8,6 +8,11 @@
 #include "shadergraph/node/Gray.h"
 #include "shadergraph/node/ChannelMask.h"
 #include "shadergraph/node/ColorMask.h"
+// channel
+#include "shadergraph/node/Combine.h"
+#include "shadergraph/node/Flip.h"
+#include "shadergraph/node/Split.h"
+#include "shadergraph/node/Swizzle.h"
 // input
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
@@ -161,6 +166,30 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_FUZZINESS,
 			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	// channel
+	else if (type == node::Combine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_R,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_G,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Flip::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+	}
+	else if (type == node::Split::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+	}
+	else if (type == node::Swizzle::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
 	}
 	// input
 	else if (type == node::SampleTex2D::GetClassName())

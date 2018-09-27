@@ -8,6 +8,11 @@
 #include "shadergraph/node/Gray.h"
 #include "shadergraph/node/ChannelMask.h"
 #include "shadergraph/node/ColorMask.h"
+// channel
+#include "shadergraph/node/Combine.h"
+#include "shadergraph/node/Flip.h"
+#include "shadergraph/node/Split.h"
+#include "shadergraph/node/Swizzle.h"
 // input
 #include "shadergraph/node/Time.h"
 #include "shadergraph/node/Vector1.h"
@@ -66,6 +71,11 @@
 #include <shaderweaver/node/Gray.h>
 #include <shaderweaver/node/ChannelMask.h>
 #include <shaderweaver/node/ColorMask.h>
+// channel
+#include <shaderweaver/node/Combine.h>
+#include <shaderweaver/node/Flip.h>
+#include <shaderweaver/node/Split.h>
+#include <shaderweaver/node/Swizzle.h>
 // input
 #include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Vector1.h>
@@ -414,7 +424,48 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::ColorMask::ID_FUZZINESS }
 		);
 	}
-	// input
+	// channel
+	else if (id == bp::GetNodeTypeID<node::Combine>())
+	{
+		auto& src = static_cast<const node::Combine&>(node);
+		dst = std::make_shared<sw::node::Combine>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Combine::ID_R),
+			{ dst, sw::node::Combine::ID_R }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Combine::ID_G),
+			{ dst, sw::node::Combine::ID_G }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Combine::ID_B),
+			{ dst, sw::node::Combine::ID_B }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Combine::ID_A),
+			{ dst, sw::node::Combine::ID_A }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Flip>())
+	{
+		auto& src = static_cast<const node::Flip&>(node);
+		dst = std::make_shared<sw::node::Flip>(src.GetChannels());
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Split>())
+	{
+		auto& src = static_cast<const node::Split&>(node);
+		dst = std::make_shared<sw::node::Split>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Swizzle>())
+	{
+		auto& src = static_cast<const node::Swizzle&>(node);
+		uint32_t channels[4];
+		src.GetChannels(channels);
+		dst = std::make_shared<sw::node::Swizzle>(channels);
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
 	else if (id == bp::GetNodeTypeID<node::Time>())
 	{
 		dst = std::make_shared<sw::node::Time>();

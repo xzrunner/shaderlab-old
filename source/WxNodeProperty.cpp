@@ -2,6 +2,9 @@
 
 // artistic
 #include "shadergraph/node/ChannelMask.h"
+// channel
+#include "shadergraph/node/Flip.h"
+#include "shadergraph/node/Swizzle.h"
 // input
 #include "shadergraph/node/Vector1.h"
 #include "shadergraph/node/Vector2.h"
@@ -53,6 +56,44 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 		auto& cm = dynamic_cast<const node::ChannelMask&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, cm.GetChannels()));
+	}
+	// channel
+	else if (type_id == bp::GetNodeTypeID<node::Flip>())
+	{
+		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
+		const long    CHANNEL_VALUES[] = {
+			sg::node::Flip::CHANNEL_R,
+			sg::node::Flip::CHANNEL_G,
+			sg::node::Flip::CHANNEL_B,
+			sg::node::Flip::CHANNEL_A
+		};
+
+		auto& flip = dynamic_cast<const node::Flip&>(*node);
+		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, flip.GetChannels()));
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Swizzle>())
+	{
+		auto& swizzle = dynamic_cast<const node::Swizzle&>(*node);
+		uint32_t channels[4];
+		swizzle.GetChannels(channels);
+
+		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
+
+		auto r_prop = new wxEnumProperty("R", wxPG_LABEL, CHANNEL_TYPES);
+		r_prop->SetValue(int(channels[0]));
+		m_pg->Append(r_prop);
+
+		auto g_prop = new wxEnumProperty("G", wxPG_LABEL, CHANNEL_TYPES);
+		g_prop->SetValue(int(channels[1]));
+		m_pg->Append(g_prop);
+
+		auto b_prop = new wxEnumProperty("B", wxPG_LABEL, CHANNEL_TYPES);
+		b_prop->SetValue(int(channels[2]));
+		m_pg->Append(b_prop);
+
+		auto a_prop = new wxEnumProperty("A", wxPG_LABEL, CHANNEL_TYPES);
+		a_prop->SetValue(int(channels[3]));
+		m_pg->Append(a_prop);
 	}
 	// input
 	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
@@ -180,6 +221,30 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			auto& cm = std::dynamic_pointer_cast<node::ChannelMask>(m_node);
 			cm->SetChannels(wxANY_AS(val, int));
 		}
+	}
+	// channel
+	else if (type_id == bp::GetNodeTypeID<node::Flip>())
+	{
+		if (key == "Channels") {
+			auto& flip = std::dynamic_pointer_cast<node::Flip>(m_node);
+			flip->SetChannels(wxANY_AS(val, int));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Swizzle>())
+	{
+		uint32_t channels[4];
+		auto& swizzle = std::dynamic_pointer_cast<node::Swizzle>(m_node);
+		swizzle->GetChannels(channels);
+		if (key == "R") {
+			channels[0] = wxANY_AS(val, int);
+		} else if (key == "G") {
+			channels[1] = wxANY_AS(val, int);
+		} else if (key == "B") {
+			channels[2] = wxANY_AS(val, int);
+		} else if (key == "A") {
+			channels[3] = wxANY_AS(val, int);
+		}
+		swizzle->SetChannels(channels);
 	}
 	// math
 	else if (type_id == bp::GetNodeTypeID<node::Exponential>())

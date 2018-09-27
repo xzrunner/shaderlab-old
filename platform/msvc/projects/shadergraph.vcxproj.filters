@@ -67,6 +67,9 @@
     <Filter Include="nodes\math\advanced">
       <UniqueIdentifier>{938a9223-115a-4c13-b0f4-23a95feff886}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\channel">
+      <UniqueIdentifier>{fe83b3af-23a6-40e0-8b9b-73ddefb1ec97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -228,6 +231,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\ReciprocalSquareRoot.h">
       <Filter>nodes\math\advanced</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Combine.h">
+      <Filter>nodes\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Flip.h">
+      <Filter>nodes\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Split.h">
+      <Filter>nodes\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Swizzle.h">
+      <Filter>nodes\channel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +408,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\ReciprocalSquareRoot.cpp">
       <Filter>nodes\math\advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Combine.cpp">
+      <Filter>nodes\channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Flip.cpp">
+      <Filter>nodes\channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Split.cpp">
+      <Filter>nodes\channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Swizzle.cpp">
+      <Filter>nodes\channel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
