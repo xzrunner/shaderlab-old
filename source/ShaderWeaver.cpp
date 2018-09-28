@@ -64,6 +64,29 @@
 #include "shadergraph/node/RandomRange.h"
 #include "shadergraph/node/Remap.h"
 #include "shadergraph/node/Saturate.h"
+#include "shadergraph/node/Ceiling.h"
+#include "shadergraph/node/Floor.h"
+#include "shadergraph/node/Round.h"
+#include "shadergraph/node/Sign.h"
+#include "shadergraph/node/Step.h"
+#include "shadergraph/node/Truncate.h"
+#include "shadergraph/node/Arccosine.h"
+#include "shadergraph/node/Arcsine.h"
+#include "shadergraph/node/Arctangent.h"
+#include "shadergraph/node/Arctangent2.h"
+#include "shadergraph/node/Cosine.h"
+#include "shadergraph/node/DegreesToRadians.h"
+#include "shadergraph/node/HyperbolicCosine.h"
+#include "shadergraph/node/HyperbolicSine.h"
+#include "shadergraph/node/HyperbolicTangent.h"
+#include "shadergraph/node/RadiansToDegrees.h"
+#include "shadergraph/node/Sine.h"
+#include "shadergraph/node/Tangent.h"
+#include "shadergraph/node/CrossProduct.h"
+#include "shadergraph/node/Distance.h"
+#include "shadergraph/node/DotProduct.h"
+#include "shadergraph/node/Projection.h"
+#include "shadergraph/node/Rejection.h"
 // procedural
 #include "shadergraph/node/Checkerboard.h"
 #include "shadergraph/node/GradientNoise.h"
@@ -157,6 +180,29 @@
 #include <shaderweaver/node/RandomRange.h>
 #include <shaderweaver/node/Remap.h>
 #include <shaderweaver/node/Saturate.h>
+#include <shaderweaver/node/Ceiling.h>
+#include <shaderweaver/node/Floor.h>
+#include <shaderweaver/node/Round.h>
+#include <shaderweaver/node/Sign.h>
+#include <shaderweaver/node/Step.h>
+#include <shaderweaver/node/Truncate.h>
+#include <shaderweaver/node/Arccosine.h>
+#include <shaderweaver/node/Arcsine.h>
+#include <shaderweaver/node/Arctangent.h>
+#include <shaderweaver/node/Arctangent2.h>
+#include <shaderweaver/node/Cosine.h>
+#include <shaderweaver/node/DegreesToRadians.h>
+#include <shaderweaver/node/HyperbolicCosine.h>
+#include <shaderweaver/node/HyperbolicSine.h>
+#include <shaderweaver/node/HyperbolicTangent.h>
+#include <shaderweaver/node/RadiansToDegrees.h>
+#include <shaderweaver/node/Sine.h>
+#include <shaderweaver/node/Tangent.h>
+#include <shaderweaver/node/CrossProduct.h>
+#include <shaderweaver/node/Distance.h>
+#include <shaderweaver/node/DotProduct.h>
+#include <shaderweaver/node/Projection.h>
+#include <shaderweaver/node/Rejection.h>
 // procedural
 #include <shaderweaver/node/Checkerboard.h>
 #include <shaderweaver/node/GradientNoise.h>
@@ -965,6 +1011,193 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::Saturate&>(node);
 		dst = std::make_shared<sw::node::Saturate>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Ceiling>())
+	{
+		auto& src = static_cast<const node::Ceiling&>(node);
+		dst = std::make_shared<sw::node::Ceiling>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Floor>())
+	{
+		auto& src = static_cast<const node::Floor&>(node);
+		dst = std::make_shared<sw::node::Floor>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Round>())
+	{
+		auto& src = static_cast<const node::Round&>(node);
+		dst = std::make_shared<sw::node::Round>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Sign>())
+	{
+		auto& src = static_cast<const node::Sign&>(node);
+		dst = std::make_shared<sw::node::Sign>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Step>())
+	{
+		auto& src = static_cast<const node::Step&>(node);
+		dst = std::make_shared<sw::node::Step>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Step::ID_INPUT),
+			{ dst, sw::node::Step::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Step::ID_EDGE),
+			{ dst, sw::node::Step::ID_EDGE }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Truncate>())
+	{
+		auto& src = static_cast<const node::Truncate&>(node);
+		dst = std::make_shared<sw::node::Truncate>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Arccosine>())
+	{
+		auto& src = static_cast<const node::Arccosine&>(node);
+		dst = std::make_shared<sw::node::Arccosine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Arcsine>())
+	{
+		auto& src = static_cast<const node::Arcsine&>(node);
+		dst = std::make_shared<sw::node::Arcsine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Arctangent>())
+	{
+		auto& src = static_cast<const node::Arctangent&>(node);
+		dst = std::make_shared<sw::node::Arctangent>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Arctangent2>())
+	{
+		auto& src = static_cast<const node::Arctangent2&>(node);
+		dst = std::make_shared<sw::node::Arctangent2>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Arctangent2::ID_A),
+			{ dst, sw::node::Arctangent2::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Arctangent2::ID_B),
+			{ dst, sw::node::Arctangent2::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Cosine>())
+	{
+		auto& src = static_cast<const node::Cosine&>(node);
+		dst = std::make_shared<sw::node::Cosine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::DegreesToRadians>())
+	{
+		auto& src = static_cast<const node::DegreesToRadians&>(node);
+		dst = std::make_shared<sw::node::DegreesToRadians>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::HyperbolicCosine>())
+	{
+		auto& src = static_cast<const node::HyperbolicCosine&>(node);
+		dst = std::make_shared<sw::node::HyperbolicCosine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::HyperbolicSine>())
+	{
+		auto& src = static_cast<const node::HyperbolicSine&>(node);
+		dst = std::make_shared<sw::node::HyperbolicSine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::HyperbolicTangent>())
+	{
+		auto& src = static_cast<const node::HyperbolicTangent&>(node);
+		dst = std::make_shared<sw::node::HyperbolicTangent>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::RadiansToDegrees>())
+	{
+		auto& src = static_cast<const node::RadiansToDegrees&>(node);
+		dst = std::make_shared<sw::node::RadiansToDegrees>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Sine>())
+	{
+		auto& src = static_cast<const node::Sine&>(node);
+		dst = std::make_shared<sw::node::Sine>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::Tangent>())
+	{
+		auto& src = static_cast<const node::Tangent&>(node);
+		dst = std::make_shared<sw::node::Tangent>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::CrossProduct>())
+	{
+		auto& src = static_cast<const node::CrossProduct&>(node);
+		dst = std::make_shared<sw::node::CrossProduct>();
+		sw::make_connecting(
+			CreateInputChild(src, node::CrossProduct::ID_A),
+			{ dst, sw::node::CrossProduct::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::CrossProduct::ID_B),
+			{ dst, sw::node::CrossProduct::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Distance>())
+	{
+		auto& src = static_cast<const node::Distance&>(node);
+		dst = std::make_shared<sw::node::Distance>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Distance::ID_A),
+			{ dst, sw::node::Distance::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Distance::ID_B),
+			{ dst, sw::node::Distance::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::DotProduct>())
+	{
+		auto& src = static_cast<const node::DotProduct&>(node);
+		dst = std::make_shared<sw::node::DotProduct>();
+		sw::make_connecting(
+			CreateInputChild(src, node::DotProduct::ID_A),
+			{ dst, sw::node::DotProduct::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::DotProduct::ID_B),
+			{ dst, sw::node::DotProduct::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Projection>())
+	{
+		auto& src = static_cast<const node::Projection&>(node);
+		dst = std::make_shared<sw::node::Projection>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Projection::ID_A),
+			{ dst, sw::node::Projection::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Projection::ID_B),
+			{ dst, sw::node::Projection::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Rejection>())
+	{
+		auto& src = static_cast<const node::Rejection&>(node);
+		dst = std::make_shared<sw::node::Rejection>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Rejection::ID_A),
+			{ dst, sw::node::Rejection::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Rejection::ID_B),
+			{ dst, sw::node::Rejection::ID_B }
+		);
 	}
 	// procedural
 	else if (id == bp::GetNodeTypeID<node::Checkerboard>())

@@ -64,6 +64,29 @@
 #include "shadergraph/node/RandomRange.h"
 #include "shadergraph/node/Remap.h"
 #include "shadergraph/node/Saturate.h"
+#include "shadergraph/node/Ceiling.h"
+#include "shadergraph/node/Floor.h"
+#include "shadergraph/node/Round.h"
+#include "shadergraph/node/Sign.h"
+#include "shadergraph/node/Step.h"
+#include "shadergraph/node/Truncate.h"
+#include "shadergraph/node/Arccosine.h"
+#include "shadergraph/node/Arcsine.h"
+#include "shadergraph/node/Arctangent.h"
+#include "shadergraph/node/Arctangent2.h"
+#include "shadergraph/node/Cosine.h"
+#include "shadergraph/node/DegreesToRadians.h"
+#include "shadergraph/node/HyperbolicCosine.h"
+#include "shadergraph/node/HyperbolicSine.h"
+#include "shadergraph/node/HyperbolicTangent.h"
+#include "shadergraph/node/RadiansToDegrees.h"
+#include "shadergraph/node/Sine.h"
+#include "shadergraph/node/Tangent.h"
+#include "shadergraph/node/CrossProduct.h"
+#include "shadergraph/node/Distance.h"
+#include "shadergraph/node/DotProduct.h"
+#include "shadergraph/node/Projection.h"
+#include "shadergraph/node/Rejection.h"
 // procedural
 #include "shadergraph/node/Checkerboard.h"
 #include "shadergraph/node/GradientNoise.h"
@@ -444,6 +467,135 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	else if (type == node::Saturate::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Ceiling::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Floor::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Round::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Sign::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Step::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Step::ID_INPUT,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Step::ID_EDGE,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::Truncate::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Arccosine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::Arcsine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Arctangent::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Arctangent2::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Arctangent2::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Arctangent2::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Cosine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::DegreesToRadians::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::HyperbolicCosine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::HyperbolicSine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::HyperbolicTangent::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::RadiansToDegrees::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Sine::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Tangent::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::CrossProduct::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::CrossProduct::ID_A,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::CrossProduct::ID_B,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+	}
+	else if (type == node::Distance::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Distance::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Distance::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::DotProduct::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::DotProduct::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::DotProduct::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Projection::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Projection::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Projection::ID_B,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Rejection::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rejection::ID_A,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rejection::ID_B,
 			node::Vector1::GetClassName()))->SetValue(0);
 	}
 	// procedural

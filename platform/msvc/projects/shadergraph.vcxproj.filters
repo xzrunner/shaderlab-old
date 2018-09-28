@@ -82,6 +82,15 @@
     <Filter Include="nodes\input\matrix">
       <UniqueIdentifier>{ad777cd9-8800-4588-9d1c-fbf65b97a6b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\math\round">
+      <UniqueIdentifier>{a330dc3e-c2b7-45b5-931a-bc5bbf3847a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\trigonometry">
+      <UniqueIdentifier>{858f7ac2-3d86-4d83-ae53-05ab2a932f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\math\vector">
+      <UniqueIdentifier>{72a3c47a-5bdc-4392-a96a-20eb6004cd29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -345,6 +354,75 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Saturate.h">
       <Filter>nodes\math\range</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Ceiling.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Floor.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Round.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Sign.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Step.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Truncate.h">
+      <Filter>nodes\math\round</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Arccosine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Arcsine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent2.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Cosine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\DegreesToRadians.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicCosine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicSine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicTangent.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\RadiansToDegrees.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Sine.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Tangent.h">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\CrossProduct.h">
+      <Filter>nodes\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Distance.h">
+      <Filter>nodes\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\DotProduct.h">
+      <Filter>nodes\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Projection.h">
+      <Filter>nodes\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Rejection.h">
+      <Filter>nodes\math\vector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -612,6 +690,75 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Saturate.cpp">
       <Filter>nodes\math\range</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Ceiling.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Floor.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Round.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Sign.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Step.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Truncate.cpp">
+      <Filter>nodes\math\round</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Arccosine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Arcsine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Arctangent.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Arctangent2.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Cosine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\DegreesToRadians.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\HyperbolicCosine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\HyperbolicSine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\HyperbolicTangent.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\RadiansToDegrees.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Sine.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Tangent.cpp">
+      <Filter>nodes\math\trigonometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\CrossProduct.cpp">
+      <Filter>nodes\math\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Distance.cpp">
+      <Filter>nodes\math\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\DotProduct.cpp">
+      <Filter>nodes\math\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Projection.cpp">
+      <Filter>nodes\math\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Rejection.cpp">
+      <Filter>nodes\math\vector</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
