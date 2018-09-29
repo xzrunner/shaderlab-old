@@ -4,10 +4,21 @@
 // artistic
 #include "shadergraph/node/ColorAddMul.h"
 #include "shadergraph/node/ColorMap.h"
+#include "shadergraph/node/Contrast.h"
+#include "shadergraph/node/Hue.h"
+#include "shadergraph/node/InvertColors.h"
 #include "shadergraph/node/ReplaceColor.h"
+#include "shadergraph/node/Saturation.h"
+#include "shadergraph/node/WhiteBalance.h"
+#include "shadergraph/node/Blend.h"
 #include "shadergraph/node/Gray.h"
 #include "shadergraph/node/ChannelMask.h"
 #include "shadergraph/node/ColorMask.h"
+#include "shadergraph/node/NormalBlend.h"
+#include "shadergraph/node/NormalCreate.h"
+#include "shadergraph/node/NormalStrength.h"
+#include "shadergraph/node/NormalUnpack.h"
+#include "shadergraph/node/ColorspaceConversion.h"
 // channel
 #include "shadergraph/node/Combine.h"
 #include "shadergraph/node/Flip.h"
@@ -189,6 +200,24 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_BMAP,
 			node::Vector3::GetClassName(), "bmap"))->SetValue({ 0, 0, 1 });
 	}
+	else if (type == node::Contrast::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Contrast::ID_INPUT,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Contrast::ID_CONTRAST,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::Hue::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Hue::ID_INPUT,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Hue::ID_OFFSET,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::InvertColors::GetClassName())
+	{
+		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+	}
 	else if (type == node::ReplaceColor::GetClassName())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_COL,
@@ -201,6 +230,31 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ReplaceColor::ID_FUZZINESS,
 			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Saturation::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Saturation::ID_INPUT,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Saturation::ID_SATURATION,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::WhiteBalance::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::WhiteBalance::ID_INPUT,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::WhiteBalance::ID_TEMPERATURE,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::WhiteBalance::ID_TINT,
+			node::Vector1::GetClassName()))->SetValue(0);
+	}
+	else if (type == node::Blend::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_BASE,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_BLEND,
+			node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_OPACITY,
+			node::Vector1::GetClassName()))->SetValue(1);
 	}
 	else if (type == node::Gray::GetClassName())
 	{
@@ -220,6 +274,40 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			node::Vector1::GetClassName()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_FUZZINESS,
 			node::Vector1::GetClassName()))->SetValue(0);
+	}
+
+	else if (type == node::NormalBlend::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalBlend::ID_A,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalBlend::ID_B,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+	}
+	else if (type == node::NormalCreate::GetClassName())
+	{
+		CreateDefault(nodes, node, node::NormalCreate::ID_TEX, node::Tex2DAsset::GetClassName());
+		CreateDefault(nodes, node, node::NormalCreate::ID_UV, node::UV::GetClassName());
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalCreate::ID_OFFSET,
+			node::Vector1::GetClassName()))->SetValue(0.5f);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalCreate::ID_STRENGTH,
+			node::Vector1::GetClassName()))->SetValue(8);
+	}
+	else if (type == node::NormalStrength::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalStrength::ID_INPUT,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalStrength::ID_STRENGTH,
+			node::Vector1::GetClassName()))->SetValue(1);
+	}
+	else if (type == node::NormalUnpack::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, 0,
+			node::Vector4::GetClassName()))->SetValue({ 0, 0, 0, 0 });
+	}
+	else if (type == node::ColorspaceConversion::GetClassName())
+	{
+		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, 0,
+			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
 	}
 	// channel
 	else if (type == node::Combine::GetClassName())

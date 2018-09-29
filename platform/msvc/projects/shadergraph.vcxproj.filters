@@ -91,6 +91,15 @@
     <Filter Include="nodes\math\vector">
       <UniqueIdentifier>{72a3c47a-5bdc-4392-a96a-20eb6004cd29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\artistic\normal">
+      <UniqueIdentifier>{9adbb88f-b1bd-4383-85d2-f36034c11492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\artistic\utility">
+      <UniqueIdentifier>{7d811989-c078-48b7-8dff-8db964e9ff3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nodes\artistic\blend">
+      <UniqueIdentifier>{a222a31b-0c26-48a1-9d27-1cc291fd8bdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -423,6 +432,39 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Rejection.h">
       <Filter>nodes\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Contrast.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Hue.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\InvertColors.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Saturation.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\WhiteBalance.h">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalUnpack.h">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalStrength.h">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalCreate.h">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalBlend.h">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\ColorspaceConversion.h">
+      <Filter>nodes\artistic\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Blend.h">
+      <Filter>nodes\artistic\blend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -759,6 +801,39 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Rejection.cpp">
       <Filter>nodes\math\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Contrast.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Hue.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\InvertColors.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Saturation.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\WhiteBalance.cpp">
+      <Filter>nodes\artistic\adjustment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\NormalBlend.cpp">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\NormalCreate.cpp">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\NormalStrength.cpp">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\NormalUnpack.cpp">
+      <Filter>nodes\artistic\normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\ColorspaceConversion.cpp">
+      <Filter>nodes\artistic\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Blend.cpp">
+      <Filter>nodes\artistic\blend</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,11 @@
 #include "shadergraph/WxNodeProperty.h"
 
 // artistic
+#include "shadergraph/node/Hue.h"
+#include "shadergraph/node/InvertColors.h"
+#include "shadergraph/node/Blend.h"
 #include "shadergraph/node/ChannelMask.h"
+#include "shadergraph/node/ColorspaceConversion.h"
 // channel
 #include "shadergraph/node/Flip.h"
 #include "shadergraph/node/Swizzle.h"
@@ -50,7 +54,41 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 	auto type_id = node->TypeID();
 	// artistic
-	if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
+	if (type_id == bp::GetNodeTypeID<node::Hue>())
+	{
+		auto& hue = dynamic_cast<const node::Hue&>(*node);
+
+		const wxChar* ROTATE_TYPES[] = { wxT("Rad"), wxT("Deg"), NULL };
+		auto type_prop = new wxEnumProperty("Unit", wxPG_LABEL, ROTATE_TYPES);
+		type_prop->SetValue(hue.IsRadians() ? 0 : 1);
+		m_pg->Append(type_prop);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::InvertColors>())
+	{
+		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
+		const long    CHANNEL_VALUES[] = {
+			sg::node::InvertColors::CHANNEL_R,
+			sg::node::InvertColors::CHANNEL_G,
+			sg::node::InvertColors::CHANNEL_B,
+			sg::node::InvertColors::CHANNEL_A
+		};
+
+		auto& flip = dynamic_cast<const node::InvertColors&>(*node);
+		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, flip.GetChannels()));
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Blend>())
+	{
+		auto& blend = dynamic_cast<const node::Blend&>(*node);
+
+		const wxChar* MODES[] = { wxT("Burn"), wxT("Darken"), wxT("Difference"), wxT("Dodge"), wxT("Divide"), wxT("Exclusion"),
+			wxT("HardLight"), wxT("HardMix"), wxT("Lighten"), wxT("LinearBurn"), wxT("LinearDodge"), wxT("LinearLight"),
+			wxT("LinearLightAddSub"), wxT("Multiply"), wxT("Negation"), wxT("Overlay"), wxT("PinLight"), wxT("Screen"),
+			wxT("SoftLight"), wxT("Subtract"), wxT("VividLight"), NULL };
+		auto mode_prop = new wxEnumProperty("Mode", wxPG_LABEL, MODES);
+		mode_prop->SetValue(blend.GetMode());
+		m_pg->Append(mode_prop);
+	}
+	else if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
 	{
 		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 		const long    CHANNEL_VALUES[] = {
@@ -62,6 +100,22 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 		auto& cm = dynamic_cast<const node::ChannelMask&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, cm.GetChannels()));
+	}
+	else if (type_id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	{
+		auto& conv = dynamic_cast<const node::ColorspaceConversion&>(*node);
+		node::ColorspaceConversion::ColorType from, to;
+		conv.GetTypes(from, to);
+
+		const wxChar* COL_TYPES[] = { wxT("RGB"), wxT("Linear"), wxT("HSV"), NULL };
+
+		auto from_prop = new wxEnumProperty("From", wxPG_LABEL, COL_TYPES);
+		from_prop->SetValue(static_cast<int>(from));
+		m_pg->Append(from_prop);
+
+		auto to_prop = new wxEnumProperty("To", wxPG_LABEL, COL_TYPES);
+		to_prop->SetValue(static_cast<int>(to));
+		m_pg->Append(to_prop);
 	}
 	// channel
 	else if (type_id == bp::GetNodeTypeID<node::Flip>())
@@ -266,11 +320,43 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 
 	auto type_id = m_node->TypeID();
 	// artistic
-	if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
+	if (type_id == bp::GetNodeTypeID<node::Hue>())
+	{
+		if (key == "Unit") {
+			auto& hue = std::dynamic_pointer_cast<node::Hue>(m_node);
+			hue->SetRadians(wxANY_AS(val, int) == 0);
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::InvertColors>())
+	{
+		if (key == "Channels") {
+			auto& flip = std::dynamic_pointer_cast<node::InvertColors>(m_node);
+			flip->SetChannels(wxANY_AS(val, int));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::Blend>())
+	{
+		if (key == "Mode") {
+			auto& blend = std::dynamic_pointer_cast<node::Blend>(m_node);
+			blend->SetMode(static_cast<sw::node::Blend::ModeType>(wxANY_AS(val, int)));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
 	{
 		if (key == "Channels") {
 			auto& cm = std::dynamic_pointer_cast<node::ChannelMask>(m_node);
 			cm->SetChannels(wxANY_AS(val, int));
+		}
+	}
+	else if (type_id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	{
+		node::ColorspaceConversion::ColorType f, t;
+		auto& conv = std::dynamic_pointer_cast<node::ColorspaceConversion>(m_node);
+		conv->GetTypes(f, t);
+		if (key == "From") {
+			conv->SetTypes(static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)), t);
+		} else if (key == "To") {
+			conv->SetTypes(f, static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)));
 		}
 	}
 	// channel

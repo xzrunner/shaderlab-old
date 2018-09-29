@@ -4,10 +4,21 @@
 // artistic
 #include "shadergraph/node/ColorAddMul.h"
 #include "shadergraph/node/ColorMap.h"
+#include "shadergraph/node/Contrast.h"
+#include "shadergraph/node/Hue.h"
+#include "shadergraph/node/InvertColors.h"
 #include "shadergraph/node/ReplaceColor.h"
+#include "shadergraph/node/Saturation.h"
+#include "shadergraph/node/WhiteBalance.h"
+#include "shadergraph/node/Blend.h"
 #include "shadergraph/node/Gray.h"
 #include "shadergraph/node/ChannelMask.h"
 #include "shadergraph/node/ColorMask.h"
+#include "shadergraph/node/NormalBlend.h"
+#include "shadergraph/node/NormalCreate.h"
+#include "shadergraph/node/NormalStrength.h"
+#include "shadergraph/node/NormalUnpack.h"
+#include "shadergraph/node/ColorspaceConversion.h"
 // channel
 #include "shadergraph/node/Combine.h"
 #include "shadergraph/node/Flip.h"
@@ -121,10 +132,21 @@
 // artistic
 #include <shaderweaver/node/ColorAddMul.h>
 #include <shaderweaver/node/ColorMap.h>
+#include <shaderweaver/node/Contrast.h>
+#include <shaderweaver/node/Hue.h>
+#include <shaderweaver/node/InvertColors.h>
 #include <shaderweaver/node/ReplaceColor.h>
+#include <shaderweaver/node/Saturation.h>
+#include <shaderweaver/node/WhiteBalance.h>
+#include <shaderweaver/node/Blend.h>
 #include <shaderweaver/node/Gray.h>
 #include <shaderweaver/node/ChannelMask.h>
 #include <shaderweaver/node/ColorMask.h>
+#include <shaderweaver/node/NormalBlend.h>
+#include <shaderweaver/node/NormalCreate.h>
+#include <shaderweaver/node/NormalStrength.h>
+#include <shaderweaver/node/NormalUnpack.h>
+#include <shaderweaver/node/ColorspaceConversion.h>
 // channel
 #include <shaderweaver/node/Combine.h>
 #include <shaderweaver/node/Flip.h>
@@ -473,6 +495,38 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::ColorMap::ID_BMAP }
 		);
 	}
+	else if (id == bp::GetNodeTypeID<node::Contrast>())
+	{
+		auto& src = static_cast<const node::Contrast&>(node);
+		dst = std::make_shared<sw::node::Contrast>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Contrast::ID_INPUT),
+			{ dst, sw::node::Contrast::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Contrast::ID_CONTRAST),
+			{ dst, sw::node::Contrast::ID_CONTRAST }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Hue>())
+	{
+		auto& src = static_cast<const node::Hue&>(node);
+		dst = std::make_shared<sw::node::Hue>(src.IsRadians());
+		sw::make_connecting(
+			CreateInputChild(src, node::Hue::ID_INPUT),
+			{ dst, sw::node::Hue::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Hue::ID_OFFSET),
+			{ dst, sw::node::Hue::ID_OFFSET }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::InvertColors>())
+	{
+		auto& src = static_cast<const node::InvertColors&>(node);
+		dst = std::make_shared<sw::node::InvertColors>(src.GetChannels());
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
 	else if (id == bp::GetNodeTypeID<node::ReplaceColor>())
 	{
 		auto& src = static_cast<const node::ReplaceColor&>(node);
@@ -496,6 +550,54 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::ReplaceColor::ID_FUZZINESS),
 			{ dst, sw::node::ReplaceColor::ID_FUZZINESS }
+		);
+	}
+
+	else if (id == bp::GetNodeTypeID<node::Saturation>())
+	{
+		auto& src = static_cast<const node::Saturation&>(node);
+		dst = std::make_shared<sw::node::Saturation>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Saturation::ID_INPUT),
+			{ dst, sw::node::Saturation::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Saturation::ID_SATURATION),
+			{ dst, sw::node::Saturation::ID_SATURATION }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::WhiteBalance>())
+	{
+		auto& src = static_cast<const node::WhiteBalance&>(node);
+		dst = std::make_shared<sw::node::WhiteBalance>();
+		sw::make_connecting(
+			CreateInputChild(src, node::WhiteBalance::ID_INPUT),
+			{ dst, sw::node::WhiteBalance::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::WhiteBalance::ID_TEMPERATURE),
+			{ dst, sw::node::WhiteBalance::ID_TEMPERATURE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::WhiteBalance::ID_TINT),
+			{ dst, sw::node::WhiteBalance::ID_TINT }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::Blend>())
+	{
+		auto& src = static_cast<const node::Blend&>(node);
+		dst = std::make_shared<sw::node::Blend>(src.GetMode());
+		sw::make_connecting(
+			CreateInputChild(src, node::Blend::ID_BASE),
+			{ dst, sw::node::Blend::ID_BASE }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Blend::ID_BLEND),
+			{ dst, sw::node::Blend::ID_BLEND }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Blend::ID_OPACITY),
+			{ dst, sw::node::Blend::ID_OPACITY }
 		);
 	}
 	else if (id == bp::GetNodeTypeID<node::Gray>())
@@ -530,6 +632,70 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			CreateInputChild(src, node::ColorMask::ID_FUZZINESS),
 			{ dst, sw::node::ColorMask::ID_FUZZINESS }
 		);
+	}
+	else if (id == bp::GetNodeTypeID<node::NormalBlend>())
+	{
+		auto& src = static_cast<const node::NormalBlend&>(node);
+		dst = std::make_shared<sw::node::NormalBlend>();
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalBlend::ID_A),
+			{ dst, sw::node::NormalBlend::ID_A }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalBlend::ID_B),
+			{ dst, sw::node::NormalBlend::ID_B }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::NormalCreate>())
+	{
+		auto& src = static_cast<const node::NormalCreate&>(node);
+		dst = std::make_shared<sw::node::NormalCreate>();
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalCreate::ID_TEX),
+			{ dst, sw::node::NormalCreate::ID_TEX }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalCreate::ID_UV),
+			{ dst, sw::node::NormalCreate::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalCreate::ID_OFFSET),
+			{ dst, sw::node::NormalCreate::ID_OFFSET }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalCreate::ID_STRENGTH),
+			{ dst, sw::node::NormalCreate::ID_STRENGTH }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::NormalStrength>())
+	{
+		auto& src = static_cast<const node::NormalStrength&>(node);
+		dst = std::make_shared<sw::node::NormalStrength>();
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalStrength::ID_INPUT),
+			{ dst, sw::node::NormalStrength::ID_INPUT }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::NormalStrength::ID_STRENGTH),
+			{ dst, sw::node::NormalStrength::ID_STRENGTH }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<node::NormalUnpack>())
+	{
+		auto& src = static_cast<const node::NormalUnpack&>(node);
+		dst = std::make_shared<sw::node::NormalUnpack>();
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+	}
+	else if (id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	{
+		auto& src = static_cast<const node::ColorspaceConversion&>(node);
+		node::ColorspaceConversion::ColorType f, t;
+		src.GetTypes(f, t);
+		dst = std::make_shared<sw::node::ColorspaceConversion>(
+			static_cast<sw::node::ColorspaceConversion::ColorType>(f),
+			static_cast<sw::node::ColorspaceConversion::ColorType>(t)
+		);
+		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	// channel
 	else if (id == bp::GetNodeTypeID<node::Combine>())

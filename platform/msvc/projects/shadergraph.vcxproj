@@ -21,6 +21,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Arcsine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent2.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Blend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Boolean.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Branch.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Ceiling.h" />
@@ -30,8 +31,10 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\ColorAddMul.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\ColorMap.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\ColorMask.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\ColorspaceConversion.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Combine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Comparison.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Contrast.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Cosine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\CrossProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\DDX.h" />
@@ -48,9 +51,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Fraction.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\GradientNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Hue.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicCosine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicSine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicTangent.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\InvertColors.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Length.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Log.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Matrix2.h" />
@@ -64,7 +69,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Minimum.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Modulo.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Negate.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalBlend.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalCreate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Normalize.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalStrength.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\NormalUnpack.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Not.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\OneMinus.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Or.h" />
@@ -86,6 +95,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Round.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\RoundedRectangle.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Saturate.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Saturation.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sign.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\SimpleNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sine.h" />
@@ -114,6 +124,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\UV.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Voronoi.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h" />
@@ -134,6 +145,7 @@
     <ClCompile Include="..\..\..\source\node\Arcsine.cpp" />
     <ClCompile Include="..\..\..\source\node\Arctangent.cpp" />
     <ClCompile Include="..\..\..\source\node\Arctangent2.cpp" />
+    <ClCompile Include="..\..\..\source\node\Blend.cpp" />
     <ClCompile Include="..\..\..\source\node\Boolean.cpp" />
     <ClCompile Include="..\..\..\source\node\Branch.cpp" />
     <ClCompile Include="..\..\..\source\node\Ceiling.cpp" />
@@ -143,8 +155,10 @@
     <ClCompile Include="..\..\..\source\node\ColorAddMul.cpp" />
     <ClCompile Include="..\..\..\source\node\ColorMap.cpp" />
     <ClCompile Include="..\..\..\source\node\ColorMask.cpp" />
+    <ClCompile Include="..\..\..\source\node\ColorspaceConversion.cpp" />
     <ClCompile Include="..\..\..\source\node\Combine.cpp" />
     <ClCompile Include="..\..\..\source\node\Comparison.cpp" />
+    <ClCompile Include="..\..\..\source\node\Contrast.cpp" />
     <ClCompile Include="..\..\..\source\node\Cosine.cpp" />
     <ClCompile Include="..\..\..\source\node\CrossProduct.cpp" />
     <ClCompile Include="..\..\..\source\node\DDX.cpp" />
@@ -161,9 +175,11 @@
     <ClCompile Include="..\..\..\source\node\Fraction.cpp" />
     <ClCompile Include="..\..\..\source\node\GradientNoise.cpp" />
     <ClCompile Include="..\..\..\source\node\Gray.cpp" />
+    <ClCompile Include="..\..\..\source\node\Hue.cpp" />
     <ClCompile Include="..\..\..\source\node\HyperbolicCosine.cpp" />
     <ClCompile Include="..\..\..\source\node\HyperbolicSine.cpp" />
     <ClCompile Include="..\..\..\source\node\HyperbolicTangent.cpp" />
+    <ClCompile Include="..\..\..\source\node\InvertColors.cpp" />
     <ClCompile Include="..\..\..\source\node\Length.cpp" />
     <ClCompile Include="..\..\..\source\node\Log.cpp" />
     <ClCompile Include="..\..\..\source\node\Matrix2.cpp" />
@@ -177,7 +193,11 @@
     <ClCompile Include="..\..\..\source\node\Minimum.cpp" />
     <ClCompile Include="..\..\..\source\node\Modulo.cpp" />
     <ClCompile Include="..\..\..\source\node\Negate.cpp" />
+    <ClCompile Include="..\..\..\source\node\NormalBlend.cpp" />
+    <ClCompile Include="..\..\..\source\node\NormalCreate.cpp" />
     <ClCompile Include="..\..\..\source\node\Normalize.cpp" />
+    <ClCompile Include="..\..\..\source\node\NormalStrength.cpp" />
+    <ClCompile Include="..\..\..\source\node\NormalUnpack.cpp" />
     <ClCompile Include="..\..\..\source\node\Not.cpp" />
     <ClCompile Include="..\..\..\source\node\OneMinus.cpp" />
     <ClCompile Include="..\..\..\source\node\Or.cpp" />
@@ -199,6 +219,7 @@
     <ClCompile Include="..\..\..\source\node\Round.cpp" />
     <ClCompile Include="..\..\..\source\node\RoundedRectangle.cpp" />
     <ClCompile Include="..\..\..\source\node\Saturate.cpp" />
+    <ClCompile Include="..\..\..\source\node\Saturation.cpp" />
     <ClCompile Include="..\..\..\source\node\Sign.cpp" />
     <ClCompile Include="..\..\..\source\node\SimpleNoise.cpp" />
     <ClCompile Include="..\..\..\source\node\Sine.cpp" />
@@ -227,6 +248,7 @@
     <ClCompile Include="..\..\..\source\node\Time.cpp" />
     <ClCompile Include="..\..\..\source\node\UV.cpp" />
     <ClCompile Include="..\..\..\source\node\Voronoi.cpp" />
+    <ClCompile Include="..\..\..\source\node\WhiteBalance.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\node\Sprite.cpp" />
