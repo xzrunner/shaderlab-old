@@ -31,7 +31,7 @@ public:
 private:
 	sm::mat3 m_val;
 
-	DECLARE_NODE_CLASS(Matrix4)
+	RTTR_ENABLE(Node)
 
 }; // Matrix4
 

@@ -40,10 +40,10 @@ public:
 		ID_OPACITY,
 	};
 
-	DECLARE_NODE_CLASS(Blend)
-
 private:
 	sw::node::Blend::ModeType m_mode = sw::node::Blend::MODE_BURN;
+
+	RTTR_ENABLE(Node)
 
 }; // Blend
 

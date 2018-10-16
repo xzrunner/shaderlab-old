@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(NormalUnpack)
+	RTTR_ENABLE(Node)
 
 }; // NormalUnpack
 

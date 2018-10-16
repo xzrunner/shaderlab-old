@@ -22,7 +22,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Add)
+	RTTR_ENABLE(Node)
 
 }; // Add
 

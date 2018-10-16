@@ -2,8 +2,6 @@
 
 #include <cpputil/StringHelper.h>
 
-IMPLEMENT_NODE_CLASS(sg::node::Vector4, sg_vec4)
-
 namespace sg
 {
 namespace node

@@ -22,7 +22,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Divide)
+	RTTR_ENABLE(Node)
 
 }; // Divide
 

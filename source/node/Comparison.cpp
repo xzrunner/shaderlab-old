@@ -1,7 +1,5 @@
 #include "shadergraph/node/Comparison.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Comparison, sg_comparison)
-
 namespace sg
 {
 namespace node

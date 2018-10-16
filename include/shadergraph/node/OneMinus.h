@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(OneMinus)
+	RTTR_ENABLE(Node)
 
 }; // OneMinus
 

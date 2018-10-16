@@ -31,7 +31,7 @@ public:
 		ID_T
 	};
 
-	DECLARE_NODE_CLASS(InverseLerp)
+	RTTR_ENABLE(Node)
 
 }; // InverseLerp
 

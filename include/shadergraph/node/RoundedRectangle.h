@@ -33,7 +33,7 @@ public:
 		ID_RADIUS,
 	};
 
-	DECLARE_NODE_CLASS(RoundedRectangle)
+	RTTR_ENABLE(Node)
 
 }; // RoundedRectangle
 

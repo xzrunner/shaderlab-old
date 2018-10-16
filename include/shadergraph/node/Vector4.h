@@ -36,7 +36,7 @@ private:
 private:
 	sm::vec4 m_val;
 
-	DECLARE_NODE_CLASS(Vector4)
+	RTTR_ENABLE(Node)
 
 }; // Vector4
 

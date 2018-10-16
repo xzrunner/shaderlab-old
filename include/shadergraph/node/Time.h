@@ -34,7 +34,7 @@ public:
 		ID_SMOOTH_DELTA,
 	};
 
-	DECLARE_NODE_CLASS(Time)
+	RTTR_ENABLE(Node)
 
 }; // Time
 

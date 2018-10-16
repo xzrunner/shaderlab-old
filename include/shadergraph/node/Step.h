@@ -28,7 +28,7 @@ public:
 		ID_EDGE,
 	};
 
-	DECLARE_NODE_CLASS(Step)
+	RTTR_ENABLE(Node)
 
 }; // Step
 

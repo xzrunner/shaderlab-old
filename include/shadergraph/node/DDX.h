@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(DDX)
+	RTTR_ENABLE(Node)
 
 }; // DDX
 

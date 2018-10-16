@@ -1,7 +1,5 @@
 #include "shadergraph/node/MatrixConstruction.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::MatrixConstruction, sg_mat_construction)
-
 namespace sg
 {
 namespace node

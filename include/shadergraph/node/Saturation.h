@@ -29,7 +29,7 @@ public:
 		ID_SATURATION,
 	};
 
-	DECLARE_NODE_CLASS(Saturation)
+	RTTR_ENABLE(Node)
 
 }; // Saturation
 

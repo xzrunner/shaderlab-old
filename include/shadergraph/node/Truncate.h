@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Truncate)
+	RTTR_ENABLE(Node)
 
 }; // Truncate
 

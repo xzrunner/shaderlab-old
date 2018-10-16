@@ -28,7 +28,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(NormalBlend)
+	RTTR_ENABLE(Node)
 
 }; // NormalBlend
 

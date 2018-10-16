@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(MatrixDeterminant)
+	RTTR_ENABLE(Node)
 
 }; // MatrixDeterminant
 

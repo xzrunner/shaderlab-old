@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(HyperbolicTangent)
+	RTTR_ENABLE(Node)
 
 }; // HyperbolicTangent
 

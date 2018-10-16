@@ -29,7 +29,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(Maximum)
+	RTTR_ENABLE(Node)
 
 }; // Maximum
 

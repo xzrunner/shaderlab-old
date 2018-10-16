@@ -1,7 +1,5 @@
 #include "shadergraph/node/Hue.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Hue, sg_hue)
-
 namespace sg
 {
 namespace node

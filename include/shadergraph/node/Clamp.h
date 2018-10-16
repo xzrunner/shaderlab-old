@@ -31,7 +31,7 @@ public:
 		ID_MAX
 	};
 
-	DECLARE_NODE_CLASS(Clamp)
+	RTTR_ENABLE(Node)
 
 }; // Clamp
 

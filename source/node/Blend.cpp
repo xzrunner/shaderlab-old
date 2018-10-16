@@ -1,7 +1,5 @@
 #include "shadergraph/node/Blend.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Blend, sg_blend)
-
 namespace sg
 {
 namespace node

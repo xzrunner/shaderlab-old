@@ -1,7 +1,5 @@
 #include "shadergraph/node/Swizzle.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Swizzle, sg_swizzle)
-
 namespace sg
 {
 namespace node

@@ -33,7 +33,7 @@ public:
 		ID_LENGTH_SCALE,
 	};
 
-	DECLARE_NODE_CLASS(PolarCoordinates)
+	RTTR_ENABLE(Node)
 
 }; // PolarCoordinates
 

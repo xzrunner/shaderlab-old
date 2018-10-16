@@ -41,7 +41,7 @@ private:
 
 	std::shared_ptr<facade::Image> m_img = nullptr;
 
-	DECLARE_NODE_CLASS(Tex2DAsset)
+	RTTR_ENABLE(Node)
 
 }; // Tex2DAsset
 

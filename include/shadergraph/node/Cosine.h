@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Cosine)
+	RTTR_ENABLE(Node)
 
 }; // Cosine
 

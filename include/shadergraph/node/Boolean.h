@@ -36,7 +36,7 @@ private:
 private:
 	bool m_val = true;
 
-	DECLARE_NODE_CLASS(Boolean)
+	RTTR_ENABLE(Node)
 
 }; // Boolean
 

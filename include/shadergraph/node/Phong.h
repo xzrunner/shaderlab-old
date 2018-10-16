@@ -44,7 +44,7 @@ public:
 		ID_VIEW_POS,
 	};
 
-	DECLARE_NODE_CLASS(Phong)
+	RTTR_ENABLE(Node)
 
 }; // Phong
 

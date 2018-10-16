@@ -46,10 +46,10 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(Comparison)
-
 private:
 	CmpType m_cmp_type = CMP_EQUAL;
+
+	RTTR_ENABLE(Node)
 
 }; // Comparison
 

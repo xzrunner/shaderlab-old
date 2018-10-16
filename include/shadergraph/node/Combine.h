@@ -42,7 +42,7 @@ public:
 		ID_RG,
 	};
 
-	DECLARE_NODE_CLASS(Combine)
+	RTTR_ENABLE(Node)
 
 }; // Combine
 

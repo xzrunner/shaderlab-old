@@ -33,7 +33,7 @@ public:
 		ID_FREQUENCY,
 	};
 
-	DECLARE_NODE_CLASS(Checkerboard)
+	RTTR_ENABLE(Node)
 
 }; // Checkerboard
 

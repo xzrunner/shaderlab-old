@@ -33,7 +33,7 @@ public:
 		ID_HEIGHT,
 	};
 
-	DECLARE_NODE_CLASS(Polygon)
+	RTTR_ENABLE(Node)
 
 }; // Polygon
 

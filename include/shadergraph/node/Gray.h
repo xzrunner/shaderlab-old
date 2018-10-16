@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Gray)
+	RTTR_ENABLE(Node)
 
 }; // Gray
 

@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(RadiansToDegrees)
+	RTTR_ENABLE(Node)
 
 }; // RadiansToDegrees
 

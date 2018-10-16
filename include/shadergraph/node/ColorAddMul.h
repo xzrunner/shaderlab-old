@@ -31,7 +31,7 @@ public:
 		ID_ADD,
 	};
 
-	DECLARE_NODE_CLASS(ColorAddMul)
+	RTTR_ENABLE(Node)
 
 }; // ColorAddMul
 

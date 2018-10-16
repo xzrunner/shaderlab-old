@@ -28,7 +28,7 @@ public:
 		ID_STRENGTH,
 	};
 
-	DECLARE_NODE_CLASS(NormalStrength)
+	RTTR_ENABLE(Node)
 
 }; // NormalStrength
 

@@ -38,7 +38,7 @@ public:
 		ID_CELLS,
 	};
 
-	DECLARE_NODE_CLASS(Voronoi)
+	RTTR_ENABLE(Node)
 
 }; // Voronoi
 

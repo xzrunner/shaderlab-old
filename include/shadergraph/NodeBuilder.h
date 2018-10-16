@@ -13,8 +13,6 @@ namespace sg
 class NodeBuilder
 {
 public:
-	static void Init();
-
 	static bp::NodePtr Create(std::vector<n0::SceneNodePtr>& nodes, const std::string& type,
 		const std::string& name = "", const sm::vec2& pos = sm::vec2(0, 0), bool is_default = false);
 

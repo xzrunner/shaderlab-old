@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(ReciprocalSquareRoot)
+	RTTR_ENABLE(Node)
 
 }; // ReciprocalSquareRoot
 

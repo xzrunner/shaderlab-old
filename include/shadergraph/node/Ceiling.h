@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Ceiling)
+	RTTR_ENABLE(Node)
 
 }; // Ceiling
 

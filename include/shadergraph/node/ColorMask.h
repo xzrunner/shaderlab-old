@@ -33,7 +33,7 @@ public:
 		ID_FUZZINESS,
 	};
 
-	DECLARE_NODE_CLASS(ColorMask)
+	RTTR_ENABLE(Node)
 
 }; // ColorMask
 

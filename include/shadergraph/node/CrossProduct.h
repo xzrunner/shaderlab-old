@@ -28,7 +28,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(CrossProduct)
+	RTTR_ENABLE(Node)
 
 }; // CrossProduct
 

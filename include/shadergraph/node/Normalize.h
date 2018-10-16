@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Normalize)
+	RTTR_ENABLE(Node)
 
 }; // Normalize
 

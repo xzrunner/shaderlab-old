@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Arctangent)
+	RTTR_ENABLE(Node)
 
 }; // Arctangent
 

@@ -2,8 +2,6 @@
 
 #include <cpputil/StringHelper.h>
 
-IMPLEMENT_NODE_CLASS(sg::node::Matrix4, sg_mat4)
-
 namespace sg
 {
 namespace node

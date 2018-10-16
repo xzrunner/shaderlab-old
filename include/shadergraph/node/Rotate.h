@@ -42,7 +42,7 @@ public:
 private:
 	bool m_is_radians = true;
 
-	DECLARE_NODE_CLASS(Rotate)
+	RTTR_ENABLE(Node)
 
 }; // Rotate
 

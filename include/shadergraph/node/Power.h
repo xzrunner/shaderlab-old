@@ -22,7 +22,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Power)
+	RTTR_ENABLE(Node)
 
 }; // Power
 

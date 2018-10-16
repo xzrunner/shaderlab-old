@@ -28,7 +28,7 @@ public:
 		ID_STEPS,
 	};
 
-	DECLARE_NODE_CLASS(Posterize)
+	RTTR_ENABLE(Node)
 
 }; // Posterize
 

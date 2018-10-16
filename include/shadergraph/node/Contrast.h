@@ -29,7 +29,7 @@ public:
 		ID_CONTRAST,
 	};
 
-	DECLARE_NODE_CLASS(Contrast)
+	RTTR_ENABLE(Node)
 
 }; // Contrast
 

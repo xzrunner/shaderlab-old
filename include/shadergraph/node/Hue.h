@@ -40,7 +40,7 @@ public:
 private:
 	bool m_is_radians = true;
 
-	DECLARE_NODE_CLASS(Hue)
+	RTTR_ENABLE(Node)
 
 }; // Hue
 

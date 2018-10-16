@@ -29,7 +29,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(Minimum)
+	RTTR_ENABLE(Node)
 
 }; // Minimum
 

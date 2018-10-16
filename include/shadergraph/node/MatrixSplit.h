@@ -40,10 +40,10 @@ public:
 		ID_M3,
 	};
 
-	DECLARE_NODE_CLASS(MatrixSplit)
-
 private:
 	bool m_row = true;
+
+	RTTR_ENABLE(Node)
 
 }; // MatrixSplit
 

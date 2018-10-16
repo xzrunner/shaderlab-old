@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Sine)
+	RTTR_ENABLE(Node)
 
 }; // Sine
 

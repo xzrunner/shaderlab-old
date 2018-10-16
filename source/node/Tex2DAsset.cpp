@@ -6,8 +6,6 @@
 
 #include <boost/filesystem.hpp>
 
-IMPLEMENT_NODE_CLASS(sg::node::Tex2DAsset, sg_tex2d_asset)
-
 namespace sg
 {
 namespace node

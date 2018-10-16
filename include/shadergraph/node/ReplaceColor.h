@@ -35,7 +35,7 @@ public:
 		ID_FUZZINESS,
 	};
 
-	DECLARE_NODE_CLASS(ReplaceColor)
+	RTTR_ENABLE(Node)
 
 }; // ReplaceColor
 

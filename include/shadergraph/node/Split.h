@@ -33,7 +33,7 @@ public:
 		ID_A,
 	};
 
-	DECLARE_NODE_CLASS(Split)
+	RTTR_ENABLE(Node)
 
 }; // Split
 

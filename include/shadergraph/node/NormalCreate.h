@@ -32,7 +32,7 @@ public:
 		ID_STRENGTH,
 	};
 
-	DECLARE_NODE_CLASS(NormalCreate)
+	RTTR_ENABLE(Node)
 
 }; // NormalCreate
 

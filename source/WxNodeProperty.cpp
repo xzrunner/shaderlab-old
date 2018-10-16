@@ -52,9 +52,9 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 	m_pg->Clear();
 
-	auto type_id = node->TypeID();
+	auto type = node->get_type();
 	// artistic
-	if (type_id == bp::GetNodeTypeID<node::Hue>())
+	if (type == rttr::type::get<node::Hue>())
 	{
 		auto& hue = dynamic_cast<const node::Hue&>(*node);
 
@@ -63,7 +63,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(hue.IsRadians() ? 0 : 1);
 		m_pg->Append(type_prop);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::InvertColors>())
+	else if (type == rttr::type::get<node::InvertColors>())
 	{
 		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 		const long    CHANNEL_VALUES[] = {
@@ -76,7 +76,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		auto& flip = dynamic_cast<const node::InvertColors&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, flip.GetChannels()));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Blend>())
+	else if (type == rttr::type::get<node::Blend>())
 	{
 		auto& blend = dynamic_cast<const node::Blend&>(*node);
 
@@ -88,7 +88,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		mode_prop->SetValue(blend.GetMode());
 		m_pg->Append(mode_prop);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
+	else if (type == rttr::type::get<node::ChannelMask>())
 	{
 		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 		const long    CHANNEL_VALUES[] = {
@@ -101,7 +101,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		auto& cm = dynamic_cast<const node::ChannelMask&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, cm.GetChannels()));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		auto& conv = dynamic_cast<const node::ColorspaceConversion&>(*node);
 		node::ColorspaceConversion::ColorType from, to;
@@ -118,7 +118,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(to_prop);
 	}
 	// channel
-	else if (type_id == bp::GetNodeTypeID<node::Flip>())
+	else if (type == rttr::type::get<node::Flip>())
 	{
 		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 		const long    CHANNEL_VALUES[] = {
@@ -131,7 +131,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		auto& flip = dynamic_cast<const node::Flip&>(*node);
 		m_pg->Append(new wxFlagsProperty("Channels", wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, flip.GetChannels()));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Swizzle>())
+	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		auto& swizzle = dynamic_cast<const node::Swizzle&>(*node);
 		uint32_t channels[4];
@@ -156,24 +156,24 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(a_prop);
 	}
 	// input
-	else if (type_id == bp::GetNodeTypeID<node::Boolean>())
+	else if (type == rttr::type::get<node::Boolean>())
 	{
 		auto& b = dynamic_cast<const node::Boolean&>(*node);
 		m_pg->Append(new wxBoolProperty("Value", wxPG_LABEL, b.GetValue()));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
+	else if (type == rttr::type::get<node::Vector1>())
 	{
 		auto& c1 = dynamic_cast<const node::Vector1&>(*node);
 		m_pg->Append(new wxFloatProperty("Value", wxPG_LABEL, c1.GetValue()));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector2>())
+	else if (type == rttr::type::get<node::Vector2>())
 	{
 		auto& c2 = dynamic_cast<const node::Vector2&>(*node);
 		auto& val = c2.GetValue();
 		m_pg->Append(new wxFloatProperty("R", wxPG_LABEL, val.x));
 		m_pg->Append(new wxFloatProperty("G", wxPG_LABEL, val.y));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector3>())
+	else if (type == rttr::type::get<node::Vector3>())
 	{
 		auto& c3 = dynamic_cast<const node::Vector3&>(*node);
 		auto& val = c3.GetValue();
@@ -181,7 +181,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(new wxFloatProperty("G", wxPG_LABEL, val.y));
 		m_pg->Append(new wxFloatProperty("B", wxPG_LABEL, val.z));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector4>())
+	else if (type == rttr::type::get<node::Vector4>())
 	{
 		auto& c4 = dynamic_cast<const node::Vector4&>(*node);
 		auto& val = c4.GetValue();
@@ -190,7 +190,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(new wxFloatProperty("B", wxPG_LABEL, val.z));
 		m_pg->Append(new wxFloatProperty("A", wxPG_LABEL, val.w));
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Tex2DAsset>())
+	else if (type == rttr::type::get<node::Tex2DAsset>())
 	{
 		auto& t2d = dynamic_cast<const node::Tex2DAsset&>(*node);
 
@@ -210,7 +210,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(prop);
 	}
 	// math
-	else if (type_id == bp::GetNodeTypeID<node::Exponential>())
+	else if (type == rttr::type::get<node::Exponential>())
 	{
 		auto& exp = dynamic_cast<const node::Exponential&>(*node);
 
@@ -219,7 +219,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(exp.GetType());
 		m_pg->Append(type_prop);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Log>())
+	else if (type == rttr::type::get<node::Log>())
 	{
 		auto& log = dynamic_cast<const node::Log&>(*node);
 
@@ -228,7 +228,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(log.GetType());
 		m_pg->Append(type_prop);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
 		auto& mc = dynamic_cast<const node::MatrixConstruction&>(*node);
 
@@ -237,7 +237,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(mc.IsRow() ? 0 : 1);
 		m_pg->Append(type_prop);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::MatrixSplit>())
+	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
 		auto& ms = dynamic_cast<const node::MatrixSplit&>(*node);
 
@@ -247,7 +247,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(type_prop);
 	}
 	// utility
-	else if (type_id == bp::GetNodeTypeID<node::Comparison>())
+	else if (type == rttr::type::get<node::Comparison>())
 	{
 		auto& cmp = dynamic_cast<const node::Comparison&>(*node);
 
@@ -259,7 +259,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		type_prop->SetValue(cmp.GetCmpType());
 		m_pg->Append(type_prop);
 	}
-	//else if (type_id == bp::GetNodeTypeID<node::Input>())
+	//else if (type == rttr::type::get<node::Input>())
 	//{
 	//	auto& input = dynamic_cast<const node::Input&>(*node);
 
@@ -273,7 +273,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	//	m_pg->Append(type_prop);
 	//}
 	// uv
-	else if (type_id == bp::GetNodeTypeID<node::Flipbook>())
+	else if (type == rttr::type::get<node::Flipbook>())
 	{
 		auto& fb = dynamic_cast<const node::Flipbook&>(*node);
 		auto& invert = fb.GetInvert();
@@ -283,7 +283,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		m_pg->Append(new wxBoolProperty("Invert Y", wxPG_LABEL, invert.y));
 		m_pg->SetPropertyAttribute("Invert Y", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
+	else if (type == rttr::type::get<node::Rotate>())
 	{
 		auto& rot = dynamic_cast<const node::Rotate&>(*node);
 
@@ -318,37 +318,37 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	auto key = property->GetName();
 	wxAny val = property->GetValue();
 
-	auto type_id = m_node->TypeID();
+	auto type = m_node->get_type();
 	// artistic
-	if (type_id == bp::GetNodeTypeID<node::Hue>())
+	if (type == rttr::type::get<node::Hue>())
 	{
 		if (key == "Unit") {
 			auto& hue = std::dynamic_pointer_cast<node::Hue>(m_node);
 			hue->SetRadians(wxANY_AS(val, int) == 0);
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::InvertColors>())
+	else if (type == rttr::type::get<node::InvertColors>())
 	{
 		if (key == "Channels") {
 			auto& flip = std::dynamic_pointer_cast<node::InvertColors>(m_node);
 			flip->SetChannels(wxANY_AS(val, int));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Blend>())
+	else if (type == rttr::type::get<node::Blend>())
 	{
 		if (key == "Mode") {
 			auto& blend = std::dynamic_pointer_cast<node::Blend>(m_node);
 			blend->SetMode(static_cast<sw::node::Blend::ModeType>(wxANY_AS(val, int)));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::ChannelMask>())
+	else if (type == rttr::type::get<node::ChannelMask>())
 	{
 		if (key == "Channels") {
 			auto& cm = std::dynamic_pointer_cast<node::ChannelMask>(m_node);
 			cm->SetChannels(wxANY_AS(val, int));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		node::ColorspaceConversion::ColorType f, t;
 		auto& conv = std::dynamic_pointer_cast<node::ColorspaceConversion>(m_node);
@@ -360,14 +360,14 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 	}
 	// channel
-	else if (type_id == bp::GetNodeTypeID<node::Flip>())
+	else if (type == rttr::type::get<node::Flip>())
 	{
 		if (key == "Channels") {
 			auto& flip = std::dynamic_pointer_cast<node::Flip>(m_node);
 			flip->SetChannels(wxANY_AS(val, int));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Swizzle>())
+	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		uint32_t channels[4];
 		auto& swizzle = std::dynamic_pointer_cast<node::Swizzle>(m_node);
@@ -384,28 +384,28 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		swizzle->SetChannels(channels);
 	}
 	// math
-	else if (type_id == bp::GetNodeTypeID<node::Exponential>())
+	else if (type == rttr::type::get<node::Exponential>())
 	{
 		if (key == "Base") {
 			auto& exp = std::dynamic_pointer_cast<node::Exponential>(m_node);
 			exp->SetType(node::Exponential::BaseType(wxANY_AS(val, int)));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Log>())
+	else if (type == rttr::type::get<node::Log>())
 	{
 		if (key == "Base") {
 			auto& log = std::dynamic_pointer_cast<node::Log>(m_node);
 			log->SetType(node::Log::BaseType(wxANY_AS(val, int)));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
 		if (key == "Mat") {
 			auto& mc = std::dynamic_pointer_cast<node::MatrixConstruction>(m_node);
 			mc->SetRow(wxANY_AS(val, int) == 0);
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::MatrixSplit>())
+	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
 		if (key == "Mat") {
 			auto& ms = std::dynamic_pointer_cast<node::MatrixSplit>(m_node);
@@ -413,21 +413,21 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 	}
 	// input
-	else if (type_id == bp::GetNodeTypeID<node::Boolean>())
+	else if (type == rttr::type::get<node::Boolean>())
 	{
 		if (key == "Value") {
 			auto& b = std::dynamic_pointer_cast<node::Boolean>(m_node);
 			b->SetValue(wxANY_AS(val, bool));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector1>())
+	else if (type == rttr::type::get<node::Vector1>())
 	{
 		if (key == "Value") {
 			auto& c1 = std::dynamic_pointer_cast<node::Vector1>(m_node);
 			c1->SetValue(wxANY_AS(val, float));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector2>())
+	else if (type == rttr::type::get<node::Vector2>())
 	{
 		auto& c2 = std::dynamic_pointer_cast<node::Vector2>(m_node);
 		auto v = c2->GetValue();
@@ -438,7 +438,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 		c2->SetValue(v);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector3>())
+	else if (type == rttr::type::get<node::Vector3>())
 	{
 		auto& c3 = std::dynamic_pointer_cast<node::Vector3>(m_node);
 		auto v = c3->GetValue();
@@ -451,7 +451,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 		c3->SetValue(v);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Vector4>())
+	else if (type == rttr::type::get<node::Vector4>())
 	{
 		auto& c4 = std::dynamic_pointer_cast<node::Vector4>(m_node);
 		auto v = c4->GetValue();
@@ -466,7 +466,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 		c4->SetValue(v);
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Tex2DAsset>())
+	else if (type == rttr::type::get<node::Tex2DAsset>())
 	{
 		if (key == "name") {
 			auto& t2d = std::dynamic_pointer_cast<node::Tex2DAsset>(m_node);
@@ -474,14 +474,14 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 		}
 	}
 	// utility
-	else if (type_id == bp::GetNodeTypeID<node::Comparison>())
+	else if (type == rttr::type::get<node::Comparison>())
 	{
 		if (key == "Cmp") {
 			auto& cmp = std::dynamic_pointer_cast<node::Comparison>(m_node);
 			cmp->SetCmpType(static_cast<node::Comparison::CmpType>(wxANY_AS(val, int)));
 		}
 	}
-	//else if (type_id == bp::GetNodeTypeID<node::Input>())
+	//else if (type == rttr::type::get<node::Input>())
 	//{
 	//	auto& input = std::dynamic_pointer_cast<node::Input>(m_node);
 	//	if (key == "name") {
@@ -491,7 +491,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	//	}
 	//}
 	// uv
-	else if (type_id == bp::GetNodeTypeID<node::Flipbook>())
+	else if (type == rttr::type::get<node::Flipbook>())
 	{
 		auto& fb = std::dynamic_pointer_cast<node::Flipbook>(m_node);
 		if (key == "Invert X") {
@@ -500,7 +500,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			fb->SetInvert(sm::bvec2(fb->GetInvert().x, wxANY_AS(val, bool)));
 		}
 	}
-	else if (type_id == bp::GetNodeTypeID<node::Rotate>())
+	else if (type == rttr::type::get<node::Rotate>())
 	{
 		if (key == "Unit") {
 			auto& rot = std::dynamic_pointer_cast<node::Rotate>(m_node);

@@ -1,7 +1,5 @@
 #include "shadergraph/node/Rotate.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Rotate, sg_rotate)
-
 namespace sg
 {
 namespace node

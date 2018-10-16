@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(HyperbolicSine)
+	RTTR_ENABLE(Node)
 
 }; // HyperbolicSine
 

@@ -31,7 +31,7 @@ public:
 		ID_T
 	};
 
-	DECLARE_NODE_CLASS(Lerp)
+	RTTR_ENABLE(Node)
 
 }; // Lerp
 

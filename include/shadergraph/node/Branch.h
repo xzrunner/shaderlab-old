@@ -30,7 +30,7 @@ public:
 		ID_FALSE,
 	};
 
-	DECLARE_NODE_CLASS(Branch)
+	RTTR_ENABLE(Node)
 
 }; // Branch
 

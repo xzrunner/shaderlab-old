@@ -42,10 +42,10 @@ public:
 		m_to = to;
 	}
 
-	DECLARE_NODE_CLASS(ColorspaceConversion)
-
 private:
 	ColorType m_from = COL_RGB, m_to = COL_RGB;
+
+	RTTR_ENABLE(Node)
 
 }; // ColorspaceConversion
 

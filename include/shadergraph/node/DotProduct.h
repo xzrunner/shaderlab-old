@@ -28,7 +28,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(DotProduct)
+	RTTR_ENABLE(Node)
 
 }; // DotProduct
 

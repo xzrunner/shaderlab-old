@@ -34,10 +34,10 @@ public:
 	static const uint32_t CHANNEL_B = 0x4;
 	static const uint32_t CHANNEL_A = 0x8;
 
-	DECLARE_NODE_CLASS(Flip)
-
 private:
 	uint32_t m_channels = 0;
+
+	RTTR_ENABLE(Node)
 
 }; // Flip
 

@@ -129,26 +129,27 @@
 #include <node2/CompBoundingBox.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/Connecting.h>
-#include <blueprint/NodeFactory.h>
 #include <blueprint/NodeLayout.h>
 #include <blueprint/Pins.h>
 
 namespace sg
 {
 
-void NodeBuilder::Init()
-{
-	// trigger class static init
-	sg::node::Time::GetClassName();
-}
-
 bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 	                            const std::string& type, const std::string& name,
 	                            const sm::vec2& pos, bool is_default)
 {
-	auto bp_node = bp::NodeFactory::Instance()->Create(type, name);
+	auto rt_type = rttr::type::get_by_name(type);
+	assert(rt_type.is_valid());
+	auto rt_obj = rt_type.create();
+	assert(rt_obj.is_valid());
+	auto bp_node = rt_obj.get_value<bp::NodePtr>();
 	if (!bp_node) {
 		return nullptr;
+	}
+
+	if (!name.empty()) {
+		bp_node->SetName(name);
 	}
 
 	if (is_default) {
@@ -178,681 +179,681 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 
 void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::Node& node)
 {
-	auto type = node.GetClassInfo().GetClassName();
+	auto type = node.get_type();
 	// artistic
-	if (type == node::ColorAddMul::GetClassName())
+	if (type == rttr::type::get<node::ColorAddMul>())
 	{
 		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_COL,
-			node::Vector4::GetClassName(), "col"))->SetValue({ 0, 0, 0, 1 });
+			rttr::type::get<node::Vector4>().get_name().to_string(), "col"))->SetValue({ 0, 0, 0, 1 });
 		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_MUL,
-			node::Vector4::GetClassName(), "mul"))->SetValue({ 1, 1, 1, 1 });
+			rttr::type::get<node::Vector4>().get_name().to_string(), "mul"))->SetValue({ 1, 1, 1, 1 });
 		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, node::ColorAddMul::ID_ADD,
-			node::Vector4::GetClassName(), "add"))->SetValue({ 0, 0, 0, 0 });
+			rttr::type::get<node::Vector4>().get_name().to_string(), "add"))->SetValue({ 0, 0, 0, 0 });
 	}
-	else if (type == node::ColorMap::GetClassName())
+	else if (type == rttr::type::get<node::ColorMap>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_COL,
-			node::Vector3::GetClassName(), "col"))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string(), "col"))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_RMAP,
-			node::Vector3::GetClassName(), "rmap"))->SetValue({ 1, 0, 0});
+			rttr::type::get<node::Vector3>().get_name().to_string(), "rmap"))->SetValue({ 1, 0, 0});
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_GMAP,
-			node::Vector3::GetClassName(), "gmap"))->SetValue({ 0, 1, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string(), "gmap"))->SetValue({ 0, 1, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMap::ID_BMAP,
-			node::Vector3::GetClassName(), "bmap"))->SetValue({ 0, 0, 1 });
+			rttr::type::get<node::Vector3>().get_name().to_string(), "bmap"))->SetValue({ 0, 0, 1 });
 	}
-	else if (type == node::Contrast::GetClassName())
+	else if (type == rttr::type::get<node::Contrast>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Contrast::ID_INPUT,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Contrast::ID_CONTRAST,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Hue::GetClassName())
+	else if (type == rttr::type::get<node::Hue>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Hue::ID_INPUT,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Hue::ID_OFFSET,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::InvertColors::GetClassName())
+	else if (type == rttr::type::get<node::InvertColors>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string());
 	}
-	else if (type == node::ReplaceColor::GetClassName())
+	else if (type == rttr::type::get<node::ReplaceColor>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_COL,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_FROM,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ReplaceColor::ID_TO,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ReplaceColor::ID_RANGE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ReplaceColor::ID_FUZZINESS,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Saturation::GetClassName())
+	else if (type == rttr::type::get<node::Saturation>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Saturation::ID_INPUT,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Saturation::ID_SATURATION,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::WhiteBalance::GetClassName())
+	else if (type == rttr::type::get<node::WhiteBalance>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::WhiteBalance::ID_INPUT,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::WhiteBalance::ID_TEMPERATURE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::WhiteBalance::ID_TINT,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Blend::GetClassName())
+	else if (type == rttr::type::get<node::Blend>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_BASE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_BLEND,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Blend::ID_OPACITY,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Gray::GetClassName())
+	else if (type == rttr::type::get<node::Gray>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector4::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector4>().get_name().to_string());
 	}
-	else if (type == node::ChannelMask::GetClassName())
+	else if (type == rttr::type::get<node::ChannelMask>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string());
 	}
-	else if (type == node::ColorMask::GetClassName())
+	else if (type == rttr::type::get<node::ColorMask>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMask::ID_COL,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::ColorMask::ID_MASK,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_RANGE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::ColorMask::ID_FUZZINESS,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
 
-	else if (type == node::NormalBlend::GetClassName())
+	else if (type == rttr::type::get<node::NormalBlend>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalBlend::ID_A,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 1 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalBlend::ID_B,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 1 });
 	}
-	else if (type == node::NormalCreate::GetClassName())
+	else if (type == rttr::type::get<node::NormalCreate>())
 	{
-		CreateDefault(nodes, node, node::NormalCreate::ID_TEX, node::Tex2DAsset::GetClassName());
-		CreateDefault(nodes, node, node::NormalCreate::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::NormalCreate::ID_TEX, rttr::type::get<node::Tex2DAsset>().get_name().to_string());
+		CreateDefault(nodes, node, node::NormalCreate::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalCreate::ID_OFFSET,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalCreate::ID_STRENGTH,
-			node::Vector1::GetClassName()))->SetValue(8);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(8);
 	}
-	else if (type == node::NormalStrength::GetClassName())
+	else if (type == rttr::type::get<node::NormalStrength>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::NormalStrength::ID_INPUT,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 1 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 1 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::NormalStrength::ID_STRENGTH,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::NormalUnpack::GetClassName())
+	else if (type == rttr::type::get<node::NormalUnpack>())
 	{
 		std::static_pointer_cast<node::Vector4>(CreateDefault(nodes, node, 0,
-			node::Vector4::GetClassName()))->SetValue({ 0, 0, 0, 0 });
+			rttr::type::get<node::Vector4>().get_name().to_string()))->SetValue({ 0, 0, 0, 0 });
 	}
-	else if (type == node::ColorspaceConversion::GetClassName())
+	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, 0,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 	}
 	// channel
-	else if (type == node::Combine::GetClassName())
+	else if (type == rttr::type::get<node::Combine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_R,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_G,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Combine::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Flip::GetClassName())
+	else if (type == rttr::type::get<node::Flip>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string());
 	}
-	else if (type == node::Split::GetClassName())
+	else if (type == rttr::type::get<node::Split>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string());
 	}
-	else if (type == node::Swizzle::GetClassName())
+	else if (type == rttr::type::get<node::Swizzle>())
 	{
-		CreateDefault(nodes, node, 0, node::Vector1::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string());
 	}
 	// input
-	else if (type == node::SampleTex2D::GetClassName())
+	else if (type == rttr::type::get<node::SampleTex2D>())
 	{
-		CreateDefault(nodes, node, node::SampleTex2D::ID_TEX, node::Tex2DAsset::GetClassName());
-		CreateDefault(nodes, node, node::SampleTex2D::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::SampleTex2D::ID_TEX, rttr::type::get<node::Tex2DAsset>().get_name().to_string());
+		CreateDefault(nodes, node, node::SampleTex2D::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 	}
 	// master
-	else if (type == node::Phong::GetClassName())
+	else if (type == rttr::type::get<node::Phong>())
 	{
 		// light
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_LIT_POSITION,
-			node::Vector3::GetClassName(), "lit_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "lit_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_LIT_AMBIENT,
-			node::Vector3::GetClassName(), "lit_ambient"))->SetValue(sm::vec3(0.2f, 0.2f, 0.2f));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "lit_ambient"))->SetValue(sm::vec3(0.2f, 0.2f, 0.2f));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_LIT_DIFFUSE,
-			node::Vector3::GetClassName(), "lit_diffuse"))->SetValue(sm::vec3(0.5f, 0.5f, 0.5f));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "lit_diffuse"))->SetValue(sm::vec3(0.5f, 0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_LIT_SPECULAR,
-			node::Vector3::GetClassName(), "lit_specular"))->SetValue(sm::vec3(1.0f, 1.0f, 1.0f));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "lit_specular"))->SetValue(sm::vec3(1.0f, 1.0f, 1.0f));
 		// material
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_MAT_DIFFUSE,
-			node::Vector3::GetClassName(), "mat_diffuse"))->SetValue(sm::vec3(1, 0, 0));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "mat_diffuse"))->SetValue(sm::vec3(1, 0, 0));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_MAT_SPECULAR,
-			node::Vector3::GetClassName(), "mat_specular"))->SetValue(sm::vec3(0, 0.5f, 0));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "mat_specular"))->SetValue(sm::vec3(0, 0.5f, 0));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Phong::ID_MAT_SHININESS,
-			node::Vector1::GetClassName(), "mat_shininess"))->SetValue(64.0f);
+			rttr::type::get<node::Vector1>().get_name().to_string(), "mat_shininess"))->SetValue(64.0f);
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_MAT_EMISSION,
-			node::Vector3::GetClassName(), "mat_emission"))->SetValue(sm::vec3(0, 0, 0));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "mat_emission"))->SetValue(sm::vec3(0, 0, 0));
 		// view
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Phong::ID_VIEW_POS,
-			node::Vector3::GetClassName(), "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "view_pos"))->SetValue(sm::vec3(1.2f, 1.0f, 2.0f));
 	}
-	else if (type == node::Sprite::GetClassName())
+	else if (type == rttr::type::get<node::Sprite>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_MUL,
-			node::Vector3::GetClassName(), "mul"))->SetValue(sm::vec3(1, 1, 1));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "mul"))->SetValue(sm::vec3(1, 1, 1));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_ADD,
-			node::Vector3::GetClassName(), "add"))->SetValue(sm::vec3(0, 0, 0));
+			rttr::type::get<node::Vector3>().get_name().to_string(), "add"))->SetValue(sm::vec3(0, 0, 0));
 	}
 	// math
-	else if (type == node::Add::GetClassName())
+	else if (type == rttr::type::get<node::Add>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Divide::GetClassName())
+	else if (type == rttr::type::get<node::Divide>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Multiply::GetClassName())
+	else if (type == rttr::type::get<node::Multiply>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Subtract::GetClassName())
+	else if (type == rttr::type::get<node::Subtract>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Power::GetClassName())
+	else if (type == rttr::type::get<node::Power>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::SquareRoot::GetClassName())
+	else if (type == rttr::type::get<node::SquareRoot>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Absolute::GetClassName())
+	else if (type == rttr::type::get<node::Absolute>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Exponential::GetClassName())
+	else if (type == rttr::type::get<node::Exponential>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Length::GetClassName())
+	else if (type == rttr::type::get<node::Length>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Log::GetClassName())
+	else if (type == rttr::type::get<node::Log>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Modulo::GetClassName())
+	else if (type == rttr::type::get<node::Modulo>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Negate::GetClassName())
+	else if (type == rttr::type::get<node::Negate>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Normalize::GetClassName())
+	else if (type == rttr::type::get<node::Normalize>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Posterize::GetClassName())
+	else if (type == rttr::type::get<node::Posterize>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Reciprocal::GetClassName())
+	else if (type == rttr::type::get<node::Reciprocal>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::ReciprocalSquareRoot::GetClassName())
+	else if (type == rttr::type::get<node::ReciprocalSquareRoot>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::DDX::GetClassName())
+	else if (type == rttr::type::get<node::DDX>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::DDY::GetClassName())
+	else if (type == rttr::type::get<node::DDY>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::DDXY::GetClassName())
+	else if (type == rttr::type::get<node::DDXY>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::InverseLerp::GetClassName())
+	else if (type == rttr::type::get<node::InverseLerp>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::InverseLerp::ID_T,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Lerp::GetClassName())
+	else if (type == rttr::type::get<node::Lerp>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Lerp::ID_T,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Smoothstep::GetClassName())
+	else if (type == rttr::type::get<node::Smoothstep>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Smoothstep::ID_T,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::MatrixConstruction::GetClassName())
+	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
-		CreateDefault(nodes, node, node::MatrixConstruction::ID_M0, node::Vector4::GetClassName());
-		CreateDefault(nodes, node, node::MatrixConstruction::ID_M1, node::Vector4::GetClassName());
-		CreateDefault(nodes, node, node::MatrixConstruction::ID_M2, node::Vector4::GetClassName());
-		CreateDefault(nodes, node, node::MatrixConstruction::ID_M3, node::Vector4::GetClassName());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M0, rttr::type::get<node::Vector4>().get_name().to_string());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M1, rttr::type::get<node::Vector4>().get_name().to_string());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M2, rttr::type::get<node::Vector4>().get_name().to_string());
+		CreateDefault(nodes, node, node::MatrixConstruction::ID_M3, rttr::type::get<node::Vector4>().get_name().to_string());
 	}
-	else if (type == node::MatrixDeterminant::GetClassName())
+	else if (type == rttr::type::get<node::MatrixDeterminant>())
 	{
-		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Matrix2>().get_name().to_string());
 	}
-	else if (type == node::MatrixSplit::GetClassName())
+	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
-		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Matrix2>().get_name().to_string());
 	}
-	else if (type == node::MatrixTranspose::GetClassName())
+	else if (type == rttr::type::get<node::MatrixTranspose>())
 	{
-		CreateDefault(nodes, node, 0, node::Matrix2::GetClassName());
+		CreateDefault(nodes, node, 0, rttr::type::get<node::Matrix2>().get_name().to_string());
 	}
-	else if (type == node::Clamp::GetClassName())
+	else if (type == rttr::type::get<node::Clamp>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_IN,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_MIN,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Clamp::ID_MAX,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Fraction::GetClassName())
+	else if (type == rttr::type::get<node::Fraction>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Maximum::GetClassName())
+	else if (type == rttr::type::get<node::Maximum>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Maximum::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Maximum::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Minimum::GetClassName())
+	else if (type == rttr::type::get<node::Minimum>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Minimum::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Minimum::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::OneMinus::GetClassName())
+	else if (type == rttr::type::get<node::OneMinus>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::RandomRange::GetClassName())
+	else if (type == rttr::type::get<node::RandomRange>())
 	{
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RandomRange::ID_SEED,
-			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 0, 0 });
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RandomRange::ID_MIN,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RandomRange::ID_MAX,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Remap::GetClassName())
+	else if (type == rttr::type::get<node::Remap>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Remap::ID_IN,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_FROM,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(-1, 1));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(-1, 1));
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Remap::ID_TO,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0, 1));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0, 1));
 	}
-	else if (type == node::Saturate::GetClassName())
+	else if (type == rttr::type::get<node::Saturate>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Ceiling::GetClassName())
+	else if (type == rttr::type::get<node::Ceiling>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Floor::GetClassName())
+	else if (type == rttr::type::get<node::Floor>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Round::GetClassName())
+	else if (type == rttr::type::get<node::Round>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Sign::GetClassName())
+	else if (type == rttr::type::get<node::Sign>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Step::GetClassName())
+	else if (type == rttr::type::get<node::Step>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Step::ID_INPUT,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Step::ID_EDGE,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Truncate::GetClassName())
+	else if (type == rttr::type::get<node::Truncate>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Arccosine::GetClassName())
+	else if (type == rttr::type::get<node::Arccosine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::Arcsine::GetClassName())
+	else if (type == rttr::type::get<node::Arcsine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Arctangent::GetClassName())
+	else if (type == rttr::type::get<node::Arctangent>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Arctangent2::GetClassName())
+	else if (type == rttr::type::get<node::Arctangent2>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Arctangent2::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Arctangent2::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Cosine::GetClassName())
+	else if (type == rttr::type::get<node::Cosine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::DegreesToRadians::GetClassName())
+	else if (type == rttr::type::get<node::DegreesToRadians>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::HyperbolicCosine::GetClassName())
+	else if (type == rttr::type::get<node::HyperbolicCosine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::HyperbolicSine::GetClassName())
+	else if (type == rttr::type::get<node::HyperbolicSine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::HyperbolicTangent::GetClassName())
+	else if (type == rttr::type::get<node::HyperbolicTangent>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::RadiansToDegrees::GetClassName())
+	else if (type == rttr::type::get<node::RadiansToDegrees>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Sine::GetClassName())
+	else if (type == rttr::type::get<node::Sine>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Tangent::GetClassName())
+	else if (type == rttr::type::get<node::Tangent>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::CrossProduct::GetClassName())
+	else if (type == rttr::type::get<node::CrossProduct>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::CrossProduct::ID_A,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::CrossProduct::ID_B,
-			node::Vector3::GetClassName()))->SetValue({ 0, 0, 0 });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
 	}
-	else if (type == node::Distance::GetClassName())
+	else if (type == rttr::type::get<node::Distance>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Distance::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Distance::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::DotProduct::GetClassName())
+	else if (type == rttr::type::get<node::DotProduct>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::DotProduct::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::DotProduct::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Projection::GetClassName())
+	else if (type == rttr::type::get<node::Projection>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Projection::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Projection::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Rejection::GetClassName())
+	else if (type == rttr::type::get<node::Rejection>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rejection::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rejection::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
 	// procedural
-	else if (type == node::Checkerboard::GetClassName())
+	else if (type == rttr::type::get<node::Checkerboard>())
 	{
-		CreateDefault(nodes, node, node::Checkerboard::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Checkerboard::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Checkerboard::ID_COLOR_A,
-			node::Vector3::GetClassName()))->SetValue({ 0.2f, 0.2f, 0.2f });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0.2f, 0.2f, 0.2f });
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Checkerboard::ID_COLOR_B,
-			node::Vector3::GetClassName()))->SetValue({ 0.7f, 0.7f, 0.7f });
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0.7f, 0.7f, 0.7f });
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Checkerboard::ID_FREQUENCY,
-			node::Vector2::GetClassName()))->SetValue({ 1, 1 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 1, 1 });
 	}
-	else if (type == node::GradientNoise::GetClassName())
+	else if (type == rttr::type::get<node::GradientNoise>())
 	{
-		CreateDefault(nodes, node, node::GradientNoise::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::GradientNoise::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::GradientNoise::ID_SCALE,
-			node::Vector1::GetClassName()))->SetValue(10);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(10);
 	}
-	else if (type == node::SimpleNoise::GetClassName())
+	else if (type == rttr::type::get<node::SimpleNoise>())
 	{
-		CreateDefault(nodes, node, node::SimpleNoise::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::SimpleNoise::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::SimpleNoise::ID_SCALE,
-			node::Vector1::GetClassName()))->SetValue(500);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(500);
 	}
-	else if (type == node::Voronoi::GetClassName())
+	else if (type == rttr::type::get<node::Voronoi>())
 	{
-		CreateDefault(nodes, node, node::Voronoi::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Voronoi::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Voronoi::ID_ANGLE_OFFSET,
-			node::Vector1::GetClassName()))->SetValue(2);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(2);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Voronoi::ID_CELL_DENSITY,
-			node::Vector1::GetClassName()))->SetValue(5);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(5);
 	}
-	else if (type == node::Ellipse::GetClassName())
+	else if (type == rttr::type::get<node::Ellipse>())
 	{
-		CreateDefault(nodes, node, node::Ellipse::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Ellipse::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Ellipse::ID_WIDTH,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Ellipse::ID_HEIGHT,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 	}
-	else if (type == node::Polygon::GetClassName())
+	else if (type == rttr::type::get<node::Polygon>())
 	{
-		CreateDefault(nodes, node, node::Polygon::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Polygon::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_SIDES,
-			node::Vector1::GetClassName()))->SetValue(6);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(6);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_WIDTH,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Polygon::ID_HEIGHT,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 	}
-	else if (type == node::Rectangle::GetClassName())
+	else if (type == rttr::type::get<node::Rectangle>())
 	{
-		CreateDefault(nodes, node, node::Rectangle::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Rectangle::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rectangle::ID_WIDTH,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rectangle::ID_HEIGHT,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 	}
-	else if (type == node::RoundedRectangle::GetClassName())
+	else if (type == rttr::type::get<node::RoundedRectangle>())
 	{
-		CreateDefault(nodes, node, node::RoundedRectangle::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::RoundedRectangle::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_WIDTH,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_HEIGHT,
-			node::Vector1::GetClassName()))->SetValue(0.5f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::RoundedRectangle::ID_RADIUS,
-			node::Vector1::GetClassName()))->SetValue(0.1f);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.1f);
 	}
 	// utility
-	else if (type == node::Preview::GetClassName())
+	else if (type == rttr::type::get<node::Preview>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::And::GetClassName())
+	else if (type == rttr::type::get<node::And>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Or::GetClassName())
+	else if (type == rttr::type::get<node::Or>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 1, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Not::GetClassName())
+	else if (type == rttr::type::get<node::Not>())
 	{
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, node::Vector1::GetClassName()))->SetValue(0);
+		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, 0, rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Branch::GetClassName())
+	else if (type == rttr::type::get<node::Branch>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_PREDICATE,
-			node::Boolean::GetClassName()))->SetValue(true);
+			rttr::type::get<node::Boolean>().get_name().to_string()))->SetValue(true);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_TRUE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Branch::ID_FALSE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Comparison::GetClassName())
+	else if (type == rttr::type::get<node::Comparison>())
 	{
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Comparison::ID_A,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Comparison::ID_B,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
 	// uv
-	else if (type == node::Flipbook::GetClassName())
+	else if (type == rttr::type::get<node::Flipbook>())
 	{
-		CreateDefault(nodes, node, node::Flipbook::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Flipbook::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_WIDTH,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_HEIGHT,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Flipbook::ID_TILE,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::PolarCoordinates::GetClassName())
+	else if (type == rttr::type::get<node::PolarCoordinates>())
 	{
-		CreateDefault(nodes, node, node::PolarCoordinates::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::PolarCoordinates::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::PolarCoordinates::ID_CENTER,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::PolarCoordinates::ID_RADIAL_SCALE,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::PolarCoordinates::ID_LENGTH_SCALE,
-			node::Vector1::GetClassName()))->SetValue(1);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(1);
 	}
-	else if (type == node::RadialShear::GetClassName())
+	else if (type == rttr::type::get<node::RadialShear>())
 	{
-		CreateDefault(nodes, node, node::RadialShear::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::RadialShear::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_CENTER,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_STRENGTH,
-			node::Vector2::GetClassName()))->SetValue({ 10, 10 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 10, 10 });
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::RadialShear::ID_OFFSET,
-			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 0, 0 });
 	}
-	else if (type == node::Rotate::GetClassName())
+	else if (type == rttr::type::get<node::Rotate>())
 	{
-		CreateDefault(nodes, node, node::Rotate::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Rotate::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Rotate::ID_CENTER,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Rotate::ID_ROTATION,
-			node::Vector1::GetClassName()))->SetValue(0);
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0);
 	}
-	else if (type == node::Spherize::GetClassName())
+	else if (type == rttr::type::get<node::Spherize>())
 	{
-		CreateDefault(nodes, node, node::Spherize::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Spherize::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_CENTER,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_STRENGTH,
-			node::Vector2::GetClassName()))->SetValue({ 10, 10 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 10, 10 });
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Spherize::ID_OFFSET,
-			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 0, 0 });
 	}
-	else if (type == node::TilingAndOffset::GetClassName())
+	else if (type == rttr::type::get<node::TilingAndOffset>())
 	{
-		CreateDefault(nodes, node, node::TilingAndOffset::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::TilingAndOffset::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::TilingAndOffset::ID_TILLING,
-			node::Vector2::GetClassName()))->SetValue({ 1, 1 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 1, 1 });
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::TilingAndOffset::ID_OFFSET,
-			node::Vector2::GetClassName()))->SetValue({ 0, 0 });
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 0, 0 });
 	}
-	else if (type == node::Twirl::GetClassName())
+	else if (type == rttr::type::get<node::Twirl>())
 	{
-		CreateDefault(nodes, node, node::Twirl::ID_UV, node::UV::GetClassName());
+		CreateDefault(nodes, node, node::Twirl::ID_UV, rttr::type::get<node::UV>().get_name().to_string());
 		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Twirl::ID_CENTER,
-			node::Vector2::GetClassName()))->SetValue(sm::vec2(0.5f, 0.5f));
+			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue(sm::vec2(0.5f, 0.5f));
 		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Twirl::ID_STRENGTH,
-			node::Vector1::GetClassName()))->SetValue(10);
-		CreateDefault(nodes, node, node::Twirl::ID_OFFSET, node::Vector2::GetClassName());
+			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(10);
+		CreateDefault(nodes, node, node::Twirl::ID_OFFSET, rttr::type::get<node::Vector2>().get_name().to_string());
 	}
 }
 

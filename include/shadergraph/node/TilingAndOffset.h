@@ -31,7 +31,7 @@ public:
 		ID_OFFSET,
 	};
 
-	DECLARE_NODE_CLASS(TilingAndOffset)
+	RTTR_ENABLE(Node)
 
 }; // TilingAndOffset
 

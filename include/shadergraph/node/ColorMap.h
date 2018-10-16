@@ -33,7 +33,7 @@ public:
 		ID_BMAP,
 	};
 
-	DECLARE_NODE_CLASS(ColorMap)
+	RTTR_ENABLE(Node)
 
 }; // ColorMap
 

@@ -29,7 +29,7 @@ public:
 		ID_SCALE,
 	};
 
-	DECLARE_NODE_CLASS(GradientNoise)
+	RTTR_ENABLE(Node)
 
 }; // GradientNoise
 

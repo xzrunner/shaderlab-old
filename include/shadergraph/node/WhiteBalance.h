@@ -31,7 +31,7 @@ public:
 		ID_TINT,
 	};
 
-	DECLARE_NODE_CLASS(WhiteBalance)
+	RTTR_ENABLE(Node)
 
 }; // WhiteBalance
 

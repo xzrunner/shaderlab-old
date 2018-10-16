@@ -23,7 +23,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(UV)
+	RTTR_ENABLE(Node)
 
 }; // UV
 

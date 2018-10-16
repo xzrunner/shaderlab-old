@@ -1,7 +1,5 @@
 #include "shadergraph/node/Boolean.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Boolean, sg_boolean)
-
 namespace sg
 {
 namespace node

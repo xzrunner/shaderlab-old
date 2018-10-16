@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Floor)
+	RTTR_ENABLE(Node)
 
 }; // Floor
 

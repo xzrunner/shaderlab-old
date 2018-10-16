@@ -39,7 +39,7 @@ public:
 private:
 	BaseType m_type = BASE_E;
 
-	DECLARE_NODE_CLASS(Exponential)
+	RTTR_ENABLE(Node)
 
 }; // Exponential
 

@@ -42,7 +42,7 @@ public:
 		ID_A,
 	};
 
-	DECLARE_NODE_CLASS(SampleTex2D)
+	RTTR_ENABLE(Node)
 
 }; // SampleTex2D
 

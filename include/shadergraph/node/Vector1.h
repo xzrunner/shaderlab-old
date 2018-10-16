@@ -36,7 +36,7 @@ private:
 private:
 	float m_val = 0;
 
-	DECLARE_NODE_CLASS(Vector1)
+	RTTR_ENABLE(Node)
 
 }; // Vector1
 

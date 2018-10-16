@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Tangent)
+	RTTR_ENABLE(Node)
 
 }; // Tangent
 

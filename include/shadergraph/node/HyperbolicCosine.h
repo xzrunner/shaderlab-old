@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(HyperbolicCosine)
+	RTTR_ENABLE(Node)
 
 }; // HyperbolicCosine
 

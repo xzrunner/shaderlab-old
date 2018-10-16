@@ -1,7 +1,5 @@
 #include "shadergraph/node/MatrixSplit.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::MatrixSplit, sg_mat_split)
-
 namespace sg
 {
 namespace node

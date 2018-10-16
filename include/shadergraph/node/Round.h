@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Round)
+	RTTR_ENABLE(Node)
 
 }; // Round
 

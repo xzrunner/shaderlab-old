@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Arccosine)
+	RTTR_ENABLE(Node)
 
 }; // Arccosine
 

@@ -30,7 +30,7 @@ public:
 		ID_COL_ADD,
 	};
 
-	DECLARE_NODE_CLASS(Sprite)
+	RTTR_ENABLE(Node)
 
 }; // Sprite
 

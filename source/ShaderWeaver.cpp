@@ -455,9 +455,9 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 {
 	sw::NodePtr dst = nullptr;
 
-	int id = node.TypeID();
+	auto type = node.get_type();
 	// artistic
-	if (id == bp::GetNodeTypeID<node::ColorAddMul>())
+	if (type == rttr::type::get<node::ColorAddMul>())
 	{
 		auto& src = static_cast<const node::ColorAddMul&>(node);
 		dst = std::make_shared<sw::node::ColorAddMul>();
@@ -474,7 +474,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::ColorAddMul::ID_ADD }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::ColorMap>())
+	else if (type == rttr::type::get<node::ColorMap>())
 	{
 		auto& src = static_cast<const node::ColorMap&>(node);
 		dst = std::make_shared<sw::node::ColorMap>();
@@ -495,7 +495,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::ColorMap::ID_BMAP }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Contrast>())
+	else if (type == rttr::type::get<node::Contrast>())
 	{
 		auto& src = static_cast<const node::Contrast&>(node);
 		dst = std::make_shared<sw::node::Contrast>();
@@ -508,7 +508,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Contrast::ID_CONTRAST }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Hue>())
+	else if (type == rttr::type::get<node::Hue>())
 	{
 		auto& src = static_cast<const node::Hue&>(node);
 		dst = std::make_shared<sw::node::Hue>(src.IsRadians());
@@ -521,13 +521,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Hue::ID_OFFSET }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::InvertColors>())
+	else if (type == rttr::type::get<node::InvertColors>())
 	{
 		auto& src = static_cast<const node::InvertColors&>(node);
 		dst = std::make_shared<sw::node::InvertColors>(src.GetChannels());
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::ReplaceColor>())
+	else if (type == rttr::type::get<node::ReplaceColor>())
 	{
 		auto& src = static_cast<const node::ReplaceColor&>(node);
 		dst = std::make_shared<sw::node::ReplaceColor>();
@@ -553,7 +553,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 
-	else if (id == bp::GetNodeTypeID<node::Saturation>())
+	else if (type == rttr::type::get<node::Saturation>())
 	{
 		auto& src = static_cast<const node::Saturation&>(node);
 		dst = std::make_shared<sw::node::Saturation>();
@@ -566,7 +566,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Saturation::ID_SATURATION }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::WhiteBalance>())
+	else if (type == rttr::type::get<node::WhiteBalance>())
 	{
 		auto& src = static_cast<const node::WhiteBalance&>(node);
 		dst = std::make_shared<sw::node::WhiteBalance>();
@@ -583,7 +583,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::WhiteBalance::ID_TINT }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Blend>())
+	else if (type == rttr::type::get<node::Blend>())
 	{
 		auto& src = static_cast<const node::Blend&>(node);
 		dst = std::make_shared<sw::node::Blend>(src.GetMode());
@@ -600,19 +600,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Blend::ID_OPACITY }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Gray>())
+	else if (type == rttr::type::get<node::Gray>())
 	{
 		auto& src = static_cast<const node::Gray&>(node);
 		dst = std::make_shared<sw::node::Gray>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::ChannelMask>())
+	else if (type == rttr::type::get<node::ChannelMask>())
 	{
 		auto& src = static_cast<const node::ChannelMask&>(node);
 		dst = std::make_shared<sw::node::ChannelMask>(src.GetChannels());
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::ColorMask>())
+	else if (type == rttr::type::get<node::ColorMask>())
 	{
 		auto& src = static_cast<const node::ColorMask&>(node);
 		dst = std::make_shared<sw::node::ColorMask>();
@@ -633,7 +633,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::ColorMask::ID_FUZZINESS }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::NormalBlend>())
+	else if (type == rttr::type::get<node::NormalBlend>())
 	{
 		auto& src = static_cast<const node::NormalBlend&>(node);
 		dst = std::make_shared<sw::node::NormalBlend>();
@@ -646,7 +646,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::NormalBlend::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::NormalCreate>())
+	else if (type == rttr::type::get<node::NormalCreate>())
 	{
 		auto& src = static_cast<const node::NormalCreate&>(node);
 		dst = std::make_shared<sw::node::NormalCreate>();
@@ -667,7 +667,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::NormalCreate::ID_STRENGTH }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::NormalStrength>())
+	else if (type == rttr::type::get<node::NormalStrength>())
 	{
 		auto& src = static_cast<const node::NormalStrength&>(node);
 		dst = std::make_shared<sw::node::NormalStrength>();
@@ -680,13 +680,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::NormalStrength::ID_STRENGTH }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::NormalUnpack>())
+	else if (type == rttr::type::get<node::NormalUnpack>())
 	{
 		auto& src = static_cast<const node::NormalUnpack&>(node);
 		dst = std::make_shared<sw::node::NormalUnpack>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::ColorspaceConversion>())
+	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		auto& src = static_cast<const node::ColorspaceConversion&>(node);
 		node::ColorspaceConversion::ColorType f, t;
@@ -698,7 +698,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	// channel
-	else if (id == bp::GetNodeTypeID<node::Combine>())
+	else if (type == rttr::type::get<node::Combine>())
 	{
 		auto& src = static_cast<const node::Combine&>(node);
 		dst = std::make_shared<sw::node::Combine>();
@@ -719,19 +719,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Combine::ID_A }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Flip>())
+	else if (type == rttr::type::get<node::Flip>())
 	{
 		auto& src = static_cast<const node::Flip&>(node);
 		dst = std::make_shared<sw::node::Flip>(src.GetChannels());
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Split>())
+	else if (type == rttr::type::get<node::Split>())
 	{
 		auto& src = static_cast<const node::Split&>(node);
 		dst = std::make_shared<sw::node::Split>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Swizzle>())
+	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		auto& src = static_cast<const node::Swizzle&>(node);
 		uint32_t channels[4];
@@ -740,56 +740,56 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	// input
-	else if (id == bp::GetNodeTypeID<node::Boolean>())
+	else if (type == rttr::type::get<node::Boolean>())
 	{
 		auto& src = static_cast<const node::Boolean&>(node);
 		dst = std::make_shared<sw::node::Boolean>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Time>())
+	else if (type == rttr::type::get<node::Time>())
 	{
 		dst = std::make_shared<sw::node::Time>();
 	}
-	else if (id == bp::GetNodeTypeID<node::Vector1>())
+	else if (type == rttr::type::get<node::Vector1>())
 	{
 		auto& src = static_cast<const node::Vector1&>(node);
 		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Vector2>())
+	else if (type == rttr::type::get<node::Vector2>())
 	{
 		auto& src = static_cast<const node::Vector2&>(node);
 		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Vector3>())
+	else if (type == rttr::type::get<node::Vector3>())
 	{
 		auto& src = static_cast<const node::Vector3&>(node);
 		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Vector4>())
+	else if (type == rttr::type::get<node::Vector4>())
 	{
 		auto& src = static_cast<const node::Vector4&>(node);
 		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::UV>())
+	else if (type == rttr::type::get<node::UV>())
 	{
 		auto& src = static_cast<const node::UV&>(node);
 		dst = std::make_shared<sw::node::UV>(src.GetName());
 	}
-	else if (id == bp::GetNodeTypeID<node::Matrix2>())
+	else if (type == rttr::type::get<node::Matrix2>())
 	{
 		auto& src = static_cast<const node::Matrix2&>(node);
 		dst = std::make_shared<sw::node::Matrix2>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Matrix3>())
+	else if (type == rttr::type::get<node::Matrix3>())
 	{
 		auto& src = static_cast<const node::Matrix3&>(node);
 		dst = std::make_shared<sw::node::Matrix3>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::Matrix4>())
+	else if (type == rttr::type::get<node::Matrix4>())
 	{
 		auto& src = static_cast<const node::Matrix4&>(node);
 		dst = std::make_shared<sw::node::Matrix4>(src.GetName(), src.GetValue());
 	}
-	else if (id == bp::GetNodeTypeID<node::SampleTex2D>())
+	else if (type == rttr::type::get<node::SampleTex2D>())
 	{
 		auto& src = static_cast<const node::SampleTex2D&>(node);
 		dst = std::make_shared<sw::node::SampleTex2D>();
@@ -802,7 +802,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::SampleTex2D::ID_UV }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Tex2DAsset>())
+	else if (type == rttr::type::get<node::Tex2DAsset>())
 	{
 		auto& src = static_cast<const node::Tex2DAsset&>(node);
 		m_texture_names.push_back(src.GetName());
@@ -813,7 +813,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
 	}
 	// master
-	else if (id == bp::GetNodeTypeID<node::Phong>())
+	else if (type == rttr::type::get<node::Phong>())
 	{
 		dst = std::make_shared<sw::node::Phong>();
 
@@ -856,54 +856,54 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 	// math
-	else if (id == bp::GetNodeTypeID<node::Add>())
+	else if (type == rttr::type::get<node::Add>())
 	{
 		auto& src = static_cast<const node::Add&>(node);
 		dst = std::make_shared<sw::node::Add>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Divide>())
+	else if (type == rttr::type::get<node::Divide>())
 	{
 		auto& src = static_cast<const node::Divide&>(node);
 		dst = std::make_shared<sw::node::Divide>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Multiply>())
+	else if (type == rttr::type::get<node::Multiply>())
 	{
 		auto& src = static_cast<const node::Multiply&>(node);
 		dst = std::make_shared<sw::node::Multiply>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Subtract>())
+	else if (type == rttr::type::get<node::Subtract>())
 	{
 		auto& src = static_cast<const node::Subtract&>(node);
 		dst = std::make_shared<sw::node::Subtract>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Power>())
+	else if (type == rttr::type::get<node::Power>())
 	{
 		auto& src = static_cast<const node::Power&>(node);
 		dst = std::make_shared<sw::node::Power>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Power::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Power::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::SquareRoot>())
+	else if (type == rttr::type::get<node::SquareRoot>())
 	{
 		auto& src = static_cast<const node::SquareRoot&>(node);
 		dst = std::make_shared<sw::node::SquareRoot>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Absolute>())
+	else if (type == rttr::type::get<node::Absolute>())
 	{
 		auto& src = static_cast<const node::Absolute&>(node);
 		dst = std::make_shared<sw::node::Absolute>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Exponential>())
+	else if (type == rttr::type::get<node::Exponential>())
 	{
 		auto& src = static_cast<const node::Exponential&>(node);
 		dst = std::make_shared<sw::node::Exponential>(
@@ -911,13 +911,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Length>())
+	else if (type == rttr::type::get<node::Length>())
 	{
 		auto& src = static_cast<const node::Length&>(node);
 		dst = std::make_shared<sw::node::Length>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Log>())
+	else if (type == rttr::type::get<node::Log>())
 	{
 		auto& src = static_cast<const node::Log&>(node);
 		dst = std::make_shared<sw::node::Log>(
@@ -925,7 +925,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Modulo>())
+	else if (type == rttr::type::get<node::Modulo>())
 	{
 		auto& src = static_cast<const node::Modulo&>(node);
 		dst = std::make_shared<sw::node::Modulo>();
@@ -938,19 +938,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Modulo::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Negate>())
+	else if (type == rttr::type::get<node::Negate>())
 	{
 		auto& src = static_cast<const node::Negate&>(node);
 		dst = std::make_shared<sw::node::Negate>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Normalize>())
+	else if (type == rttr::type::get<node::Normalize>())
 	{
 		auto& src = static_cast<const node::Normalize&>(node);
 		dst = std::make_shared<sw::node::Normalize>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Posterize>())
+	else if (type == rttr::type::get<node::Posterize>())
 	{
 		auto& src = static_cast<const node::Posterize&>(node);
 		dst = std::make_shared<sw::node::Posterize>();
@@ -963,37 +963,37 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Posterize::ID_STEPS }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Reciprocal>())
+	else if (type == rttr::type::get<node::Reciprocal>())
 	{
 		auto& src = static_cast<const node::Reciprocal&>(node);
 		dst = std::make_shared<sw::node::Reciprocal>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::ReciprocalSquareRoot>())
+	else if (type == rttr::type::get<node::ReciprocalSquareRoot>())
 	{
 		auto& src = static_cast<const node::ReciprocalSquareRoot&>(node);
 		dst = std::make_shared<sw::node::ReciprocalSquareRoot>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::DDX>())
+	else if (type == rttr::type::get<node::DDX>())
 	{
 		auto& src = static_cast<const node::DDX&>(node);
 		dst = std::make_shared<sw::node::DDX>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::DDY>())
+	else if (type == rttr::type::get<node::DDY>())
 	{
 		auto& src = static_cast<const node::DDY&>(node);
 		dst = std::make_shared<sw::node::DDY>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::DDXY>())
+	else if (type == rttr::type::get<node::DDXY>())
 	{
 		auto& src = static_cast<const node::DDXY&>(node);
 		dst = std::make_shared<sw::node::DDXY>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::InverseLerp>())
+	else if (type == rttr::type::get<node::InverseLerp>())
 	{
 		auto& src = static_cast<const node::InverseLerp&>(node);
 		dst = std::make_shared<sw::node::InverseLerp>();
@@ -1010,7 +1010,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::InverseLerp::ID_T }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Lerp>())
+	else if (type == rttr::type::get<node::Lerp>())
 	{
 		auto& src = static_cast<const node::Lerp&>(node);
 		dst = std::make_shared<sw::node::Lerp>();
@@ -1027,7 +1027,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Lerp::ID_T }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Smoothstep>())
+	else if (type == rttr::type::get<node::Smoothstep>())
 	{
 		auto& src = static_cast<const node::Smoothstep&>(node);
 		dst = std::make_shared<sw::node::Smoothstep>();
@@ -1044,7 +1044,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Smoothstep::ID_T }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::MatrixConstruction>())
+	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
 		auto& src = static_cast<const node::MatrixConstruction&>(node);
 		dst = std::make_shared<sw::node::MatrixConstruction>(src.IsRow());
@@ -1065,25 +1065,25 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::MatrixConstruction::ID_M3 }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::MatrixDeterminant>())
+	else if (type == rttr::type::get<node::MatrixDeterminant>())
 	{
 		auto& src = static_cast<const node::MatrixDeterminant&>(node);
 		dst = std::make_shared<sw::node::MatrixDeterminant>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::MatrixSplit>())
+	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
 		auto& src = static_cast<const node::MatrixSplit&>(node);
 		dst = std::make_shared<sw::node::MatrixSplit>(src.IsRow());
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::MatrixTranspose>())
+	else if (type == rttr::type::get<node::MatrixTranspose>())
 	{
 		auto& src = static_cast<const node::MatrixTranspose&>(node);
 		dst = std::make_shared<sw::node::MatrixTranspose>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Clamp>())
+	else if (type == rttr::type::get<node::Clamp>())
 	{
 		auto& src = static_cast<const node::Clamp&>(node);
 		dst = std::make_shared<sw::node::Clamp>();
@@ -1100,13 +1100,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Clamp::ID_MAX }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Fraction>())
+	else if (type == rttr::type::get<node::Fraction>())
 	{
 		auto& src = static_cast<const node::Fraction&>(node);
 		dst = std::make_shared<sw::node::Fraction>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Maximum>())
+	else if (type == rttr::type::get<node::Maximum>())
 	{
 		auto& src = static_cast<const node::Maximum&>(node);
 		dst = std::make_shared<sw::node::Maximum>();
@@ -1119,7 +1119,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Maximum::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Minimum>())
+	else if (type == rttr::type::get<node::Minimum>())
 	{
 		auto& src = static_cast<const node::Minimum&>(node);
 		dst = std::make_shared<sw::node::Minimum>();
@@ -1132,13 +1132,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Minimum::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::OneMinus>())
+	else if (type == rttr::type::get<node::OneMinus>())
 	{
 		auto& src = static_cast<const node::OneMinus&>(node);
 		dst = std::make_shared<sw::node::OneMinus>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::RandomRange>())
+	else if (type == rttr::type::get<node::RandomRange>())
 	{
 		auto& src = static_cast<const node::RandomRange&>(node);
 		dst = std::make_shared<sw::node::RandomRange>();
@@ -1155,7 +1155,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::RandomRange::ID_MAX }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Remap>())
+	else if (type == rttr::type::get<node::Remap>())
 	{
 		auto& src = static_cast<const node::Remap&>(node);
 		dst = std::make_shared<sw::node::Remap>();
@@ -1172,37 +1172,37 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Remap::ID_TO }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Saturate>())
+	else if (type == rttr::type::get<node::Saturate>())
 	{
 		auto& src = static_cast<const node::Saturate&>(node);
 		dst = std::make_shared<sw::node::Saturate>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Ceiling>())
+	else if (type == rttr::type::get<node::Ceiling>())
 	{
 		auto& src = static_cast<const node::Ceiling&>(node);
 		dst = std::make_shared<sw::node::Ceiling>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Floor>())
+	else if (type == rttr::type::get<node::Floor>())
 	{
 		auto& src = static_cast<const node::Floor&>(node);
 		dst = std::make_shared<sw::node::Floor>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Round>())
+	else if (type == rttr::type::get<node::Round>())
 	{
 		auto& src = static_cast<const node::Round&>(node);
 		dst = std::make_shared<sw::node::Round>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Sign>())
+	else if (type == rttr::type::get<node::Sign>())
 	{
 		auto& src = static_cast<const node::Sign&>(node);
 		dst = std::make_shared<sw::node::Sign>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Step>())
+	else if (type == rttr::type::get<node::Step>())
 	{
 		auto& src = static_cast<const node::Step&>(node);
 		dst = std::make_shared<sw::node::Step>();
@@ -1215,31 +1215,31 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Step::ID_EDGE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Truncate>())
+	else if (type == rttr::type::get<node::Truncate>())
 	{
 		auto& src = static_cast<const node::Truncate&>(node);
 		dst = std::make_shared<sw::node::Truncate>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Arccosine>())
+	else if (type == rttr::type::get<node::Arccosine>())
 	{
 		auto& src = static_cast<const node::Arccosine&>(node);
 		dst = std::make_shared<sw::node::Arccosine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Arcsine>())
+	else if (type == rttr::type::get<node::Arcsine>())
 	{
 		auto& src = static_cast<const node::Arcsine&>(node);
 		dst = std::make_shared<sw::node::Arcsine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Arctangent>())
+	else if (type == rttr::type::get<node::Arctangent>())
 	{
 		auto& src = static_cast<const node::Arctangent&>(node);
 		dst = std::make_shared<sw::node::Arctangent>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Arctangent2>())
+	else if (type == rttr::type::get<node::Arctangent2>())
 	{
 		auto& src = static_cast<const node::Arctangent2&>(node);
 		dst = std::make_shared<sw::node::Arctangent2>();
@@ -1252,55 +1252,55 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Arctangent2::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Cosine>())
+	else if (type == rttr::type::get<node::Cosine>())
 	{
 		auto& src = static_cast<const node::Cosine&>(node);
 		dst = std::make_shared<sw::node::Cosine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::DegreesToRadians>())
+	else if (type == rttr::type::get<node::DegreesToRadians>())
 	{
 		auto& src = static_cast<const node::DegreesToRadians&>(node);
 		dst = std::make_shared<sw::node::DegreesToRadians>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::HyperbolicCosine>())
+	else if (type == rttr::type::get<node::HyperbolicCosine>())
 	{
 		auto& src = static_cast<const node::HyperbolicCosine&>(node);
 		dst = std::make_shared<sw::node::HyperbolicCosine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::HyperbolicSine>())
+	else if (type == rttr::type::get<node::HyperbolicSine>())
 	{
 		auto& src = static_cast<const node::HyperbolicSine&>(node);
 		dst = std::make_shared<sw::node::HyperbolicSine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::HyperbolicTangent>())
+	else if (type == rttr::type::get<node::HyperbolicTangent>())
 	{
 		auto& src = static_cast<const node::HyperbolicTangent&>(node);
 		dst = std::make_shared<sw::node::HyperbolicTangent>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::RadiansToDegrees>())
+	else if (type == rttr::type::get<node::RadiansToDegrees>())
 	{
 		auto& src = static_cast<const node::RadiansToDegrees&>(node);
 		dst = std::make_shared<sw::node::RadiansToDegrees>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Sine>())
+	else if (type == rttr::type::get<node::Sine>())
 	{
 		auto& src = static_cast<const node::Sine&>(node);
 		dst = std::make_shared<sw::node::Sine>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Tangent>())
+	else if (type == rttr::type::get<node::Tangent>())
 	{
 		auto& src = static_cast<const node::Tangent&>(node);
 		dst = std::make_shared<sw::node::Tangent>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::CrossProduct>())
+	else if (type == rttr::type::get<node::CrossProduct>())
 	{
 		auto& src = static_cast<const node::CrossProduct&>(node);
 		dst = std::make_shared<sw::node::CrossProduct>();
@@ -1313,7 +1313,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::CrossProduct::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Distance>())
+	else if (type == rttr::type::get<node::Distance>())
 	{
 		auto& src = static_cast<const node::Distance&>(node);
 		dst = std::make_shared<sw::node::Distance>();
@@ -1326,7 +1326,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Distance::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::DotProduct>())
+	else if (type == rttr::type::get<node::DotProduct>())
 	{
 		auto& src = static_cast<const node::DotProduct&>(node);
 		dst = std::make_shared<sw::node::DotProduct>();
@@ -1339,7 +1339,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::DotProduct::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Projection>())
+	else if (type == rttr::type::get<node::Projection>())
 	{
 		auto& src = static_cast<const node::Projection&>(node);
 		dst = std::make_shared<sw::node::Projection>();
@@ -1352,7 +1352,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Projection::ID_B }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Rejection>())
+	else if (type == rttr::type::get<node::Rejection>())
 	{
 		auto& src = static_cast<const node::Rejection&>(node);
 		dst = std::make_shared<sw::node::Rejection>();
@@ -1366,7 +1366,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 	// procedural
-	else if (id == bp::GetNodeTypeID<node::Checkerboard>())
+	else if (type == rttr::type::get<node::Checkerboard>())
 	{
 		auto& src = static_cast<const node::Checkerboard&>(node);
 		dst = std::make_shared<sw::node::Checkerboard>();
@@ -1387,7 +1387,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Checkerboard::ID_FREQUENCY }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::GradientNoise>())
+	else if (type == rttr::type::get<node::GradientNoise>())
 	{
 		auto& src = static_cast<const node::GradientNoise&>(node);
 		dst = std::make_shared<sw::node::GradientNoise>();
@@ -1400,7 +1400,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::GradientNoise::ID_SCALE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::SimpleNoise>())
+	else if (type == rttr::type::get<node::SimpleNoise>())
 	{
 		auto& src = static_cast<const node::SimpleNoise&>(node);
 		dst = std::make_shared<sw::node::SimpleNoise>();
@@ -1413,7 +1413,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::SimpleNoise::ID_SCALE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Voronoi>())
+	else if (type == rttr::type::get<node::Voronoi>())
 	{
 		auto& src = static_cast<const node::Voronoi&>(node);
 		dst = std::make_shared<sw::node::Voronoi>();
@@ -1430,7 +1430,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Voronoi::ID_CELL_DENSITY }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Ellipse>())
+	else if (type == rttr::type::get<node::Ellipse>())
 	{
 		auto& src = static_cast<const node::Ellipse&>(node);
 		dst = std::make_shared<sw::node::Ellipse>();
@@ -1447,7 +1447,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Ellipse::ID_HEIGHT }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Polygon>())
+	else if (type == rttr::type::get<node::Polygon>())
 	{
 		auto& src = static_cast<const node::Polygon&>(node);
 		dst = std::make_shared<sw::node::Polygon>();
@@ -1468,7 +1468,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Polygon::ID_HEIGHT }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Rectangle>())
+	else if (type == rttr::type::get<node::Rectangle>())
 	{
 		auto& src = static_cast<const node::Rectangle&>(node);
 		dst = std::make_shared<sw::node::Rectangle>();
@@ -1485,7 +1485,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Rectangle::ID_HEIGHT }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::RoundedRectangle>())
+	else if (type == rttr::type::get<node::RoundedRectangle>())
 	{
 		auto& src = static_cast<const node::RoundedRectangle&>(node);
 		dst = std::make_shared<sw::node::RoundedRectangle>();
@@ -1507,33 +1507,33 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		);
 	}
 	// utility
-	else if (id == bp::GetNodeTypeID<node::Preview>())
+	else if (type == rttr::type::get<node::Preview>())
 	{
 		auto& src = static_cast<const node::Preview&>(node);
 		dst = std::make_shared<sw::node::Assign>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::And>())
+	else if (type == rttr::type::get<node::And>())
 	{
 		auto& src = static_cast<const node::And&>(node);
 		dst = std::make_shared<sw::node::And>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::And::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::And::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Or>())
+	else if (type == rttr::type::get<node::Or>())
 	{
 		auto& src = static_cast<const node::Or&>(node);
 		dst = std::make_shared<sw::node::Or>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Or::ID_A });
 		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Or::ID_B });
 	}
-	else if (id == bp::GetNodeTypeID<node::Not>())
+	else if (type == rttr::type::get<node::Not>())
 	{
 		auto& src = static_cast<const node::Not&>(node);
 		dst = std::make_shared<sw::node::Not>();
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
-	else if (id == bp::GetNodeTypeID<node::Branch>())
+	else if (type == rttr::type::get<node::Branch>())
 	{
 		auto& src = static_cast<const node::Branch&>(node);
 		dst = std::make_shared<sw::node::Branch>();
@@ -1550,7 +1550,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Branch::ID_FALSE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Comparison>())
+	else if (type == rttr::type::get<node::Comparison>())
 	{
 		auto& src = static_cast<const node::Comparison&>(node);
 		dst = std::make_shared<sw::node::Comparison>(
@@ -1565,7 +1565,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Comparison::ID_B }
 		);
 	}
-	//else if (id == bp::GetNodeTypeID<node::Input>())
+	//else if (type == rttr::type::get<node::Input>())
 	//{
 	//	auto& src = static_cast<const node::Input&>(node);
 	//	uint32_t type = 0;
@@ -1584,7 +1584,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
 	//}
 	// UV
-	else if (id == bp::GetNodeTypeID<node::Flipbook>())
+	else if (type == rttr::type::get<node::Flipbook>())
 	{
 		auto& src = static_cast<const node::Flipbook&>(node);
 		dst = std::make_shared<sw::node::Flipbook>(src.GetInvert());
@@ -1605,7 +1605,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Flipbook::ID_TILE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::PolarCoordinates>())
+	else if (type == rttr::type::get<node::PolarCoordinates>())
 	{
 		auto& src = static_cast<const node::PolarCoordinates&>(node);
 		dst = std::make_shared<sw::node::PolarCoordinates>();
@@ -1626,7 +1626,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::PolarCoordinates::ID_LENGTH_SCALE }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::RadialShear>())
+	else if (type == rttr::type::get<node::RadialShear>())
 	{
 		auto& src = static_cast<const node::RadialShear&>(node);
 		dst = std::make_shared<sw::node::RadialShear>();
@@ -1647,7 +1647,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::RadialShear::ID_OFFSET }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Rotate>())
+	else if (type == rttr::type::get<node::Rotate>())
 	{
 		auto& src = static_cast<const node::Rotate&>(node);
 		dst = std::make_shared<sw::node::Rotate>(src.IsRadians());
@@ -1664,7 +1664,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Rotate::ID_ROTATION }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Spherize>())
+	else if (type == rttr::type::get<node::Spherize>())
 	{
 		auto& src = static_cast<const node::Spherize&>(node);
 		dst = std::make_shared<sw::node::Spherize>();
@@ -1685,7 +1685,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Spherize::ID_OFFSET }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::TilingAndOffset>())
+	else if (type == rttr::type::get<node::TilingAndOffset>())
 	{
 		auto& src = static_cast<const node::TilingAndOffset&>(node);
 		dst = std::make_shared<sw::node::TilingAndOffset>();
@@ -1702,7 +1702,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::TilingAndOffset::ID_OFFSET }
 		);
 	}
-	else if (id == bp::GetNodeTypeID<node::Twirl>())
+	else if (type == rttr::type::get<node::Twirl>())
 	{
 		auto& src = static_cast<const node::Twirl&>(node);
 		dst = std::make_shared<sw::node::Twirl>();

@@ -31,7 +31,7 @@ public:
 		ID_HEIGHT,
 	};
 
-	DECLARE_NODE_CLASS(Ellipse)
+	RTTR_ENABLE(Node)
 
 }; // Ellipse
 

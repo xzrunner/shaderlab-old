@@ -40,7 +40,7 @@ public:
 private:
 	BaseType m_type = BASE_E;
 
-	DECLARE_NODE_CLASS(Log)
+	RTTR_ENABLE(Node)
 
 }; // Log
 

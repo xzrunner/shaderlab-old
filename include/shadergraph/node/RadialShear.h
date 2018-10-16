@@ -33,7 +33,7 @@ public:
 		ID_OFFSET,
 	};
 
-	DECLARE_NODE_CLASS(RadialShear)
+	RTTR_ENABLE(Node)
 
 }; // RadialShear
 

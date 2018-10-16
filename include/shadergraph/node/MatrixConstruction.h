@@ -49,10 +49,10 @@ public:
 		ID_MAT2,
 	};
 
-	DECLARE_NODE_CLASS(MatrixConstruction)
-
 private:
 	bool m_row = true;
+
+	RTTR_ENABLE(Node)
 
 }; // MatrixConstruction
 

@@ -31,7 +31,7 @@ public:
 		ID_T
 	};
 
-	DECLARE_NODE_CLASS(Smoothstep)
+	RTTR_ENABLE(Node)
 
 }; // Smoothstep
 

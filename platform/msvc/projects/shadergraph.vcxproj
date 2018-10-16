@@ -138,123 +138,34 @@
     <ClCompile Include="..\..\..\source\Node.cpp" />
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
-    <ClCompile Include="..\..\..\source\node\Absolute.cpp" />
-    <ClCompile Include="..\..\..\source\node\Add.cpp" />
-    <ClCompile Include="..\..\..\source\node\And.cpp" />
-    <ClCompile Include="..\..\..\source\node\Arccosine.cpp" />
-    <ClCompile Include="..\..\..\source\node\Arcsine.cpp" />
-    <ClCompile Include="..\..\..\source\node\Arctangent.cpp" />
-    <ClCompile Include="..\..\..\source\node\Arctangent2.cpp" />
     <ClCompile Include="..\..\..\source\node\Blend.cpp" />
     <ClCompile Include="..\..\..\source\node\Boolean.cpp" />
-    <ClCompile Include="..\..\..\source\node\Branch.cpp" />
-    <ClCompile Include="..\..\..\source\node\Ceiling.cpp" />
     <ClCompile Include="..\..\..\source\node\ChannelMask.cpp" />
-    <ClCompile Include="..\..\..\source\node\Checkerboard.cpp" />
-    <ClCompile Include="..\..\..\source\node\Clamp.cpp" />
-    <ClCompile Include="..\..\..\source\node\ColorAddMul.cpp" />
-    <ClCompile Include="..\..\..\source\node\ColorMap.cpp" />
-    <ClCompile Include="..\..\..\source\node\ColorMask.cpp" />
     <ClCompile Include="..\..\..\source\node\ColorspaceConversion.cpp" />
-    <ClCompile Include="..\..\..\source\node\Combine.cpp" />
     <ClCompile Include="..\..\..\source\node\Comparison.cpp" />
-    <ClCompile Include="..\..\..\source\node\Contrast.cpp" />
-    <ClCompile Include="..\..\..\source\node\Cosine.cpp" />
-    <ClCompile Include="..\..\..\source\node\CrossProduct.cpp" />
-    <ClCompile Include="..\..\..\source\node\DDX.cpp" />
-    <ClCompile Include="..\..\..\source\node\DDXY.cpp" />
-    <ClCompile Include="..\..\..\source\node\DDY.cpp" />
-    <ClCompile Include="..\..\..\source\node\DegreesToRadians.cpp" />
-    <ClCompile Include="..\..\..\source\node\Distance.cpp" />
-    <ClCompile Include="..\..\..\source\node\DotProduct.cpp" />
-    <ClCompile Include="..\..\..\source\node\Ellipse.cpp" />
     <ClCompile Include="..\..\..\source\node\Exponential.cpp" />
     <ClCompile Include="..\..\..\source\node\Flip.cpp" />
     <ClCompile Include="..\..\..\source\node\Flipbook.cpp" />
-    <ClCompile Include="..\..\..\source\node\Floor.cpp" />
-    <ClCompile Include="..\..\..\source\node\Fraction.cpp" />
-    <ClCompile Include="..\..\..\source\node\GradientNoise.cpp" />
-    <ClCompile Include="..\..\..\source\node\Gray.cpp" />
     <ClCompile Include="..\..\..\source\node\Hue.cpp" />
-    <ClCompile Include="..\..\..\source\node\HyperbolicCosine.cpp" />
-    <ClCompile Include="..\..\..\source\node\HyperbolicSine.cpp" />
-    <ClCompile Include="..\..\..\source\node\HyperbolicTangent.cpp" />
     <ClCompile Include="..\..\..\source\node\InvertColors.cpp" />
-    <ClCompile Include="..\..\..\source\node\Length.cpp" />
     <ClCompile Include="..\..\..\source\node\Log.cpp" />
     <ClCompile Include="..\..\..\source\node\Matrix2.cpp" />
     <ClCompile Include="..\..\..\source\node\Matrix3.cpp" />
     <ClCompile Include="..\..\..\source\node\Matrix4.cpp" />
     <ClCompile Include="..\..\..\source\node\MatrixConstruction.cpp" />
-    <ClCompile Include="..\..\..\source\node\MatrixDeterminant.cpp" />
     <ClCompile Include="..\..\..\source\node\MatrixSplit.cpp" />
-    <ClCompile Include="..\..\..\source\node\MatrixTranspose.cpp" />
-    <ClCompile Include="..\..\..\source\node\Maximum.cpp" />
-    <ClCompile Include="..\..\..\source\node\Minimum.cpp" />
-    <ClCompile Include="..\..\..\source\node\Modulo.cpp" />
-    <ClCompile Include="..\..\..\source\node\Negate.cpp" />
-    <ClCompile Include="..\..\..\source\node\NormalBlend.cpp" />
-    <ClCompile Include="..\..\..\source\node\NormalCreate.cpp" />
-    <ClCompile Include="..\..\..\source\node\Normalize.cpp" />
-    <ClCompile Include="..\..\..\source\node\NormalStrength.cpp" />
-    <ClCompile Include="..\..\..\source\node\NormalUnpack.cpp" />
-    <ClCompile Include="..\..\..\source\node\Not.cpp" />
-    <ClCompile Include="..\..\..\source\node\OneMinus.cpp" />
-    <ClCompile Include="..\..\..\source\node\Or.cpp" />
-    <ClCompile Include="..\..\..\source\node\PolarCoordinates.cpp" />
-    <ClCompile Include="..\..\..\source\node\Polygon.cpp" />
-    <ClCompile Include="..\..\..\source\node\Posterize.cpp" />
-    <ClCompile Include="..\..\..\source\node\Power.cpp" />
-    <ClCompile Include="..\..\..\source\node\Preview.cpp" />
-    <ClCompile Include="..\..\..\source\node\Projection.cpp" />
-    <ClCompile Include="..\..\..\source\node\RadialShear.cpp" />
-    <ClCompile Include="..\..\..\source\node\RadiansToDegrees.cpp" />
-    <ClCompile Include="..\..\..\source\node\RandomRange.cpp" />
-    <ClCompile Include="..\..\..\source\node\Reciprocal.cpp" />
-    <ClCompile Include="..\..\..\source\node\ReciprocalSquareRoot.cpp" />
-    <ClCompile Include="..\..\..\source\node\Rectangle.cpp" />
-    <ClCompile Include="..\..\..\source\node\Rejection.cpp" />
-    <ClCompile Include="..\..\..\source\node\ReplaceColor.cpp" />
     <ClCompile Include="..\..\..\source\node\Rotate.cpp" />
-    <ClCompile Include="..\..\..\source\node\Round.cpp" />
-    <ClCompile Include="..\..\..\source\node\RoundedRectangle.cpp" />
-    <ClCompile Include="..\..\..\source\node\Saturate.cpp" />
-    <ClCompile Include="..\..\..\source\node\Saturation.cpp" />
-    <ClCompile Include="..\..\..\source\node\Sign.cpp" />
-    <ClCompile Include="..\..\..\source\node\SimpleNoise.cpp" />
-    <ClCompile Include="..\..\..\source\node\Sine.cpp" />
-    <ClCompile Include="..\..\..\source\node\Smoothstep.cpp" />
-    <ClCompile Include="..\..\..\source\node\Spherize.cpp" />
-    <ClCompile Include="..\..\..\source\node\Split.cpp" />
-    <ClCompile Include="..\..\..\source\node\SquareRoot.cpp" />
-    <ClCompile Include="..\..\..\source\node\Step.cpp" />
     <ClCompile Include="..\..\..\source\node\Swizzle.cpp" />
-    <ClCompile Include="..\..\..\source\node\Tangent.cpp" />
-    <ClCompile Include="..\..\..\source\node\TilingAndOffset.cpp" />
-    <ClCompile Include="..\..\..\source\node\Truncate.cpp" />
-    <ClCompile Include="..\..\..\source\node\Twirl.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector2.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector3.cpp" />
     <ClCompile Include="..\..\..\source\node\Vector4.cpp" />
-    <ClCompile Include="..\..\..\source\node\Divide.cpp" />
     <ClCompile Include="..\..\..\source\node\Input.cpp" />
-    <ClCompile Include="..\..\..\source\node\InverseLerp.cpp" />
-    <ClCompile Include="..\..\..\source\node\Lerp.cpp" />
-    <ClCompile Include="..\..\..\source\node\Multiply.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
-    <ClCompile Include="..\..\..\source\node\Phong.cpp" />
-    <ClCompile Include="..\..\..\source\node\Remap.cpp" />
-    <ClCompile Include="..\..\..\source\node\Time.cpp" />
-    <ClCompile Include="..\..\..\source\node\UV.cpp" />
-    <ClCompile Include="..\..\..\source\node\Voronoi.cpp" />
-    <ClCompile Include="..\..\..\source\node\WhiteBalance.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
-    <ClCompile Include="..\..\..\source\node\Sprite.cpp" />
-    <ClCompile Include="..\..\..\source\node\Subtract.cpp" />
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
-    <ClCompile Include="..\..\..\source\node\SampleTex2D.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
@@ -302,7 +213,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -310,19 +221,21 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\cpputil\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

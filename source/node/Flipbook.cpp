@@ -1,7 +1,5 @@
 #include "shadergraph/node/Flipbook.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Flipbook, sg_flipbook)
-
 namespace sg
 {
 namespace node

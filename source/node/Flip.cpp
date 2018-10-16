@@ -1,7 +1,5 @@
 #include "shadergraph/node/Flip.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::Flip, sg_flip)
-
 namespace sg
 {
 namespace node

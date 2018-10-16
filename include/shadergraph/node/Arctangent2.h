@@ -28,7 +28,7 @@ public:
 		ID_B,
 	};
 
-	DECLARE_NODE_CLASS(Arctangent2)
+	RTTR_ENABLE(Node)
 
 }; // Arctangent2
 

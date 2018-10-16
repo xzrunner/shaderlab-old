@@ -31,7 +31,7 @@ public:
 private:
 	sm::mat2 m_val;
 
-	DECLARE_NODE_CLASS(Matrix2)
+	RTTR_ENABLE(Node)
 
 }; // Matrix2
 

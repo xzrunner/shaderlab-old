@@ -1,7 +1,5 @@
 #include "shadergraph/node/ColorspaceConversion.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::ColorspaceConversion, sg_col_conv)
-
 namespace sg
 {
 namespace node

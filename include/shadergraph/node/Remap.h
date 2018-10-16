@@ -31,7 +31,7 @@ public:
 		ID_TO
 	};
 
-	DECLARE_NODE_CLASS(Remap)
+	RTTR_ENABLE(Node)
 
 }; // Remap
 

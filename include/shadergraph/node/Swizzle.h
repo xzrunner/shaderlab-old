@@ -41,10 +41,10 @@ public:
 		CHANNEL_A
 	};
 
-	DECLARE_NODE_CLASS(Swizzle)
-
 private:
 	ChannelType m_channels[4] = { CHANNEL_R, CHANNEL_G, CHANNEL_B, CHANNEL_A };
+
+	RTTR_ENABLE(Node)
 
 }; // Swizzle
 

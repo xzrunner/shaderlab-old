@@ -1,7 +1,5 @@
 #include "shadergraph/node/InvertColors.h"
 
-IMPLEMENT_NODE_CLASS(sg::node::InvertColors, sg_invert_colors)
-
 namespace sg
 {
 namespace node

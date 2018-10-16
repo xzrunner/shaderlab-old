@@ -21,7 +21,7 @@ public:
 		});
 	}
 
-	DECLARE_NODE_CLASS(Sign)
+	RTTR_ENABLE(Node)
 
 }; // Sign
 

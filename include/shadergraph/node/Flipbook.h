@@ -44,7 +44,7 @@ public:
 private:
 	sm::bvec2 m_invert;
 
-	DECLARE_NODE_CLASS(Flipbook)
+	RTTR_ENABLE(Node)
 
 }; // Flipbook
 
