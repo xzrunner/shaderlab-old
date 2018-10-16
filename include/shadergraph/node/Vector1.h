@@ -3,6 +3,8 @@
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
 
+#include <cpputil/StringHelper.h>
+
 namespace sg
 {
 namespace node
@@ -22,16 +24,17 @@ public:
 		UpdateTitle();
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
-	auto& GetValue() const { return m_val; }
-	void SetValue(float val);
+	auto GetValue() const { return m_val; }
+	void SetValue(float val) {
+		m_val = val;
+		UpdateTitle();
+	}
 
 private:
-	void UpdateTitle();
+	void UpdateTitle() {
+		SetStyleSmallTitleFont(true);
+		m_title = cpputil::StringHelper::ToString(m_val, 2);
+	}
 
 private:
 	float m_val = 0;

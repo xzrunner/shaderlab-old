@@ -32,6 +32,8 @@ private:
 private:
 	std::unique_ptr<NodePreview> m_preview = nullptr;
 
+	RTTR_ENABLE(bp::Node)
+
 }; // Node
 
 }

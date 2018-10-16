@@ -25,15 +25,12 @@ public:
 
 	virtual void Draw(const sm::Matrix2D& mt) const override;
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	void  SetName(const std::string& name);
 	auto& GetName() const { return m_name; }
 
-	void  SetImage(const std::string& filepath);
+	void SetImagePath(const char* filepath);
+	const char* GetImagePath() const;
+
 	auto& GetImage() const { return m_img; }
 
 private:

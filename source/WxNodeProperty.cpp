@@ -104,8 +104,8 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		auto& conv = dynamic_cast<const node::ColorspaceConversion&>(*node);
-		node::ColorspaceConversion::ColorType from, to;
-		conv.GetTypes(from, to);
+		auto from = conv.GetFromType();
+		auto to = conv.GetToType();
 
 		const wxChar* COL_TYPES[] = { wxT("RGB"), wxT("Linear"), wxT("HSV"), NULL };
 
@@ -134,8 +134,7 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		auto& swizzle = dynamic_cast<const node::Swizzle&>(*node);
-		uint32_t channels[4];
-		swizzle.GetChannels(channels);
+		auto& channels = swizzle.GetChannels();
 
 		const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 
@@ -196,14 +195,11 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 
 		m_pg->Append(new wxStringProperty("name", wxPG_LABEL, t2d.GetName()));
 
-		std::string filepath;
-		if (auto& tex = t2d.GetImage()) {
-			filepath = tex->GetResPath();
-		}
+		std::string filepath = t2d.GetImagePath();
 		auto prop = new ee0::WxOpenFileProp("Filepath", wxPG_LABEL, filepath);
 		prop->SetFilter("*.png");
 		prop->SetCallback([&](const std::string& filepath) {
-			const_cast<node::Tex2DAsset&>(t2d).SetImage(filepath);
+			const_cast<node::Tex2DAsset&>(t2d).SetImagePath(filepath.c_str());
 			m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 		});
 
@@ -350,13 +346,11 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
-		node::ColorspaceConversion::ColorType f, t;
 		auto& conv = std::dynamic_pointer_cast<node::ColorspaceConversion>(m_node);
-		conv->GetTypes(f, t);
 		if (key == "From") {
-			conv->SetTypes(static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)), t);
+			conv->SetFromType(static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)));
 		} else if (key == "To") {
-			conv->SetTypes(f, static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)));
+			conv->SetToType(static_cast<node::ColorspaceConversion::ColorType>(wxANY_AS(val, int)));
 		}
 	}
 	// channel
@@ -369,17 +363,16 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 	else if (type == rttr::type::get<node::Swizzle>())
 	{
-		uint32_t channels[4];
 		auto& swizzle = std::dynamic_pointer_cast<node::Swizzle>(m_node);
-		swizzle->GetChannels(channels);
+		auto channels = swizzle->GetChannels();
 		if (key == "R") {
-			channels[0] = wxANY_AS(val, int);
+			channels[0] = static_cast<node::Swizzle::ChannelType>(wxANY_AS(val, int));
 		} else if (key == "G") {
-			channels[1] = wxANY_AS(val, int);
+			channels[1] = static_cast<node::Swizzle::ChannelType>(wxANY_AS(val, int));
 		} else if (key == "B") {
-			channels[2] = wxANY_AS(val, int);
+			channels[2] = static_cast<node::Swizzle::ChannelType>(wxANY_AS(val, int));
 		} else if (key == "A") {
-			channels[3] = wxANY_AS(val, int);
+			channels[3] = static_cast<node::Swizzle::ChannelType>(wxANY_AS(val, int));
 		}
 		swizzle->SetChannels(channels);
 	}

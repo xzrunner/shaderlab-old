@@ -11,6 +11,17 @@ namespace node
 class Swizzle : public Node
 {
 public:
+	static const size_t CHANNEL_COUNT = 4;
+
+	enum ChannelType
+	{
+		CHANNEL_R = 0,
+		CHANNEL_G,
+		CHANNEL_B,
+		CHANNEL_A
+	};
+
+public:
 	Swizzle()
 		: Node("Swizzle", true)
 	{
@@ -21,28 +32,14 @@ public:
 		});
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
-	void GetChannels(uint32_t channels[4]) const {
-		memcpy(channels, m_channels, sizeof(m_channels));
+	auto& GetChannels() const { return m_channels; }
+	void SetChannels(const std::array<ChannelType, CHANNEL_COUNT>& channels) {
+		m_channels = channels;
 	}
-	void SetChannels(uint32_t channels[4]) {
-		memcpy(m_channels, channels, sizeof(m_channels));
-	}
-
-	enum ChannelType
-	{
-		CHANNEL_R = 0,
-		CHANNEL_G,
-		CHANNEL_B,
-		CHANNEL_A
-	};
 
 private:
-	ChannelType m_channels[4] = { CHANNEL_R, CHANNEL_G, CHANNEL_B, CHANNEL_A };
+	std::array<ChannelType, CHANNEL_COUNT> m_channels
+		= { CHANNEL_R, CHANNEL_G, CHANNEL_B, CHANNEL_A };
 
 	RTTR_ENABLE(Node)
 

@@ -24,11 +24,6 @@ public:
 		});
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	void SetRow(bool row) { m_row = row; }
 	bool IsRow() const { return m_row; }
 

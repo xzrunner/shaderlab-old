@@ -138,34 +138,11 @@
     <ClCompile Include="..\..\..\source\Node.cpp" />
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
-    <ClCompile Include="..\..\..\source\node\Blend.cpp" />
-    <ClCompile Include="..\..\..\source\node\Boolean.cpp" />
-    <ClCompile Include="..\..\..\source\node\ChannelMask.cpp" />
-    <ClCompile Include="..\..\..\source\node\ColorspaceConversion.cpp" />
-    <ClCompile Include="..\..\..\source\node\Comparison.cpp" />
-    <ClCompile Include="..\..\..\source\node\Exponential.cpp" />
-    <ClCompile Include="..\..\..\source\node\Flip.cpp" />
-    <ClCompile Include="..\..\..\source\node\Flipbook.cpp" />
-    <ClCompile Include="..\..\..\source\node\Hue.cpp" />
-    <ClCompile Include="..\..\..\source\node\InvertColors.cpp" />
-    <ClCompile Include="..\..\..\source\node\Log.cpp" />
-    <ClCompile Include="..\..\..\source\node\Matrix2.cpp" />
-    <ClCompile Include="..\..\..\source\node\Matrix3.cpp" />
-    <ClCompile Include="..\..\..\source\node\Matrix4.cpp" />
-    <ClCompile Include="..\..\..\source\node\MatrixConstruction.cpp" />
-    <ClCompile Include="..\..\..\source\node\MatrixSplit.cpp" />
-    <ClCompile Include="..\..\..\source\node\Rotate.cpp" />
-    <ClCompile Include="..\..\..\source\node\Swizzle.cpp" />
-    <ClCompile Include="..\..\..\source\node\Vector1.cpp" />
-    <ClCompile Include="..\..\..\source\node\Vector2.cpp" />
-    <ClCompile Include="..\..\..\source\node\Vector3.cpp" />
-    <ClCompile Include="..\..\..\source\node\Vector4.cpp" />
-    <ClCompile Include="..\..\..\source\node\Input.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
+    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
-    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
@@ -213,7 +190,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\js\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -228,7 +205,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\unirender\include;..\..\..\..\guard\include;..\..\..\..\js\include;..\..\..\..\cpputil\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\anim\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\blueprint\include;..\..\..\..\moon\include;..\..\..\..\facade\include;..\..\..\..\shaderweaver\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\lua\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external-editor\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

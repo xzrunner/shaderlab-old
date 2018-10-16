@@ -23,11 +23,6 @@ public:
 		});
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	bool IsRadians() const { return m_is_radians; }
 	void SetRadians(bool rad) { m_is_radians = rad; }
 

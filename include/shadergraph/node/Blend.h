@@ -25,11 +25,6 @@ public:
 		});
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	auto GetMode() const { return m_mode; }
 	void SetMode(sw::node::Blend::ModeType mode) { m_mode = mode; }
 

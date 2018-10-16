@@ -689,11 +689,9 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		auto& src = static_cast<const node::ColorspaceConversion&>(node);
-		node::ColorspaceConversion::ColorType f, t;
-		src.GetTypes(f, t);
 		dst = std::make_shared<sw::node::ColorspaceConversion>(
-			static_cast<sw::node::ColorspaceConversion::ColorType>(f),
-			static_cast<sw::node::ColorspaceConversion::ColorType>(t)
+			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetFromType()),
+			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetToType())
 		);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
@@ -734,9 +732,12 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		auto& src = static_cast<const node::Swizzle&>(node);
-		uint32_t channels[4];
-		src.GetChannels(channels);
-		dst = std::make_shared<sw::node::Swizzle>(channels);
+		auto& src_channels = src.GetChannels();
+		std::array<sw::node::Swizzle::ChannelType, sw::node::Swizzle::CHANNEL_COUNT> dst_channels;
+		for (size_t i = 0; i < sw::node::Swizzle::CHANNEL_COUNT; ++i) {
+			dst_channels[i] = static_cast<sw::node::Swizzle::ChannelType>(src_channels[i]);
+		}
+		dst = std::make_shared<sw::node::Swizzle>(dst_channels);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	// input

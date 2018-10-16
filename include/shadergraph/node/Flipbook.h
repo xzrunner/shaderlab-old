@@ -24,11 +24,6 @@ public:
 		});
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	auto& GetInvert() const { return m_invert; }
 	void SetInvert(const sm::bvec2& invert) { m_invert = invert; }
 

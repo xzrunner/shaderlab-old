@@ -120,6 +120,8 @@
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
 
+#include <js/RTTR.h>
+
 #include <rttr/registration.h>
 
 RTTR_REGISTRATION
@@ -136,9 +138,11 @@ RTTR_REGISTRATION
 	;
 	rttr::registration::class_<sg::node::Hue>("sg_hue")
 		.constructor<>()
+		.property("is_radians", &sg::node::Hue::IsRadians, &sg::node::Hue::SetRadians)
 	;
 	rttr::registration::class_<sg::node::InvertColors>("sg_invert_colors")
 		.constructor<>()
+		.property("channels", &sg::node::InvertColors::GetChannels, &sg::node::InvertColors::SetChannels)
 	;
 	rttr::registration::class_<sg::node::ReplaceColor>("sg_replace_col")
 		.constructor<>()
@@ -151,12 +155,14 @@ RTTR_REGISTRATION
 	;
 	rttr::registration::class_<sg::node::Blend>("sg_blend")
 		.constructor<>()
+		.property("mode", &sg::node::Blend::GetMode, &sg::node::Blend::SetMode)
 	;
 	rttr::registration::class_<sg::node::Gray>("sg_gray")
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::ChannelMask>("sg_channel_mask")
 		.constructor<>()
+		.property("channels", &sg::node::ChannelMask::GetChannels, &sg::node::ChannelMask::SetChannels)
 	;
 	rttr::registration::class_<sg::node::ColorMask>("sg_col_mask")
 		.constructor<>()
@@ -173,8 +179,16 @@ RTTR_REGISTRATION
 	rttr::registration::class_<sg::node::NormalUnpack>("sg_normal_unpack")
 		.constructor<>()
 	;
+	rttr::registration::enumeration<sg::node::ColorspaceConversion::ColorType>("sg_col_conv_col_type")
+    (
+		rttr::value("rgb",    sg::node::ColorspaceConversion::COL_RGB),
+		rttr::value("linear", sg::node::ColorspaceConversion::COL_LINEAR),
+		rttr::value("hsv",    sg::node::ColorspaceConversion::COL_HSV)
+    );
 	rttr::registration::class_<sg::node::ColorspaceConversion>("sg_col_conv")
 		.constructor<>()
+		.property("from", &sg::node::ColorspaceConversion::GetFromType, &sg::node::ColorspaceConversion::SetFromType)
+		.property("to",   &sg::node::ColorspaceConversion::GetToType,   &sg::node::ColorspaceConversion::SetToType)
 	;
 	// channel
 	rttr::registration::class_<sg::node::Combine>("sg_combine")
@@ -182,49 +196,116 @@ RTTR_REGISTRATION
 	;
 	rttr::registration::class_<sg::node::Flip>("sg_flip")
 		.constructor<>()
+		.property("channels", &sg::node::Flip::GetChannels, &sg::node::Flip::SetChannels)
 	;
 	rttr::registration::class_<sg::node::Split>("sg_split")
 		.constructor<>()
 	;
+	rttr::registration::enumeration<sg::node::Swizzle::ChannelType>("sg_swizzle_channel")
+    (
+		rttr::value("R", sg::node::Swizzle::CHANNEL_R),
+		rttr::value("G", sg::node::Swizzle::CHANNEL_G),
+		rttr::value("B", sg::node::Swizzle::CHANNEL_B),
+		rttr::value("A", sg::node::Swizzle::CHANNEL_A)
+    );
 	rttr::registration::class_<sg::node::Swizzle>("sg_swizzle")
 		.constructor<>()
+		.property("channels", &sg::node::Swizzle::GetChannels, &sg::node::Swizzle::SetChannels)
 	;
 	// input
 	rttr::registration::class_<sg::node::Boolean>("sg_boolean")
 		.constructor<>()
+		.property("val", &sg::node::Boolean::GetValue, &sg::node::Boolean::SetValue)
 	;
 	rttr::registration::class_<sg::node::Time>("sg_time")
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::Vector1>("sg_vec1")
 		.constructor<>()
+		.property("x", &sg::node::Vector1::GetValue, &sg::node::Vector1::SetValue)
 	;
+	//rttr::registration::class_<sm::vec2>("sm_vec2")
+	//	.constructor()(rttr::policy::ctor::as_object)
+	//	.property("x", &sm::vec2::x)
+	//	.property("y", &sm::vec2::y)
+	//;
+	//rttr::registration::class_<sg::node::Vector2>("sg_vec2")
+	//	.constructor<>()
+	//	.property("val", &sg::node::Vector2::GetValue, &sg::node::Vector2::SetValue)
+	//;
 	rttr::registration::class_<sg::node::Vector2>("sg_vec2")
 		.constructor<>()
+		.property("x", &sg::node::Vector2::GetX, &sg::node::Vector2::SetX)
+		.property("y", &sg::node::Vector2::GetY, &sg::node::Vector2::SetY)
 	;
+	//rttr::registration::class_<sm::vec3>("sm_vec3")
+	//	.constructor()(rttr::policy::ctor::as_object)
+	//	.property("x", &sm::vec3::x)
+	//	.property("y", &sm::vec3::y)
+	//	.property("z", &sm::vec3::z)
+	//;
+	//rttr::registration::class_<sg::node::Vector3>("sg_vec3")
+	//	.constructor<>()
+	//	.property("val", &sg::node::Vector3::GetValue, &sg::node::Vector3::SetValue)
+	//;
 	rttr::registration::class_<sg::node::Vector3>("sg_vec3")
 		.constructor<>()
+		.property("x", &sg::node::Vector3::GetX, &sg::node::Vector3::SetX)
+		.property("y", &sg::node::Vector3::GetY, &sg::node::Vector3::SetY)
+		.property("z", &sg::node::Vector3::GetZ, &sg::node::Vector3::SetZ)
 	;
+	//rttr::registration::class_<sm::vec4>("sm_vec4")
+	//	.constructor()(rttr::policy::ctor::as_object)
+	//	.property("x", &sm::vec4::x)
+	//	.property("y", &sm::vec4::y)
+	//	.property("z", &sm::vec4::z)
+	//	.property("w", &sm::vec4::w)
+	//;
+	//rttr::registration::class_<sg::node::Vector4>("sg_vec4")
+	//	.constructor<>()
+	//	.property("val", &sg::node::Vector4::GetValue, &sg::node::Vector4::SetValue)
+	//;
 	rttr::registration::class_<sg::node::Vector4>("sg_vec4")
 		.constructor<>()
+		.property("x", &sg::node::Vector4::GetX, &sg::node::Vector4::SetX)
+		.property("y", &sg::node::Vector4::GetY, &sg::node::Vector4::SetY)
+		.property("z", &sg::node::Vector4::GetZ, &sg::node::Vector4::SetZ)
+		.property("w", &sg::node::Vector4::GetW, &sg::node::Vector4::SetW)
 	;
 	rttr::registration::class_<sg::node::UV>("sg_uv")
 		.constructor<>()
 	;
+	rttr::registration::class_<sm::mat2>("sm_mat2")
+		.property("val", &sm::mat2::x)
+	;
 	rttr::registration::class_<sg::node::Matrix2>("sg_mat2")
 		.constructor<>()
+		.property("mat", &sg::node::Matrix2::GetValue, &sg::node::Matrix2::SetValue)
+	;
+	rttr::registration::class_<sm::mat3>("sm_mat3")
+		.property("val", &sm::mat3::x)
 	;
 	rttr::registration::class_<sg::node::Matrix3>("sg_mat3")
 		.constructor<>()
+		.property("mat", &sg::node::Matrix3::GetValue, &sg::node::Matrix3::SetValue)
+	;
+	rttr::registration::class_<sm::mat4>("sm_mat4")
+		.property("val", &sm::mat4::x)
 	;
 	rttr::registration::class_<sg::node::Matrix4>("sg_mat4")
 		.constructor<>()
+		.property("mat", &sg::node::Matrix4::GetValue, &sg::node::Matrix4::SetValue)
 	;
 	rttr::registration::class_<sg::node::SampleTex2D>("sg_sample_tex2d")
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::Tex2DAsset>("sg_tex2d_asset")
 		.constructor<>()
+		.property("name", &sg::node::Tex2DAsset::GetName, &sg::node::Tex2DAsset::SetName)
+		.property("filepath", &sg::node::Tex2DAsset::GetImagePath, &sg::node::Tex2DAsset::SetImagePath)
+		(
+			rttr::metadata(js::RTTR::FILEPATH_TAG, true)
+		)
 	;
 	// master
 	rttr::registration::class_<sg::node::Phong>("sg_phong")
@@ -255,14 +336,27 @@ RTTR_REGISTRATION
 	rttr::registration::class_<sg::node::Absolute>("sg_abs")
 		.constructor<>()
 	;
+	rttr::registration::enumeration<sg::node::Exponential::BaseType>("sg_exponential_base")
+    (
+		rttr::value("base_e", sg::node::Exponential::BASE_E),
+		rttr::value("base_2", sg::node::Exponential::BASE_2)
+    );
 	rttr::registration::class_<sg::node::Exponential>("sg_exp")
 		.constructor<>()
+		.property("type", &sg::node::Exponential::GetType, &sg::node::Exponential::SetType)
 	;
 	rttr::registration::class_<sg::node::Length>("sg_length")
 		.constructor<>()
 	;
+	rttr::registration::enumeration<sg::node::Log::BaseType>("sg_log_base")
+    (
+		rttr::value("base_e", sg::node::Log::BASE_E),
+		rttr::value("base_2", sg::node::Log::BASE_2),
+		rttr::value("base_10", sg::node::Log::BASE_10)
+    );
 	rttr::registration::class_<sg::node::Log>("sg_log")
 		.constructor<>()
+		.property("type", &sg::node::Log::GetType, &sg::node::Log::SetType)
 	;
 	rttr::registration::class_<sg::node::Modulo>("sg_mod")
 		.constructor<>()
@@ -302,12 +396,14 @@ RTTR_REGISTRATION
 	;
 	rttr::registration::class_<sg::node::MatrixConstruction>("sg_mat_construction")
 		.constructor<>()
+		.property("row", &sg::node::MatrixConstruction::IsRow, &sg::node::MatrixConstruction::SetRow)
 	;
 	rttr::registration::class_<sg::node::MatrixDeterminant>("sg_mat_determinant")
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::MatrixSplit>("sg_mat_split")
 		.constructor<>()
+		.property("row", &sg::node::MatrixSplit::IsRow, &sg::node::MatrixSplit::SetRow)
 	;
 	rttr::registration::class_<sg::node::MatrixTranspose>("sg_mat_transpose")
 		.constructor<>()
@@ -446,12 +542,28 @@ RTTR_REGISTRATION
 	rttr::registration::class_<sg::node::Branch>("sg_branch")
 		.constructor<>()
 	;
+	rttr::registration::enumeration<sg::node::Comparison::CmpType>("sg_comparison_type")
+    (
+		rttr::value("equal",            sg::node::Comparison::CMP_EQUAL),
+		rttr::value("not_equal",        sg::node::Comparison::CMP_NOT_EQUAL),
+		rttr::value("less",             sg::node::Comparison::CMP_LESS),
+		rttr::value("less_or_equal",    sg::node::Comparison::CMP_LESS_OR_EQUAL),
+		rttr::value("greater",          sg::node::Comparison::CMP_GREATER),
+		rttr::value("greater_or_equal", sg::node::Comparison::CMP_GREATER_OR_EQUAL)
+    );
 	rttr::registration::class_<sg::node::Comparison>("sg_comparison")
 		.constructor<>()
+		.property("cmp_type", &sg::node::Comparison::GetCmpType, &sg::node::Comparison::SetCmpType)
 	;
 	// uv
+    rttr::registration::class_<sm::bvec2>("sm::bvec2")
+		.constructor()(rttr::policy::ctor::as_object)
+		.property("x", &sm::bvec2::x)
+		.property("y", &sm::bvec2::y)
+	;
 	rttr::registration::class_<sg::node::Flipbook>("sg_flipbook")
 		.constructor<>()
+		.property("invert", &sg::node::Flipbook::GetInvert, &sg::node::Flipbook::SetInvert)
 	;
 	rttr::registration::class_<sg::node::PolarCoordinates>("sg_polar_coord")
 		.constructor<>()
@@ -461,6 +573,7 @@ RTTR_REGISTRATION
 	;
 	rttr::registration::class_<sg::node::Rotate>("sg_rotate")
 		.constructor<>()
+		.property("radians", &sg::node::Rotate::IsRadians, &sg::node::Rotate::SetRadians)
 	;
 	rttr::registration::class_<sg::node::Spherize>("sg_spherize")
 		.constructor<>()

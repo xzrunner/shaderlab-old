@@ -22,16 +22,17 @@ public:
 		UpdateTitle();
 	}
 
-	virtual void StoreToJson(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir,
-		const rapidjson::Value& val) override;
-
 	auto& GetValue() const { return m_val; }
-	void SetValue(bool val);
+	void SetValue(const bool& val) {
+		m_val = val;
+		UpdateTitle();
+	}
 
 private:
-	void UpdateTitle();
+	void UpdateTitle() {
+		SetStyleSmallTitleFont(true);
+		m_title = m_val ? "true" : "false";
+	}
 
 private:
 	bool m_val = true;

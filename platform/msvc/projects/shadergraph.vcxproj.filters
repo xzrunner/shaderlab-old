@@ -493,78 +493,9 @@
     <ClCompile Include="..\..\..\source\NodePreview.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Input.cpp">
-      <Filter>nodes\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Vector1.cpp">
-      <Filter>nodes\input\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Vector2.cpp">
-      <Filter>nodes\input\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Vector3.cpp">
-      <Filter>nodes\input\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Vector4.cpp">
-      <Filter>nodes\input\basic</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
       <Filter>nodes\input\texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Rotate.cpp">
-      <Filter>nodes\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\ChannelMask.cpp">
-      <Filter>nodes\artistic\mask</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Exponential.cpp">
-      <Filter>nodes\math\advanced</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Log.cpp">
-      <Filter>nodes\math\advanced</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Flip.cpp">
-      <Filter>nodes\channel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Swizzle.cpp">
-      <Filter>nodes\channel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Boolean.cpp">
-      <Filter>nodes\input\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Comparison.cpp">
-      <Filter>nodes\utility\logic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Flipbook.cpp">
-      <Filter>nodes\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\MatrixConstruction.cpp">
-      <Filter>nodes\math\matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\MatrixSplit.cpp">
-      <Filter>nodes\math\matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Matrix4.cpp">
-      <Filter>nodes\input\matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Matrix3.cpp">
-      <Filter>nodes\input\matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Matrix2.cpp">
-      <Filter>nodes\input\matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Hue.cpp">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\InvertColors.cpp">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\ColorspaceConversion.cpp">
-      <Filter>nodes\artistic\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\node\Blend.cpp">
-      <Filter>nodes\artistic\blend</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
   </ItemGroup>
 </Project>
