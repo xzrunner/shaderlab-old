@@ -2,6 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ReflectPropTypes.h"
 
 namespace facade { class Image; }
 
@@ -28,8 +29,8 @@ public:
 	void  SetName(const std::string& name);
 	auto& GetName() const { return m_name; }
 
-	void SetImagePath(const char* filepath);
-	const char* GetImagePath() const;
+	void SetImagePath(std::string filepath);
+	std::string GetImagePath() const;
 
 	auto& GetImage() const { return m_img; }
 

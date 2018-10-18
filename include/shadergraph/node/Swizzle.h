@@ -11,17 +11,6 @@ namespace node
 class Swizzle : public Node
 {
 public:
-	static const size_t CHANNEL_COUNT = 4;
-
-	enum ChannelType
-	{
-		CHANNEL_R = 0,
-		CHANNEL_G,
-		CHANNEL_B,
-		CHANNEL_A
-	};
-
-public:
 	Swizzle()
 		: Node("Swizzle", true)
 	{
@@ -33,13 +22,12 @@ public:
 	}
 
 	auto& GetChannels() const { return m_channels; }
-	void SetChannels(const std::array<ChannelType, CHANNEL_COUNT>& channels) {
+	void SetChannels(const PropChannelArray& channels) {
 		m_channels = channels;
 	}
 
 private:
-	std::array<ChannelType, CHANNEL_COUNT> m_channels
-		= { CHANNEL_R, CHANNEL_G, CHANNEL_B, CHANNEL_A };
+	PropChannelArray m_channels;
 
 	RTTR_ENABLE(Node)
 

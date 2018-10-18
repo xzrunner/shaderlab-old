@@ -24,8 +24,8 @@ public:
 		});
 	}
 
-	void SetRow(bool row) { m_row = row; }
-	bool IsRow() const { return m_row; }
+	void SetType(MatrixType type) { m_type = type; }
+	MatrixType GetType() const { return m_type; }
 
 	enum OutputID
 	{
@@ -36,7 +36,7 @@ public:
 	};
 
 private:
-	bool m_row = true;
+	MatrixType m_type = MatrixType::ROW;
 
 	RTTR_ENABLE(Node)
 

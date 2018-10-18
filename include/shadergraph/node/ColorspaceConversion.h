@@ -2,6 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ReflectPropTypes.h"
 
 namespace sg
 {
@@ -11,16 +12,9 @@ namespace node
 class ColorspaceConversion : public Node
 {
 public:
-	enum ColorType
-	{
-		COL_RGB,
-		COL_LINEAR,
-		COL_HSV,
-	};
-
-public:
 	ColorspaceConversion()
 		: Node("ColorspaceConversion", true)
+		, m_type(ColorType::RGB, ColorType::RGB)
 	{
 		InitPins({
 			{ PINS_COLOR, "In" },
@@ -29,13 +23,11 @@ public:
 		});
 	}
 
-	ColorType GetFromType() const { return m_from; }
-	void SetFromType(ColorType t) { m_from = t; }
-	ColorType GetToType() const { return m_to; }
-	void SetToType(ColorType t) { m_to = t; }
+	auto& GetType() const { return m_type; }
+	void SetType(const PropColorTrans& type) { m_type = type; }
 
 private:
-	ColorType m_from = COL_RGB, m_to = COL_RGB;
+	PropColorTrans m_type;
 
 	RTTR_ENABLE(Node)
 

@@ -13,6 +13,7 @@ class Flipbook : public Node
 public:
 	Flipbook()
 		: Node("Flipbook", true)
+		, m_invert({ false, false })
 	{
 		InitPins({
 			{ PINS_VECTOR2, "UV" },

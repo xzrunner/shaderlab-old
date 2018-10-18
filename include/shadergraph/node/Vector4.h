@@ -24,21 +24,25 @@ public:
 		UpdateTitle();
 	}
 
+	virtual void Refresh() override {
+		UpdateTitle();
+	}
+
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec4& val) {
 		m_val = val;
 		UpdateTitle();
 	}
 
-	// for serialize
+	// for serialize with rttr
 	float GetX() const { return m_val.x; }
-	void  SetX(float x) { m_val.x = x; UpdateTitle(); }
+	void SetX(float x) { m_val.x = x; UpdateTitle(); }
 	float GetY() const { return m_val.y; }
-	void  SetY(float y) { m_val.y = y; UpdateTitle(); }
+	void SetY(float y) { m_val.y = y; UpdateTitle(); }
 	float GetZ() const { return m_val.z; }
-	void  SetZ(float z) { m_val.z = z; UpdateTitle(); }
+	void SetZ(float z) { m_val.z = z; UpdateTitle(); }
 	float GetW() const { return m_val.w; }
-	void  SetW(float w) { m_val.w = w; UpdateTitle(); }
+	void SetW(float w) { m_val.w = w; UpdateTitle(); }
 
 private:
 	void UpdateTitle() {

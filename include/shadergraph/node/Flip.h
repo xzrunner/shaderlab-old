@@ -2,6 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ReflectPropTypes.h"
 
 namespace sg
 {
@@ -13,6 +14,7 @@ class Flip : public Node
 public:
 	Flip()
 		: Node("Flip", true)
+		, m_channels(0)
 	{
 		InitPins({
 			{ PINS_DYNAMIC_VECTOR, "In" },
@@ -21,16 +23,11 @@ public:
 		});
 	}
 
-	uint32_t GetChannels() const { return m_channels; }
-	void SetChannels(uint32_t channels) { m_channels = channels; }
-
-	static const uint32_t CHANNEL_R = 0x1;
-	static const uint32_t CHANNEL_G = 0x2;
-	static const uint32_t CHANNEL_B = 0x4;
-	static const uint32_t CHANNEL_A = 0x8;
+	auto& GetChannels() const { return m_channels; }
+	void SetChannels(const PropMultiChannels& channels) { m_channels = channels; }
 
 private:
-	uint32_t m_channels = 0;
+	PropMultiChannels m_channels;
 
 	RTTR_ENABLE(Node)
 

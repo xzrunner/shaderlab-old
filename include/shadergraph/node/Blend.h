@@ -25,8 +25,8 @@ public:
 		});
 	}
 
-	auto GetMode() const { return m_mode; }
-	void SetMode(sw::node::Blend::ModeType mode) { m_mode = mode; }
+	auto GetMode() const { return m_mode.mode; }
+	void SetMode(uint32_t mode) { m_mode.mode = mode; }
 
 	enum InputID
 	{
@@ -36,7 +36,7 @@ public:
 	};
 
 private:
-	sw::node::Blend::ModeType m_mode = sw::node::Blend::MODE_BURN;
+	PropBlendMode m_mode = sw::node::Blend::MODE_BURN;
 
 	RTTR_ENABLE(Node)
 

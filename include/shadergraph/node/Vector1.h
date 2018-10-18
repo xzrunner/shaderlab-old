@@ -24,6 +24,10 @@ public:
 		UpdateTitle();
 	}
 
+	virtual void Refresh() override {
+		UpdateTitle();
+	}
+
 	auto GetValue() const { return m_val; }
 	void SetValue(float val) {
 		m_val = val;

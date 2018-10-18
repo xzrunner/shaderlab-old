@@ -26,14 +26,14 @@ void Tex2DAsset::SetName(const std::string& name)
 	m_title = m_name;
 }
 
-void Tex2DAsset::SetImagePath(const char* filepath)
+void Tex2DAsset::SetImagePath(std::string filepath)
 {
-	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+	m_img = facade::ResPool::Instance().Fetch<facade::Image>(std::move(filepath));
 }
 
-const char* Tex2DAsset::GetImagePath() const
+std::string Tex2DAsset::GetImagePath() const
 {
-	return m_img ? m_img->GetResPath().c_str() : "";
+	return m_img ? m_img->GetResPath() : "";
 }
 
 }

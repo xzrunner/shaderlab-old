@@ -511,7 +511,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Hue>())
 	{
 		auto& src = static_cast<const node::Hue&>(node);
-		dst = std::make_shared<sw::node::Hue>(src.IsRadians());
+		dst = std::make_shared<sw::node::Hue>(src.GetAngleType() == PropAngleType::RADIAN);
 		sw::make_connecting(
 			CreateInputChild(src, node::Hue::ID_INPUT),
 			{ dst, sw::node::Hue::ID_INPUT }
@@ -524,7 +524,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::InvertColors>())
 	{
 		auto& src = static_cast<const node::InvertColors&>(node);
-		dst = std::make_shared<sw::node::InvertColors>(src.GetChannels());
+		dst = std::make_shared<sw::node::InvertColors>(src.GetChannels().channels);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (type == rttr::type::get<node::ReplaceColor>())
@@ -586,7 +586,8 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Blend>())
 	{
 		auto& src = static_cast<const node::Blend&>(node);
-		dst = std::make_shared<sw::node::Blend>(src.GetMode());
+		auto sw_type = static_cast<sw::node::Blend::ModeType>(src.GetMode());
+		dst = std::make_shared<sw::node::Blend>(sw_type);
 		sw::make_connecting(
 			CreateInputChild(src, node::Blend::ID_BASE),
 			{ dst, sw::node::Blend::ID_BASE }
@@ -609,7 +610,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::ChannelMask>())
 	{
 		auto& src = static_cast<const node::ChannelMask&>(node);
-		dst = std::make_shared<sw::node::ChannelMask>(src.GetChannels());
+		dst = std::make_shared<sw::node::ChannelMask>(src.GetChannels().channels);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (type == rttr::type::get<node::ColorMask>())
@@ -690,8 +691,8 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const node::ColorspaceConversion&>(node);
 		dst = std::make_shared<sw::node::ColorspaceConversion>(
-			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetFromType()),
-			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetToType())
+			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().from),
+			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().to)
 		);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
@@ -720,7 +721,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Flip>())
 	{
 		auto& src = static_cast<const node::Flip&>(node);
-		dst = std::make_shared<sw::node::Flip>(src.GetChannels());
+		dst = std::make_shared<sw::node::Flip>(src.GetChannels().channels);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (type == rttr::type::get<node::Split>())
@@ -732,7 +733,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Swizzle>())
 	{
 		auto& src = static_cast<const node::Swizzle&>(node);
-		auto& src_channels = src.GetChannels();
+		auto& src_channels = src.GetChannels().channels;
 		std::array<sw::node::Swizzle::ChannelType, sw::node::Swizzle::CHANNEL_COUNT> dst_channels;
 		for (size_t i = 0; i < sw::node::Swizzle::CHANNEL_COUNT; ++i) {
 			dst_channels[i] = static_cast<sw::node::Swizzle::ChannelType>(src_channels[i]);
@@ -1048,7 +1049,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
 		auto& src = static_cast<const node::MatrixConstruction&>(node);
-		dst = std::make_shared<sw::node::MatrixConstruction>(src.IsRow());
+		dst = std::make_shared<sw::node::MatrixConstruction>(src.GetType() == MatrixType::ROW);
 		sw::make_connecting(
 			CreateInputChild(src, node::MatrixConstruction::ID_M0),
 			{ dst, sw::node::MatrixConstruction::ID_M0 }
@@ -1075,7 +1076,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
 		auto& src = static_cast<const node::MatrixSplit&>(node);
-		dst = std::make_shared<sw::node::MatrixSplit>(src.IsRow());
+		dst = std::make_shared<sw::node::MatrixSplit>(src.GetType() == MatrixType::ROW);
 		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
 	}
 	else if (type == rttr::type::get<node::MatrixTranspose>())
@@ -1555,7 +1556,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const node::Comparison&>(node);
 		dst = std::make_shared<sw::node::Comparison>(
-			static_cast<sw::node::Comparison::CmpType>(src.GetCmpType())
+			static_cast<sw::node::Comparison::CmpType>(src.GetType())
 		);
 		sw::make_connecting(
 			CreateInputChild(src, node::Comparison::ID_A),
@@ -1651,7 +1652,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<node::Rotate>())
 	{
 		auto& src = static_cast<const node::Rotate&>(node);
-		dst = std::make_shared<sw::node::Rotate>(src.IsRadians());
+		dst = std::make_shared<sw::node::Rotate>(src.GetAngleType() == PropAngleType::RADIAN);
 		sw::make_connecting(
 			CreateInputChild(src, node::Rotate::ID_UV),
 			{ dst, sw::node::Rotate::ID_UV }

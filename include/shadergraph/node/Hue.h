@@ -2,6 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ReflectPropTypes.h"
 
 namespace sg
 {
@@ -22,8 +23,8 @@ public:
 		});
 	}
 
-	bool IsRadians() const { return m_is_radians; }
-	void SetRadians(bool rad) { m_is_radians = rad; }
+	auto GetAngleType() const { return m_type; }
+	void SetAngleType(PropAngleType type) { m_type = type; }
 
 public:
 	enum InputID
@@ -33,7 +34,7 @@ public:
 	};
 
 private:
-	bool m_is_radians = true;
+	PropAngleType m_type = PropAngleType::RADIAN;
 
 	RTTR_ENABLE(Node)
 

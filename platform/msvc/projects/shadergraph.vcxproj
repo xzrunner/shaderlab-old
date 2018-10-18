@@ -14,6 +14,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Absolute.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\And.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
+    <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
@@ -146,6 +148,11 @@
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\js\platform\msvc\projects\js.vcxproj">
+      <Project>{68c18da9-79bb-43a5-9e0c-79740aea954b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>5.shadergraph</ProjectName>

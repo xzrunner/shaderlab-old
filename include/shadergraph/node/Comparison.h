@@ -2,6 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/ReflectPropTypes.h"
 
 namespace sg
 {
@@ -22,18 +23,8 @@ public:
 		});
 	}
 
-	enum CmpType
-	{
-		CMP_EQUAL = 0,
-		CMP_NOT_EQUAL,
-		CMP_LESS,
-		CMP_LESS_OR_EQUAL,
-		CMP_GREATER,
-		CMP_GREATER_OR_EQUAL,
-	};
-
-	auto GetCmpType() const { return m_cmp_type; }
-	void SetCmpType(CmpType cmp_type) { m_cmp_type = cmp_type; }
+	auto GetType() const { return m_type; }
+	void SetType(CmpType type) { m_type = type; }
 
 	enum InputID
 	{
@@ -42,7 +33,7 @@ public:
 	};
 
 private:
-	CmpType m_cmp_type = CMP_EQUAL;
+	CmpType m_type = CmpType::EQUAL;
 
 	RTTR_ENABLE(Node)
 

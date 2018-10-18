@@ -22,8 +22,12 @@ public:
 		UpdateTitle();
 	}
 
-	auto& GetValue() const { return m_val; }
-	void SetValue(const bool& val) {
+	virtual void Refresh() override {
+		UpdateTitle();
+	}
+
+	auto GetValue() const { return m_val; }
+	void SetValue(bool val) {
 		m_val = val;
 		UpdateTitle();
 	}
