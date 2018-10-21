@@ -21,8 +21,11 @@ public:
 	void Draw(const sm::Matrix2D& mt) const;
 	bool Update(const bp::UpdateParams& params);
 
-	static sm::mat4 CalcNodePreviewMat(const Node& node,
+	static sm::Matrix2D CalcNodePreviewMat(const Node& node,
 		const sm::Matrix2D& mt);
+
+private:
+	static sm::mat4 MatTrans(const sm::Matrix2D& mt);
 
 private:
 	const Node& m_node;

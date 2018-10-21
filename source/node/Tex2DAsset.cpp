@@ -16,7 +16,7 @@ void Tex2DAsset::Draw(const sm::Matrix2D& mt) const
 	if (m_img)
 	{
 		auto model_mat = NodePreview::CalcNodePreviewMat(*this, mt);
-		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), model_mat);
+		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), sm::rect(1, 1), model_mat);
 	}
 }
 

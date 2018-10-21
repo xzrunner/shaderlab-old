@@ -4,6 +4,7 @@
 #include "shadergraph/node/UV.h"
 
 #include <painting2/RenderSystem.h>
+#include <painting2/Shader.h>
 #include <blueprint/Pins.h>
 #include <blueprint/NodeHelper.h>
 
@@ -24,7 +25,7 @@ void NodePreview::Draw(const sm::Matrix2D& mt) const
 		return;
 	}
 
-	auto model_mat = CalcNodePreviewMat(m_node, mt);
+	auto model_mat = MatTrans(CalcNodePreviewMat(m_node, mt));
 	if (m_draw_tex) {
 		pt2::RenderSystem::DrawTexture(m_shader, model_mat);
 	} else {
@@ -45,24 +46,32 @@ bool NodePreview::Update(const bp::UpdateParams& params)
 	return true;
 }
 
-sm::mat4 NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2D& mt)
+sm::Matrix2D NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2D& mt)
 {
 	auto& style = node.GetStyle();
-
 	const float LEN = style.width;
 	sm::rect r;
-	r.xmin = -style.width * 0.5f; r.xmax = r.xmin + LEN;
+	r.xmin = -style.width * 0.5f;  r.xmax = r.xmin + LEN;
 	r.ymax = -style.height * 0.5f; r.ymin = r.ymax - LEN;
 
-	sm::mat4 model_mat;
-	model_mat.x[0]  = mt.x[0] * r.Width();
-	model_mat.x[1]  = mt.x[1];
-	model_mat.x[4]  = mt.x[2];
-	model_mat.x[5]  = mt.x[3] * r.Height();
-	model_mat.x[12] = mt.x[4] + r.Center().x;
-	model_mat.x[13] = mt.x[5] + r.Center().y;
+	sm::Matrix2D ret = mt;
+	ret.x[0] *= r.Width();
+	ret.x[3] *= r.Height();
+	ret.x[4] += r.Center().x;
+	ret.x[5] += r.Center().y;
+	return ret;
+}
 
-	return model_mat;
+sm::mat4 NodePreview::MatTrans(const sm::Matrix2D& mt)
+{
+	sm::mat4 ret;
+	ret.x[0]  = mt.x[0];
+	ret.x[1]  = mt.x[1];
+	ret.x[4]  = mt.x[2];
+	ret.x[5]  = mt.x[3];
+	ret.x[12] = mt.x[4];
+	ret.x[13] = mt.x[5];
+	return ret;
 }
 
 }
