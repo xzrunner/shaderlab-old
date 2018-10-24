@@ -1755,14 +1755,17 @@ pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, 
 	pt0::Shader::Params sp(m_texture_names, m_layout);
 	sp.vs = vert.GetShaderStr().c_str();
 	sp.fs = frag.GetShaderStr().c_str();
-	// todo
+
 	sp.uniform_names.model_mat  = "u_model";
 	sp.uniform_names.view_mat   = "u_view";
 	sp.uniform_names.proj_mat   = "u_projection";
-	sp.uniform_names.time       = "u_time";
-	sp.uniform_names.sine_time  = "u_sine_time";
-	sp.uniform_names.cos_time   = "u_cos_time";
-	sp.uniform_names.delta_time = "u_delta_time";
+
+	if (vert.HasNodeType<sw::node::Time>() || frag.HasNodeType<sw::node::Time>()) {
+		sp.utime_names = std::make_unique<pt0::Shader::UniformTimeNames>(
+			pt0::Shader::UniformTimeNames{ "u_time", "u_sine_time", "u_cos_time", "u_delta_time" }
+		);
+	}
+
 	return sp;
 }
 
