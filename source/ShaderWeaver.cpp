@@ -40,6 +40,7 @@
 // master
 #include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Sprite.h"
+#include "shadergraph/node/Raymarching.h"
 // math
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Divide.h"
@@ -122,6 +123,9 @@
 #include "shadergraph/node/Spherize.h"
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
+// sdf
+#include "shadergraph/node/Sphere.h"
+#include "shadergraph/node/Torus.h"
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -166,6 +170,7 @@
 #include <shaderweaver/node/SampleTex2D.h>
 // master
 #include <shaderweaver/node/Phong.h>
+#include <shaderweaver/node/Raymarching.h>
 // math
 #include <shaderweaver/node/Assign.h>
 #include <shaderweaver/node/Add.h>
@@ -255,6 +260,9 @@
 #include <shaderweaver/node/Spherize.h>
 #include <shaderweaver/node/TilingAndOffset.h>
 #include <shaderweaver/node/Twirl.h>
+// sdf
+#include <shaderweaver/node/Sphere.h>
+#include <shaderweaver/node/Torus.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -271,9 +279,9 @@ namespace
 void debug_print(const sw::Evaluator& vert, const sw::Evaluator& frag)
 {
 	printf("//////////////////////////////////////////////////////////////////////////\n");
-	printf("%s\n", vert.GetShaderStr().c_str());
+	printf("%s\n", vert.GenShaderStr().c_str());
 	printf("//////////////////////////////////////////////////////////////////////////\n");
-	printf("%s\n", frag.GetShaderStr().c_str());
+	printf("%s\n", frag.GenShaderStr().c_str());
 	printf("//////////////////////////////////////////////////////////////////////////\n");
 }
 
@@ -855,6 +863,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		sw::make_connecting(
 			CreateInputChild(src, node::Phong::ID_VIEW_POS),
 			{ dst, sw::node::Phong::ID_VIEW_POS }
+		);
+	}
+	else if (type == rttr::type::get<node::Raymarching>())
+	{
+		auto& src = static_cast<const node::Raymarching&>(node);
+		dst = std::make_shared<sw::node::Raymarching>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Raymarching::ID_UV),
+			{ dst, sw::node::Raymarching::ID_UV }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Raymarching::ID_SDF),
+			{ dst, sw::node::Raymarching::ID_SDF }
 		);
 	}
 	// math
@@ -1725,6 +1746,33 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Twirl::ID_OFFSET }
 		);
 	}
+	// sdf
+	else if (type == rttr::type::get<node::Sphere>())
+	{
+		auto& src = static_cast<const node::Sphere&>(node);
+		dst = std::make_shared<sw::node::Sphere>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Sphere::ID_POS),
+			{ dst, sw::node::Sphere::ID_POS }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Sphere::ID_RADIUS),
+			{ dst, sw::node::Sphere::ID_RADIUS }
+		);
+	}
+	else if (type == rttr::type::get<node::Torus>())
+	{
+		auto& src = static_cast<const node::Torus&>(node);
+		dst = std::make_shared<sw::node::Torus>();
+		sw::make_connecting(
+			CreateInputChild(src, node::Torus::ID_POS),
+			{ dst, sw::node::Torus::ID_POS }
+		);
+		sw::make_connecting(
+			CreateInputChild(src, node::Torus::ID_RADIUS),
+			{ dst, sw::node::Torus::ID_RADIUS }
+		);
+	}
 	else
 	{
 		assert(0);
@@ -1753,8 +1801,8 @@ sw::Node::PortAddr ShaderWeaver::CreateInputChild(const bp::Node& node, int inpu
 pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const
 {
 	pt0::Shader::Params sp(m_texture_names, m_layout);
-	sp.vs = vert.GetShaderStr().c_str();
-	sp.fs = frag.GetShaderStr().c_str();
+	sp.vs = vert.GenShaderStr().c_str();
+	sp.fs = frag.GenShaderStr().c_str();
 
 	sp.uniform_names.model_mat  = "u_model";
 	sp.uniform_names.view_mat   = "u_view";

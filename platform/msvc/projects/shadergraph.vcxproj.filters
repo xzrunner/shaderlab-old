@@ -100,6 +100,9 @@
     <Filter Include="nodes\artistic\blend">
       <UniqueIdentifier>{a222a31b-0c26-48a1-9d27-1cc291fd8bdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\sdf">
+      <UniqueIdentifier>{2b02d15c-82d3-473c-87f9-189f6f0e2324}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -468,6 +471,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
       <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Raymarching.h">
+      <Filter>nodes\master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Sphere.h">
+      <Filter>nodes\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Torus.h">
+      <Filter>nodes\sdf</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@ enum PinsType
 	PINS_MATRIX2,
 	PINS_MATRIX3,
 	PINS_MATRIX4,
+	PINS_FUNCTION,
 
 }; // PinsType
 

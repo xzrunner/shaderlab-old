@@ -14,6 +14,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Raymarching.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Sphere.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Torus.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Absolute.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />

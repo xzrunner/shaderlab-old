@@ -39,6 +39,7 @@
 // master
 #include "shadergraph/node/Phong.h"
 #include "shadergraph/node/Sprite.h"
+#include "shadergraph/node/Raymarching.h"
 // math
 #include "shadergraph/node/Add.h"
 #include "shadergraph/node/Divide.h"
@@ -121,6 +122,9 @@
 #include "shadergraph/node/Spherize.h"
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
+// sdf
+#include "shadergraph/node/Sphere.h"
+#include "shadergraph/node/Torus.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -344,6 +348,9 @@ RTTR_REGISTRATION
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::Sprite>("sg_sprite")
+		.constructor<>()
+	;
+	rttr::registration::class_<sg::node::Raymarching>("sg_raymarching")
 		.constructor<>()
 	;
 	// math
@@ -610,6 +617,13 @@ RTTR_REGISTRATION
 		.constructor<>()
 	;
 	rttr::registration::class_<sg::node::Twirl>("sg_twirl")
+		.constructor<>()
+	;
+	// sdf
+	rttr::registration::class_<sg::node::Sphere>("sg_sphere")
+		.constructor<>()
+	;
+	rttr::registration::class_<sg::node::Torus>("sg_torus")
 		.constructor<>()
 	;
 }
