@@ -83,6 +83,9 @@ bool Pins::CanTypeCast(int type) const
 	if (GetType() == type) {
 		return true;
 	}
+	if (type == PINS_FUNCTION) {
+		return true;
+	}
 
 	switch (GetType())
 	{
