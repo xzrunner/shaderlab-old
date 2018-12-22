@@ -24,6 +24,7 @@ protected:
 	};
 	void InitPins(const std::vector<PinsDesc>& input,
 		const std::vector<PinsDesc>& output);
+	void InitPins(const std::string& name);
 
 private:
 	void InitPinsImpl(const std::vector<PinsDesc>& pins,

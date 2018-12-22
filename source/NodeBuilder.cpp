@@ -1,5 +1,6 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/Nodes.h"
 
 // artistic
 #include "shadergraph/node/ColorAddMul.h"
@@ -123,9 +124,6 @@
 #include "shadergraph/node/Spherize.h"
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
-// SDF
-#include "shadergraph/node/Sphere.h"
-#include "shadergraph/node/Torus.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -864,22 +862,93 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(10);
 		CreateDefault(nodes, node, node::Twirl::ID_OFFSET, rttr::type::get<node::Vector2>().get_name().to_string());
 	}
-	// sdf
-	else if (type == rttr::type::get<node::Sphere>())
+	else
 	{
-		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sphere::ID_POS,
-			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
-		std::static_pointer_cast<node::Vector1>(CreateDefault(nodes, node, node::Sphere::ID_RADIUS,
-			rttr::type::get<node::Vector1>().get_name().to_string()))->SetValue(0.5f);
-	}
-	else if (type == rttr::type::get<node::Torus>())
-	{
-		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Torus::ID_POS,
-			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue({ 0, 0, 0 });
-		std::static_pointer_cast<node::Vector2>(CreateDefault(nodes, node, node::Torus::ID_RADIUS,
-			rttr::type::get<node::Vector2>().get_name().to_string()))->SetValue({ 0.2f, 0.8f });
-	}
+		// from rttr
 
+		auto cls_name = type.get_name().to_string();
+		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+
+		rttr::type t = rttr::type::get_by_name(cls_name);
+		if (!t.is_valid()) {
+			return;
+		}
+		auto ctor = t.get_constructor();
+		if (!ctor.is_valid()) {
+			return;
+		}
+
+		for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
+		{
+			auto& pins = node.GetAllInput()[i];
+			std::string default_type_str;
+			switch (pins->GetType())
+			{
+			case PINS_VECTOR1:
+				default_type_str = rttr::type::get<node::Vector1>().get_name().to_string();
+				break;
+			case PINS_VECTOR2:
+				default_type_str = rttr::type::get<node::Vector2>().get_name().to_string();
+				break;
+			case PINS_VECTOR3:
+				default_type_str = rttr::type::get<node::Vector3>().get_name().to_string();
+				break;
+			case PINS_VECTOR4:
+				default_type_str = rttr::type::get<node::Vector4>().get_name().to_string();
+				break;
+			default:
+				assert(0);
+			}
+
+			auto default_node = CreateDefault(nodes, node, i, default_type_str);
+			auto default_val = ctor.get_metadata(i);
+			switch (pins->GetType())
+			{
+			case PINS_VECTOR1:
+				if (default_val.is_valid()) {
+					assert(default_val.is_type<float>());
+					std::static_pointer_cast<node::Vector1>(default_node)->SetValue(
+						default_val.to_float()
+					);
+				} else {
+					std::static_pointer_cast<node::Vector1>(default_node)->SetValue(0);
+				}
+				break;
+			case PINS_VECTOR2:
+				if (default_val.is_valid()) {
+					assert(default_val.is_type<sm::vec2>());
+					std::static_pointer_cast<node::Vector2>(default_node)->SetValue(
+						default_val.get_value<sm::vec2>()
+					);
+				} else {
+					std::static_pointer_cast<node::Vector2>(default_node)->SetValue(sm::vec2(0, 0));
+				}
+				break;
+			case PINS_VECTOR3:
+				if (default_val.is_valid()) {
+					assert(default_val.is_type<sm::vec3>());
+					std::static_pointer_cast<node::Vector3>(default_node)->SetValue(
+						default_val.get_value<sm::vec3>()
+					);
+				} else {
+					std::static_pointer_cast<node::Vector3>(default_node)->SetValue(sm::vec3(0, 0, 0));
+				}
+				break;
+			case PINS_VECTOR4:
+				if (default_val.is_valid()) {
+					assert(default_val.is_type<sm::vec4>());
+					std::static_pointer_cast<node::Vector4>(default_node)->SetValue(
+						default_val.get_value<sm::vec4>()
+					);
+				} else {
+					std::static_pointer_cast<node::Vector4>(default_node)->SetValue(sm::vec4(0, 0, 0, 0));
+				}
+				break;
+			default:
+				assert(0);
+			}
+		}
+	}
 }
 
 bp::NodePtr NodeBuilder::CreateDefault(std::vector<n0::SceneNodePtr>& nodes, bp::Node& parent,

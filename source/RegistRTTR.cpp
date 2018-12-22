@@ -1,4 +1,5 @@
 #include "shadergraph/ReflectPropTypes.h"
+#include "shadergraph/Nodes.h"
 
 // artistic
 #include "shadergraph/node/ColorAddMul.h"
@@ -122,9 +123,6 @@
 #include "shadergraph/node/Spherize.h"
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
-// sdf
-#include "shadergraph/node/Sphere.h"
-#include "shadergraph/node/Torus.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -619,13 +617,6 @@ RTTR_REGISTRATION
 	rttr::registration::class_<sg::node::Twirl>("sg_twirl")
 		.constructor<>()
 	;
-	// sdf
-	rttr::registration::class_<sg::node::Sphere>("sg_sphere")
-		.constructor<>()
-	;
-	rttr::registration::class_<sg::node::Torus>("sg_torus")
-		.constructor<>()
-	;
 }
 
 namespace sg
@@ -634,6 +625,7 @@ namespace sg
 void regist_rttr()
 {
 //	prop_types_regist_rttr();
+	nodes_regist_rttr();
 }
 
 }

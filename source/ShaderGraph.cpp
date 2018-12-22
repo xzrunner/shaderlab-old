@@ -6,6 +6,7 @@
 
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pins.h>
+#include <shaderweaver/ShaderWeaver.h>
 
 namespace sg
 {
@@ -16,6 +17,8 @@ extern void regist_rttr();
 
 ShaderGraph::ShaderGraph()
 {
+	sw::ShaderWeaver::Instance();
+
 	regist_rttr();
 
 	Init();

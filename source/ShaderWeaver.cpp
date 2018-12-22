@@ -123,9 +123,8 @@
 #include "shadergraph/node/Spherize.h"
 #include "shadergraph/node/TilingAndOffset.h"
 #include "shadergraph/node/Twirl.h"
-// sdf
-#include "shadergraph/node/Sphere.h"
-#include "shadergraph/node/Torus.h"
+
+#include "shadergraph/Nodes.h"
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -260,9 +259,6 @@
 #include <shaderweaver/node/Spherize.h>
 #include <shaderweaver/node/TilingAndOffset.h>
 #include <shaderweaver/node/Twirl.h>
-// sdf
-#include <shaderweaver/node/Sphere.h>
-#include <shaderweaver/node/Torus.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -1746,36 +1742,25 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 			{ dst, sw::node::Twirl::ID_OFFSET }
 		);
 	}
-	// sdf
-	else if (type == rttr::type::get<node::Sphere>())
-	{
-		auto& src = static_cast<const node::Sphere&>(node);
-		dst = std::make_shared<sw::node::Sphere>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Sphere::ID_POS),
-			{ dst, sw::node::Sphere::ID_POS }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Sphere::ID_RADIUS),
-			{ dst, sw::node::Sphere::ID_RADIUS }
-		);
-	}
-	else if (type == rttr::type::get<node::Torus>())
-	{
-		auto& src = static_cast<const node::Torus&>(node);
-		dst = std::make_shared<sw::node::Torus>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Torus::ID_POS),
-			{ dst, sw::node::Torus::ID_POS }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Torus::ID_RADIUS),
-			{ dst, sw::node::Torus::ID_RADIUS }
-		);
-	}
 	else
 	{
-		assert(0);
+		// from rttr
+
+		auto cls_name = type.get_name().to_string();
+		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+
+		rttr::type t = rttr::type::get_by_name(cls_name);
+		assert(t.is_valid());
+		rttr::variant var = t.create();
+		assert(var.is_valid());
+
+		dst = var.get_value<std::shared_ptr<sw::Node>>();
+		assert(dst);
+		for (int i = 0, n = node.GetAllInput().size(); i < n; ++i) {
+			sw::make_connecting(
+				CreateInputChild(node, i), { dst, i }
+			);
+		}
 	}
 
 	if (dst) {

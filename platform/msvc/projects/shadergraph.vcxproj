@@ -14,9 +14,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\Nodes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Raymarching.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Sphere.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Torus.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Absolute.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Add.h" />
@@ -143,6 +142,7 @@
     <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
+    <ClCompile Include="..\..\..\source\Nodes.cpp" />
     <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
     <ClCompile Include="..\..\..\source\Pins.cpp" />
