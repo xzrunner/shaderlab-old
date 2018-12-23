@@ -16,7 +16,7 @@ enum class PropAngleType
 
 struct PropMultiChannels
 {
-	PropMultiChannels(uint32_t channels)
+	PropMultiChannels(uint32_t channels = 0)
 		: channels(channels) {}
 
 	static const uint32_t CHANNEL_R = 0x1;

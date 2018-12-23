@@ -1,163 +1,23 @@
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/RegistNodes.h"
 
-// artistic
-#include "shadergraph/node/ColorAddMul.h"
-#include "shadergraph/node/ColorMap.h"
-#include "shadergraph/node/Contrast.h"
-#include "shadergraph/node/Hue.h"
-#include "shadergraph/node/InvertColors.h"
-#include "shadergraph/node/ReplaceColor.h"
-#include "shadergraph/node/Saturation.h"
-#include "shadergraph/node/WhiteBalance.h"
-#include "shadergraph/node/Blend.h"
-#include "shadergraph/node/Gray.h"
-#include "shadergraph/node/ChannelMask.h"
-#include "shadergraph/node/ColorMask.h"
-#include "shadergraph/node/NormalBlend.h"
-#include "shadergraph/node/NormalCreate.h"
-#include "shadergraph/node/NormalStrength.h"
-#include "shadergraph/node/NormalUnpack.h"
-#include "shadergraph/node/ColorspaceConversion.h"
-// channel
-#include "shadergraph/node/Combine.h"
-#include "shadergraph/node/Flip.h"
-#include "shadergraph/node/Split.h"
-#include "shadergraph/node/Swizzle.h"
-// input
-#include "shadergraph/node/Boolean.h"
-#include "shadergraph/node/Time.h"
-#include "shadergraph/node/Vector1.h"
-#include "shadergraph/node/Vector2.h"
-#include "shadergraph/node/Vector3.h"
-#include "shadergraph/node/Vector4.h"
-#include "shadergraph/node/UV.h"
-#include "shadergraph/node/Matrix2.h"
-#include "shadergraph/node/Matrix3.h"
-#include "shadergraph/node/Matrix4.h"
-#include "shadergraph/node/SampleTex2D.h"
-#include "shadergraph/node/Tex2DAsset.h"
-// master
-#include "shadergraph/node/Phong.h"
-#include "shadergraph/node/Sprite.h"
-#include "shadergraph/node/Raymarching.h"
-// math
-#include "shadergraph/node/Add.h"
-#include "shadergraph/node/Divide.h"
-#include "shadergraph/node/Multiply.h"
-#include "shadergraph/node/Subtract.h"
-#include "shadergraph/node/Power.h"
-#include "shadergraph/node/SquareRoot.h"
-#include "shadergraph/node/Absolute.h"
-#include "shadergraph/node/Exponential.h"
-#include "shadergraph/node/Length.h"
-#include "shadergraph/node/Log.h"
-#include "shadergraph/node/Modulo.h"
-#include "shadergraph/node/Negate.h"
-#include "shadergraph/node/Normalize.h"
-#include "shadergraph/node/Posterize.h"
-#include "shadergraph/node/Reciprocal.h"
-#include "shadergraph/node/ReciprocalSquareRoot.h"
-#include "shadergraph/node/DDX.h"
-#include "shadergraph/node/DDY.h"
-#include "shadergraph/node/DDXY.h"
-#include "shadergraph/node/InverseLerp.h"
-#include "shadergraph/node/Lerp.h"
-#include "shadergraph/node/Smoothstep.h"
-#include "shadergraph/node/MatrixConstruction.h"
-#include "shadergraph/node/MatrixDeterminant.h"
-#include "shadergraph/node/MatrixSplit.h"
-#include "shadergraph/node/MatrixTranspose.h"
-#include "shadergraph/node/Clamp.h"
-#include "shadergraph/node/Fraction.h"
-#include "shadergraph/node/Maximum.h"
-#include "shadergraph/node/Minimum.h"
-#include "shadergraph/node/OneMinus.h"
-#include "shadergraph/node/RandomRange.h"
-#include "shadergraph/node/Remap.h"
-#include "shadergraph/node/Saturate.h"
-#include "shadergraph/node/Ceiling.h"
-#include "shadergraph/node/Floor.h"
-#include "shadergraph/node/Round.h"
-#include "shadergraph/node/Sign.h"
-#include "shadergraph/node/Step.h"
-#include "shadergraph/node/Truncate.h"
-#include "shadergraph/node/Arccosine.h"
-#include "shadergraph/node/Arcsine.h"
-#include "shadergraph/node/Arctangent.h"
-#include "shadergraph/node/Arctangent2.h"
-#include "shadergraph/node/Cosine.h"
-#include "shadergraph/node/DegreesToRadians.h"
-#include "shadergraph/node/HyperbolicCosine.h"
-#include "shadergraph/node/HyperbolicSine.h"
-#include "shadergraph/node/HyperbolicTangent.h"
-#include "shadergraph/node/RadiansToDegrees.h"
-#include "shadergraph/node/Sine.h"
-#include "shadergraph/node/Tangent.h"
-#include "shadergraph/node/CrossProduct.h"
-#include "shadergraph/node/Distance.h"
-#include "shadergraph/node/DotProduct.h"
-#include "shadergraph/node/Projection.h"
-#include "shadergraph/node/Rejection.h"
-// procedural
-#include "shadergraph/node/Checkerboard.h"
-#include "shadergraph/node/GradientNoise.h"
-#include "shadergraph/node/SimpleNoise.h"
-#include "shadergraph/node/Voronoi.h"
-#include "shadergraph/node/Ellipse.h"
-#include "shadergraph/node/Polygon.h"
-#include "shadergraph/node/Rectangle.h"
-#include "shadergraph/node/RoundedRectangle.h"
-// utility
-#include "shadergraph/node/Preview.h"
-#include "shadergraph/node/And.h"
-#include "shadergraph/node/Or.h"
-#include "shadergraph/node/Not.h"
-#include "shadergraph/node/Branch.h"
-#include "shadergraph/node/Comparison.h"
-// uv
-#include "shadergraph/node/Flipbook.h"
-#include "shadergraph/node/PolarCoordinates.h"
-#include "shadergraph/node/RadialShear.h"
-#include "shadergraph/node/Rotate.h"
-#include "shadergraph/node/Spherize.h"
-#include "shadergraph/node/TilingAndOffset.h"
-#include "shadergraph/node/Twirl.h"
-
-#include "shadergraph/Nodes.h"
-
-#include <blueprint/Node.h>
-#include <blueprint/Pins.h>
-#include <blueprint/Connecting.h>
-#include <blueprint/CompNode.h>
-
-#include <shaderweaver/Evaluator.h>
-// artistic
-#include <shaderweaver/node/ColorAddMul.h>
-#include <shaderweaver/node/ColorMap.h>
-#include <shaderweaver/node/Contrast.h>
+#include <shaderweaver/node/Uniform.h>
+#include <shaderweaver/node/Input.h>
+#include <shaderweaver/node/Output.h>
+#include <shaderweaver/node/PositionTrans.h>
+#include <shaderweaver/node/FragPosTrans.h>
+#include <shaderweaver/node/NormalTrans.h>
+#include <shaderweaver/node/Phong.h>
+#include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Hue.h>
 #include <shaderweaver/node/InvertColors.h>
-#include <shaderweaver/node/ReplaceColor.h>
-#include <shaderweaver/node/Saturation.h>
-#include <shaderweaver/node/WhiteBalance.h>
 #include <shaderweaver/node/Blend.h>
-#include <shaderweaver/node/Gray.h>
 #include <shaderweaver/node/ChannelMask.h>
-#include <shaderweaver/node/ColorMask.h>
-#include <shaderweaver/node/NormalBlend.h>
-#include <shaderweaver/node/NormalCreate.h>
-#include <shaderweaver/node/NormalStrength.h>
-#include <shaderweaver/node/NormalUnpack.h>
 #include <shaderweaver/node/ColorspaceConversion.h>
-// channel
-#include <shaderweaver/node/Combine.h>
 #include <shaderweaver/node/Flip.h>
-#include <shaderweaver/node/Split.h>
 #include <shaderweaver/node/Swizzle.h>
-// input
 #include <shaderweaver/node/Boolean.h>
-#include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Vector1.h>
 #include <shaderweaver/node/Vector2.h>
 #include <shaderweaver/node/Vector3.h>
@@ -166,100 +26,19 @@
 #include <shaderweaver/node/Matrix2.h>
 #include <shaderweaver/node/Matrix3.h>
 #include <shaderweaver/node/Matrix4.h>
-#include <shaderweaver/node/SampleTex2D.h>
-// master
-#include <shaderweaver/node/Phong.h>
-#include <shaderweaver/node/Raymarching.h>
-// math
-#include <shaderweaver/node/Assign.h>
-#include <shaderweaver/node/Add.h>
-#include <shaderweaver/node/Divide.h>
-#include <shaderweaver/node/Multiply.h>
-#include <shaderweaver/node/Subtract.h>
-#include <shaderweaver/node/Power.h>
-#include <shaderweaver/node/SquareRoot.h>
-#include <shaderweaver/node/Absolute.h>
 #include <shaderweaver/node/Exponential.h>
-#include <shaderweaver/node/Length.h>
 #include <shaderweaver/node/Log.h>
-#include <shaderweaver/node/Modulo.h>
-#include <shaderweaver/node/Negate.h>
-#include <shaderweaver/node/Normalize.h>
-#include <shaderweaver/node/Posterize.h>
-#include <shaderweaver/node/Reciprocal.h>
-#include <shaderweaver/node/ReciprocalSquareRoot.h>
-#include <shaderweaver/node/DDX.h>
-#include <shaderweaver/node/DDY.h>
-#include <shaderweaver/node/DDXY.h>
-#include <shaderweaver/node/InverseLerp.h>
-#include <shaderweaver/node/Lerp.h>
-#include <shaderweaver/node/Smoothstep.h>
 #include <shaderweaver/node/MatrixConstruction.h>
-#include <shaderweaver/node/MatrixDeterminant.h>
 #include <shaderweaver/node/MatrixSplit.h>
-#include <shaderweaver/node/MatrixTranspose.h>
-#include <shaderweaver/node/Clamp.h>
-#include <shaderweaver/node/Fraction.h>
-#include <shaderweaver/node/Maximum.h>
-#include <shaderweaver/node/Minimum.h>
-#include <shaderweaver/node/OneMinus.h>
-#include <shaderweaver/node/RandomRange.h>
-#include <shaderweaver/node/Remap.h>
-#include <shaderweaver/node/Saturate.h>
-#include <shaderweaver/node/Ceiling.h>
-#include <shaderweaver/node/Floor.h>
-#include <shaderweaver/node/Round.h>
-#include <shaderweaver/node/Sign.h>
-#include <shaderweaver/node/Step.h>
-#include <shaderweaver/node/Truncate.h>
-#include <shaderweaver/node/Arccosine.h>
-#include <shaderweaver/node/Arcsine.h>
-#include <shaderweaver/node/Arctangent.h>
-#include <shaderweaver/node/Arctangent2.h>
-#include <shaderweaver/node/Cosine.h>
-#include <shaderweaver/node/DegreesToRadians.h>
-#include <shaderweaver/node/HyperbolicCosine.h>
-#include <shaderweaver/node/HyperbolicSine.h>
-#include <shaderweaver/node/HyperbolicTangent.h>
-#include <shaderweaver/node/RadiansToDegrees.h>
-#include <shaderweaver/node/Sine.h>
-#include <shaderweaver/node/Tangent.h>
-#include <shaderweaver/node/CrossProduct.h>
-#include <shaderweaver/node/Distance.h>
-#include <shaderweaver/node/DotProduct.h>
-#include <shaderweaver/node/Projection.h>
-#include <shaderweaver/node/Rejection.h>
-// procedural
-#include <shaderweaver/node/Checkerboard.h>
-#include <shaderweaver/node/GradientNoise.h>
-#include <shaderweaver/node/SimpleNoise.h>
-#include <shaderweaver/node/Voronoi.h>
-#include <shaderweaver/node/Ellipse.h>
-#include <shaderweaver/node/Polygon.h>
-#include <shaderweaver/node/Rectangle.h>
-#include <shaderweaver/node/RoundedRectangle.h>
-// utility
-#include <shaderweaver/node/Input.h>
-#include <shaderweaver/node/Output.h>
-#include <shaderweaver/node/Uniform.h>
-#include <shaderweaver/node/PositionTransOld.h>
-#include <shaderweaver/node/PositionTrans.h>
-#include <shaderweaver/node/FragPosTrans.h>
-#include <shaderweaver/node/NormalTrans.h>
-#include <shaderweaver/node/And.h>
-#include <shaderweaver/node/Or.h>
-#include <shaderweaver/node/Not.h>
-#include <shaderweaver/node/Branch.h>
 #include <shaderweaver/node/Comparison.h>
-// uv
 #include <shaderweaver/node/Flipbook.h>
-#include <shaderweaver/node/PolarCoordinates.h>
-#include <shaderweaver/node/RadialShear.h>
 #include <shaderweaver/node/Rotate.h>
-#include <shaderweaver/node/Spherize.h>
-#include <shaderweaver/node/TilingAndOffset.h>
-#include <shaderweaver/node/Twirl.h>
 
+#include <blueprint/Node.h>
+#include <blueprint/Pins.h>
+#include <blueprint/Connecting.h>
+#include <blueprint/CompNode.h>
+#include <shaderweaver/Evaluator.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <painting2/Shader.h>
@@ -460,279 +239,66 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	sw::NodePtr dst = nullptr;
 
 	auto type = node.get_type();
-	// artistic
-	if (type == rttr::type::get<node::ColorAddMul>())
+
+	auto cls_name = type.get_name().to_string();
+	cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+
+	rttr::type t = rttr::type::get_by_name(cls_name);
+	assert(t.is_valid());
+	rttr::variant var = t.create();
+	assert(var.is_valid());
+
+	// create node
+	dst = var.get_value<std::shared_ptr<sw::Node>>();
+	assert(dst);
+
+	// connect
+	for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
 	{
-		auto& src = static_cast<const node::ColorAddMul&>(node);
-		dst = std::make_shared<sw::node::ColorAddMul>();
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorAddMul::ID_COL),
-			{ dst, sw::node::ColorAddMul::ID_COL }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorAddMul::ID_MUL),
-			{ dst, sw::node::ColorAddMul::ID_MUL }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorAddMul::ID_ADD),
-			{ dst, sw::node::ColorAddMul::ID_ADD }
-		);
+		auto& imports = dst->GetImports();
+		if (imports[i].var.IsDefaultInput()) {
+			sw::make_connecting(
+				CreateInputChild(node, i), { dst, i }
+			);
+		}
 	}
-	else if (type == rttr::type::get<node::ColorMap>())
-	{
-		auto& src = static_cast<const node::ColorMap&>(node);
-		dst = std::make_shared<sw::node::ColorMap>();
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMap::ID_COL),
-			{ dst, sw::node::ColorMap::ID_COL }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMap::ID_RMAP),
-			{ dst, sw::node::ColorMap::ID_RMAP }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMap::ID_GMAP),
-			{ dst, sw::node::ColorMap::ID_GMAP }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMap::ID_BMAP),
-			{ dst, sw::node::ColorMap::ID_BMAP }
-		);
-	}
-	else if (type == rttr::type::get<node::Contrast>())
-	{
-		auto& src = static_cast<const node::Contrast&>(node);
-		dst = std::make_shared<sw::node::Contrast>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Contrast::ID_INPUT),
-			{ dst, sw::node::Contrast::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Contrast::ID_CONTRAST),
-			{ dst, sw::node::Contrast::ID_CONTRAST }
-		);
-	}
-	else if (type == rttr::type::get<node::Hue>())
+
+	// init
+	if (type == rttr::type::get<node::Hue>())
 	{
 		auto& src = static_cast<const node::Hue&>(node);
-		dst = std::make_shared<sw::node::Hue>(src.GetAngleType() == PropAngleType::RADIAN);
-		sw::make_connecting(
-			CreateInputChild(src, node::Hue::ID_INPUT),
-			{ dst, sw::node::Hue::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Hue::ID_OFFSET),
-			{ dst, sw::node::Hue::ID_OFFSET }
-		);
+		std::static_pointer_cast<sw::node::Hue>(dst)->
+			SetRadians(src.GetAngleType() == PropAngleType::RADIAN);
 	}
 	else if (type == rttr::type::get<node::InvertColors>())
 	{
 		auto& src = static_cast<const node::InvertColors&>(node);
-		dst = std::make_shared<sw::node::InvertColors>(src.GetChannels().channels);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::ReplaceColor>())
-	{
-		auto& src = static_cast<const node::ReplaceColor&>(node);
-		dst = std::make_shared<sw::node::ReplaceColor>();
-		sw::make_connecting(
-			CreateInputChild(src, node::ReplaceColor::ID_COL),
-			{ dst, sw::node::ReplaceColor::ID_COL }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ReplaceColor::ID_FROM),
-			{ dst, sw::node::ReplaceColor::ID_FROM }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ReplaceColor::ID_TO),
-			{ dst, sw::node::ReplaceColor::ID_TO }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ReplaceColor::ID_RANGE),
-			{ dst, sw::node::ReplaceColor::ID_RANGE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ReplaceColor::ID_FUZZINESS),
-			{ dst, sw::node::ReplaceColor::ID_FUZZINESS }
-		);
-	}
-
-	else if (type == rttr::type::get<node::Saturation>())
-	{
-		auto& src = static_cast<const node::Saturation&>(node);
-		dst = std::make_shared<sw::node::Saturation>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Saturation::ID_INPUT),
-			{ dst, sw::node::Saturation::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Saturation::ID_SATURATION),
-			{ dst, sw::node::Saturation::ID_SATURATION }
-		);
-	}
-	else if (type == rttr::type::get<node::WhiteBalance>())
-	{
-		auto& src = static_cast<const node::WhiteBalance&>(node);
-		dst = std::make_shared<sw::node::WhiteBalance>();
-		sw::make_connecting(
-			CreateInputChild(src, node::WhiteBalance::ID_INPUT),
-			{ dst, sw::node::WhiteBalance::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::WhiteBalance::ID_TEMPERATURE),
-			{ dst, sw::node::WhiteBalance::ID_TEMPERATURE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::WhiteBalance::ID_TINT),
-			{ dst, sw::node::WhiteBalance::ID_TINT }
-		);
+		std::static_pointer_cast<sw::node::InvertColors>(dst)->
+			SetChannels(src.GetChannels().channels);
 	}
 	else if (type == rttr::type::get<node::Blend>())
 	{
 		auto& src = static_cast<const node::Blend&>(node);
-		auto sw_type = static_cast<sw::node::Blend::ModeType>(src.GetMode());
-		dst = std::make_shared<sw::node::Blend>(sw_type);
-		sw::make_connecting(
-			CreateInputChild(src, node::Blend::ID_BASE),
-			{ dst, sw::node::Blend::ID_BASE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Blend::ID_BLEND),
-			{ dst, sw::node::Blend::ID_BLEND }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Blend::ID_OPACITY),
-			{ dst, sw::node::Blend::ID_OPACITY }
-		);
-	}
-	else if (type == rttr::type::get<node::Gray>())
-	{
-		auto& src = static_cast<const node::Gray&>(node);
-		dst = std::make_shared<sw::node::Gray>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::Blend>(dst)->
+			SetModeType(static_cast<sw::node::Blend::ModeType>(src.GetMode()));
 	}
 	else if (type == rttr::type::get<node::ChannelMask>())
 	{
 		auto& src = static_cast<const node::ChannelMask&>(node);
-		dst = std::make_shared<sw::node::ChannelMask>(src.GetChannels().channels);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::ColorMask>())
-	{
-		auto& src = static_cast<const node::ColorMask&>(node);
-		dst = std::make_shared<sw::node::ColorMask>();
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMask::ID_COL),
-			{ dst, sw::node::ColorMask::ID_COL }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMask::ID_MASK),
-			{ dst, sw::node::ColorMask::ID_MASK }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMask::ID_RANGE),
-			{ dst, sw::node::ColorMask::ID_RANGE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::ColorMask::ID_FUZZINESS),
-			{ dst, sw::node::ColorMask::ID_FUZZINESS }
-		);
-	}
-	else if (type == rttr::type::get<node::NormalBlend>())
-	{
-		auto& src = static_cast<const node::NormalBlend&>(node);
-		dst = std::make_shared<sw::node::NormalBlend>();
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalBlend::ID_A),
-			{ dst, sw::node::NormalBlend::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalBlend::ID_B),
-			{ dst, sw::node::NormalBlend::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::NormalCreate>())
-	{
-		auto& src = static_cast<const node::NormalCreate&>(node);
-		dst = std::make_shared<sw::node::NormalCreate>();
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalCreate::ID_TEX),
-			{ dst, sw::node::NormalCreate::ID_TEX }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalCreate::ID_UV),
-			{ dst, sw::node::NormalCreate::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalCreate::ID_OFFSET),
-			{ dst, sw::node::NormalCreate::ID_OFFSET }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalCreate::ID_STRENGTH),
-			{ dst, sw::node::NormalCreate::ID_STRENGTH }
-		);
-	}
-	else if (type == rttr::type::get<node::NormalStrength>())
-	{
-		auto& src = static_cast<const node::NormalStrength&>(node);
-		dst = std::make_shared<sw::node::NormalStrength>();
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalStrength::ID_INPUT),
-			{ dst, sw::node::NormalStrength::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::NormalStrength::ID_STRENGTH),
-			{ dst, sw::node::NormalStrength::ID_STRENGTH }
-		);
-	}
-	else if (type == rttr::type::get<node::NormalUnpack>())
-	{
-		auto& src = static_cast<const node::NormalUnpack&>(node);
-		dst = std::make_shared<sw::node::NormalUnpack>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::ChannelMask>(dst)->
+			SetChannels(src.GetChannels().channels);
 	}
 	else if (type == rttr::type::get<node::ColorspaceConversion>())
 	{
 		auto& src = static_cast<const node::ColorspaceConversion&>(node);
-		dst = std::make_shared<sw::node::ColorspaceConversion>(
-			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().from),
-			static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().to)
-		);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	// channel
-	else if (type == rttr::type::get<node::Combine>())
-	{
-		auto& src = static_cast<const node::Combine&>(node);
-		dst = std::make_shared<sw::node::Combine>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Combine::ID_R),
-			{ dst, sw::node::Combine::ID_R }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Combine::ID_G),
-			{ dst, sw::node::Combine::ID_G }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Combine::ID_B),
-			{ dst, sw::node::Combine::ID_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Combine::ID_A),
-			{ dst, sw::node::Combine::ID_A }
-		);
+		auto from = static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().from);
+		auto to = static_cast<sw::node::ColorspaceConversion::ColorType>(src.GetType().to);
+		std::static_pointer_cast<sw::node::ColorspaceConversion>(dst)->SetColType(from, to);
 	}
 	else if (type == rttr::type::get<node::Flip>())
 	{
 		auto& src = static_cast<const node::Flip&>(node);
-		dst = std::make_shared<sw::node::Flip>(src.GetChannels().channels);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Split>())
-	{
-		auto& src = static_cast<const node::Split&>(node);
-		dst = std::make_shared<sw::node::Split>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::Flip>(dst)->SetChannels(src.GetChannels().channels);
 	}
 	else if (type == rttr::type::get<node::Swizzle>())
 	{
@@ -742,71 +308,68 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		for (size_t i = 0; i < sw::node::Swizzle::CHANNEL_COUNT; ++i) {
 			dst_channels[i] = static_cast<sw::node::Swizzle::ChannelType>(src_channels[i]);
 		}
-		dst = std::make_shared<sw::node::Swizzle>(dst_channels);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::Swizzle>(dst)->SetChannels(dst_channels);
 	}
-	// input
 	else if (type == rttr::type::get<node::Boolean>())
 	{
 		auto& src = static_cast<const node::Boolean&>(node);
-		dst = std::make_shared<sw::node::Boolean>(src.GetName(), src.GetValue());
-	}
-	else if (type == rttr::type::get<node::Time>())
-	{
-		dst = std::make_shared<sw::node::Time>();
+		auto boolean = std::static_pointer_cast<sw::node::Boolean>(dst);
+		boolean->SetName(src.GetName());
+		boolean->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Vector1>())
 	{
 		auto& src = static_cast<const node::Vector1&>(node);
-		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
+		auto vec1 = std::static_pointer_cast<sw::node::Vector1>(dst);
+		vec1->SetName(src.GetName());
+		vec1->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Vector2>())
 	{
 		auto& src = static_cast<const node::Vector2&>(node);
-		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
+		auto vec2 = std::static_pointer_cast<sw::node::Vector2>(dst);
+		vec2->SetName(src.GetName());
+		vec2->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Vector3>())
 	{
 		auto& src = static_cast<const node::Vector3&>(node);
-		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
+		auto vec3 = std::static_pointer_cast<sw::node::Vector3>(dst);
+		vec3->SetName(src.GetName());
+		vec3->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Vector4>())
 	{
 		auto& src = static_cast<const node::Vector4&>(node);
-		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
+		auto vec4 = std::static_pointer_cast<sw::node::Vector4>(dst);
+		vec4->SetName(src.GetName());
+		vec4->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::UV>())
 	{
 		auto& src = static_cast<const node::UV&>(node);
-		dst = std::make_shared<sw::node::UV>(src.GetName());
+		std::static_pointer_cast<sw::node::UV>(dst)->SetName(src.GetName());
 	}
 	else if (type == rttr::type::get<node::Matrix2>())
 	{
 		auto& src = static_cast<const node::Matrix2&>(node);
-		dst = std::make_shared<sw::node::Matrix2>(src.GetName(), src.GetValue());
+		auto mat2 = std::static_pointer_cast<sw::node::Matrix2>(dst);
+		mat2->SetName(src.GetName());
+		mat2->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Matrix3>())
 	{
 		auto& src = static_cast<const node::Matrix3&>(node);
-		dst = std::make_shared<sw::node::Matrix3>(src.GetName(), src.GetValue());
+		auto mat3 = std::static_pointer_cast<sw::node::Matrix3>(dst);
+		mat3->SetName(src.GetName());
+		mat3->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Matrix4>())
 	{
 		auto& src = static_cast<const node::Matrix4&>(node);
-		dst = std::make_shared<sw::node::Matrix4>(src.GetName(), src.GetValue());
-	}
-	else if (type == rttr::type::get<node::SampleTex2D>())
-	{
-		auto& src = static_cast<const node::SampleTex2D&>(node);
-		dst = std::make_shared<sw::node::SampleTex2D>();
-		sw::make_connecting(
-			CreateInputChild(src, node::SampleTex2D::ID_TEX),
-			{ dst, sw::node::SampleTex2D::ID_TEX }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::SampleTex2D::ID_UV),
-			{ dst, sw::node::SampleTex2D::ID_UV }
-		);
+		auto mat4 = std::static_pointer_cast<sw::node::Matrix4>(dst);
+		mat4->SetName(src.GetName());
+		mat4->SetValue(src.GetValue());
 	}
 	else if (type == rttr::type::get<node::Tex2DAsset>())
 	{
@@ -816,951 +379,50 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		if (img) {
 			m_texture_ids.push_back(img->GetTexID());
 		}
-		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
-	}
-	// master
-	else if (type == rttr::type::get<node::Phong>())
-	{
-		dst = std::make_shared<sw::node::Phong>();
-
-		auto& src = static_cast<const node::Phong&>(node);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_LIT_POSITION),
-			{ dst, sw::node::Phong::ID_LIGHT_POSITION }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_LIT_AMBIENT),
-			{ dst, sw::node::Phong::ID_LIGHT_AMBIENT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_LIT_DIFFUSE),
-			{ dst, sw::node::Phong::ID_LIGHT_DIFFUSE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_LIT_SPECULAR),
-			{ dst, sw::node::Phong::ID_LIGHT_SPECULAR }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_MAT_DIFFUSE),
-			{ dst, sw::node::Phong::ID_MATERIAL_DIFFUSE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_MAT_SPECULAR),
-			{ dst, sw::node::Phong::ID_MATERIAL_SPECULAR }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_MAT_SHININESS),
-			{ dst, sw::node::Phong::ID_MATERIAL_SHININESS }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_MAT_EMISSION),
-			{ dst, sw::node::Phong::ID_MATERIAL_EMISSION }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Phong::ID_VIEW_POS),
-			{ dst, sw::node::Phong::ID_VIEW_POS }
-		);
-	}
-	else if (type == rttr::type::get<node::Raymarching>())
-	{
-		auto& src = static_cast<const node::Raymarching&>(node);
-		dst = std::make_shared<sw::node::Raymarching>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Raymarching::ID_UV),
-			{ dst, sw::node::Raymarching::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Raymarching::ID_SDF),
-			{ dst, sw::node::Raymarching::ID_SDF }
-		);
-	}
-	// math
-	else if (type == rttr::type::get<node::Add>())
-	{
-		auto& src = static_cast<const node::Add&>(node);
-		dst = std::make_shared<sw::node::Add>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Add::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Add::ID_B });
-	}
-	else if (type == rttr::type::get<node::Divide>())
-	{
-		auto& src = static_cast<const node::Divide&>(node);
-		dst = std::make_shared<sw::node::Divide>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Divide::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Divide::ID_B });
-	}
-	else if (type == rttr::type::get<node::Multiply>())
-	{
-		auto& src = static_cast<const node::Multiply&>(node);
-		dst = std::make_shared<sw::node::Multiply>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Multiply::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Multiply::ID_B });
-	}
-	else if (type == rttr::type::get<node::Subtract>())
-	{
-		auto& src = static_cast<const node::Subtract&>(node);
-		dst = std::make_shared<sw::node::Subtract>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Subtract::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Subtract::ID_B });
-	}
-	else if (type == rttr::type::get<node::Power>())
-	{
-		auto& src = static_cast<const node::Power&>(node);
-		dst = std::make_shared<sw::node::Power>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Power::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Power::ID_B });
-	}
-	else if (type == rttr::type::get<node::SquareRoot>())
-	{
-		auto& src = static_cast<const node::SquareRoot&>(node);
-		dst = std::make_shared<sw::node::SquareRoot>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Absolute>())
-	{
-		auto& src = static_cast<const node::Absolute&>(node);
-		dst = std::make_shared<sw::node::Absolute>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::Uniform>(dst)->
+			SetNameAndType(src.GetName(), sw::t_tex2d);
 	}
 	else if (type == rttr::type::get<node::Exponential>())
 	{
 		auto& src = static_cast<const node::Exponential&>(node);
-		dst = std::make_shared<sw::node::Exponential>(
-			static_cast<sw::node::Exponential::BaseType>(src.GetType())
-		);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Length>())
-	{
-		auto& src = static_cast<const node::Length&>(node);
-		dst = std::make_shared<sw::node::Length>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::Exponential>(dst)->
+			SetType(static_cast<sw::node::Exponential::BaseType>(src.GetType()));
 	}
 	else if (type == rttr::type::get<node::Log>())
 	{
 		auto& src = static_cast<const node::Log&>(node);
-		dst = std::make_shared<sw::node::Log>(
-			static_cast<sw::node::Log::BaseType>(src.GetType())
-		);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Modulo>())
-	{
-		auto& src = static_cast<const node::Modulo&>(node);
-		dst = std::make_shared<sw::node::Modulo>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Modulo::ID_A),
-			{ dst, sw::node::Modulo::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Modulo::ID_B),
-			{ dst, sw::node::Modulo::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Negate>())
-	{
-		auto& src = static_cast<const node::Negate&>(node);
-		dst = std::make_shared<sw::node::Negate>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Normalize>())
-	{
-		auto& src = static_cast<const node::Normalize&>(node);
-		dst = std::make_shared<sw::node::Normalize>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Posterize>())
-	{
-		auto& src = static_cast<const node::Posterize&>(node);
-		dst = std::make_shared<sw::node::Posterize>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Posterize::ID_INPUT),
-			{ dst, sw::node::Posterize::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Posterize::ID_STEPS),
-			{ dst, sw::node::Posterize::ID_STEPS }
-		);
-	}
-	else if (type == rttr::type::get<node::Reciprocal>())
-	{
-		auto& src = static_cast<const node::Reciprocal&>(node);
-		dst = std::make_shared<sw::node::Reciprocal>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::ReciprocalSquareRoot>())
-	{
-		auto& src = static_cast<const node::ReciprocalSquareRoot&>(node);
-		dst = std::make_shared<sw::node::ReciprocalSquareRoot>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::DDX>())
-	{
-		auto& src = static_cast<const node::DDX&>(node);
-		dst = std::make_shared<sw::node::DDX>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::DDY>())
-	{
-		auto& src = static_cast<const node::DDY&>(node);
-		dst = std::make_shared<sw::node::DDY>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::DDXY>())
-	{
-		auto& src = static_cast<const node::DDXY&>(node);
-		dst = std::make_shared<sw::node::DDXY>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::InverseLerp>())
-	{
-		auto& src = static_cast<const node::InverseLerp&>(node);
-		dst = std::make_shared<sw::node::InverseLerp>();
-		sw::make_connecting(
-			CreateInputChild(src, node::InverseLerp::ID_A),
-			{ dst, sw::node::InverseLerp::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::InverseLerp::ID_B),
-			{ dst, sw::node::InverseLerp::ID_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::InverseLerp::ID_T),
-			{ dst, sw::node::InverseLerp::ID_T }
-		);
-	}
-	else if (type == rttr::type::get<node::Lerp>())
-	{
-		auto& src = static_cast<const node::Lerp&>(node);
-		dst = std::make_shared<sw::node::Lerp>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_A),
-			{ dst, sw::node::Lerp::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_B),
-			{ dst, sw::node::Lerp::ID_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Lerp::ID_T),
-			{ dst, sw::node::Lerp::ID_T }
-		);
-	}
-	else if (type == rttr::type::get<node::Smoothstep>())
-	{
-		auto& src = static_cast<const node::Smoothstep&>(node);
-		dst = std::make_shared<sw::node::Smoothstep>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Smoothstep::ID_A),
-			{ dst, sw::node::Smoothstep::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Smoothstep::ID_B),
-			{ dst, sw::node::Smoothstep::ID_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Smoothstep::ID_T),
-			{ dst, sw::node::Smoothstep::ID_T }
-		);
+		std::static_pointer_cast<sw::node::Log>(dst)->
+			SetType(static_cast<sw::node::Log::BaseType>(src.GetType()));
 	}
 	else if (type == rttr::type::get<node::MatrixConstruction>())
 	{
 		auto& src = static_cast<const node::MatrixConstruction&>(node);
-		dst = std::make_shared<sw::node::MatrixConstruction>(src.GetType() == MatrixType::ROW);
-		sw::make_connecting(
-			CreateInputChild(src, node::MatrixConstruction::ID_M0),
-			{ dst, sw::node::MatrixConstruction::ID_M0 }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::MatrixConstruction::ID_M1),
-			{ dst, sw::node::MatrixConstruction::ID_M1 }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::MatrixConstruction::ID_M2),
-			{ dst, sw::node::MatrixConstruction::ID_M2 }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::MatrixConstruction::ID_M3),
-			{ dst, sw::node::MatrixConstruction::ID_M3 }
-		);
-	}
-	else if (type == rttr::type::get<node::MatrixDeterminant>())
-	{
-		auto& src = static_cast<const node::MatrixDeterminant&>(node);
-		dst = std::make_shared<sw::node::MatrixDeterminant>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
+		std::static_pointer_cast<sw::node::MatrixConstruction>(dst)->
+			SetRow(src.GetType() == MatrixType::ROW);
 	}
 	else if (type == rttr::type::get<node::MatrixSplit>())
 	{
 		auto& src = static_cast<const node::MatrixSplit&>(node);
-		dst = std::make_shared<sw::node::MatrixSplit>(src.GetType() == MatrixType::ROW);
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::MatrixTranspose>())
-	{
-		auto& src = static_cast<const node::MatrixTranspose&>(node);
-		dst = std::make_shared<sw::node::MatrixTranspose>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Clamp>())
-	{
-		auto& src = static_cast<const node::Clamp&>(node);
-		dst = std::make_shared<sw::node::Clamp>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Clamp::ID_IN),
-			{ dst, sw::node::Clamp::ID_IN }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Clamp::ID_MIN),
-			{ dst, sw::node::Clamp::ID_MIN }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Clamp::ID_MAX),
-			{ dst, sw::node::Clamp::ID_MAX }
-		);
-	}
-	else if (type == rttr::type::get<node::Fraction>())
-	{
-		auto& src = static_cast<const node::Fraction&>(node);
-		dst = std::make_shared<sw::node::Fraction>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Maximum>())
-	{
-		auto& src = static_cast<const node::Maximum&>(node);
-		dst = std::make_shared<sw::node::Maximum>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Maximum::ID_A),
-			{ dst, sw::node::Maximum::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Maximum::ID_B),
-			{ dst, sw::node::Maximum::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Minimum>())
-	{
-		auto& src = static_cast<const node::Minimum&>(node);
-		dst = std::make_shared<sw::node::Minimum>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Minimum::ID_A),
-			{ dst, sw::node::Minimum::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Minimum::ID_B),
-			{ dst, sw::node::Minimum::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::OneMinus>())
-	{
-		auto& src = static_cast<const node::OneMinus&>(node);
-		dst = std::make_shared<sw::node::OneMinus>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::RandomRange>())
-	{
-		auto& src = static_cast<const node::RandomRange&>(node);
-		dst = std::make_shared<sw::node::RandomRange>();
-		sw::make_connecting(
-			CreateInputChild(src, node::RandomRange::ID_SEED),
-			{ dst, sw::node::RandomRange::ID_SEED }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RandomRange::ID_MIN),
-			{ dst, sw::node::RandomRange::ID_MIN }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RandomRange::ID_MAX),
-			{ dst, sw::node::RandomRange::ID_MAX }
-		);
-	}
-	else if (type == rttr::type::get<node::Remap>())
-	{
-		auto& src = static_cast<const node::Remap&>(node);
-		dst = std::make_shared<sw::node::Remap>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Remap::ID_IN),
-			{ dst, sw::node::Remap::ID_IN }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Remap::ID_FROM),
-			{ dst, sw::node::Remap::ID_FROM }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Remap::ID_TO),
-			{ dst, sw::node::Remap::ID_TO }
-		);
-	}
-	else if (type == rttr::type::get<node::Saturate>())
-	{
-		auto& src = static_cast<const node::Saturate&>(node);
-		dst = std::make_shared<sw::node::Saturate>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Ceiling>())
-	{
-		auto& src = static_cast<const node::Ceiling&>(node);
-		dst = std::make_shared<sw::node::Ceiling>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Floor>())
-	{
-		auto& src = static_cast<const node::Floor&>(node);
-		dst = std::make_shared<sw::node::Floor>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Round>())
-	{
-		auto& src = static_cast<const node::Round&>(node);
-		dst = std::make_shared<sw::node::Round>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Sign>())
-	{
-		auto& src = static_cast<const node::Sign&>(node);
-		dst = std::make_shared<sw::node::Sign>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Step>())
-	{
-		auto& src = static_cast<const node::Step&>(node);
-		dst = std::make_shared<sw::node::Step>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Step::ID_INPUT),
-			{ dst, sw::node::Step::ID_INPUT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Step::ID_EDGE),
-			{ dst, sw::node::Step::ID_EDGE }
-		);
-	}
-	else if (type == rttr::type::get<node::Truncate>())
-	{
-		auto& src = static_cast<const node::Truncate&>(node);
-		dst = std::make_shared<sw::node::Truncate>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Arccosine>())
-	{
-		auto& src = static_cast<const node::Arccosine&>(node);
-		dst = std::make_shared<sw::node::Arccosine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Arcsine>())
-	{
-		auto& src = static_cast<const node::Arcsine&>(node);
-		dst = std::make_shared<sw::node::Arcsine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Arctangent>())
-	{
-		auto& src = static_cast<const node::Arctangent&>(node);
-		dst = std::make_shared<sw::node::Arctangent>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Arctangent2>())
-	{
-		auto& src = static_cast<const node::Arctangent2&>(node);
-		dst = std::make_shared<sw::node::Arctangent2>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Arctangent2::ID_A),
-			{ dst, sw::node::Arctangent2::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Arctangent2::ID_B),
-			{ dst, sw::node::Arctangent2::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Cosine>())
-	{
-		auto& src = static_cast<const node::Cosine&>(node);
-		dst = std::make_shared<sw::node::Cosine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::DegreesToRadians>())
-	{
-		auto& src = static_cast<const node::DegreesToRadians&>(node);
-		dst = std::make_shared<sw::node::DegreesToRadians>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::HyperbolicCosine>())
-	{
-		auto& src = static_cast<const node::HyperbolicCosine&>(node);
-		dst = std::make_shared<sw::node::HyperbolicCosine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::HyperbolicSine>())
-	{
-		auto& src = static_cast<const node::HyperbolicSine&>(node);
-		dst = std::make_shared<sw::node::HyperbolicSine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::HyperbolicTangent>())
-	{
-		auto& src = static_cast<const node::HyperbolicTangent&>(node);
-		dst = std::make_shared<sw::node::HyperbolicTangent>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::RadiansToDegrees>())
-	{
-		auto& src = static_cast<const node::RadiansToDegrees&>(node);
-		dst = std::make_shared<sw::node::RadiansToDegrees>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Sine>())
-	{
-		auto& src = static_cast<const node::Sine&>(node);
-		dst = std::make_shared<sw::node::Sine>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Tangent>())
-	{
-		auto& src = static_cast<const node::Tangent&>(node);
-		dst = std::make_shared<sw::node::Tangent>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::CrossProduct>())
-	{
-		auto& src = static_cast<const node::CrossProduct&>(node);
-		dst = std::make_shared<sw::node::CrossProduct>();
-		sw::make_connecting(
-			CreateInputChild(src, node::CrossProduct::ID_A),
-			{ dst, sw::node::CrossProduct::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::CrossProduct::ID_B),
-			{ dst, sw::node::CrossProduct::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Distance>())
-	{
-		auto& src = static_cast<const node::Distance&>(node);
-		dst = std::make_shared<sw::node::Distance>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Distance::ID_A),
-			{ dst, sw::node::Distance::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Distance::ID_B),
-			{ dst, sw::node::Distance::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::DotProduct>())
-	{
-		auto& src = static_cast<const node::DotProduct&>(node);
-		dst = std::make_shared<sw::node::DotProduct>();
-		sw::make_connecting(
-			CreateInputChild(src, node::DotProduct::ID_A),
-			{ dst, sw::node::DotProduct::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::DotProduct::ID_B),
-			{ dst, sw::node::DotProduct::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Projection>())
-	{
-		auto& src = static_cast<const node::Projection&>(node);
-		dst = std::make_shared<sw::node::Projection>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Projection::ID_A),
-			{ dst, sw::node::Projection::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Projection::ID_B),
-			{ dst, sw::node::Projection::ID_B }
-		);
-	}
-	else if (type == rttr::type::get<node::Rejection>())
-	{
-		auto& src = static_cast<const node::Rejection&>(node);
-		dst = std::make_shared<sw::node::Rejection>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Rejection::ID_A),
-			{ dst, sw::node::Rejection::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rejection::ID_B),
-			{ dst, sw::node::Rejection::ID_B }
-		);
-	}
-	// procedural
-	else if (type == rttr::type::get<node::Checkerboard>())
-	{
-		auto& src = static_cast<const node::Checkerboard&>(node);
-		dst = std::make_shared<sw::node::Checkerboard>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Checkerboard::ID_UV),
-			{ dst, sw::node::Checkerboard::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Checkerboard::ID_COLOR_A),
-			{ dst, sw::node::Checkerboard::ID_COLOR_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Checkerboard::ID_COLOR_B),
-			{ dst, sw::node::Checkerboard::ID_COLOR_B }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Checkerboard::ID_FREQUENCY),
-			{ dst, sw::node::Checkerboard::ID_FREQUENCY }
-		);
-	}
-	else if (type == rttr::type::get<node::GradientNoise>())
-	{
-		auto& src = static_cast<const node::GradientNoise&>(node);
-		dst = std::make_shared<sw::node::GradientNoise>();
-		sw::make_connecting(
-			CreateInputChild(src, node::GradientNoise::ID_UV),
-			{ dst, sw::node::GradientNoise::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::GradientNoise::ID_SCALE),
-			{ dst, sw::node::GradientNoise::ID_SCALE }
-		);
-	}
-	else if (type == rttr::type::get<node::SimpleNoise>())
-	{
-		auto& src = static_cast<const node::SimpleNoise&>(node);
-		dst = std::make_shared<sw::node::SimpleNoise>();
-		sw::make_connecting(
-			CreateInputChild(src, node::SimpleNoise::ID_UV),
-			{ dst, sw::node::SimpleNoise::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::SimpleNoise::ID_SCALE),
-			{ dst, sw::node::SimpleNoise::ID_SCALE }
-		);
-	}
-	else if (type == rttr::type::get<node::Voronoi>())
-	{
-		auto& src = static_cast<const node::Voronoi&>(node);
-		dst = std::make_shared<sw::node::Voronoi>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Voronoi::ID_UV),
-			{ dst, sw::node::Voronoi::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Voronoi::ID_ANGLE_OFFSET),
-			{ dst, sw::node::Voronoi::ID_ANGLE_OFFSET }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Voronoi::ID_CELL_DENSITY),
-			{ dst, sw::node::Voronoi::ID_CELL_DENSITY }
-		);
-	}
-	else if (type == rttr::type::get<node::Ellipse>())
-	{
-		auto& src = static_cast<const node::Ellipse&>(node);
-		dst = std::make_shared<sw::node::Ellipse>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Ellipse::ID_UV),
-			{ dst, sw::node::Ellipse::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Ellipse::ID_WIDTH),
-			{ dst, sw::node::Ellipse::ID_WIDTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Ellipse::ID_HEIGHT),
-			{ dst, sw::node::Ellipse::ID_HEIGHT }
-		);
-	}
-	else if (type == rttr::type::get<node::Polygon>())
-	{
-		auto& src = static_cast<const node::Polygon&>(node);
-		dst = std::make_shared<sw::node::Polygon>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Polygon::ID_UV),
-			{ dst, sw::node::Polygon::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Polygon::ID_SIDES),
-			{ dst, sw::node::Polygon::ID_SIDES }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Polygon::ID_WIDTH),
-			{ dst, sw::node::Polygon::ID_WIDTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Polygon::ID_HEIGHT),
-			{ dst, sw::node::Polygon::ID_HEIGHT }
-		);
-	}
-	else if (type == rttr::type::get<node::Rectangle>())
-	{
-		auto& src = static_cast<const node::Rectangle&>(node);
-		dst = std::make_shared<sw::node::Rectangle>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Rectangle::ID_UV),
-			{ dst, sw::node::Rectangle::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rectangle::ID_WIDTH),
-			{ dst, sw::node::Rectangle::ID_WIDTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rectangle::ID_HEIGHT),
-			{ dst, sw::node::Rectangle::ID_HEIGHT }
-		);
-	}
-	else if (type == rttr::type::get<node::RoundedRectangle>())
-	{
-		auto& src = static_cast<const node::RoundedRectangle&>(node);
-		dst = std::make_shared<sw::node::RoundedRectangle>();
-		sw::make_connecting(
-			CreateInputChild(src, node::RoundedRectangle::ID_UV),
-			{ dst, sw::node::RoundedRectangle::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RoundedRectangle::ID_WIDTH),
-			{ dst, sw::node::RoundedRectangle::ID_WIDTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RoundedRectangle::ID_HEIGHT),
-			{ dst, sw::node::RoundedRectangle::ID_HEIGHT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RoundedRectangle::ID_RADIUS),
-			{ dst, sw::node::RoundedRectangle::ID_RADIUS }
-		);
-	}
-	// utility
-	else if (type == rttr::type::get<node::Preview>())
-	{
-		auto& src = static_cast<const node::Preview&>(node);
-		dst = std::make_shared<sw::node::Assign>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::And>())
-	{
-		auto& src = static_cast<const node::And&>(node);
-		dst = std::make_shared<sw::node::And>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::And::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::And::ID_B });
-	}
-	else if (type == rttr::type::get<node::Or>())
-	{
-		auto& src = static_cast<const node::Or&>(node);
-		dst = std::make_shared<sw::node::Or>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, sw::node::Or::ID_A });
-		sw::make_connecting(CreateInputChild(src, 1), { dst, sw::node::Or::ID_B });
-	}
-	else if (type == rttr::type::get<node::Not>())
-	{
-		auto& src = static_cast<const node::Not&>(node);
-		dst = std::make_shared<sw::node::Not>();
-		sw::make_connecting(CreateInputChild(src, 0), { dst, 0 });
-	}
-	else if (type == rttr::type::get<node::Branch>())
-	{
-		auto& src = static_cast<const node::Branch&>(node);
-		dst = std::make_shared<sw::node::Branch>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Branch::ID_PREDICATE),
-			{ dst, sw::node::Branch::ID_PREDICATE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Branch::ID_TRUE),
-			{ dst, sw::node::Branch::ID_TRUE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Branch::ID_FALSE),
-			{ dst, sw::node::Branch::ID_FALSE }
-		);
+		std::static_pointer_cast<sw::node::MatrixSplit>(dst)->
+			SetRow(src.GetType() == MatrixType::ROW);
 	}
 	else if (type == rttr::type::get<node::Comparison>())
 	{
 		auto& src = static_cast<const node::Comparison&>(node);
-		dst = std::make_shared<sw::node::Comparison>(
-			static_cast<sw::node::Comparison::CmpType>(src.GetType())
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Comparison::ID_A),
-			{ dst, sw::node::Comparison::ID_A }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Comparison::ID_B),
-			{ dst, sw::node::Comparison::ID_B }
-		);
+		std::static_pointer_cast<sw::node::Comparison>(dst)->
+			SetCmpType(static_cast<sw::node::Comparison::CmpType>(src.GetType()));
 	}
-	//else if (type == rttr::type::get<node::Input>())
-	//{
-	//	auto& src = static_cast<const node::Input&>(node);
-	//	uint32_t type = 0;
-	//	switch (src.GetType())
-	//	{
-	//	case PINS_TEXTURE2D:
-	//		type = sw::t_tex2d;
-	//		break;
-	//	case PINS_VECTOR2:
-	//		type = sw::t_flt2;
-	//		break;
-	//	default:
-	//		// todo
-	//		assert(0);
-	//	}
-	//	dst = std::make_shared<sw::node::Input>(src.GetName(), type);
-	//}
-	// UV
 	else if (type == rttr::type::get<node::Flipbook>())
 	{
 		auto& src = static_cast<const node::Flipbook&>(node);
-		dst = std::make_shared<sw::node::Flipbook>(src.GetInvert());
-		sw::make_connecting(
-			CreateInputChild(src, node::Flipbook::ID_UV),
-			{ dst, sw::node::Flipbook::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Flipbook::ID_WIDTH),
-			{ dst, sw::node::Flipbook::ID_WIDTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Flipbook::ID_HEIGHT),
-			{ dst, sw::node::Flipbook::ID_HEIGHT }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Flipbook::ID_TILE),
-			{ dst, sw::node::Flipbook::ID_TILE }
-		);
-	}
-	else if (type == rttr::type::get<node::PolarCoordinates>())
-	{
-		auto& src = static_cast<const node::PolarCoordinates&>(node);
-		dst = std::make_shared<sw::node::PolarCoordinates>();
-		sw::make_connecting(
-			CreateInputChild(src, node::PolarCoordinates::ID_UV),
-			{ dst, sw::node::PolarCoordinates::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::PolarCoordinates::ID_CENTER),
-			{ dst, sw::node::PolarCoordinates::ID_CENTER }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::PolarCoordinates::ID_RADIAL_SCALE),
-			{ dst, sw::node::PolarCoordinates::ID_RADIAL_SCALE }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::PolarCoordinates::ID_LENGTH_SCALE),
-			{ dst, sw::node::PolarCoordinates::ID_LENGTH_SCALE }
-		);
-	}
-	else if (type == rttr::type::get<node::RadialShear>())
-	{
-		auto& src = static_cast<const node::RadialShear&>(node);
-		dst = std::make_shared<sw::node::RadialShear>();
-		sw::make_connecting(
-			CreateInputChild(src, node::RadialShear::ID_UV),
-			{ dst, sw::node::RadialShear::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RadialShear::ID_CENTER),
-			{ dst, sw::node::RadialShear::ID_CENTER }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RadialShear::ID_STRENGTH),
-			{ dst, sw::node::RadialShear::ID_STRENGTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::RadialShear::ID_OFFSET),
-			{ dst, sw::node::RadialShear::ID_OFFSET }
-		);
+		std::static_pointer_cast<sw::node::Flipbook>(dst)->
+			SetInvert(src.GetInvert());
 	}
 	else if (type == rttr::type::get<node::Rotate>())
 	{
 		auto& src = static_cast<const node::Rotate&>(node);
-		dst = std::make_shared<sw::node::Rotate>(src.GetAngleType() == PropAngleType::RADIAN);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rotate::ID_UV),
-			{ dst, sw::node::Rotate::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rotate::ID_CENTER),
-			{ dst, sw::node::Rotate::ID_CENTER }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Rotate::ID_ROTATION),
-			{ dst, sw::node::Rotate::ID_ROTATION }
-		);
-	}
-	else if (type == rttr::type::get<node::Spherize>())
-	{
-		auto& src = static_cast<const node::Spherize&>(node);
-		dst = std::make_shared<sw::node::Spherize>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Spherize::ID_UV),
-			{ dst, sw::node::Spherize::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Spherize::ID_CENTER),
-			{ dst, sw::node::Spherize::ID_CENTER }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Spherize::ID_STRENGTH),
-			{ dst, sw::node::Spherize::ID_STRENGTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Spherize::ID_OFFSET),
-			{ dst, sw::node::Spherize::ID_OFFSET }
-		);
-	}
-	else if (type == rttr::type::get<node::TilingAndOffset>())
-	{
-		auto& src = static_cast<const node::TilingAndOffset&>(node);
-		dst = std::make_shared<sw::node::TilingAndOffset>();
-		sw::make_connecting(
-			CreateInputChild(src, node::TilingAndOffset::ID_UV),
-			{ dst, sw::node::TilingAndOffset::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::TilingAndOffset::ID_TILLING),
-			{ dst, sw::node::TilingAndOffset::ID_TILLING }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::TilingAndOffset::ID_OFFSET),
-			{ dst, sw::node::TilingAndOffset::ID_OFFSET }
-		);
-	}
-	else if (type == rttr::type::get<node::Twirl>())
-	{
-		auto& src = static_cast<const node::Twirl&>(node);
-		dst = std::make_shared<sw::node::Twirl>();
-		sw::make_connecting(
-			CreateInputChild(src, node::Twirl::ID_UV),
-			{ dst, sw::node::Twirl::ID_UV }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Twirl::ID_CENTER),
-			{ dst, sw::node::Twirl::ID_CENTER }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Twirl::ID_STRENGTH),
-			{ dst, sw::node::Twirl::ID_STRENGTH }
-		);
-		sw::make_connecting(
-			CreateInputChild(src, node::Twirl::ID_OFFSET),
-			{ dst, sw::node::Twirl::ID_OFFSET }
-		);
-	}
-	else
-	{
-		// from rttr
-
-		auto cls_name = type.get_name().to_string();
-		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
-
-		rttr::type t = rttr::type::get_by_name(cls_name);
-		assert(t.is_valid());
-		rttr::variant var = t.create();
-		assert(var.is_valid());
-
-		dst = var.get_value<std::shared_ptr<sw::Node>>();
-		assert(dst);
-		for (int i = 0, n = node.GetAllInput().size(); i < n; ++i) {
-			sw::make_connecting(
-				CreateInputChild(node, i), { dst, i }
-			);
-		}
+		std::static_pointer_cast<sw::node::Rotate>(dst)->
+			SetRadians(src.GetAngleType() == PropAngleType::RADIAN);
 	}
 
 	if (dst) {

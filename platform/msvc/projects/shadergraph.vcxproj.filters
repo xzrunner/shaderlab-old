@@ -4,101 +4,11 @@
     <Filter Include="script">
       <UniqueIdentifier>{a15173f4-3823-4295-bb77-2ad20edc2fdc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes">
-      <UniqueIdentifier>{fd271f54-25a3-4500-a563-32e00b7efc1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="view">
       <UniqueIdentifier>{9519954e-3cff-4973-a1e7-02f18fde0c70}</UniqueIdentifier>
     </Filter>
     <Filter Include="dataset">
       <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math">
-      <UniqueIdentifier>{2416c320-06f1-4f0e-b4b3-322a1826c557}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\basic">
-      <UniqueIdentifier>{4039e1eb-0da3-4401-901d-8368a528ba1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\range">
-      <UniqueIdentifier>{01678a38-5e42-429f-850f-ddebd7a2b103}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\input">
-      <UniqueIdentifier>{9b567abd-aba2-498c-899b-5b576689ce1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\input\basic">
-      <UniqueIdentifier>{d99db16b-86b3-4d6c-8b79-257fed1f967f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\master">
-      <UniqueIdentifier>{f11e8d03-98f0-4a0c-b7ad-c2322b66745f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\utility">
-      <UniqueIdentifier>{054ef821-0b68-4217-a6a6-c3b5c5439490}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\input\geometry">
-      <UniqueIdentifier>{4aa4ed37-e942-49b2-b72e-e898ca98fadb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\interplation">
-      <UniqueIdentifier>{6168da2d-83e6-444b-9b78-a7243c656705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\input\texture">
-      <UniqueIdentifier>{b3d97966-d447-46c6-a04b-14772a35baa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic">
-      <UniqueIdentifier>{456c2381-455d-4578-aa90-8b0987d90fe1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\filter">
-      <UniqueIdentifier>{05847c17-d359-442f-921d-dafed62c0e1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\uv">
-      <UniqueIdentifier>{004d4cd4-5a39-4712-9bb8-f40585399de8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\procedural">
-      <UniqueIdentifier>{30c75c1b-054f-4d3f-99b6-c1e2b48774de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\trans">
-      <UniqueIdentifier>{aa386c92-26c7-44d4-9d57-401afc5da0b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\adjustment">
-      <UniqueIdentifier>{43f15eeb-ae7b-4e69-8ea4-dbd0f0d2d29a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\mask">
-      <UniqueIdentifier>{adcc7a7c-c781-4dab-b023-006b2cf5c284}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\advanced">
-      <UniqueIdentifier>{938a9223-115a-4c13-b0f4-23a95feff886}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\channel">
-      <UniqueIdentifier>{fe83b3af-23a6-40e0-8b9b-73ddefb1ec97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\utility\logic">
-      <UniqueIdentifier>{c75b4631-1f1a-4e97-8012-7baa4bfd50aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\derivative">
-      <UniqueIdentifier>{0b2a573e-d2d4-4ec6-ae42-4d6de3a3b3c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\matrix">
-      <UniqueIdentifier>{7616f85d-34bd-4d21-882d-3d2001b6e904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\input\matrix">
-      <UniqueIdentifier>{ad777cd9-8800-4588-9d1c-fbf65b97a6b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\round">
-      <UniqueIdentifier>{a330dc3e-c2b7-45b5-931a-bc5bbf3847a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\trigonometry">
-      <UniqueIdentifier>{858f7ac2-3d86-4d83-ae53-05ab2a932f9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\math\vector">
-      <UniqueIdentifier>{72a3c47a-5bdc-4392-a96a-20eb6004cd29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\normal">
-      <UniqueIdentifier>{9adbb88f-b1bd-4383-85d2-f36034c11492}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\utility">
-      <UniqueIdentifier>{7d811989-c078-48b7-8dff-8db964e9ff3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\artistic\blend">
-      <UniqueIdentifier>{a222a31b-0c26-48a1-9d27-1cc291fd8bdf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,41 +19,14 @@
       <Filter>dataset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Sprite.h">
-      <Filter>nodes\master</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>dataset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h">
       <Filter>dataset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Phong.h">
-      <Filter>nodes\master</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
       <Filter>dataset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Add.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Divide.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Multiply.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Subtract.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Lerp.h">
-      <Filter>nodes\math\interplation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\InverseLerp.h">
-      <Filter>nodes\math\interplation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Remap.h">
-      <Filter>nodes\math\range</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Node.h">
       <Filter>dataset</Filter>
@@ -151,328 +34,10 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h">
       <Filter>dataset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Time.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Input.h">
-      <Filter>nodes\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\UV.h">
-      <Filter>nodes\input\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Vector1.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Vector2.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Vector3.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Vector4.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\SampleTex2D.h">
-      <Filter>nodes\input\texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
-      <Filter>nodes\input\texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Gray.h">
-      <Filter>nodes\artistic\filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Rotate.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Twirl.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\SimpleNoise.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Polygon.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Voronoi.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Checkerboard.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\GradientNoise.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Ellipse.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Rectangle.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\RoundedRectangle.h">
-      <Filter>nodes\procedural</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ColorAddMul.h">
-      <Filter>nodes\artistic\trans</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ColorMap.h">
-      <Filter>nodes\artistic\trans</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ReplaceColor.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ColorMask.h">
-      <Filter>nodes\artistic\mask</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ChannelMask.h">
-      <Filter>nodes\artistic\mask</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Power.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\SquareRoot.h">
-      <Filter>nodes\math\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Absolute.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Exponential.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Length.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Log.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Modulo.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Negate.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Normalize.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Posterize.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Reciprocal.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ReciprocalSquareRoot.h">
-      <Filter>nodes\math\advanced</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Combine.h">
-      <Filter>nodes\channel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Flip.h">
-      <Filter>nodes\channel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Split.h">
-      <Filter>nodes\channel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Swizzle.h">
-      <Filter>nodes\channel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Preview.h">
-      <Filter>nodes\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\And.h">
-      <Filter>nodes\utility\logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Or.h">
-      <Filter>nodes\utility\logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Not.h">
-      <Filter>nodes\utility\logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Boolean.h">
-      <Filter>nodes\input\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Branch.h">
-      <Filter>nodes\utility\logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Comparison.h">
-      <Filter>nodes\utility\logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Flipbook.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\PolarCoordinates.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\RadialShear.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Spherize.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\TilingAndOffset.h">
-      <Filter>nodes\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Smoothstep.h">
-      <Filter>nodes\math\interplation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\DDX.h">
-      <Filter>nodes\math\derivative</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\DDY.h">
-      <Filter>nodes\math\derivative</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\DDXY.h">
-      <Filter>nodes\math\derivative</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixConstruction.h">
-      <Filter>nodes\math\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixDeterminant.h">
-      <Filter>nodes\math\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixSplit.h">
-      <Filter>nodes\math\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\MatrixTranspose.h">
-      <Filter>nodes\math\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix4.h">
-      <Filter>nodes\input\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix3.h">
-      <Filter>nodes\input\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Matrix2.h">
-      <Filter>nodes\input\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Clamp.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Fraction.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Maximum.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Minimum.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\OneMinus.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\RandomRange.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Saturate.h">
-      <Filter>nodes\math\range</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Ceiling.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Floor.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Round.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Sign.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Step.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Truncate.h">
-      <Filter>nodes\math\round</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Arccosine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Arcsine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Arctangent2.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Cosine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\DegreesToRadians.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicCosine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicSine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\HyperbolicTangent.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\RadiansToDegrees.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Sine.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Tangent.h">
-      <Filter>nodes\math\trigonometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\CrossProduct.h">
-      <Filter>nodes\math\vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Distance.h">
-      <Filter>nodes\math\vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\DotProduct.h">
-      <Filter>nodes\math\vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Projection.h">
-      <Filter>nodes\math\vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Rejection.h">
-      <Filter>nodes\math\vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Contrast.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Hue.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\InvertColors.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Saturation.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\WhiteBalance.h">
-      <Filter>nodes\artistic\adjustment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\NormalUnpack.h">
-      <Filter>nodes\artistic\normal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\NormalStrength.h">
-      <Filter>nodes\artistic\normal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\NormalCreate.h">
-      <Filter>nodes\artistic\normal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\NormalBlend.h">
-      <Filter>nodes\artistic\normal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\ColorspaceConversion.h">
-      <Filter>nodes\artistic\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Blend.h">
-      <Filter>nodes\artistic\blend</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
       <Filter>dataset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Raymarching.h">
-      <Filter>nodes\master</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\Nodes.h">
+    <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
       <Filter>dataset</Filter>
     </ClInclude>
   </ItemGroup>
@@ -503,13 +68,10 @@
       <Filter>dataset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
-    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
-      <Filter>nodes\input\texture</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Nodes.cpp">
+    <ClCompile Include="..\..\..\source\RegistNodes.cpp">
       <Filter>dataset</Filter>
     </ClCompile>
   </ItemGroup>

@@ -72,7 +72,8 @@ void Node::InitPins(const std::string& name)
 			auto& t = s.var.GetType();
 			if (t.precision == sw::VT_BOOL) {
 				d.type = PINS_BOOLEAN;
-			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_1) {
+			} else if ((t.precision == sw::VT_FLT && t.dim == sw::VT_1) ||
+				       (t.precision == sw::VT_FLT && t.dim == 0)) {
 				d.type = PINS_VECTOR1;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_2) {
 				d.type = PINS_VECTOR2;

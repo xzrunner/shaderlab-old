@@ -1,7 +1,7 @@
 #include "shadergraph/NodePreview.h"
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/Node.h"
-#include "shadergraph/node/UV.h"
+#include "shadergraph/RegistNodes.h"
 
 #include <painting2/RenderSystem.h>
 #include <painting2/Shader.h>
