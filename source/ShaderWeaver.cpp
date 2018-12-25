@@ -236,31 +236,42 @@ std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) 
 
 sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 {
-	sw::NodePtr dst = nullptr;
-
-	auto type = node.get_type();
-
-	auto cls_name = type.get_name().to_string();
-	cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
-
-	rttr::type t = rttr::type::get_by_name(cls_name);
-	assert(t.is_valid());
-	rttr::variant var = t.create();
-	assert(var.is_valid());
-
 	// create node
-	dst = var.get_value<std::shared_ptr<sw::Node>>();
-	assert(dst);
+	sw::NodePtr dst = nullptr;
+	auto type = node.get_type();
+	auto cls_name = type.get_name().to_string();
+	if (cls_name == "sg::Tex2DAsset")
+	{
+		dst = std::make_shared<sw::node::Uniform>(node.GetName(), sw::t_tex2d);
+	}
+	else
+	{
+		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+
+		rttr::type t = rttr::type::get_by_name(cls_name);
+		if (!t.is_valid()) {
+			return nullptr;
+		}
+		assert(t.is_valid());
+		rttr::variant var = t.create();
+		assert(var.is_valid());
+
+		dst = var.get_value<std::shared_ptr<sw::Node>>();
+		assert(dst);
+	}
 
 	// connect
 	for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
 	{
 		auto& imports = dst->GetImports();
-		if (imports[i].var.IsDefaultInput()) {
-			sw::make_connecting(
-				CreateInputChild(node, i), { dst, i }
-			);
+		if (!imports[i].var.IsDefaultInput()) {
+			continue;
 		}
+		auto from = CreateInputChild(node, i);
+		if (from.node.expired()) {
+			continue;
+		}
+		sw::make_connecting(from, { dst, i });
 	}
 
 	// init
