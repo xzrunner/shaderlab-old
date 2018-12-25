@@ -30,6 +30,8 @@ private:
 	void InitPinsImpl(const std::vector<PinsDesc>& pins,
 		bool is_input);
 
+	static std::string UnderscoreToCamelCase(const std::string& str);
+
 private:
 	std::unique_ptr<NodePreview> m_preview = nullptr;
 

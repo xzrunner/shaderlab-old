@@ -3,6 +3,9 @@
 #include "shadergraph/Pins.h"
 
 #include <shaderweaver/Node.h>
+#include <cpputil/StringHelper.h>
+
+#include <cctype>
 
 namespace sg
 {
@@ -97,7 +100,7 @@ void Node::InitPins(const std::string& name)
 			// todo PINS_DYNAMIC_VECTOR PINS_COLOR PINS_DYNAMIC_MATRIX
 
 			auto& name = s.var.GetName();
-			d.name = name;
+			d.name = UnderscoreToCamelCase(name);
 		}
 	};
 
@@ -123,6 +126,36 @@ void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
 		}
 		dst.push_back(p);
 	}
+}
+
+std::string Node::UnderscoreToCamelCase(const std::string& str)
+{
+	if (str == "_in") {
+		return "In";
+	} else if (str == "_out") {
+		return "Out";
+	} else if (str == "rgba") {
+		return "RGBA";
+	} else if (str == "uv") {
+		return "UV";
+	}
+
+	std::vector<std::string> tokens;
+	cpputil::StringHelper::Split(str, "_", tokens);
+
+	std::string ret;
+	for (auto& sub : tokens)
+	{
+		if (sub.empty()) {
+			continue;
+		}
+		sub[0] = std::toupper(sub[0]);
+		if (!ret.empty()) {
+			ret += " ";
+		}
+		ret += sub;
+	}
+	return ret;
 }
 
 }
