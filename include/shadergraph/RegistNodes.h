@@ -34,6 +34,7 @@ public:                                                  \
 #define SG_NODE_PROP
 #define SG_DEFINE_NODE_DEFAULT(name) SG_DEFINE_NODE(name, false, false, SG_NODE_PROP)
 #define SG_DEFINE_NODE_PREVIEW(name) SG_DEFINE_NODE(name, true, false, SG_NODE_PROP)
+#define SG_DEFINE_NODE_DEBUG(name)   SG_DEFINE_NODE(name, false, true, SG_NODE_PROP)
 
 // artistic
 SG_DEFINE_NODE_PREVIEW(Contrast)
@@ -413,8 +414,11 @@ SG_DEFINE_NODE_PREVIEW(RoundedRectangle)
 SG_DEFINE_NODE_PREVIEW(SimpleNoise)
 SG_DEFINE_NODE_PREVIEW(Voronoi)
 // sdf
+SG_DEFINE_NODE_DEFAULT(SDF)
 SG_DEFINE_NODE_PREVIEW(Sphere)
 SG_DEFINE_NODE_PREVIEW(Torus)
+SG_DEFINE_NODE_DEFAULT(EstimateNormal)
+SG_DEFINE_NODE_DEFAULT(PhongIllumination)
 // utility
 SG_DEFINE_NODE_DEFAULT(And)
 SG_DEFINE_NODE_DEFAULT(Branch)

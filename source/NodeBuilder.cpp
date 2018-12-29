@@ -65,7 +65,6 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 
 	auto cls_name = type.get_name().to_string();
 	cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
-
 	rttr::type t = rttr::type::get_by_name(cls_name);
 	if (!t.is_valid()) {
 		return;
@@ -126,6 +125,14 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			default_type_str = rttr::type::get<node::Matrix4>().get_name().to_string();
 			break;
 		case PINS_FUNCTION:
+        {
+            auto method = t.get_method("QueryNesting");
+            assert(method.is_valid());
+            auto nest = method.invoke(var, imports[i].var.GetName());
+            assert(nest.is_valid() && nest.is_type<std::string>());
+            default_type_str = nest.get_value<std::string>();
+            default_type_str = "sg::" + default_type_str.substr(default_type_str.find("sw::") + strlen("sw::"));
+        }
 			break;
 		default:
 			assert(0);
@@ -237,6 +244,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	else if (type == rttr::type::get<node::Raymarching>())
 	{
 		CreateDefault(nodes, node, sw::node::Raymarching::ID_SDF, rttr::type::get<node::Torus>().get_name().to_string());
+		CreateDefault(nodes, node, sw::node::Raymarching::ID_LIGHTING, rttr::type::get<node::PhongIllumination>().get_name().to_string());
 	}
 }
 
