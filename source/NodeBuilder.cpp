@@ -87,13 +87,45 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
 	{
 		auto& pins = node.GetAllInput()[i];
-		std::string default_type_str;
-		switch (pins->GetType())
+
+        std::string default_type_str;
+
+        auto default_val = ctor.get_metadata(i);
+
+        int pins_type = pins->GetType();
+        if (pins_type == PINS_DYNAMIC_VECTOR)
+        {
+            if (default_val.is_type<float>()) {
+                pins_type = PINS_VECTOR1;
+            } else if (default_val.is_type<sm::vec2>()) {
+                pins_type = PINS_VECTOR2;
+            } else if (default_val.is_type<sm::vec3>()) {
+                pins_type = PINS_VECTOR3;
+            } else if (default_val.is_type<sm::vec4>()) {
+                pins_type = PINS_VECTOR4;
+            } else {
+                assert(0);
+            }
+        }
+        else if (pins_type == PINS_DYNAMIC_MATRIX)
+        {
+            if (default_val.is_type<sm::mat2>()) {
+                pins_type = PINS_MATRIX2;
+            } else if (default_val.is_type<sm::mat3>()) {
+                pins_type = PINS_MATRIX3;
+            } else if (default_val.is_type<sm::mat4>()) {
+                pins_type = PINS_MATRIX4;
+            } else {
+                assert(0);
+            }
+        }
+
+		switch (pins_type)
 		{
 		case PINS_BOOLEAN:
 			default_type_str = rttr::type::get<node::Boolean>().get_name().to_string();
 			break;
-		case PINS_VECTOR1: case PINS_DYNAMIC_VECTOR:
+		case PINS_VECTOR1:
 			default_type_str = rttr::type::get<node::Vector1>().get_name().to_string();
 			break;
 		case PINS_VECTOR2:
@@ -111,9 +143,6 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			break;
 		case PINS_TEXTURE2D:
 			default_type_str = rttr::type::get<node::Tex2DAsset>().get_name().to_string();
-			break;
-		case PINS_DYNAMIC_MATRIX:
-			default_type_str = rttr::type::get<node::Matrix2>().get_name().to_string();
 			break;
 		case PINS_MATRIX2:
 			default_type_str = rttr::type::get<node::Matrix2>().get_name().to_string();
@@ -143,8 +172,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		}
 
 		auto default_node = CreateDefault(nodes, node, i, default_type_str);
-		auto default_val = ctor.get_metadata(i);
-		switch (pins->GetType())
+		switch (pins_type)
 		{
 		case PINS_BOOLEAN:
 			if (default_val.is_valid()) {
@@ -156,7 +184,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Boolean>(default_node)->SetValue(false);
 			}
 			break;
-		case PINS_VECTOR1: case PINS_DYNAMIC_VECTOR:
+		case PINS_VECTOR1:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<float>());
 				std::static_pointer_cast<node::Vector1>(default_node)->SetValue(
@@ -196,7 +224,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector4>(default_node)->SetValue(sm::vec4(0, 0, 0, 0));
 			}
 			break;
-		case PINS_MATRIX2: case PINS_DYNAMIC_MATRIX:
+		case PINS_MATRIX2:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::mat2>());
 				std::static_pointer_cast<node::Matrix2>(default_node)->SetValue(

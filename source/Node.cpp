@@ -75,15 +75,16 @@ void Node::InitPins(const std::string& name)
 			auto& t = s.var.GetType();
 			if (t.precision == sw::VT_BOOL) {
 				d.type = PINS_BOOLEAN;
-			} else if ((t.precision == sw::VT_FLT && t.dim == sw::VT_1) ||
-				       (t.precision == sw::VT_FLT && t.dim == 0)) {
+			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_1) {
 				d.type = PINS_VECTOR1;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_2) {
 				d.type = PINS_VECTOR2;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_3) {
 				d.type = PINS_VECTOR3;
-			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_4) {
-				d.type = PINS_VECTOR4;
+            } else if (t.precision == sw::VT_FLT && t.dim == sw::VT_4) {
+                d.type = PINS_VECTOR4;
+            } else if (t.precision == sw::VT_FLT && t.dim == 0) {
+                d.type = PINS_DYNAMIC_VECTOR;
 			} else if (t.interp == sw::VT_T2D) {
 				d.type = PINS_TEXTURE2D;
 			} else if (t.interp == sw::VT_TCUBE) {
@@ -92,8 +93,10 @@ void Node::InitPins(const std::string& name)
 				d.type = PINS_MATRIX2;
 			} else if (t.interp == sw::VT_MAT && t.dim == sw::VT_3) {
 				d.type = PINS_MATRIX3;
-			} else if (t.interp == sw::VT_MAT && t.dim == sw::VT_4) {
-				d.type = PINS_MATRIX4;
+            } else if (t.interp == sw::VT_MAT && t.dim == sw::VT_4) {
+                d.type = PINS_MATRIX4;
+            } else if (t.interp == sw::VT_MAT && t.dim == 0) {
+                d.type = PINS_DYNAMIC_MATRIX;
 			} else if (t.interp == sw::VT_FUNC) {
 				d.type = PINS_FUNCTION;
 			}
