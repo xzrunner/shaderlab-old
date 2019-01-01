@@ -19,15 +19,17 @@ namespace sg
 class ShaderWeaver
 {
 public:
-	enum VertType
+	enum ShaderType
 	{
-		VERT_SHAPE = 0,
-		VERT_SPRITE,
-		VERT_PHONG
+		SHADER_SHAPE = 0,
+		SHADER_SPRITE,
+		SHADER_PHONG,
+        SHADER_PBR,
+        SHADER_RAYMARCHING,
 	};
 
 public:
-	ShaderWeaver(VertType vert_type, const bp::Node& frag_node,
+	ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 		bool debug_print = false);
 
 	std::shared_ptr<pt2::Shader> CreateShader(pt2::WindowContext& wc) const;
