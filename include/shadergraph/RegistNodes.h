@@ -17,12 +17,12 @@ void nodes_regist_rttr();
 namespace node
 {
 
-#define SG_DEFINE_NODE(name, preview, debug, prop)       \
+#define SG_DEFINE_NODE(name, preview, debug, rt, prop)   \
 class name : public Node                                 \
 {                                                        \
 public:                                                  \
 	name()                                               \
-		: Node(#name, preview, debug)                    \
+		: Node(#name, preview, debug, rt)                \
 	{                                                    \
 		InitPins(#name);                                 \
 	}                                                    \
@@ -32,19 +32,20 @@ public:                                                  \
 };
 
 #define SG_NODE_PROP
-#define SG_DEFINE_NODE_DEFAULT(name) SG_DEFINE_NODE(name, false, false, SG_NODE_PROP)
-#define SG_DEFINE_NODE_PREVIEW(name) SG_DEFINE_NODE(name, true, false, SG_NODE_PROP)
-#define SG_DEFINE_NODE_DEBUG(name)   SG_DEFINE_NODE(name, false, true, SG_NODE_PROP)
+#define SG_DEFINE_NODE_DEFAULT(name)    SG_DEFINE_NODE(name, false, false, false, SG_NODE_PROP)
+#define SG_DEFINE_NODE_PREVIEW(name)    SG_DEFINE_NODE(name, true,  false, false, SG_NODE_PROP)
+#define SG_DEFINE_NODE_PREVIEW_RT(name) SG_DEFINE_NODE(name, true,  false, true,  SG_NODE_PROP)
+#define SG_DEFINE_NODE_DEBUG(name)      SG_DEFINE_NODE(name, false, true,  false, SG_NODE_PROP)
 
 // artistic
 SG_DEFINE_NODE_PREVIEW(Contrast)
-SG_DEFINE_NODE(Hue, true, false,                             \
+SG_DEFINE_NODE(Hue, true, false, false,                      \
 	auto GetAngleType() const { return m_type; }             \
 	void SetAngleType(PropAngleType type) { m_type = type; } \
 private:                                                     \
 	PropAngleType m_type = PropAngleType::RADIAN;
 )
-SG_DEFINE_NODE(InvertColors, true, false,                                           \
+SG_DEFINE_NODE(InvertColors, true, false, false,                                    \
 	auto& GetChannels() const { return m_channels; }                                \
 	void SetChannels(const PropMultiChannels& channels) { m_channels = channels; }  \
 private:                                                                            \
@@ -53,14 +54,14 @@ private:                                                                        
 SG_DEFINE_NODE_PREVIEW(ReplaceColor)
 SG_DEFINE_NODE_PREVIEW(Saturation)
 SG_DEFINE_NODE_PREVIEW(WhiteBalance)
-SG_DEFINE_NODE(Blend, true, false,                       \
+SG_DEFINE_NODE(Blend, true, false, false,                \
 	auto GetMode() const { return m_mode.mode; }         \
 	void SetMode(uint32_t mode) { m_mode.mode = mode; }  \
 private:                                                 \
 	PropBlendMode m_mode = sw::node::Blend::MODE_BURN;   \
 )
 SG_DEFINE_NODE_PREVIEW(Gray)
-SG_DEFINE_NODE(ChannelMask, true, false,                                           \
+SG_DEFINE_NODE(ChannelMask, true, false, false,                                    \
 	auto& GetChannels() const { return m_channels; }                               \
 	void SetChannels(const PropMultiChannels& channels) { m_channels = channels; } \
 private:                                                                           \
@@ -77,7 +78,7 @@ SG_DEFINE_NODE_PREVIEW(NormalStrength)
 SG_DEFINE_NODE_PREVIEW(NormalUnpack)
 SG_DEFINE_NODE_PREVIEW(ColorAddMul)
 SG_DEFINE_NODE_PREVIEW(ColorMap)
-SG_DEFINE_NODE(ColorspaceConversion, true, false,                           \
+SG_DEFINE_NODE(ColorspaceConversion, true, false, false,                    \
 	auto& GetType() const { return m_type; }                                \
 	void SetType(const PropColorTrans& type) { m_type = type; }             \
 private:                                                                    \
@@ -85,14 +86,14 @@ private:                                                                    \
 )
 // channel
 SG_DEFINE_NODE_PREVIEW(Combine)
-SG_DEFINE_NODE(Flip, true, false,                                                  \
+SG_DEFINE_NODE(Flip, true, false, false,                                           \
 	auto& GetChannels() const { return m_channels; }                               \
 	void SetChannels(const PropMultiChannels& channels) { m_channels = channels; } \
 private:                                                                           \
 	PropMultiChannels m_channels = 0;                                              \
 )
 SG_DEFINE_NODE_PREVIEW(Split)
-SG_DEFINE_NODE(Swizzle, true, false,                                              \
+SG_DEFINE_NODE(Swizzle, true, false, false,                                       \
 	auto& GetChannels() const { return m_channels; }                              \
 	void SetChannels(const PropChannelArray& channels) { m_channels = channels; } \
 private:                                                                          \
@@ -248,19 +249,19 @@ public:
 	}
 	RTTR_ENABLE(Node)
 }; // UV
-SG_DEFINE_NODE(Matrix2, false, false,                   \
+SG_DEFINE_NODE(Matrix2, false, false, false,            \
 	auto& GetValue() const { return m_val; }            \
 	void SetValue(const sm::mat2& val) { m_val = val; } \
 private:                                                \
 	sm::mat2 m_val;                                     \
 )
-SG_DEFINE_NODE(Matrix3, false, false,                   \
+SG_DEFINE_NODE(Matrix3, false, false, false,            \
 	auto& GetValue() const { return m_val; }            \
 	void SetValue(const sm::mat3& val) { m_val = val; } \
 private:                                                \
 	sm::mat3 m_val;                                     \
 )
-SG_DEFINE_NODE(Matrix4, false, false,                   \
+SG_DEFINE_NODE(Matrix4, false, false, false,            \
 	auto& GetValue() const { return m_val; }            \
 	void SetValue(const sm::mat4& val) { m_val = val; } \
 private:                                                \
@@ -300,7 +301,7 @@ private:
 }; // Tex2DAsset
 // master
 SG_DEFINE_NODE_DEFAULT(Phong)
-SG_DEFINE_NODE_PREVIEW(Raymarching)
+SG_DEFINE_NODE_PREVIEW_RT(Raymarching)
 class Sprite : public Node
 {
 public:
@@ -328,14 +329,14 @@ public:
 }; // Sprite
 // math
 SG_DEFINE_NODE_PREVIEW(Absolute)
-SG_DEFINE_NODE(Exponential, true, false,                   \
+SG_DEFINE_NODE(Exponential, true, false, false,            \
 	PropMathBaseType GetType() const { return m_type; }    \
 	void SetType(PropMathBaseType type) { m_type = type; } \
 private:                                                   \
 	PropMathBaseType m_type = PropMathBaseType::BASE_E;    \
 )
 SG_DEFINE_NODE_PREVIEW(Length)
-SG_DEFINE_NODE(Log, true, false,                           \
+SG_DEFINE_NODE(Log, true, false, false,                    \
 	PropMathBaseType GetType() const { return m_type; }    \
 	void SetType(PropMathBaseType type) { m_type = type; } \
 private:                                                   \
@@ -359,14 +360,14 @@ SG_DEFINE_NODE_DEFAULT(DDY)
 SG_DEFINE_NODE_PREVIEW(InverseLerp)
 SG_DEFINE_NODE_PREVIEW(Lerp)
 SG_DEFINE_NODE_PREVIEW(Smoothstep)
-SG_DEFINE_NODE(MatrixConstruction, false, false,     \
-	void SetType(MatrixType type) { m_type = type; } \
-	MatrixType GetType() const { return m_type; }    \
-private:                                             \
-	MatrixType m_type = MatrixType::ROW;             \
+SG_DEFINE_NODE(MatrixConstruction, false, false, false, \
+	void SetType(MatrixType type) { m_type = type; }    \
+	MatrixType GetType() const { return m_type; }       \
+private:                                                \
+	MatrixType m_type = MatrixType::ROW;                \
 )
 SG_DEFINE_NODE_DEFAULT(MatrixDeterminant)
-SG_DEFINE_NODE(MatrixSplit, false, false,            \
+SG_DEFINE_NODE(MatrixSplit, false, false, false,     \
 	void SetType(MatrixType type) { m_type = type; } \
 	MatrixType GetType() const { return m_type; }    \
 private:                                             \
@@ -414,15 +415,19 @@ SG_DEFINE_NODE_PREVIEW(RoundedRectangle)
 SG_DEFINE_NODE_PREVIEW(SimpleNoise)
 SG_DEFINE_NODE_PREVIEW(Voronoi)
 // sdf
+SG_DEFINE_NODE_DEBUG(Intersection)
+SG_DEFINE_NODE_DEFAULT(Subtraction)
+SG_DEFINE_NODE_DEFAULT(Union)
 SG_DEFINE_NODE_DEFAULT(SDF)
-SG_DEFINE_NODE_PREVIEW(Sphere)
-SG_DEFINE_NODE_PREVIEW(Torus)
+SG_DEFINE_NODE_DEFAULT(Sphere)
+SG_DEFINE_NODE_DEFAULT(Torus)
+SG_DEFINE_NODE_DEFAULT(Box)
 SG_DEFINE_NODE_DEFAULT(EstimateNormal)
 SG_DEFINE_NODE_DEFAULT(PhongIllumination)
 // utility
 SG_DEFINE_NODE_DEFAULT(And)
 SG_DEFINE_NODE_DEFAULT(Branch)
-SG_DEFINE_NODE(Comparison, false, false,          \
+SG_DEFINE_NODE(Comparison, false, false, false,   \
 	auto GetType() const { return m_type; }       \
 	void SetType(CmpType type) { m_type = type; } \
 private:                                          \
@@ -443,7 +448,7 @@ public:
 	RTTR_ENABLE(Node)
 }; // Preview
 // uv
-SG_DEFINE_NODE(Flipbook, true, false,                              \
+SG_DEFINE_NODE(Flipbook, true, false, false,                       \
 	auto& GetInvert() const { return m_invert; }                   \
 	void SetInvert(const sm::bvec2& invert) { m_invert = invert; } \
 private:                                                           \
@@ -451,7 +456,7 @@ private:                                                           \
 )
 SG_DEFINE_NODE_PREVIEW(PolarCoordinates)
 SG_DEFINE_NODE_PREVIEW(RadialShear)
-SG_DEFINE_NODE(Rotate, true, false,                          \
+SG_DEFINE_NODE(Rotate, true, false, false,                   \
 	auto GetAngleType() const { return m_type; }             \
 	void SetAngleType(PropAngleType type) { m_type = type; } \
 private:                                                     \
