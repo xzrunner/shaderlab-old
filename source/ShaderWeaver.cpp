@@ -200,8 +200,6 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 	{
 		// layout
 		m_layout.push_back(ur::VertexAttrib("position", 3, 4, 32, 0));
-		m_layout.push_back(ur::VertexAttrib("normal",   3, 4, 32, 12));
-		m_layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 32, 24));
 
 		// vert
 		auto projection = std::make_shared<sw::node::Uniform>("u_projection", sw::t_mat4);
@@ -220,8 +218,6 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
 		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
 		m_vert_nodes.push_back(pos_trans);
-
-		add_vert_varying(m_vert_nodes, m_cached_nodes, "texcoord", sw::t_uv);
 
 		// frag
 		auto raymarching = CreateWeaverNode(frag_node);
