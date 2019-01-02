@@ -33,6 +33,7 @@
 #include <shaderweaver/node/Comparison.h>
 #include <shaderweaver/node/Flipbook.h>
 #include <shaderweaver/node/Rotate.h>
+#include <shaderweaver/node/Raymarching.h>
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -500,9 +501,18 @@ pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, 
 
 	if (vert.HasNodeType<sw::node::Time>() || frag.HasNodeType<sw::node::Time>()) {
 		sp.utime_names = std::make_unique<pt0::Shader::UniformTimeNames>(
-			pt0::Shader::UniformTimeNames{ "u_time", "u_sine_time", "u_cos_time", "u_delta_time" }
+			pt0::Shader::UniformTimeNames{
+                sw::node::Time::TimeName(),
+                sw::node::Time::SineTimeName(),
+                sw::node::Time::CosTimeName(),
+                sw::node::Time::DeltaTimeName()
+            }
 		);
 	}
+
+    if (vert.HasNodeType<sw::node::Raymarching>() || frag.HasNodeType<sw::node::Raymarching>()) {
+        sp.uniform_names.resolution = sw::node::Raymarching::ResolutionName();
+    }
 
 	return sp;
 }

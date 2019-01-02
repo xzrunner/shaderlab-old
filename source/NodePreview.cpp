@@ -104,9 +104,17 @@ void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
 
     m_shader->UpdateViewMat(sm::vec2(), 1);
 
+    m_shader->SetResolution(
+        static_cast<float>(rt_mgr.WIDTH),
+        static_cast<float>(rt_mgr.HEIGHT)
+    );
+
     sm::mat4 mat;
-    mat.Scale(static_cast<float>(rt_mgr.WIDTH),
-        static_cast<float>(rt_mgr.HEIGHT), 1.0f);
+    mat.Scale(
+        static_cast<float>(rt_mgr.WIDTH),
+        static_cast<float>(rt_mgr.HEIGHT),
+        1.0f
+    );
     pt2::RenderSystem::DrawTexture(m_shader, mat);
 
     rt->Unbind();
