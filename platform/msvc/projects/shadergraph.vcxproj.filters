@@ -10,6 +10,9 @@
     <Filter Include="dataset">
       <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes">
+      <UniqueIdentifier>{93d0111d-b3b0-46b8-a29f-b28825f016d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
@@ -39,6 +42,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
       <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h">
+      <Filter>nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropEditor.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropHelper.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +85,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\RegistNodes.cpp">
       <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Custom.cpp">
+      <Filter>nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\WxCustomNodePropEditor.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\WxCustomNodePropHelper.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

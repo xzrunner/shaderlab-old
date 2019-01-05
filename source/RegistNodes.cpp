@@ -1,4 +1,5 @@
 #include "shadergraph/RegistNodes.h"
+#include "shadergraph/node/Custom.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -274,6 +275,8 @@ REGIST_NODE_RTTI(Rotate,                                                        
 REGIST_NODE_RTTI_DEFAULT(Spherize)
 REGIST_NODE_RTTI_DEFAULT(TilingAndOffset)
 REGIST_NODE_RTTI_DEFAULT(Twirl)
+// tools
+REGIST_NODE_RTTI_DEFAULT(Custom)
 
 }
 

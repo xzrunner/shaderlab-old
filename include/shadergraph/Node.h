@@ -16,20 +16,21 @@ public:
 	virtual void Draw(const sm::Matrix2D& mt) const override;
 	virtual bool Update(const bp::UpdateParams& params) override;
 
-protected:
 	struct PinsDesc
 	{
 		int         type;
 		std::string name;
 	};
+
+protected:
 	void InitPins(const std::vector<PinsDesc>& input,
 		const std::vector<PinsDesc>& output);
 	void InitPins(const std::string& name);
 
-private:
 	void InitPinsImpl(const std::vector<PinsDesc>& pins,
 		bool is_input);
 
+private:
 	static std::string UnderscoreToCamelCase(const std::string& str);
 
 private:

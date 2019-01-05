@@ -1,6 +1,7 @@
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/Pins.h"
 #include "shadergraph/RegistNodes.h"
+#include "shadergraph/node/Custom.h"
 
 #include <shaderweaver/node/Uniform.h>
 #include <shaderweaver/node/Input.h>
@@ -34,6 +35,7 @@
 #include <shaderweaver/node/Flipbook.h>
 #include <shaderweaver/node/Rotate.h>
 #include <shaderweaver/node/Raymarching.h>
+#include <shaderweaver/node/Custom.h>
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -69,6 +71,56 @@ void add_vert_varying(std::vector<sw::NodePtr>& nodes, std::vector<sw::NodePtr>&
 	nodes.push_back(vert_out);
 
 	cache_nodes.push_back(vert_in);
+}
+
+uint32_t var_type_sg_to_sw(sg::PinsType type)
+{
+    uint32_t ret = 0;
+    switch (type)
+    {
+    case sg::PINS_BOOLEAN:
+        ret = sw::t_bool;
+        break;
+    case sg::PINS_DYNAMIC_VECTOR:
+        ret = sw::t_d_vec;
+        break;
+    case sg::PINS_VECTOR1:
+        ret = sw::t_flt1;
+        break;
+    case sg::PINS_VECTOR2:
+        ret = sw::t_flt2;
+        break;
+    case sg::PINS_VECTOR3:
+        ret = sw::t_flt3;
+        break;
+    case sg::PINS_VECTOR4:
+        ret = sw::t_flt4;
+        break;
+    case sg::PINS_COLOR:
+        ret = sw::t_col3;
+        break;
+    case sg::PINS_TEXTURE2D:
+        ret = sw::t_tex2d;
+        break;
+    case sg::PINS_CUBE_MAP:
+        break;
+    case sg::PINS_DYNAMIC_MATRIX:
+        ret = sw::t_d_mat;
+        break;
+    case sg::PINS_MATRIX2:
+        ret = sw::t_mat2;
+        break;
+    case sg::PINS_MATRIX3:
+        ret = sw::t_mat3;
+        break;
+    case sg::PINS_MATRIX4:
+        ret = sw::t_mat4;
+        break;
+    case sg::PINS_FUNCTION:
+        ret = sw::t_func;
+        break;
+    }
+    return ret;
 }
 
 }
@@ -268,13 +320,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	// create node
 	sw::NodePtr dst = nullptr;
 	auto type = node.get_type();
-	auto cls_name = type.get_name().to_string();
-	if (cls_name == "sg::Tex2DAsset")
+	if (type == rttr::type::get<sg::node::Tex2DAsset>())
 	{
 		dst = std::make_shared<sw::node::Uniform>(node.GetName(), sw::t_tex2d);
 	}
 	else
 	{
+        auto cls_name = type.get_name().to_string();
 		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
 
 		rttr::type t = rttr::type::get_by_name(cls_name);
@@ -287,20 +339,6 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 
 		dst = var.get_value<std::shared_ptr<sw::Node>>();
 		assert(dst);
-	}
-
-	// connect
-	for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
-	{
-		auto& imports = dst->GetImports();
-		if (!imports[i].var.IsDefaultInput()) {
-			continue;
-		}
-		auto from = CreateInputChild(node, i);
-		if (from.node.expired()) {
-			continue;
-		}
-		sw::make_connecting(from, { dst, i });
 	}
 
 	// init
@@ -464,6 +502,44 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		std::static_pointer_cast<sw::node::Rotate>(dst)->
 			SetRadians(src.GetAngleType() == PropAngleType::RADIAN);
 	}
+    else if (type == rttr::type::get<node::Custom>())
+    {
+        auto& src = static_cast<const node::Custom&>(node);
+        auto cus = std::static_pointer_cast<sw::node::Custom>(dst);
+
+        std::vector<sw::Variable> params;
+        auto& inputs = src.GetParams();
+        params.reserve(inputs.size());
+        for (auto& i : inputs) {
+            sw::Variable var(var_type_sg_to_sw(i.type), i.name);
+            params.push_back(var);
+        }
+        cus->SetParams(params);
+
+        auto& outputs = src.GetReturns();
+        if (!outputs.empty())
+        {
+            sw::Variable ret(var_type_sg_to_sw(outputs[0].type), outputs[0].name);
+            cus->SetReturn(ret);
+        }
+
+        cus->SetHeadStr(src.GetHeadStr());
+        cus->SetBodyStr(src.GetBodyStr());
+    }
+
+    // connect
+    for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
+    {
+        auto& imports = dst->GetImports();
+        if (!imports[i].var.IsDefaultInput()) {
+            continue;
+        }
+        auto from = CreateInputChild(node, i);
+        if (from.node.expired()) {
+            continue;
+        }
+        sw::make_connecting(from, { dst, i });
+    }
 
 	if (dst) {
 		m_cached_nodes.push_back(dst);

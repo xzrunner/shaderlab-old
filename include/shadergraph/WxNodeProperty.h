@@ -3,6 +3,7 @@
 #include <ee0/typedef.h>
 
 #include <blueprint/Node.h>
+#include <node0/typedef.h>
 
 #include <wx/panel.h>
 
@@ -17,7 +18,7 @@ class WxNodeProperty : public wxPanel
 public:
 	WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
-	void LoadFromNode(const bp::NodePtr& node);
+	void LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr& node);
 
 private:
 	void InitLayout();
@@ -29,7 +30,8 @@ private:
 
 	wxPropertyGrid* m_pg;
 
-	bp::NodePtr m_node = nullptr;
+    n0::SceneNodePtr m_obj = nullptr;
+	bp::NodePtr      m_node = nullptr;
 
 }; // WxNodeProperty
 

@@ -1,5 +1,8 @@
 #include "shadergraph/WxNodeProperty.h"
 #include "shadergraph/ReflectPropTypes.h"
+#include "shadergraph/RegistNodes.h"
+#include "shadergraph/WxCustomNodePropHelper.h"
+#include "shadergraph/node/Custom.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/ReflectPropTypes.h>
@@ -21,13 +24,19 @@ WxNodeProperty::WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 	InitLayout();
 }
 
-void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
+void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr& node)
 {
+    m_obj = obj;
 	m_node = node;
 
 	m_pg->Clear();
 
 	auto type = node->get_type();
+
+    if (type == rttr::type::get<node::Custom>()) {
+        auto custom = std::static_pointer_cast<const node::Custom>(node);
+        WxCustomNodePropHelper::InitProp(m_pg, obj, custom);
+    }
 
 	for (auto& prop : type.get_properties())
 	{
@@ -40,8 +49,8 @@ void WxNodeProperty::LoadFromNode(const bp::NodePtr& node)
 		auto type = prop.get_type();
 		if (type == rttr::type::get<PropAngleType>())
 		{
-			const wxChar* ANDLE_TYPES[] = { wxT("Deg"), wxT("Rad"), NULL };
-			auto type_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, ANDLE_TYPES);
+			const wxChar* ANGLE_TYPES[] = { wxT("Deg"), wxT("Rad"), NULL };
+			auto type_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, ANGLE_TYPES);
 			auto angle_type = prop.get_value(node).get_value<PropAngleType>();
 			type_prop->SetValue(static_cast<int>(angle_type));
 			m_pg->Append(type_prop);
@@ -164,6 +173,11 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	wxPGProperty* property = event.GetProperty();
 	auto key = property->GetName();
 	wxAny val = property->GetValue();
+
+    if (m_node->get_type() == rttr::type::get<node::Custom>()) {
+        auto custom = std::static_pointer_cast<node::Custom>(m_node);
+        WxCustomNodePropHelper::PropChanged(key, val, m_obj, *custom);
+    }
 
 	auto node_type = m_node->get_type();
 	for (auto& prop : node_type.get_properties())
