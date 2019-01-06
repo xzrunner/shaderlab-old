@@ -46,12 +46,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropEditor.h">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropHelper.h">
-      <Filter>view</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -88,12 +82,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Custom.cpp">
       <Filter>nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\WxCustomNodePropEditor.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\WxCustomNodePropHelper.cpp">
-      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

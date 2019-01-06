@@ -21,8 +21,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\Pins.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropEditor.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\WxCustomNodePropHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
@@ -38,8 +36,6 @@
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
-    <ClCompile Include="..\..\..\source\WxCustomNodePropEditor.cpp" />
-    <ClCompile Include="..\..\..\source\WxCustomNodePropHelper.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
   </ItemGroup>
   <ItemGroup>
