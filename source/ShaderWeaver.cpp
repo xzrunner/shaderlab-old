@@ -523,6 +523,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
             cus->SetReturn(ret);
         }
 
+        cus->SetName(src.GetName());
         cus->SetHeadStr(src.GetHeadStr());
         cus->SetBodyStr(src.GetBodyStr());
     }

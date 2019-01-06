@@ -31,6 +31,7 @@ void Custom::SetBodyStr(const std::string& str)
         outputs.push_back({ ret_type, "_out" });
     }
     m_title = tokens[1];
+    SetName(m_title);
 
     // parse params list
     std::string params_str = str.substr(s_pos + 1, str.find(")") - s_pos - 1);
@@ -46,7 +47,28 @@ void Custom::SetBodyStr(const std::string& str)
         inputs.push_back({ type, tokens[1] });
     }
 
-    InitPins(inputs, outputs);
+    // reset
+    if (inputs.size() != m_all_input.size()) {
+        InitPinsImpl(inputs, true);
+    } else {
+        for (int i = 0, n = inputs.size(); i < n; ++i) {
+            auto& src = inputs[i];
+            auto& dst = m_all_input[i];
+            dst->SetType(src.type);
+            dst->SetName(src.name);
+        }
+    }
+    if (outputs.size() != m_all_output.size()) {
+        InitPinsImpl(outputs, false);
+    } else {
+        for (int i = 0, n = outputs.size(); i < n; ++i) {
+            auto& src = outputs[i];
+            auto& dst = m_all_output[i];
+            dst->SetType(src.type);
+            dst->SetName(src.name);
+        }
+    }
+    Layout();
 }
 
 int Custom::TransToPinsType(const std::string& str)
