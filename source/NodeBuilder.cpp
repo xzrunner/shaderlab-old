@@ -32,11 +32,6 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 		bp_node->SetName(name);
 	}
 
-	if (is_default) {
-		bp_node->SetStyleOnlyTitle(true);
-		bp::NodeLayout::UpdateNodeStyle(*bp_node);
-	}
-
 	bp_node->SetPos(pos);
 
 	auto node = std::make_shared<n0::SceneNode>();
@@ -51,6 +46,11 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 	);
 
 	CreateDefaultInputs(nodes, *bp_node);
+
+    if (is_default && bp_node->GetAllInput().size() <= 1 && bp_node->GetAllOutput().size() <= 1) {
+		bp_node->SetStyleOnlyTitle(true);
+		bp::NodeLayout::UpdateNodeStyle(*bp_node);
+	}
 
 	nodes.push_back(node);
 
