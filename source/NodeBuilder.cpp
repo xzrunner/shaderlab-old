@@ -272,7 +272,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	else if (type == rttr::type::get<node::Raymarching>())
 	{
 		CreateDefault(nodes, node, sw::node::Raymarching::ID_SDF, rttr::type::get<node::Torus>().get_name().to_string());
-		CreateDefault(nodes, node, sw::node::Raymarching::ID_LIGHTING, rttr::type::get<node::PhongIllumination>().get_name().to_string());
+//		CreateDefault(nodes, node, sw::node::Raymarching::ID_LIGHTING, rttr::type::get<node::PhongIllumination>().get_name().to_string());
 	}
 }
 
