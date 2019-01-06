@@ -73,7 +73,7 @@ void add_vert_varying(std::vector<sw::NodePtr>& nodes, std::vector<sw::NodePtr>&
 	cache_nodes.push_back(vert_in);
 }
 
-uint32_t var_type_sg_to_sw(sg::PinsType type)
+uint32_t var_type_sg_to_sw(int type)
 {
     uint32_t ret = 0;
     switch (type)
@@ -508,18 +508,18 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
         auto cus = std::static_pointer_cast<sw::node::Custom>(dst);
 
         std::vector<sw::Variable> params;
-        auto& inputs = src.GetParams();
+        auto& inputs = src.GetAllInput();
         params.reserve(inputs.size());
         for (auto& i : inputs) {
-            sw::Variable var(var_type_sg_to_sw(i.type), i.name);
+            sw::Variable var(var_type_sg_to_sw(i->GetType()), i->GetName());
             params.push_back(var);
         }
         cus->SetParams(params);
 
-        auto& outputs = src.GetReturns();
+        auto& outputs = src.GetAllOutput();
         if (!outputs.empty())
         {
-            sw::Variable ret(var_type_sg_to_sw(outputs[0].type), outputs[0].name);
+            sw::Variable ret(var_type_sg_to_sw(outputs[0]->GetType()), outputs[0]->GetName());
             cus->SetReturn(ret);
         }
 
