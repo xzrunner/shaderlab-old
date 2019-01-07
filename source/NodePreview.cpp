@@ -6,6 +6,7 @@
 #include <painting2/RenderSystem.h>
 #include <painting2/Shader.h>
 #include <painting2/RenderTarget.h>
+#include <painting2/RenderTargetCtx.h>
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
 #include <blueprint/Pins.h>
@@ -92,8 +93,7 @@ void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
 {
     // draw texture to rt
 
-    auto& rc = pt2::Blackboard::Instance()->GetRenderContext();
-    auto& rt_mgr = rc.GetRTMgr();
+    auto& rt_mgr = pt2::Blackboard::Instance()->GetRenderContext().GetRTMgr();
 
     auto rt = rt_mgr.Fetch();
     rt->Bind();
@@ -101,22 +101,22 @@ void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
     auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
     ur_rc.SetClearColor(0);
     ur_rc.Clear();
+    {
+        pt2::RenderTargetCtx ctx(ur_rc, m_shader, rt_mgr.WIDTH, rt_mgr.HEIGHT);
 
-    m_shader->UpdateViewMat(sm::vec2(), 1);
+        m_shader->SetResolution(
+            static_cast<float>(rt_mgr.WIDTH),
+            static_cast<float>(rt_mgr.HEIGHT)
+        );
 
-    m_shader->SetResolution(
-        static_cast<float>(rt_mgr.WIDTH),
-        static_cast<float>(rt_mgr.HEIGHT)
-    );
-
-    sm::mat4 mat;
-    mat.Scale(
-        static_cast<float>(rt_mgr.WIDTH),
-        static_cast<float>(rt_mgr.HEIGHT),
-        1.0f
-    );
-    pt2::RenderSystem::DrawTexture(m_shader, mat);
-
+        sm::mat4 mat;
+        mat.Scale(
+            static_cast<float>(rt_mgr.WIDTH),
+            static_cast<float>(rt_mgr.HEIGHT),
+            1.0f
+        );
+        pt2::RenderSystem::DrawTexture(m_shader, mat);
+    }
     rt->Unbind();
 
     // draw rt to screen
