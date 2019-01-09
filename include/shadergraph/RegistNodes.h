@@ -300,6 +300,7 @@ private:
 
 }; // Tex2DAsset
 // master
+SG_DEFINE_NODE_DEFAULT(PBR)
 SG_DEFINE_NODE_DEFAULT(Phong)
 SG_DEFINE_NODE_PREVIEW_RT(Raymarching)
 class Sprite : public Node

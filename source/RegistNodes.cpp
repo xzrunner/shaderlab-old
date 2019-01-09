@@ -146,6 +146,7 @@ REGIST_NODE_RTTI(Tex2DAsset,                                                    
 )
 )
 // master
+REGIST_NODE_RTTI_DEFAULT(PBR)
 REGIST_NODE_RTTI_DEFAULT(Phong)
 REGIST_NODE_RTTI_DEFAULT(Raymarching)
 REGIST_NODE_RTTI_DEFAULT(Sprite)
