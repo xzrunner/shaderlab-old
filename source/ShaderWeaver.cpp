@@ -325,7 +325,8 @@ std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) 
 	}
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<pt2::Shader>(wc, &rc, CreateShaderParams(vert, frag));
+	auto shader = std::make_shared<pt2::Shader>(&rc, CreateShaderParams(vert, frag));
+    shader->AddNotify(wc);
 
 	shader->SetUsedTextures(m_texture_ids);
 
