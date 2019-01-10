@@ -238,6 +238,7 @@ private:
 	sm::vec4 m_val;
 	RTTR_ENABLE(Node)
 }; // Vector4
+SG_DEFINE_NODE_DEFAULT(CameraPos)
 class UV : public Node
 {
 public:

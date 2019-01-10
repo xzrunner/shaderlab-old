@@ -122,6 +122,7 @@ REGIST_NODE_RTTI(Vector4,                                                    \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector4"))         \
 )
 )
+REGIST_NODE_RTTI_DEFAULT(CameraPos)
 REGIST_NODE_RTTI_DEFAULT(UV)
 REGIST_NODE_RTTI(Matrix2,                                                    \
 .property("mat", &sg::node::Matrix2::GetValue, &sg::node::Matrix2::SetValue)

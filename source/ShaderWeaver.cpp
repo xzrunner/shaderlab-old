@@ -25,6 +25,7 @@
 #include <shaderweaver/node/Vector3.h>
 #include <shaderweaver/node/Vector4.h>
 #include <shaderweaver/node/UV.h>
+#include <shaderweaver/node/CameraPos.h>
 #include <shaderweaver/node/Matrix2.h>
 #include <shaderweaver/node/Matrix3.h>
 #include <shaderweaver/node/Matrix4.h>
@@ -234,6 +235,12 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 
 		// frag
 		m_frag_node = CreateWeaverNode(frag_node);
+        // fixme
+        if (m_frag_node->get_type() == rttr::type::get<sw::node::Raymarching>()) {
+            auto cam_pos = std::make_shared<sw::node::CameraPos>();
+            m_cached_nodes.push_back(cam_pos);
+            sw::make_connecting({ cam_pos, 0 }, { m_frag_node, sw::node::Raymarching::ID_CAM_POS });
+        }
 	}
 		break;
 	case SHADER_PHONG:
@@ -249,10 +256,13 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		// frag
 		auto phong = CreateWeaverNode(frag_node);
 
+        auto cam_pos = std::make_shared<sw::node::CameraPos>();
 		auto frag_in_pos = std::make_shared<sw::node::Input>("v_frag_pos", sw::t_flt3);
 		auto frag_in_nor = std::make_shared<sw::node::Input>("v_normal", sw::t_nor3);
+        m_cached_nodes.push_back(cam_pos);
 		m_cached_nodes.push_back(frag_in_pos);
 		m_cached_nodes.push_back(frag_in_nor);
+        sw::make_connecting({ cam_pos, 0 }, { phong, sw::node::Phong::ID_VIEW_POS });
 		sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::ID_FRAG_POS });
 		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::ID_NORMAL });
 
@@ -274,10 +284,13 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 
         auto frag_in_pos = std::make_shared<sw::node::Input>("v_frag_pos", sw::t_flt3);
         auto frag_in_nor = std::make_shared<sw::node::Input>("v_normal", sw::t_nor3);
+        auto cam_pos = std::make_shared<sw::node::CameraPos>();
         m_cached_nodes.push_back(frag_in_pos);
         m_cached_nodes.push_back(frag_in_nor);
+        m_cached_nodes.push_back(cam_pos);
         sw::make_connecting({ frag_in_pos, 0 }, { pbr, sw::node::PBR::ID_FRAG_POS });
         sw::make_connecting({ frag_in_nor, 0 }, { pbr, sw::node::PBR::ID_NORMAL });
+        sw::make_connecting({ cam_pos, 0 }, { pbr, sw::node::PBR::ID_CAM_POS });
 
         m_frag_node = pbr;
     }
@@ -307,6 +320,11 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 
 		// frag
 		auto raymarching = CreateWeaverNode(frag_node);
+
+        auto cam_pos = std::make_shared<sw::node::CameraPos>();
+        m_cached_nodes.push_back(cam_pos);
+        sw::make_connecting({ cam_pos, 0 }, { raymarching, sw::node::Raymarching::ID_CAM_POS });
+
 		m_frag_node = raymarching;
 	}
 		break;
@@ -620,6 +638,10 @@ pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, 
 
     if (vert.HasNodeType<sw::node::Raymarching>() || frag.HasNodeType<sw::node::Raymarching>()) {
         sp.uniform_names.resolution = sw::node::Raymarching::ResolutionName();
+    }
+
+    if (vert.HasNodeType<sw::node::CameraPos>() || frag.HasNodeType<sw::node::CameraPos>()) {
+        sp.uniform_names.cam_pos = sw::node::CameraPos::CamPosName();
     }
 
 	return sp;
