@@ -140,7 +140,10 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 		}
 		else
 		{
-			ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop);
+            ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop, [&]() {
+                m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+                m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+            });
 		}
 	}
 }
