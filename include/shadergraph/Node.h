@@ -31,7 +31,7 @@ protected:
 		bool is_input);
 
 private:
-	static std::string UnderscoreToCamelCase(const std::string& str);
+	static std::string PortNameFromVar(const std::string& str);
 
 private:
 	std::unique_ptr<NodePreview> m_preview = nullptr;

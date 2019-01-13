@@ -1,6 +1,7 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/Pins.h"
+#include "shadergraph/Utility.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -224,6 +225,12 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector4>(default_node)->SetValue(sm::vec4(0, 0, 0, 0));
 			}
 			break;
+        case PINS_TEXTURE2D:
+        {
+            auto var_name = Utility::CamelCaseToUnderscore(pins->GetName());
+            std::static_pointer_cast<node::Tex2DAsset>(default_node)->SetName(var_name);
+        }
+            break;
 		case PINS_MATRIX2:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::mat2>());
