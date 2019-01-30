@@ -467,6 +467,8 @@ private:                                                     \
 SG_DEFINE_NODE_PREVIEW(Spherize)
 SG_DEFINE_NODE_PREVIEW(TilingAndOffset)
 SG_DEFINE_NODE_PREVIEW(Twirl)
+// anim
+SG_DEFINE_NODE_PREVIEW(Skin)
 
 }
 }

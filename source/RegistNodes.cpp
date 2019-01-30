@@ -290,6 +290,8 @@ REGIST_NODE_RTTI(Custom,                                                        
     rttr::metadata(ee0::PropLongStringTag(), true)                              \
 )
 )
+// anim
+REGIST_NODE_RTTI_DEFAULT(Skin)
 
 }
 
