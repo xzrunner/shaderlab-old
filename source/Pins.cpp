@@ -3,15 +3,15 @@
 namespace
 {
 
-const pt2::Color COL_DEFAULT   = pt2::Color(255, 255, 255);
+const pt0::Color COL_DEFAULT   = pt0::Color(255, 255, 255);
 
-const pt2::Color COL_VECTOR1   = pt2::Color(132, 228, 231);
-const pt2::Color COL_VECTOR2   = pt2::Color(154, 239, 146);
-const pt2::Color COL_VECTOR3   = pt2::Color(246, 255, 154);
-const pt2::Color COL_VECTOR4   = pt2::Color(251, 203, 244);
-const pt2::Color COL_COLOR     = pt2::Color(251, 203, 244);
-const pt2::Color COL_TEXTURE2D = pt2::Color(255, 139, 139);
-const pt2::Color COL_BOOLEAN   = pt2::Color(148, 129, 230);
+const pt0::Color COL_VECTOR1   = pt0::Color(132, 228, 231);
+const pt0::Color COL_VECTOR2   = pt0::Color(154, 239, 146);
+const pt0::Color COL_VECTOR3   = pt0::Color(246, 255, 154);
+const pt0::Color COL_VECTOR4   = pt0::Color(251, 203, 244);
+const pt0::Color COL_COLOR     = pt0::Color(251, 203, 244);
+const pt0::Color COL_TEXTURE2D = pt0::Color(255, 139, 139);
+const pt0::Color COL_BOOLEAN   = pt0::Color(148, 129, 230);
 
 }
 
@@ -54,7 +54,7 @@ std::string Pins::GetDesc() const
 	return ret;
 }
 
-const pt2::Color& Pins::GetColor() const
+const pt0::Color& Pins::GetColor() const
 {
 	switch (GetType())
 	{

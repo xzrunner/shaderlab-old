@@ -31,7 +31,7 @@ public:
 		const bp::Node& parent);
 
 	virtual std::string GetDesc() const;
-	virtual const pt2::Color& GetColor() const;
+	virtual const pt0::Color& GetColor() const;
 
 	virtual bool CanTypeCast(int type) const;
 
