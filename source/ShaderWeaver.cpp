@@ -163,9 +163,11 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 	sw::make_connecting({ position, 0 }, { frag_pos_trans, sw::node::FragPosTrans::ID_POS });
     m_cached_nodes.push_back(frag_pos_trans);
 
+    auto normal_mat = std::make_shared<sw::node::Uniform>(sw::node::NormalTrans::NormalMatName(), sw::t_mat3);
+    m_cached_nodes.push_back(normal_mat);
 	auto norm_trans = std::make_shared<sw::node::NormalTrans>();
-	sw::make_connecting({ model, 0 },  { norm_trans, sw::node::NormalTrans::ID_MODEL });
-	sw::make_connecting({ normal, 0 }, { norm_trans, sw::node::NormalTrans::ID_NORM });
+	sw::make_connecting({ normal_mat, 0 }, { norm_trans, sw::node::NormalTrans::ID_NORMAL_MAT });
+	sw::make_connecting({ normal, 0 },     { norm_trans, sw::node::NormalTrans::ID_NORMAL });
     m_cached_nodes.push_back(norm_trans);
 
     // v_texcoord = a_texcoord;
