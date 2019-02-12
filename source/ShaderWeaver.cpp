@@ -649,27 +649,23 @@ pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, 
 	sp.vs = vert.GenShaderStr().c_str();
 	sp.fs = frag.GenShaderStr().c_str();
 
-	sp.uniform_names.model_mat  = MODEL_MAT_NAME;
-	sp.uniform_names.view_mat   = VIEW_MAT_NAME;
-	sp.uniform_names.proj_mat   = PROJ_MAT_NAME;
+	sp.uniform_names[pt0::U_MODEL_MAT] = MODEL_MAT_NAME;
+	sp.uniform_names[pt0::U_VIEW_MAT]  = VIEW_MAT_NAME;
+	sp.uniform_names[pt0::U_PROJ_MAT]  = PROJ_MAT_NAME;
 
 	if (vert.HasNodeType<sw::node::Time>() || frag.HasNodeType<sw::node::Time>()) {
-		sp.utime_names = std::make_unique<pt0::Shader::UniformTimeNames>(
-			pt0::Shader::UniformTimeNames{
-                sw::node::Time::TimeName(),
-                sw::node::Time::SineTimeName(),
-                sw::node::Time::CosTimeName(),
-                sw::node::Time::DeltaTimeName()
-            }
-		);
+        sp.uniform_names[pt0::U_TIME]       = sw::node::Time::TimeName();
+        sp.uniform_names[pt0::U_SINE_TIME]  = sw::node::Time::SineTimeName();
+        sp.uniform_names[pt0::U_COS_TIME]   = sw::node::Time::CosTimeName();
+        sp.uniform_names[pt0::U_DELTA_TIME] = sw::node::Time::DeltaTimeName();
 	}
 
     if (vert.HasNodeType<sw::node::Raymarching>() || frag.HasNodeType<sw::node::Raymarching>()) {
-        sp.uniform_names.resolution = sw::node::Raymarching::ResolutionName();
+        sp.uniform_names[pt0::U_RESOLUTION] = sw::node::Raymarching::ResolutionName();
     }
 
     if (vert.HasNodeType<sw::node::CameraPos>() || frag.HasNodeType<sw::node::CameraPos>()) {
-        sp.uniform_names.cam_pos = sw::node::CameraPos::CamPosName();
+        sp.uniform_names[pt0::U_CAM_POS] = sw::node::CameraPos::CamPosName();
     }
 
 	return sp;
