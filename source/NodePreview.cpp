@@ -104,10 +104,15 @@ void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
     {
         pt2::RenderTargetCtx ctx(ur_rc, m_shader, rt_mgr.WIDTH, rt_mgr.HEIGHT);
 
-        m_shader->SetResolution(
-            static_cast<float>(rt_mgr.WIDTH),
-            static_cast<float>(rt_mgr.HEIGHT)
-        );
+        auto& uniform = m_shader->GetUniformName(pt0::U_RESOLUTION);
+        if (!uniform.empty())
+        {
+            const float res[2] = {
+                static_cast<float>(rt_mgr.WIDTH),
+                static_cast<float>(rt_mgr.HEIGHT)
+            };
+            m_shader->SetVec2(uniform, res);
+        }
 
         sm::mat4 mat;
         mat.Scale(
