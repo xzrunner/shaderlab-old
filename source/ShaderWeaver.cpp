@@ -180,7 +180,7 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     sw::make_connecting({ frag_pos_trans, 0 }, { v_world_pos, 0 });
     m_vert_nodes.push_back(v_world_pos);
 
-    // v_normal = mat3(u_model) * a_normal;
+    // v_normal = mat3(transpose(inverse(u_model))) * a_normal;
     auto v_normal = std::make_shared<sw::node::Output>(FRAG_NORMAL_NAME, sw::t_nor3);
     sw::make_connecting({ norm_trans, 0 }, { v_normal, 0 });
     m_vert_nodes.push_back(v_normal);
