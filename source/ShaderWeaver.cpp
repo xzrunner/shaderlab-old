@@ -38,6 +38,8 @@
 #include <shaderweaver/node/Rotate.h>
 #include <shaderweaver/node/Raymarching.h>
 #include <shaderweaver/node/Custom.h>
+#include <shaderweaver/node/VertexShader.h>
+#include <shaderweaver/node/FragmentShader.h>
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -156,7 +158,9 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 	sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
 	sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
 	sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
-	m_vert_nodes.push_back(pos_trans);
+    m_cached_nodes.push_back(pos_trans);
+    auto vert_end = std::make_shared<sw::node::VertexShader>();
+    sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
 
 	auto frag_pos_trans = std::make_shared<sw::node::FragPosTrans>();
 	sw::make_connecting({ model, 0 },    { frag_pos_trans, sw::node::FragPosTrans::ID_MODEL });
@@ -184,6 +188,8 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     auto v_normal = std::make_shared<sw::node::Output>(FRAG_NORMAL_NAME, sw::t_nor3);
     sw::make_connecting({ norm_trans, 0 }, { v_normal, 0 });
     m_vert_nodes.push_back(v_normal);
+
+    m_vert_nodes.push_back(vert_end);
 }
 
 }
@@ -194,6 +200,8 @@ namespace sg
 ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bool debug_print)
 	: m_debug_print(debug_print)
 {
+    sw::NodePtr frag_end = nullptr;
+
 	switch (shader_type)
 	{
 	case SHADER_SHAPE:
@@ -218,10 +226,12 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
 		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
 		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
-		m_vert_nodes.push_back(pos_trans);
+        m_cached_nodes.push_back(pos_trans);
+        auto vert_end = std::make_shared<sw::node::VertexShader>();
+        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+		m_vert_nodes.push_back(vert_end);
 
-		// frag
-		m_frag_node = CreateWeaverNode(frag_node);
+        frag_end = CreateWeaverNode(frag_node);
 	}
 		break;
 	case SHADER_SPRITE:
@@ -248,7 +258,9 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
 		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
 		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
-		m_vert_nodes.push_back(pos_trans);
+        m_cached_nodes.push_back(pos_trans);
+        auto vert_end = std::make_shared<sw::node::VertexShader>();
+        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
 
         // v_texcoord = a_texcoord;
         auto a_texcoord = std::make_shared<sw::node::Input>(VERT_TEXCOORD_NAME, sw::t_uv);
@@ -257,13 +269,15 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
         m_vert_nodes.push_back(v_texcoord);
         m_cached_nodes.push_back(a_texcoord);
 
+        m_vert_nodes.push_back(vert_end);
+
 		// frag
-		m_frag_node = CreateWeaverNode(frag_node);
+		frag_end = CreateWeaverNode(frag_node);
         // fixme
-        if (m_frag_node->get_type() == rttr::type::get<sw::node::Raymarching>()) {
+        if (frag_end->get_type() == rttr::type::get<sw::node::Raymarching>()) {
             auto cam_pos = std::make_shared<sw::node::CameraPos>();
             m_cached_nodes.push_back(cam_pos);
-            sw::make_connecting({ cam_pos, 0 }, { m_frag_node, sw::node::Raymarching::ID_CAM_POS });
+            sw::make_connecting({ cam_pos, 0 }, { frag_end, sw::node::Raymarching::ID_CAM_POS });
         }
 	}
 		break;
@@ -290,7 +304,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::ID_FRAG_POS });
 		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::ID_NORMAL });
 
-		m_frag_node = phong;
+		frag_end = phong;
 	}
 		break;
     case SHADER_PBR:
@@ -319,7 +333,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
         sw::make_connecting({ frag_in_tex, 0 }, { pbr, sw::node::PBR::ID_TEXCOORD });
         sw::make_connecting({ cam_pos, 0 }, { pbr, sw::node::PBR::ID_CAM_POS });
 
-        m_frag_node = pbr;
+        frag_end = pbr;
     }
         break;
 	case SHADER_RAYMARCHING:
@@ -343,7 +357,10 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
 		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
 		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
-		m_vert_nodes.push_back(pos_trans);
+        m_cached_nodes.push_back(pos_trans);
+        auto vert_end = std::make_shared<sw::node::VertexShader>();
+        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+		m_vert_nodes.push_back(vert_end);
 
 		// frag
 		auto raymarching = CreateWeaverNode(frag_node);
@@ -352,18 +369,21 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
         m_cached_nodes.push_back(cam_pos);
         sw::make_connecting({ cam_pos, 0 }, { raymarching, sw::node::Raymarching::ID_CAM_POS });
 
-		m_frag_node = raymarching;
+		frag_end = raymarching;
 	}
 		break;
 	default:
 		assert(0);
 	}
+
+    auto m_frag_node = std::make_shared<sw::node::FragmentShader>();
+    sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
 }
 
 std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) const
 {
-	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
-	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
+	sw::Evaluator vert(m_vert_nodes);
+	sw::Evaluator frag({ m_frag_node });
 
 	if (m_debug_print) {
 		debug_print(vert, frag);
@@ -380,8 +400,8 @@ std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader(pt2::WindowContext& wc) 
 
 std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader(pt3::WindowContext& wc) const
 {
-	sw::Evaluator vert(m_vert_nodes, sw::ST_VERT);
-	sw::Evaluator frag({ m_frag_node }, sw::ST_FRAG);
+	sw::Evaluator vert(m_vert_nodes);
+	sw::Evaluator frag({ m_frag_node });
 
 	if (m_debug_print) {
 		debug_print(vert, frag);
