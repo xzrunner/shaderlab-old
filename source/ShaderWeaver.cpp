@@ -153,7 +153,7 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     m_cached_nodes.push_back(texcoord);
 
     // gl_Position =  u_projection * u_view * u_model * a_pos;
-	auto pos_trans = std::make_shared<sw::node::PositionTrans>(3);
+	auto pos_trans = std::make_shared<sw::node::PositionTrans>(4);
 	sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::ID_PROJ });
 	sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
 	sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
@@ -350,7 +350,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		auto position = std::make_shared<sw::node::Input>(VERT_POSITION_NAME, sw::t_flt3);
 		m_cached_nodes.push_back(position);
 
-		auto pos_trans = std::make_shared<sw::node::PositionTrans>(3);
+		auto pos_trans = std::make_shared<sw::node::PositionTrans>(4);
 		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::ID_PROJ });
 		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
 		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
