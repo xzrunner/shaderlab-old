@@ -161,6 +161,7 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     m_cached_nodes.push_back(pos_trans);
     auto vert_end = std::make_shared<sw::node::VertexShader>();
     sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+    m_vert_nodes.push_back(vert_end);
 
 	auto frag_pos_trans = std::make_shared<sw::node::FragPosTrans>();
 	sw::make_connecting({ model, 0 },    { frag_pos_trans, sw::node::FragPosTrans::ID_MODEL });
@@ -188,8 +189,6 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     auto v_normal = std::make_shared<sw::node::Output>(FRAG_NORMAL_NAME, sw::t_nor3);
     sw::make_connecting({ norm_trans, 0 }, { v_normal, 0 });
     m_vert_nodes.push_back(v_normal);
-
-    m_vert_nodes.push_back(vert_end);
 }
 
 }
@@ -261,6 +260,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
         m_cached_nodes.push_back(pos_trans);
         auto vert_end = std::make_shared<sw::node::VertexShader>();
         sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+        m_vert_nodes.push_back(vert_end);
 
         // v_texcoord = a_texcoord;
         auto a_texcoord = std::make_shared<sw::node::Input>(VERT_TEXCOORD_NAME, sw::t_uv);
@@ -268,8 +268,6 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
         sw::make_connecting({ a_texcoord, 0 }, { v_texcoord, 0 });
         m_vert_nodes.push_back(v_texcoord);
         m_cached_nodes.push_back(a_texcoord);
-
-        m_vert_nodes.push_back(vert_end);
 
 		// frag
 		frag_end = CreateWeaverNode(frag_node);
