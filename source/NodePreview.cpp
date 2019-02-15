@@ -52,11 +52,12 @@ bool NodePreview::Update(const bp::UpdateParams& params)
 	m_draw_tex = bp::NodeHelper::HasInputNode<node::UV>(m_node);
 	if (m_draw_tex) {
 		ShaderWeaver sw(ShaderWeaver::SHADER_SPRITE, m_node, m_debug_print);
-		m_shader = sw.CreateShader(*params.wc2);
+		m_shader = sw.CreateShader2();
 	} else {
 		ShaderWeaver sw(ShaderWeaver::SHADER_SHAPE, m_node, m_debug_print);
-		m_shader = sw.CreateShader(*params.wc2);
+		m_shader = sw.CreateShader2();
 	}
+    m_shader->AddNotify(std::const_pointer_cast<pt2::WindowContext>(params.wc2));
     m_shader->Use();
 	return true;
 }
