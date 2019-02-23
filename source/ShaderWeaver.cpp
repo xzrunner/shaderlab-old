@@ -374,7 +374,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bo
 		assert(0);
 	}
 
-    auto m_frag_node = std::make_shared<sw::node::FragmentShader>();
+    m_frag_node = std::make_shared<sw::node::FragmentShader>();
     sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
 }
 
