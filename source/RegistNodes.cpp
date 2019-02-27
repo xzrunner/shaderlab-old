@@ -1,6 +1,5 @@
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
-#include "shadergraph/node/Commentary.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -289,20 +288,6 @@ REGIST_NODE_RTTI(Custom,                                                        
 (                                                                               \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("BodyStr")),           \
     rttr::metadata(ee0::PropLongStringTag(), true)                              \
-)
-)
-REGIST_NODE_RTTI(Commentary,                                                                       \
-.property("comment", &sg::node::Commentary::GetCommentText, &sg::node::Commentary::SetCommentText) \
-(                                                                                                  \
-	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Comment"))                               \
-)                                                                                                  \
-.property("width", &sg::node::Commentary::GetWidth, &sg::node::Commentary::SetWidth)               \
-(                                                                                                  \
-	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Width"))                                 \
-)                                                                                                  \
-.property("height", &sg::node::Commentary::GetHeight, &sg::node::Commentary::SetHeight)            \
-(                                                                                                  \
-	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Height"))                                \
 )
 )
 // anim
