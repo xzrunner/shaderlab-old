@@ -14,6 +14,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node\Commentary.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h" />
     <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />

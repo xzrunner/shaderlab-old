@@ -52,6 +52,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\Utility.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Commentary.h">
+      <Filter>nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
