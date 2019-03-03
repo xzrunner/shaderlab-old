@@ -17,24 +17,31 @@ void NodeHelper::TypePromote(const bp::Pins& p0, const bp::Pins& p1)
 	if (type0 == type1) {
 		return;
 	}
+
+    bool promote = false;
+
 	if (type0 >= PINS_DYNAMIC_VECTOR && type0 <= PINS_VECTOR4 &&
 		type1 >= PINS_DYNAMIC_VECTOR && type1 <= PINS_VECTOR4 &&
 		(p0.GetOldType() == PINS_DYNAMIC_VECTOR ||
-		 p1.GetOldType() == PINS_DYNAMIC_VECTOR))
-	{
-		int type = std::max(type0, type1);
-		SetPinsType(const_cast<bp::Pins&>(p0), type);
-		SetPinsType(const_cast<bp::Pins&>(p1), type);
+		 p1.GetOldType() == PINS_DYNAMIC_VECTOR)) {
+        promote = true;
 	}
 	if (type0 >= PINS_DYNAMIC_MATRIX && type0 <= PINS_MATRIX4 &&
 		type1 >= PINS_DYNAMIC_MATRIX && type1 <= PINS_MATRIX4 &&
 		(p0.GetOldType() == PINS_DYNAMIC_MATRIX ||
-		 p1.GetOldType() == PINS_DYNAMIC_MATRIX))
-	{
-		int type = std::max(type0, type1);
-		SetPinsType(const_cast<bp::Pins&>(p0), type);
-		SetPinsType(const_cast<bp::Pins&>(p1), type);
-	}
+		 p1.GetOldType() == PINS_DYNAMIC_MATRIX)) {
+        promote = true;
+    }
+    if (p0.GetOldType() == bp::PINS_ANY_VAR ||
+        p1.GetOldType() == bp::PINS_ANY_VAR) {
+        promote = true;
+    }
+
+    if (promote) {
+        int type = std::max(type0, type1);
+        SetPinsType(const_cast<bp::Pins&>(p0), type);
+        SetPinsType(const_cast<bp::Pins&>(p1), type);
+    }
 }
 
 void NodeHelper::TypePromote(const bp::Node& node)

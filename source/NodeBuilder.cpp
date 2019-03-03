@@ -164,6 +164,8 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
             default_type_str = "sg::" + default_type_str.substr(default_type_str.find("sw::") + strlen("sw::"));
         }
 			break;
+        case bp::PINS_ANY_VAR:
+            break;
 		default:
 			assert(0);
 		}
