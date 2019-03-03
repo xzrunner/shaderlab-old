@@ -98,7 +98,9 @@ void Node::InitPins(const std::string& name)
                 d.type = PINS_DYNAMIC_MATRIX;
 			} else if (t.interp == sw::VT_FUNC) {
 				d.type = PINS_FUNCTION;
-			}
+			} else if (t.precision == 0 && t.dim == 0 && t.interp == 0) {
+                d.type = bp::PINS_ANY_VAR;
+            }
 			// todo PINS_DYNAMIC_VECTOR PINS_COLOR PINS_DYNAMIC_MATRIX
 
 			auto& name = s.var.GetName();
