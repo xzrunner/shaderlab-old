@@ -45,6 +45,7 @@
 #include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
+#include <blueprint/node/GetLocalVar.h>
 #include <shaderweaver/Evaluator.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -196,12 +197,21 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 namespace sg
 {
 
-ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node, bool debug_print)
+ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
+                           bool debug_print, const std::vector<bp::NodePtr>& all_nodes)
 	: m_debug_print(debug_print)
 {
     sw::NodePtr frag_end = nullptr;
 
-	switch (shader_type)
+	// prepare m_map2setnodes
+    for (auto& n : all_nodes) {
+        if (n->get_type() == rttr::type::get<bp::node::SetLocalVar>()) {
+            auto set_node = std::static_pointer_cast<const bp::node::SetLocalVar>(n);
+            m_map2setnodes.insert({ set_node->GetVarName(), set_node });
+        }
+    }
+
+    switch (shader_type)
 	{
 	case SHADER_SHAPE:
 	{
@@ -417,7 +427,21 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	// create node
 	sw::NodePtr dst = nullptr;
 	auto type = node.get_type();
-	if (type == rttr::type::get<sg::node::Tex2DAsset>())
+    if (type == rttr::type::get<bp::node::GetLocalVar>())
+    {
+        auto& get_node = static_cast<const bp::node::GetLocalVar&>(node);
+        auto itr = m_map2setnodes.find(get_node.GetVarName());
+        if (itr != m_map2setnodes.end()) {
+            auto& conns = itr->second->GetAllInput()[0]->GetConnecting();
+            if (!conns.empty()) {
+                assert(conns.size() == 1);
+                auto& bp_from_port = conns[0]->GetFrom();
+                assert(bp_from_port);
+                return CreateWeaverNode(bp_from_port->GetParent());
+            }
+        }
+    }
+	else if (type == rttr::type::get<sg::node::Tex2DAsset>())
 	{
 		dst = std::make_shared<sw::node::Uniform>(node.GetName(), sw::t_tex2d);
 	}
@@ -437,6 +461,10 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = var.get_value<std::shared_ptr<sw::Node>>();
 		assert(dst);
 	}
+
+    if (!dst) {
+        return nullptr;
+    }
 
 	// init
 	if (type == rttr::type::get<node::Hue>())
@@ -632,31 +660,33 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
         if (!imports[i].var.IsDefaultInput()) {
             continue;
         }
-        auto from = CreateInputChild(node, i);
-        if (from.node.expired()) {
+        sw::Node::PortAddr from_port;
+        if (!CreateFromNode(node, i, from_port) ||
+            from_port.node.expired()) {
             continue;
         }
-        sw::make_connecting(from, { dst, i });
+        sw::make_connecting(from_port, { dst, i });
     }
 
-	if (dst) {
-		m_cached_nodes.push_back(dst);
-	}
+    m_cached_nodes.push_back(dst);
 
 	return dst;
 }
 
-sw::Node::PortAddr ShaderWeaver::CreateInputChild(const bp::Node& node, int input_idx)
+bool ShaderWeaver::CreateFromNode(const bp::Node& node, int input_idx, sw::Node::PortAddr& from_port)
 {
-	auto& to_port = node.GetAllInput()[input_idx];
-	auto& conns = to_port->GetConnecting();
-	assert(conns.size() == 1);
-	auto& from_port = conns[0]->GetFrom();
-	assert(from_port);
+    auto& to_port = node.GetAllInput()[input_idx];
+    auto& conns = to_port->GetConnecting();
+    if (conns.empty()) {
+        return false;
+    }
+    assert(conns.size() == 1);
+    auto& bp_from_port = conns[0]->GetFrom();
+    assert(bp_from_port);
 
-	auto ret_node = CreateWeaverNode(from_port->GetParent());
-	int  ret_idx  = from_port->GetPosIdx();
-	return sw::Node::PortAddr(ret_node, ret_idx);
+    from_port.node = CreateWeaverNode(bp_from_port->GetParent());
+    from_port.idx  = bp_from_port->GetPosIdx();
+    return true;
 }
 
 pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const
