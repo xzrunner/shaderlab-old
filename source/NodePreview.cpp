@@ -49,17 +49,33 @@ void NodePreview::Draw(const sm::Matrix2D& mt) const
 
 bool NodePreview::Update(const bp::UpdateParams& params)
 {
-	m_draw_tex = bp::NodeHelper::HasInputNode<node::UV>(m_node);
-	if (m_draw_tex) {
+    auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+    int old_vl_id = rc.GetBindedVertexLayoutID();
+
+    bool draw_tex = bp::NodeHelper::HasInputNode<node::UV>(m_node);
+    std::shared_ptr<pt2::Shader> shader = nullptr;
+	if (draw_tex) {
 		ShaderWeaver sw(ShaderWeaver::SHADER_SPRITE, m_node, m_debug_print);
-		m_shader = sw.CreateShader2();
+		shader = sw.CreateShader2();
 	} else {
 		ShaderWeaver sw(ShaderWeaver::SHADER_SHAPE, m_node, m_debug_print);
-		m_shader = sw.CreateShader2();
+		shader = sw.CreateShader2();
 	}
-    m_shader->AddNotify(std::const_pointer_cast<pt2::WindowContext>(params.wc2));
-    m_shader->Use();
-	return true;
+
+    if (shader->IsValid())
+    {
+        m_draw_tex = draw_tex;
+        m_shader = shader;
+
+        m_shader->AddNotify(std::const_pointer_cast<pt2::WindowContext>(params.wc2));
+        m_shader->Use();
+        return true;
+    }
+    else
+    {
+        rc.BindVertexLayout(old_vl_id);
+        return false;
+    }
 }
 
 sm::Matrix2D NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2D& mt)
