@@ -7,6 +7,9 @@
 #include <ee0/MessageID.h>
 #include <ee0/WxPropHelper.h>
 #include <blueprint/MessageID.h>
+#include <blueprint/node/Input.h>
+#include <blueprint/node/Output.h>
+#include <blueprint/node/Function.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
@@ -32,8 +35,8 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 
 	m_pg->Clear();
 
-	auto type = node->get_type();
-	for (auto& prop : type.get_properties())
+	auto node_type = node->get_type();
+	for (auto& prop : node_type.get_properties())
 	{
 		auto ui_info_obj = prop.get_metadata(ee0::UIMetaInfoTag());
 		if (!ui_info_obj.is_valid()) {
@@ -41,8 +44,21 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 		}
 
 		auto ui_info = ui_info_obj.get_value<ee0::UIMetaInfo>();
-		auto type = prop.get_type();
-		if (type == rttr::type::get<PropAngleType>())
+        if ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
+            (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE))
+        {
+            const wxChar* VAR_TYPES[] = { wxT("Int"), wxT("Float"), wxT("Vector2"), wxT("Vector3"), wxT("Vector4"), /*wxT("Color"),*/
+                                          wxT("Matrix33"), wxT("Matrix44"), wxT("Sampler 1D"), wxT("Sampler 2D"), wxT("Sampler 3D"), wxT("Sampler Cube"), NULL };
+			auto mode_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, VAR_TYPES);
+			auto mode = prop.get_value(node).get_value<int>();
+			mode_prop->SetValue(static_cast<int>(mode));
+			m_pg->Append(mode_prop);
+
+            continue;
+        }
+
+		auto prop_type = prop.get_type();
+		if (prop_type == rttr::type::get<PropAngleType>())
 		{
 			const wxChar* ANGLE_TYPES[] = { wxT("Deg"), wxT("Rad"), NULL };
 			auto type_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, ANGLE_TYPES);
@@ -50,7 +66,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			type_prop->SetValue(static_cast<int>(angle_type));
 			m_pg->Append(type_prop);
 		}
-		else if (type == rttr::type::get<PropMultiChannels>())
+		else if (prop_type == rttr::type::get<PropMultiChannels>())
 		{
 			const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 			const long    CHANNEL_VALUES[] = {
@@ -62,7 +78,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			auto channels = prop.get_value(node).get_value<PropMultiChannels>().channels;
 			m_pg->Append(new wxFlagsProperty(ui_info.desc, wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, channels));
 		}
-		else if (type == rttr::type::get<PropBlendMode>())
+		else if (prop_type == rttr::type::get<PropBlendMode>())
 		{
 			const wxChar* MODES[] = { wxT("Burn"), wxT("Darken"), wxT("Difference"), wxT("Dodge"), wxT("Divide"), wxT("Exclusion"),
 				wxT("HardLight"), wxT("HardMix"), wxT("Lighten"), wxT("LinearBurn"), wxT("LinearDodge"), wxT("LinearLight"),
@@ -73,7 +89,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			mode_prop->SetValue(static_cast<int>(mode));
 			m_pg->Append(mode_prop);
 		}
-		else if (type == rttr::type::get<PropColorTrans>())
+		else if (prop_type == rttr::type::get<PropColorTrans>())
 		{
 			const wxChar* COL_TYPES[] = { wxT("RGB"), wxT("Linear"), wxT("HSV"), NULL };
 
@@ -87,7 +103,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			to_prop->SetValue(static_cast<int>(type.to));
 			m_pg->Append(to_prop);
 		}
-		else if (type == rttr::type::get<PropChannelArray>())
+		else if (prop_type == rttr::type::get<PropChannelArray>())
 		{
 			const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 
@@ -110,7 +126,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			m_pg->Append(a_prop);
 		}
 		// math
-		else if (type == rttr::type::get<PropMathBaseType>())
+		else if (prop_type == rttr::type::get<PropMathBaseType>())
 		{
 			const wxChar* EXP_TYPES[] = { wxT("BaseE"), wxT("Base2"), wxT("Base10"), NULL };
 			auto type_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, EXP_TYPES);
@@ -118,7 +134,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			type_prop->SetValue(static_cast<int>(type));
 			m_pg->Append(type_prop);
 		}
-		else if (type == rttr::type::get<MatrixType>())
+		else if (prop_type == rttr::type::get<MatrixType>())
 		{
 			const wxChar* TYPES[] = { wxT("Row"), wxT("Column"), NULL };
 			auto type_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, TYPES);
@@ -127,7 +143,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 			m_pg->Append(type_prop);
 		}
 		// utility
-		else if (type == rttr::type::get<CmpType>())
+		else if (prop_type == rttr::type::get<CmpType>())
 		{
 			const wxChar* CMP_TYPES[] = {
 				wxT("Equal"), wxT("Not Equal"), wxT("Less"), wxT("Less or Equal"),
@@ -180,20 +196,28 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			continue;
 		}
 		auto ui_info = ui_info_obj.get_value<ee0::UIMetaInfo>();
-		auto type = prop.get_type();
-		if (type == rttr::type::get<PropAngleType>() && key == ui_info.desc)
+        if (key == ui_info.desc &&
+            ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
+             (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE)))
+        {
+            prop.set_value(m_node, wxANY_AS(val, int));
+            continue;
+        }
+
+		auto prop_type = prop.get_type();
+		if (prop_type == rttr::type::get<PropAngleType>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, static_cast<PropAngleType>(wxANY_AS(val, int)));
 		}
-		else if (type == rttr::type::get<PropMultiChannels>() && key == ui_info.desc)
+		else if (prop_type == rttr::type::get<PropMultiChannels>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, PropMultiChannels(wxANY_AS(val, int)));
 		}
-		else if (type == rttr::type::get<PropBlendMode>() && key == ui_info.desc)
+		else if (prop_type == rttr::type::get<PropBlendMode>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, PropBlendMode(wxANY_AS(val, int)));
 		}
-		else if (type == rttr::type::get<PropColorTrans>() && (key == "From" || key == "To"))
+		else if (prop_type == rttr::type::get<PropColorTrans>() && (key == "From" || key == "To"))
 		{
 			auto type = prop.get_value(m_node).get_value<PropColorTrans>();
 			if (key == "From") {
@@ -203,7 +227,7 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			}
 			prop.set_value(m_node, type);
 		}
-		else if (type == rttr::type::get<PropChannelArray>() && (key == "R" || key == "G" || key == "B" || key == "A"))
+		else if (prop_type == rttr::type::get<PropChannelArray>() && (key == "R" || key == "G" || key == "B" || key == "A"))
 		{
 			auto channels = prop.get_value(m_node).get_value<PropChannelArray>();
 			if (key == "R") {
@@ -218,15 +242,15 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 			prop.set_value(m_node, channels);
 		}
 		// math
-		else if (type == rttr::type::get<PropMathBaseType>() && key == ui_info.desc)
+		else if (prop_type == rttr::type::get<PropMathBaseType>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, static_cast<PropMathBaseType>(wxANY_AS(val, int)));
 		}
-		else if (type == rttr::type::get<MatrixType>() && key == ui_info.desc)
+		else if (prop_type == rttr::type::get<MatrixType>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, static_cast<MatrixType>(wxANY_AS(val, int)));
 		}
-		else if (type == rttr::type::get<CmpType>() && key == ui_info.desc)
+		else if (prop_type == rttr::type::get<CmpType>() && key == ui_info.desc)
 		{
 			prop.set_value(m_node, static_cast<CmpType>(wxANY_AS(val, int)));
 		}
