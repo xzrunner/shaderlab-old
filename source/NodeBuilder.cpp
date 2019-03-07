@@ -16,9 +16,8 @@
 namespace sg
 {
 
-bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
-	                            const std::string& type, const std::string& name,
-	                            const sm::vec2& pos, bool is_default)
+bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes, const std::string& type,
+                                const sm::vec2& pos, bool is_default)
 {
 	auto rt_type = rttr::type::get_by_name(type);
 	assert(rt_type.is_valid());
@@ -27,10 +26,6 @@ bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes,
 	auto bp_node = rt_obj.get_value<bp::NodePtr>();
 	if (!bp_node) {
 		return nullptr;
-	}
-
-	if (!name.empty()) {
-		bp_node->SetName(name);
 	}
 
 	bp_node->SetPos(pos);
@@ -274,9 +269,9 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	if (type == rttr::type::get<node::Sprite>())
 	{
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_MUL,
-			rttr::type::get<node::Vector3>().get_name().to_string(), "mul"))->SetValue(sm::vec3(1, 1, 1));
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue(sm::vec3(1, 1, 1));
 		std::static_pointer_cast<node::Vector3>(CreateDefault(nodes, node, node::Sprite::ID_COL_ADD,
-			rttr::type::get<node::Vector3>().get_name().to_string(), "add"))->SetValue(sm::vec3(0, 0, 0));
+			rttr::type::get<node::Vector3>().get_name().to_string()))->SetValue(sm::vec3(0, 0, 0));
 	}
 	else if (type == rttr::type::get<node::Raymarching>())
 	{
@@ -286,14 +281,14 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 }
 
 bp::NodePtr NodeBuilder::CreateDefault(std::vector<n0::SceneNodePtr>& nodes, bp::Node& parent,
-	                                   int idx, const std::string& type, const std::string& name)
+	                                   int idx, const std::string& type)
 {
 	const float dx = -65;
 
 	auto pos = bp::NodeLayout::GetPinsPos(parent, true, idx);
 	pos.x += dx;
 
-	auto child = Create(nodes, type, name, pos, true);
+	auto child = Create(nodes, type, pos, true);
 	bp::make_connecting(child->GetAllOutput()[0], parent.GetAllInput()[idx]);
 
 	return child;

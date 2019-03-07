@@ -443,7 +443,8 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     }
 	else if (type == rttr::type::get<sg::node::Tex2DAsset>())
 	{
-		dst = std::make_shared<sw::node::Uniform>(node.GetName(), sw::t_tex2d);
+        auto& tex2d = static_cast<const sg::node::Tex2DAsset&>(node);
+		dst = std::make_shared<sw::node::Uniform>(tex2d.GetName(), sw::t_tex2d);
 	}
 	else
 	{

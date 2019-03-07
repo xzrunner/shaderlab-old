@@ -12,6 +12,9 @@ class Custom : public Node
 public:
     Custom();
 
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
+
     auto& GetHeadStr() const { return m_head_str; }
     void  SetHeadStr(const std::string& str) { m_head_str = str; }
 
@@ -22,6 +25,8 @@ private:
     static int TransToPinsType(const std::string& str);
 
 private:
+    std::string m_name;
+
     std::string m_head_str, m_body_str;
 
 	RTTR_ENABLE(Node)

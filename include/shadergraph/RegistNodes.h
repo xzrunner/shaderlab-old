@@ -108,6 +108,8 @@ public:
 		UpdateTitle();
 	}
 	virtual void Refresh() override { UpdateTitle(); }
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
 	auto GetValue() const { return m_val; }
 	void SetValue(bool val) {
 		m_val = val;
@@ -119,6 +121,7 @@ private:
 		m_title = m_val ? "true" : "false";
 	}
 private:
+    std::string m_name;
 	bool m_val = true;
 	RTTR_ENABLE(Node)
 }; // Boolean
@@ -131,6 +134,8 @@ public:
 		UpdateTitle();
 	}
 	virtual void Refresh() override { UpdateTitle(); }
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
 	auto GetValue() const { return m_val; }
 	void SetValue(float val) {
 		m_val = val;
@@ -142,6 +147,7 @@ private:
 		m_title = cpputil::StringHelper::ToString(m_val, 2);
 	}
 private:
+    std::string m_name;
 	float m_val = 0;
 	RTTR_ENABLE(Node)
 }; // Vector1
@@ -153,6 +159,8 @@ public:
 		UpdateTitle();
 	}
 	virtual void Refresh() override { UpdateTitle(); }
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec2& val) {
 		m_val = val;
@@ -170,6 +178,7 @@ private:
 				  cpputil::StringHelper::ToString(m_val.y, 2);
 	}
 private:
+    std::string m_name;
 	sm::vec2 m_val;
 	RTTR_ENABLE(Node)
 }; // Vector2
@@ -181,6 +190,8 @@ public:
 		UpdateTitle();
 	}
 	virtual void Refresh() override { UpdateTitle(); }
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec3& val) {
 		m_val = val;
@@ -201,6 +212,7 @@ private:
 				  cpputil::StringHelper::ToString(m_val.z, 2);
 	}
 private:
+    std::string m_name;
 	sm::vec3 m_val;
 	RTTR_ENABLE(Node)
 }; // Vector3
@@ -212,6 +224,8 @@ public:
 		UpdateTitle();
 	}
 	virtual void Refresh() override { UpdateTitle(); }
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
 	auto& GetValue() const { return m_val; }
 	void SetValue(const sm::vec4& val) {
 		m_val = val;
@@ -235,6 +249,7 @@ private:
 				  cpputil::StringHelper::ToString(m_val.w, 2);
 	}
 private:
+    std::string m_name;
 	sm::vec4 m_val;
 	RTTR_ENABLE(Node)
 }; // Vector4
@@ -245,28 +260,41 @@ public:
 	UV() : Node("UV", false)
 	{
 		// todo channel
-		SetName("v_texcoord");
+		SetName("v_texcoord");      // todozz1234
 		InitPins("UV");
 	}
+    void  SetName(const std::string& name) { m_name = name; }
+    auto& GetName() const { return m_name; }
+private:
+    std::string m_name;
 	RTTR_ENABLE(Node)
 }; // UV
-SG_DEFINE_NODE(Matrix2, false, false, false,            \
-	auto& GetValue() const { return m_val; }            \
-	void SetValue(const sm::mat2& val) { m_val = val; } \
-private:                                                \
-	sm::mat2 m_val;                                     \
+SG_DEFINE_NODE(Matrix2, false, false, false,                  \
+    void  SetName(const std::string& name) { m_name = name; } \
+    auto& GetName() const { return m_name; }                  \
+	auto& GetValue() const { return m_val; }                  \
+	void SetValue(const sm::mat2& val) { m_val = val; }       \
+private:                                                      \
+    std::string m_name;                                       \
+	sm::mat2 m_val;                                           \
 )
-SG_DEFINE_NODE(Matrix3, false, false, false,            \
-	auto& GetValue() const { return m_val; }            \
-	void SetValue(const sm::mat3& val) { m_val = val; } \
-private:                                                \
-	sm::mat3 m_val;                                     \
+SG_DEFINE_NODE(Matrix3, false, false, false,                  \
+    void  SetName(const std::string& name) { m_name = name; } \
+    auto& GetName() const { return m_name; }                  \
+	auto& GetValue() const { return m_val; }                  \
+	void SetValue(const sm::mat3& val) { m_val = val; }       \
+private:                                                      \
+    std::string m_name;                                       \
+	sm::mat3 m_val;                                           \
 )
-SG_DEFINE_NODE(Matrix4, false, false, false,            \
-	auto& GetValue() const { return m_val; }            \
-	void SetValue(const sm::mat4& val) { m_val = val; } \
-private:                                                \
-	sm::mat4 m_val;                                     \
+SG_DEFINE_NODE(Matrix4, false, false, false,                  \
+    void  SetName(const std::string& name) { m_name = name; } \
+    auto& GetName() const { return m_name; }                  \
+	auto& GetValue() const { return m_val; }                  \
+	void SetValue(const sm::mat4& val) { m_val = val; }       \
+private:                                                      \
+    std::string m_name;                                       \
+	sm::mat4 m_val;                                           \
 )
 SG_DEFINE_NODE_PREVIEW(SampleTex2D)
 class Tex2DAsset : public Node
