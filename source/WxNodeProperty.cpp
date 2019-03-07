@@ -171,14 +171,42 @@ void WxNodeProperty::InitLayout()
 	m_pg = new wxPropertyGrid(this, -1, wxDefaultPosition, wxSize(300, 600),
 		wxPG_SPLITTER_AUTO_CENTER | wxPG_BOLD_MODIFIED
 	);
+    Connect(m_pg->GetId(), wxEVT_PG_CHANGING, wxPropertyGridEventHandler(
+        WxNodeProperty::OnPropertyGridChanging));
 	Connect(m_pg->GetId(), wxEVT_PG_CHANGED, wxPropertyGridEventHandler(
-		WxNodeProperty::OnPropertyGridChange));
+		WxNodeProperty::OnPropertyGridChanged));
 	sizer->Add(m_pg, 1, wxEXPAND);
 
 	SetSizer(sizer);
 }
 
-void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
+void WxNodeProperty::OnPropertyGridChanging(wxPropertyGridEvent& event)
+{
+    if (!m_node) {
+        return;
+    }
+
+    wxPGProperty* property = event.GetProperty();
+    auto key = property->GetName();
+    wxAny val = property->GetValue();
+
+    auto node_type = m_node->get_type();
+
+    for (auto& prop : node_type.get_properties())
+    {
+        auto ui_info_obj = prop.get_metadata(ee0::UIMetaInfoTag());
+        if (!ui_info_obj.is_valid()) {
+            continue;
+        }
+        auto ui_info = ui_info_obj.get_value<ee0::UIMetaInfo>();
+        if (prop.get_metadata(ee0::PropOpenFileTag()).is_valid() && key == ui_info.desc) {
+            event.Veto();
+            continue;
+        }
+    }
+}
+
+void WxNodeProperty::OnPropertyGridChanged(wxPropertyGridEvent& event)
 {
 	if (!m_node) {
 		return;
@@ -191,6 +219,9 @@ void WxNodeProperty::OnPropertyGridChange(wxPropertyGridEvent& event)
 	auto node_type = m_node->get_type();
 	for (auto& prop : node_type.get_properties())
 	{
+        if (prop.get_metadata(ee0::PropOpenFileTag()).is_valid()) {
+            continue;
+        }
 		auto ui_info_obj = prop.get_metadata(ee0::UIMetaInfoTag());
 		if (!ui_info_obj.is_valid()) {
 			continue;

@@ -23,7 +23,8 @@ public:
 private:
 	void InitLayout();
 
-	void OnPropertyGridChange(wxPropertyGridEvent& event);
+    void OnPropertyGridChanging(wxPropertyGridEvent& event);
+	void OnPropertyGridChanged(wxPropertyGridEvent& event);
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
