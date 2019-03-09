@@ -1,8 +1,9 @@
 #include "shadergraph/NodeHelper.h"
-#include "shadergraph/Pins.h"
 #include "shadergraph/Node.h"
+#include "shadergraph/PinsType.h"
 
 #include <blueprint/Connecting.h>
+#include <blueprint/Pins.h>
 
 #include <algorithm>
 

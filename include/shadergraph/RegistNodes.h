@@ -2,7 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/ReflectPropTypes.h"
-#include "shadergraph/Pins.h"
+#include "shadergraph/PinsType.h"
 
 #include <shaderweaver/node/Blend.h>
 #include <cpputil/StringHelper.h>

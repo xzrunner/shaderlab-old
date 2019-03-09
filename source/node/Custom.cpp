@@ -1,7 +1,8 @@
 #include "shadergraph/node/Custom.h"
-#include "shadergraph/Pins.h"
+#include "shadergraph/PinsType.h"
 
 #include <cpputil/StringHelper.h>
+#include <blueprint/Pins.h>
 
 namespace sg
 {

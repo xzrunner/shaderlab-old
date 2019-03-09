@@ -2,7 +2,7 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/NodeHelper.h"
 #include "shadergraph/Node.h"
-#include "shadergraph/Pins.h"
+#include "shadergraph/PinsCallback.h"
 
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pins.h>
@@ -23,6 +23,8 @@ ShaderGraph::ShaderGraph()
 
 	Init();
 	InitNodes();
+
+    InitPinsCallback();
 }
 
 void ShaderGraph::Init()

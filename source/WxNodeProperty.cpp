@@ -12,11 +12,51 @@
 #include <blueprint/node/Function.h>
 
 #include <node0/SceneNode.h>
+#include <node0/CompAsset.h>
+#include <node0/CompComplex.h>
 #include <node2/CompBoundingBox.h>
+#include <ns/CompFactory.h>
 
 #include <wx/sizer.h>
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
+
+namespace
+{
+
+const wxChar* PINS_IDX_TITLE[] = { wxT("Unknown"), wxT("Bool"), wxT("Vec1"), wxT("Vec2"), wxT("Vec3"), wxT("Vec4"),
+                                   wxT("Mat2"), wxT("Mat3"), wxT("Mat4"), wxT("Tex2D"), /*wxT("Tex3D"), */wxT("TexCube"), NULL };
+
+const int PINS_IDX_TO_TYPE[] = {
+    bp::PINS_ANY_VAR,
+
+    sg::PINS_BOOLEAN,
+    sg::PINS_VECTOR1,
+    sg::PINS_VECTOR2,
+    sg::PINS_VECTOR3,
+    sg::PINS_VECTOR4,
+    sg::PINS_MATRIX2,
+    sg::PINS_MATRIX3,
+    sg::PINS_MATRIX4,
+    sg::PINS_TEXTURE2D,
+//    sg::PINS_TEXTURE3D,
+    sg::PINS_CUBE_MAP,
+};
+
+int PinsTypeToIdx(int type)
+{
+    const int num = sizeof(PINS_IDX_TO_TYPE) / sizeof(PINS_IDX_TO_TYPE[0]);
+    for (int i = 0; i < num; ++i)
+    {
+        if (PINS_IDX_TO_TYPE[i] == type) {
+            return i;
+        }
+    }
+    assert(0);
+    return -1;
+}
+
+}
 
 namespace sg
 {
@@ -47,11 +87,12 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
         if ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
             (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE))
         {
-            const wxChar* VAR_TYPES[] = { wxT("Int"), wxT("Float"), wxT("Vector2"), wxT("Vector3"), wxT("Vector4"), /*wxT("Color"),*/
-                                          wxT("Matrix33"), wxT("Matrix44"), wxT("Sampler 1D"), wxT("Sampler 2D"), wxT("Sampler 3D"), wxT("Sampler Cube"), NULL };
-			auto mode_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, VAR_TYPES);
+			auto mode_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, PINS_IDX_TITLE);
 			auto mode = prop.get_value(node).get_value<int>();
-			mode_prop->SetValue(static_cast<int>(mode));
+            if (mode < 0) {
+                mode = bp::PINS_ANY_VAR;
+            }
+			mode_prop->SetValue(PinsTypeToIdx(mode));
 			m_pg->Append(mode_prop);
 
             continue;
@@ -156,7 +197,22 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 		}
 		else
 		{
-            ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop, [&]() {
+            ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop, [&](const std::string& filepath)
+            {
+                if (node->get_type() == rttr::type::get<bp::node::Function>())
+                {
+                    n0::CompAssetPtr casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+                    assert(casset->TypeID() == n0::GetAssetUniqueTypeID<n0::CompComplex>());
+                    auto& ccomplex = std::static_pointer_cast<n0::CompComplex>(casset);
+                    auto func_node = std::static_pointer_cast<bp::node::Function>(node);
+                    bp::node::Function::SetChildren(func_node, ccomplex->GetAllChildren());
+
+                    // update aabb
+                    auto& st = node->GetStyle();
+                    m_obj->GetUniqueComp<n2::CompBoundingBox>().SetSize(
+                        *m_obj, sm::rect(st.width, st.height)
+                    );
+                }
                 m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
                 m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
             });
@@ -231,7 +287,7 @@ void WxNodeProperty::OnPropertyGridChanged(wxPropertyGridEvent& event)
             ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
              (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE)))
         {
-            prop.set_value(m_node, wxANY_AS(val, int));
+            prop.set_value(m_node, PINS_IDX_TO_TYPE[wxANY_AS(val, int)]);
             continue;
         }
 

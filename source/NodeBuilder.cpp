@@ -1,6 +1,5 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/RegistNodes.h"
-#include "shadergraph/Pins.h"
 #include "shadergraph/Utility.h"
 
 #include <node0/SceneNode.h>
@@ -10,6 +9,7 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/NodeLayout.h>
+#include <blueprint/Pins.h>
 #include <shaderweaver/Node.h>
 #include <shaderweaver/node/Raymarching.h>
 

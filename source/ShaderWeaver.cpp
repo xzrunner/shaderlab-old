@@ -1,5 +1,4 @@
 #include "shadergraph/ShaderWeaver.h"
-#include "shadergraph/Pins.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
 

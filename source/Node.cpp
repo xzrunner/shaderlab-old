@@ -1,9 +1,10 @@
 #include "shadergraph/Node.h"
 #include "shadergraph/NodePreview.h"
-#include "shadergraph/Pins.h"
 #include "shadergraph/Utility.h"
+#include "shadergraph/PinsType.h"
 
 #include <shaderweaver/Node.h>
+#include <blueprint/Pins.h>
 
 namespace sg
 {
@@ -123,7 +124,7 @@ void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
 	int idx = 0;
 	for (auto& d : pins)
 	{
-		auto p = std::make_shared<Pins>(is_input, idx++, d.type, d.name, *this);
+		auto p = std::make_shared<bp::Pins>(is_input, idx++, d.type, d.name, *this);
 		if (!CheckPinsName(*p, dst)) {
 			assert(0);
 			return;
