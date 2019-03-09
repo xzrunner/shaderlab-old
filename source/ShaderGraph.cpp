@@ -40,6 +40,10 @@ void ShaderGraph::Init()
 	cb.on_connected = [](bp::Pins& from, bp::Pins& to) {
         TypeDeduction::DeduceConn(from, to);
 	};
+    cb.on_disconnected = [](bp::Pins& from, bp::Pins& to) {
+        TypeDeduction::DeduceNode(from.GetParent());
+        TypeDeduction::DeduceNode(to.GetParent());
+    };
 	bp::NodeBuilder::Instance()->RegistCB(cb);
 }
 
