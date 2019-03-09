@@ -82,6 +82,10 @@ bool can_type_cast_func(int type_from, int type_to)
 	if (type_to == sg::PINS_FUNCTION) {
 		return true;
 	}
+    if (type_from == bp::PINS_ANY_VAR ||
+        type_to == bp::PINS_ANY_VAR) {
+        return true;
+    }
 
 	switch (type_from)
 	{

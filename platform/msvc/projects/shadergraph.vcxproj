@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\TypeDeduction.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Utility.h" />
     <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
   </ItemGroup>
@@ -37,6 +38,7 @@
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
+    <ClCompile Include="..\..\..\source\TypeDeduction.cpp" />
     <ClCompile Include="..\..\..\source\Utility.cpp" />
     <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />

@@ -7,14 +7,23 @@
     <Filter Include="view">
       <UniqueIdentifier>{9519954e-3cff-4973-a1e7-02f18fde0c70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="dataset">
-      <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nodes">
       <UniqueIdentifier>{93d0111d-b3b0-46b8-a29f-b28825f016d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="utility">
       <UniqueIdentifier>{b596225b-9622-46e8-b566-0bb93c2c0c99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rtti">
+      <UniqueIdentifier>{4356cbf3-0b7a-41a5-b5bf-20286053899b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pins">
+      <UniqueIdentifier>{498e6076-0797-445f-8f99-417453d9452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="node">
+      <UniqueIdentifier>{780c40d4-62a2-4334-8df5-ea3e1628b8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="trans">
+      <UniqueIdentifier>{6c939e9c-b617-4427-b93d-240a2a9f85b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -23,25 +32,16 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h">
-      <Filter>dataset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Node.h">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h">
-      <Filter>dataset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
-      <Filter>dataset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h">
       <Filter>nodes</Filter>
@@ -49,11 +49,23 @@
     <ClInclude Include="..\..\..\include\shadergraph\Utility.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
+      <Filter>rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
+      <Filter>rtti</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\PinsType.h">
-      <Filter>dataset</Filter>
+      <Filter>pins</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\PinsCallback.h">
-      <Filter>dataset</Filter>
+      <Filter>pins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
+      <Filter>trans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\TypeDeduction.h">
+      <Filter>pins</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,26 +77,16 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodeHelper.cpp">
-      <Filter>dataset</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ShaderWeaver.cpp">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Node.cpp">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodePreview.cpp">
-      <Filter>dataset</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
-    <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp">
-      <Filter>dataset</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\RegistNodes.cpp">
-      <Filter>dataset</Filter>
+      <Filter>node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Custom.cpp">
       <Filter>nodes</Filter>
@@ -92,8 +94,23 @@
     <ClCompile Include="..\..\..\source\Utility.cpp">
       <Filter>utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
+      <Filter>rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\RegistNodes.cpp">
+      <Filter>rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp">
+      <Filter>rtti</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\source\PinsCallback.cpp">
-      <Filter>dataset</Filter>
+      <Filter>pins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ShaderWeaver.cpp">
+      <Filter>trans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\TypeDeduction.cpp">
+      <Filter>pins</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

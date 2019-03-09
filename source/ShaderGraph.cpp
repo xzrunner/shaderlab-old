@@ -3,6 +3,7 @@
 #include "shadergraph/NodeHelper.h"
 #include "shadergraph/Node.h"
 #include "shadergraph/PinsCallback.h"
+#include "shadergraph/TypeDeduction.h"
 
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pins.h>
@@ -37,9 +38,7 @@ void ShaderGraph::Init()
 		NodeHelper::RemoveDefaultNode(to);
 	};
 	cb.after_connected = [](bp::Pins& from, bp::Pins& to) {
-		NodeHelper::TypePromote(from, to);
-		NodeHelper::TypePromote(from.GetParent());
-		NodeHelper::TypePromote(to.GetParent());
+        TypeDeduction::DeduceConn(from, to);
 	};
 	bp::NodeBuilder::Instance()->RegistCB(cb);
 }
