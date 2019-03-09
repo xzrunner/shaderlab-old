@@ -31,13 +31,13 @@ ShaderGraph::ShaderGraph()
 void ShaderGraph::Init()
 {
 	bp::NodeBuilder::Callback cb;
-	cb.after_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
+	cb.on_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
 		NodeBuilder::CreateDefaultInputs(nodes, node);
 	};
-	cb.before_connected = [](bp::Pins& from, bp::Pins& to) {
+	cb.on_connecting = [](bp::Pins& from, bp::Pins& to) {
 		NodeHelper::RemoveDefaultNode(to);
 	};
-	cb.after_connected = [](bp::Pins& from, bp::Pins& to) {
+	cb.on_connected = [](bp::Pins& from, bp::Pins& to) {
         TypeDeduction::DeduceConn(from, to);
 	};
 	bp::NodeBuilder::Instance()->RegistCB(cb);
