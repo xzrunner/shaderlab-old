@@ -1,12 +1,14 @@
 #include "shadergraph/WxNodeProperty.h"
 #include "shadergraph/ReflectPropTypes.h"
 #include "shadergraph/RegistNodes.h"
+#include "shadergraph/TypeDeduction.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/ReflectPropTypes.h>
 #include <ee0/MessageID.h>
 #include <ee0/WxPropHelper.h>
 #include <blueprint/MessageID.h>
+#include <blueprint/Connecting.h>
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <blueprint/node/Function.h>
@@ -288,6 +290,18 @@ void WxNodeProperty::OnPropertyGridChanged(wxPropertyGridEvent& event)
              (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE)))
         {
             prop.set_value(m_node, PINS_IDX_TO_TYPE[wxANY_AS(val, int)]);
+            // type deduce
+            if (node_type == rttr::type::get<bp::node::Input>()) {
+                auto input = std::static_pointer_cast<bp::node::Input>(m_node);
+                for (auto& c : input->GetAllOutput()[0]->GetConnecting()) {
+                    TypeDeduction::DeduceConn(*c->GetFrom(), *c->GetTo());
+                }
+            } else if (node_type == rttr::type::get<bp::node::Output>()) {
+                auto output = std::static_pointer_cast<bp::node::Output>(m_node);
+                for (auto& c : output->GetAllInput()[0]->GetConnecting()) {
+                    TypeDeduction::DeduceConn(*c->GetFrom(), *c->GetTo());
+                }
+            }
             continue;
         }
 

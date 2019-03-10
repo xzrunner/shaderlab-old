@@ -4,6 +4,8 @@
 #include <blueprint/Pins.h>
 #include <blueprint/Node.h>
 #include <blueprint/Connecting.h>
+#include <blueprint/node/Input.h>
+#include <blueprint/node/Output.h>
 
 namespace
 {
@@ -76,20 +78,33 @@ void TypeDeduction::DeduceConn(const bp::Pins& p0, const bp::Pins& p1)
         } else if (old_t1 == bp::PINS_ANY_VAR) {
             new_t1 = type0;
         }
+
+        auto pp0 = p0.GetParent().get_type();
+        auto pp1 = p1.GetParent().get_type();
+        if (pp0 == rttr::type::get<bp::node::Input>() ||
+            pp0 == rttr::type::get<bp::node::Output>()) {
+            new_t0 = type0;
+        } else if (pp1 == rttr::type::get<bp::node::Input>() ||
+                   pp1 == rttr::type::get<bp::node::Output>()) {
+            new_t1 = type1;
+        }
     }
 
-    if (new_t0 != type0) {
-        SetPinsType(const_cast<bp::Pins&>(p0), new_t0);
-        DeduceNode(p0.GetParent());
-    }
-    if (new_t1 != type1) {
-        SetPinsType(const_cast<bp::Pins&>(p1), new_t1);
-        DeduceNode(p1.GetParent());
-    }
+    SetPinsType(const_cast<bp::Pins&>(p0), new_t0);
+    DeduceNode(p0.GetParent());
+
+    SetPinsType(const_cast<bp::Pins&>(p1), new_t1);
+    DeduceNode(p1.GetParent());
 }
 
 void TypeDeduction::DeduceNode(const bp::Node& node)
 {
+    auto node_type = node.get_type();
+    if (node_type == rttr::type::get<bp::node::Input>() ||
+        node_type == rttr::type::get<bp::node::Output>()) {
+        return;
+    }
+
     std::vector<int> in_types, out_types;
     auto& inputs = node.GetAllInput();
     auto& outputs = node.GetAllOutput();
