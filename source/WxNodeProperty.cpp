@@ -2,6 +2,7 @@
 #include "shadergraph/ReflectPropTypes.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/TypeDeduction.h"
+#include "shadergraph/NodeHelper.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/ReflectPropTypes.h>
@@ -201,19 +202,8 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 		{
             ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop, [&](const std::string& filepath)
             {
-                if (node->get_type() == rttr::type::get<bp::node::Function>())
-                {
-                    n0::CompAssetPtr casset = ns::CompFactory::Instance()->CreateAsset(filepath);
-                    assert(casset->TypeID() == n0::GetAssetUniqueTypeID<n0::CompComplex>());
-                    auto& ccomplex = std::static_pointer_cast<n0::CompComplex>(casset);
-                    auto func_node = std::static_pointer_cast<bp::node::Function>(node);
-                    bp::node::Function::SetChildren(func_node, ccomplex->GetAllChildren());
-
-                    // update aabb
-                    auto& st = node->GetStyle();
-                    m_obj->GetUniqueComp<n2::CompBoundingBox>().SetSize(
-                        *m_obj, sm::rect(st.width, st.height)
-                    );
+                if (m_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                    NodeHelper::LoadFunctionNode(m_obj, m_node);
                 }
                 m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
                 m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
