@@ -2,9 +2,9 @@
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
 
-#include <shaderweaver/node/Uniform.h>
-#include <shaderweaver/node/Input.h>
-#include <shaderweaver/node/Output.h>
+#include <shaderweaver/node/ShaderUniform.h>
+#include <shaderweaver/node/ShaderInput.h>
+#include <shaderweaver/node/ShaderOutput.h>
 #include <shaderweaver/node/PositionTrans.h>
 #include <shaderweaver/node/FragPosTrans.h>
 #include <shaderweaver/node/NormalTrans.h>
@@ -138,16 +138,16 @@ uint32_t var_type_sg_to_sw(int type)
 */
 void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodePtr>& m_vert_nodes)
 {
-	auto projection = std::make_shared<sw::node::Uniform>(PROJ_MAT_NAME,  sw::t_mat4);
-	auto view       = std::make_shared<sw::node::Uniform>(VIEW_MAT_NAME,  sw::t_mat4);
-	auto model      = std::make_shared<sw::node::Uniform>(MODEL_MAT_NAME, sw::t_mat4);
+	auto projection = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+	auto view       = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+	auto model      = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
 	m_cached_nodes.push_back(projection);
 	m_cached_nodes.push_back(view);
 	m_cached_nodes.push_back(model);
 
-	auto position = std::make_shared<sw::node::Input>(VERT_POSITION_NAME, sw::t_flt3);
-	auto normal   = std::make_shared<sw::node::Input>(VERT_NORMAL_NAME,   sw::t_nor3);
-    auto texcoord = std::make_shared<sw::node::Input>(VERT_TEXCOORD_NAME, sw::t_uv);
+	auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_flt3);
+	auto normal   = std::make_shared<sw::node::ShaderInput>(VERT_NORMAL_NAME,   sw::t_nor3);
+    auto texcoord = std::make_shared<sw::node::ShaderInput>(VERT_TEXCOORD_NAME, sw::t_uv);
 	m_cached_nodes.push_back(position);
 	m_cached_nodes.push_back(normal);
     m_cached_nodes.push_back(texcoord);
@@ -168,7 +168,7 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 	sw::make_connecting({ position, 0 }, { frag_pos_trans, sw::node::FragPosTrans::ID_POS });
     m_cached_nodes.push_back(frag_pos_trans);
 
-    auto normal_mat = std::make_shared<sw::node::Uniform>(sw::node::NormalTrans::NormalMatName(), sw::t_mat3);
+    auto normal_mat = std::make_shared<sw::node::ShaderUniform>(sw::node::NormalTrans::NormalMatName(), sw::t_mat3);
     m_cached_nodes.push_back(normal_mat);
 	auto norm_trans = std::make_shared<sw::node::NormalTrans>();
 	sw::make_connecting({ normal_mat, 0 }, { norm_trans, sw::node::NormalTrans::ID_NORMAL_MAT });
@@ -176,17 +176,17 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
     m_cached_nodes.push_back(norm_trans);
 
     // v_texcoord = a_texcoord;
-    auto v_texcoord = std::make_shared<sw::node::Output>(FRAG_TEXCOORD_NAME, sw::t_uv);
+    auto v_texcoord = std::make_shared<sw::node::ShaderOutput>(FRAG_TEXCOORD_NAME, sw::t_uv);
     sw::make_connecting({ texcoord, 0 }, { v_texcoord, 0 });
     m_vert_nodes.push_back(v_texcoord);
 
     // v_world_pos = vec3(u_model * a_pos);
-    auto v_world_pos = std::make_shared<sw::node::Output>(FRAG_POSITION_NAME, sw::t_flt3);
+    auto v_world_pos = std::make_shared<sw::node::ShaderOutput>(FRAG_POSITION_NAME, sw::t_flt3);
     sw::make_connecting({ frag_pos_trans, 0 }, { v_world_pos, 0 });
     m_vert_nodes.push_back(v_world_pos);
 
     // v_normal = mat3(transpose(inverse(u_model))) * a_normal;
-    auto v_normal = std::make_shared<sw::node::Output>(FRAG_NORMAL_NAME, sw::t_nor3);
+    auto v_normal = std::make_shared<sw::node::ShaderOutput>(FRAG_NORMAL_NAME, sw::t_nor3);
     sw::make_connecting({ norm_trans, 0 }, { v_normal, 0 });
     m_vert_nodes.push_back(v_normal);
 }
@@ -219,14 +219,14 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 
 		// vert
 
-		auto proj  = std::make_shared<sw::node::Uniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::Uniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model = std::make_shared<sw::node::Uniform>(MODEL_MAT_NAME, sw::t_mat4);
+		auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+		auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
 		m_cached_nodes.push_back(proj);
 		m_cached_nodes.push_back(view);
 		m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::Input>(VERT_POSITION_NAME, sw::t_pos2);
+		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
 		m_cached_nodes.push_back(position);
 
 		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
@@ -250,14 +250,14 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 
 		// vert
 
-		auto proj  = std::make_shared<sw::node::Uniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::Uniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model = std::make_shared<sw::node::Uniform>(MODEL_MAT_NAME, sw::t_mat4);
+		auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+		auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+		auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
 		m_cached_nodes.push_back(proj);
 		m_cached_nodes.push_back(view);
 		m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::Input>(VERT_POSITION_NAME, sw::t_pos2);
+		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
 		m_cached_nodes.push_back(position);
 
         // gl_Position =  u_projection * u_view * u_model * a_pos;
@@ -272,8 +272,8 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
         m_vert_nodes.push_back(vert_end);
 
         // v_texcoord = a_texcoord;
-        auto a_texcoord = std::make_shared<sw::node::Input>(VERT_TEXCOORD_NAME, sw::t_uv);
-        auto v_texcoord = std::make_shared<sw::node::Output>(FRAG_TEXCOORD_NAME, sw::t_uv);
+        auto a_texcoord = std::make_shared<sw::node::ShaderInput>(VERT_TEXCOORD_NAME, sw::t_uv);
+        auto v_texcoord = std::make_shared<sw::node::ShaderOutput>(FRAG_TEXCOORD_NAME, sw::t_uv);
         sw::make_connecting({ a_texcoord, 0 }, { v_texcoord, 0 });
         m_vert_nodes.push_back(v_texcoord);
         m_cached_nodes.push_back(a_texcoord);
@@ -302,8 +302,8 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 		auto phong = CreateWeaverNode(frag_node);
 
         auto cam_pos = std::make_shared<sw::node::CameraPos>();
-		auto frag_in_pos = std::make_shared<sw::node::Input>(FRAG_POSITION_NAME, sw::t_flt3);
-		auto frag_in_nor = std::make_shared<sw::node::Input>(FRAG_NORMAL_NAME, sw::t_nor3);
+		auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
+		auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME, sw::t_nor3);
         m_cached_nodes.push_back(cam_pos);
 		m_cached_nodes.push_back(frag_in_pos);
 		m_cached_nodes.push_back(frag_in_nor);
@@ -327,9 +327,9 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
         // frag
         auto pbr = CreateWeaverNode(frag_node);
 
-        auto frag_in_pos = std::make_shared<sw::node::Input>(FRAG_POSITION_NAME, sw::t_flt3);
-        auto frag_in_nor = std::make_shared<sw::node::Input>(FRAG_NORMAL_NAME,    sw::t_nor3);
-        auto frag_in_tex = std::make_shared<sw::node::Input>(FRAG_TEXCOORD_NAME,  sw::t_uv);
+        auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
+        auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME,    sw::t_nor3);
+        auto frag_in_tex = std::make_shared<sw::node::ShaderInput>(FRAG_TEXCOORD_NAME,  sw::t_uv);
         auto cam_pos = std::make_shared<sw::node::CameraPos>();
         m_cached_nodes.push_back(frag_in_pos);
         m_cached_nodes.push_back(frag_in_nor);
@@ -349,14 +349,14 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
 
 		// vert
-		auto projection = std::make_shared<sw::node::Uniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view       = std::make_shared<sw::node::Uniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model      = std::make_shared<sw::node::Uniform>(MODEL_MAT_NAME, sw::t_mat4);
+		auto projection = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+		auto view       = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+		auto model      = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
 		m_cached_nodes.push_back(projection);
 		m_cached_nodes.push_back(view);
 		m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::Input>(VERT_POSITION_NAME, sw::t_flt3);
+		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_flt3);
 		m_cached_nodes.push_back(position);
 
 		auto pos_trans = std::make_shared<sw::node::PositionTrans>(4);
@@ -443,7 +443,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (type == rttr::type::get<sg::node::Tex2DAsset>())
 	{
         auto& tex2d = static_cast<const sg::node::Tex2DAsset&>(node);
-		dst = std::make_shared<sw::node::Uniform>(tex2d.GetName(), sw::t_tex2d);
+		dst = std::make_shared<sw::node::ShaderUniform>(tex2d.GetName(), sw::t_tex2d);
 	}
 	else
 	{
@@ -582,7 +582,7 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		if (img) {
 			m_texture_ids.push_back(img->GetTexID());
 		}
-		std::static_pointer_cast<sw::node::Uniform>(dst)->
+		std::static_pointer_cast<sw::node::ShaderUniform>(dst)->
 			SetNameAndType(src.GetName(), sw::t_tex2d);
 	}
 	else if (type == rttr::type::get<node::Exponential>())
