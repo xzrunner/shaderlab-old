@@ -37,6 +37,9 @@
 #include <shaderweaver/node/Rotate.h>
 #include <shaderweaver/node/Raymarching.h>
 #include <shaderweaver/node/Custom.h>
+#include <shaderweaver/node/Function.h>
+#include <shaderweaver/node/FuncInput.h>
+#include <shaderweaver/node/FuncOutput.h>
 #include <shaderweaver/node/VertexShader.h>
 #include <shaderweaver/node/FragmentShader.h>
 
@@ -45,6 +48,9 @@
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/node/GetLocalVar.h>
+#include <blueprint/node/Function.h>
+#include <blueprint/node/Input.h>
+#include <blueprint/node/Output.h>
 #include <shaderweaver/Evaluator.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -440,6 +446,10 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
             }
         }
     }
+    else if (type == rttr::type::get<bp::node::Function>())
+    {
+        dst = std::make_shared<sw::node::Function>();
+    }
 	else if (type == rttr::type::get<sg::node::Tex2DAsset>())
 	{
         auto& tex2d = static_cast<const sg::node::Tex2DAsset&>(node);
@@ -447,10 +457,25 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	}
 	else
 	{
-        auto cls_name = type.get_name().to_string();
-		cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+        auto src_type = type.get_name().to_string();
+        std::string dst_type;
+        auto find_sg = src_type.find("sg::");
+        if (find_sg != std::string::npos) {
+            dst_type = "sw::" + src_type.substr(find_sg + strlen("sg::"));
+        } else {
+            if (src_type == "bp::Input") {
+                dst_type = "sw::FuncInput";
+            } else if (src_type == "bp::Output") {
+                dst_type = "sw::FuncOutput";
+            } else {
+                assert(0);
+            }
+        }
+        if (dst_type.empty()) {
+            return nullptr;
+        }
 
-		rttr::type t = rttr::type::get_by_name(cls_name);
+		rttr::type t = rttr::type::get_by_name(dst_type);
 		if (!t.is_valid()) {
 			return nullptr;
 		}
@@ -630,7 +655,6 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     else if (type == rttr::type::get<node::Custom>())
     {
         auto& src = static_cast<const node::Custom&>(node);
-        auto cus = std::static_pointer_cast<sw::node::Custom>(dst);
 
         std::vector<sw::Variable> params;
         auto& inputs = src.GetAllInput();
@@ -639,18 +663,67 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
             sw::Variable var(var_type_sg_to_sw(i->GetType()), i->GetName());
             params.push_back(var);
         }
-        cus->SetParams(params);
+        sw::NodeHelper::SetImports(*dst, params);
 
         auto& outputs = src.GetAllOutput();
         if (!outputs.empty())
         {
-            sw::Variable ret(var_type_sg_to_sw(outputs[0]->GetType()), outputs[0]->GetName());
-            cus->SetReturn(ret);
+            sw::Variable var(var_type_sg_to_sw(outputs[0]->GetType()), outputs[0]->GetName());
+            sw::NodeHelper::SetExports(*dst, { var });
         }
 
+        auto cus = std::static_pointer_cast<sw::node::Custom>(dst);
         cus->SetName(src.GetName());
         cus->SetHeadStr(src.GetHeadStr());
         cus->SetBodyStr(src.GetBodyStr());
+    }
+    else if (type == rttr::type::get<bp::node::Function>())
+    {
+        auto& src = static_cast<const bp::node::Function&>(node);
+
+        std::vector<sw::Variable> params;
+        auto& inputs = src.GetAllInput();
+        params.reserve(inputs.size());
+        for (auto& i : inputs) {
+            sw::Variable var(var_type_sg_to_sw(i->GetType()), i->GetName());
+            params.push_back(var);
+        }
+        sw::NodeHelper::SetImports(*dst, params);
+
+        auto& outputs = src.GetAllOutput();
+        if (!outputs.empty())
+        {
+            sw::Variable var(var_type_sg_to_sw(outputs[0]->GetType()), outputs[0]->GetName());
+            sw::NodeHelper::SetExports(*dst, { var });
+        }
+
+        dst->SetName(src.GetName());
+
+        std::vector<sw::NodePtr> end_nodes;
+        for (auto& c : src.GetChildren())
+        {
+            assert(c->HasUniqueComp<bp::CompNode>());
+            auto bp_node = c->GetUniqueComp<bp::CompNode>().GetNode();
+            if (bp_node->GetAllOutput().empty()) {
+                end_nodes.push_back(CreateWeaverNode(*bp_node));
+            }
+        }
+        auto func_node = std::static_pointer_cast<sw::node::Function>(dst);
+        func_node->SetEndNodes(end_nodes);
+    }
+    else if (type == rttr::type::get<bp::node::Input>())
+    {
+		auto& src = static_cast<const bp::node::Input&>(node);
+        std::static_pointer_cast<sw::node::FuncInput>(dst)->SetNameAndType(
+            src.GetName(), var_type_sg_to_sw(src.GetType())
+        );
+    }
+    else if (type == rttr::type::get<bp::node::Output>())
+    {
+		auto& src = static_cast<const bp::node::Output&>(node);
+        std::static_pointer_cast<sw::node::FuncOutput>(dst)->SetNameAndType(
+            src.GetName(), var_type_sg_to_sw(src.GetType())
+        );
     }
 
     // connect
