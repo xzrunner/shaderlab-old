@@ -84,6 +84,8 @@ SG_DEFINE_NODE(ColorspaceConversion, true, false, false,                    \
 private:                                                                    \
 	PropColorTrans m_type = PropColorTrans(ColorType::RGB, ColorType::RGB); \
 )
+SG_DEFINE_NODE_PREVIEW(RGBToHSV)
+SG_DEFINE_NODE_PREVIEW(HSVToRGB)
 // channel
 SG_DEFINE_NODE_PREVIEW(Combine)
 SG_DEFINE_NODE(Flip, true, false, false,                                           \
@@ -254,6 +256,8 @@ private:
 	RTTR_ENABLE(Node)
 }; // Vector4
 SG_DEFINE_NODE_DEFAULT(CameraPos)
+SG_DEFINE_NODE_DEFAULT(TexCoords)
+SG_DEFINE_NODE_DEFAULT(TextureTransform)
 class UV : public Node
 {
 public:
@@ -269,6 +273,19 @@ private:
     std::string m_name;
 	RTTR_ENABLE(Node)
 }; // UV
+SG_DEFINE_NODE(ViewDirection, false, false, false,                                     \
+    ViewSpace GetViewSpace() const { return m_view_space; }                            \
+    void SetViewSpace(ViewSpace view_space) { m_view_space = view_space; }             \
+    bool GetSafeNormalize() const { return m_safe_normalize; }                         \
+    void SetSafeNormalize(bool safe_normalize) { m_safe_normalize = safe_normalize; }  \
+private:                                                                               \
+    ViewSpace m_view_space;                                                            \
+    bool m_safe_normalize = false;                                                     \
+)
+SG_DEFINE_NODE_DEFAULT(IndirectDiffuseLighting)
+SG_DEFINE_NODE_DEFAULT(IndirectSpecularLight)
+SG_DEFINE_NODE_DEFAULT(LightColor)
+SG_DEFINE_NODE_DEFAULT(WorldSpaceLightDir)
 SG_DEFINE_NODE(Matrix2, false, false, false,                  \
     void  SetName(const std::string& name) { m_name = name; } \
     auto& GetName() const { return m_name; }                  \
@@ -466,6 +483,8 @@ private:                                          \
 )
 SG_DEFINE_NODE_DEFAULT(Not)
 SG_DEFINE_NODE_DEFAULT(Or)
+SG_DEFINE_NODE_DEFAULT(ViewMatrix)
+SG_DEFINE_NODE_DEFAULT(WorldNormalVector)
 class Preview : public Node
 {
 public:

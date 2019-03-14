@@ -63,6 +63,8 @@ REGIST_NODE_RTTI(ColorspaceConversion,                                          
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("ColTrans"))                                 \
 )
 )
+REGIST_NODE_RTTI_DEFAULT(RGBToHSV)
+REGIST_NODE_RTTI_DEFAULT(HSVToRGB)
 // channel
 REGIST_NODE_RTTI_DEFAULT(Combine)
 REGIST_NODE_RTTI(Flip,                                                            \
@@ -124,6 +126,20 @@ REGIST_NODE_RTTI(Vector4,                                                    \
 )
 REGIST_NODE_RTTI_DEFAULT(CameraPos)
 REGIST_NODE_RTTI_DEFAULT(UV)
+REGIST_NODE_RTTI(ViewDirection,                                                                                     \
+.property("view_space", &sg::node::ViewDirection::GetViewSpace, &sg::node::ViewDirection::SetViewSpace)             \
+(                                                                                                                   \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("ViewSpace"))                                              \
+)                                                                                                                   \
+.property("safe_normalize", &sg::node::ViewDirection::GetSafeNormalize, &sg::node::ViewDirection::SetSafeNormalize) \
+(                                                                                                                   \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("SafeNormalize"))                                          \
+)
+)
+REGIST_NODE_RTTI_DEFAULT(IndirectDiffuseLighting)
+REGIST_NODE_RTTI_DEFAULT(IndirectSpecularLight)
+REGIST_NODE_RTTI_DEFAULT(LightColor)
+REGIST_NODE_RTTI_DEFAULT(WorldSpaceLightDir)
 REGIST_NODE_RTTI(Matrix2,                                                    \
 .property("mat", &sg::node::Matrix2::GetValue, &sg::node::Matrix2::SetValue)
 )
@@ -259,6 +275,8 @@ REGIST_NODE_RTTI(Comparison,                                      \
 )
 REGIST_NODE_RTTI_DEFAULT(Not)
 REGIST_NODE_RTTI_DEFAULT(Or)
+REGIST_NODE_RTTI_DEFAULT(ViewMatrix)
+REGIST_NODE_RTTI_DEFAULT(WorldNormalVector)
 REGIST_NODE_RTTI_DEFAULT(Preview)
 // uv
 REGIST_NODE_RTTI(Flipbook,                                                          \

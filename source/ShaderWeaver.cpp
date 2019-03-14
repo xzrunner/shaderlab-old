@@ -16,6 +16,8 @@
 #include <shaderweaver/node/Blend.h>
 #include <shaderweaver/node/ChannelMask.h>
 #include <shaderweaver/node/ColorspaceConversion.h>
+#include <shaderweaver/node/RGBToHSV.h>
+#include <shaderweaver/node/HSVToRGB.h>
 #include <shaderweaver/node/Flip.h>
 #include <shaderweaver/node/Swizzle.h>
 #include <shaderweaver/node/Boolean.h>
@@ -24,6 +26,8 @@
 #include <shaderweaver/node/Vector3.h>
 #include <shaderweaver/node/Vector4.h>
 #include <shaderweaver/node/UV.h>
+#include <shaderweaver/node/ViewDirection.h>
+#include <shaderweaver/node/WorldSpaceLightDir.h>
 #include <shaderweaver/node/CameraPos.h>
 #include <shaderweaver/node/Matrix2.h>
 #include <shaderweaver/node/Matrix3.h>
@@ -578,6 +582,13 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& src = static_cast<const node::UV&>(node);
 		std::static_pointer_cast<sw::node::UV>(dst)->SetName(src.GetName());
 	}
+    else if (type == rttr::type::get<node::ViewDirection>())
+    {
+        auto& src = static_cast<const node::ViewDirection&>(node);
+        auto view_dir = std::static_pointer_cast<sw::node::ViewDirection>(dst);
+        view_dir->SetViewSpace(static_cast<sw::node::ViewDirection::ViewSpace>(src.GetViewSpace()));
+        view_dir->SetSafeNormalize(src.GetSafeNormalize());
+    }
 	else if (type == rttr::type::get<node::Matrix2>())
 	{
 		auto& src = static_cast<const node::Matrix2&>(node);

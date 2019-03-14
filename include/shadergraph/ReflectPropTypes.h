@@ -91,6 +91,14 @@ enum class CmpType
 	GREATER_OR_EQUAL,
 };
 
+enum class ViewSpace
+{
+    Object = 0,
+    View,
+    World,
+    Tangent
+};
+
 void prop_types_regist_rttr();
 
 }
