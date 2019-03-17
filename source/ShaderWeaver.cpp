@@ -471,8 +471,6 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
                 dst_type = "sw::FuncInput";
             } else if (src_type == "bp::Output") {
                 dst_type = "sw::FuncOutput";
-            } else {
-                assert(0);
             }
         }
         if (dst_type.empty()) {
