@@ -41,7 +41,13 @@ void NodeHelper::LoadFunctionNode(const n0::SceneNodePtr& obj, const bp::NodePtr
 
     auto func_node = std::static_pointer_cast<bp::node::Function>(node);
     auto& filepath = func_node->GetFilepath();
+    if (filepath.empty()) {
+        return;
+    }
     n0::CompAssetPtr casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+    if (!casset) {
+        return;
+    }
     assert(casset->TypeID() == n0::GetAssetUniqueTypeID<n0::CompComplex>());
     auto& ccomplex = std::static_pointer_cast<n0::CompComplex>(casset);
     auto& children = ccomplex->GetAllChildren();
