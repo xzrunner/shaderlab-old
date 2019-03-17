@@ -21,6 +21,9 @@ public:
     auto& GetBodyStr() const { return m_body_str; }
     void  SetBodyStr(const std::string& str);
 
+    void ResetPorts(const std::vector<PinsDesc>& input,
+        const std::vector<PinsDesc>& output);
+
 private:
     static int TransToPinsType(const std::string& str);
 

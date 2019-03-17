@@ -96,5 +96,10 @@ int Custom::TransToPinsType(const std::string& str)
     }
 }
 
+void Custom::ResetPorts(const std::vector<PinsDesc>& input, const std::vector<PinsDesc>& output)
+{
+    InitPins(input, output);
+}
+
 }
 }
