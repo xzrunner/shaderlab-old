@@ -67,6 +67,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\TypeDeduction.h">
       <Filter>pins</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h">
+      <Filter>nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -111,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\TypeDeduction.cpp">
       <Filter>pins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\StandardSurfaceOutput.cpp">
+      <Filter>nodes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
