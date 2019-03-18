@@ -739,6 +739,9 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
     {
         auto& imports = dst->GetImports();
+        if (node.IsExtensibleInputPorts() && i >= imports.size()) {
+            continue;
+        }
         if (!imports[i].var.IsDefaultInput()) {
             continue;
         }

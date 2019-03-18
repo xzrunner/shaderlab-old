@@ -395,9 +395,25 @@ SG_DEFINE_NODE_PREVIEW(Normalize)
 SG_DEFINE_NODE_PREVIEW(Posterize)
 SG_DEFINE_NODE_PREVIEW(Reciprocal)
 SG_DEFINE_NODE_PREVIEW(ReciprocalSquareRoot)
-SG_DEFINE_NODE_PREVIEW(Add)
+class Add : public Node
+{
+public:
+    Add() : Node("Add", true) {
+        InitPins("Add");
+        SetExtensibleInputPorts(true);
+	}
+	RTTR_ENABLE(Node)
+}; // Add
 SG_DEFINE_NODE_PREVIEW(Divide)
-SG_DEFINE_NODE_PREVIEW(Multiply)
+class Multiply : public Node
+{
+public:
+    Multiply() : Node("Multiply", true) {
+        InitPins("Multiply");
+        SetExtensibleInputPorts(true);
+	}
+	RTTR_ENABLE(Node)
+}; // Multiply
 SG_DEFINE_NODE_PREVIEW(Power)
 SG_DEFINE_NODE_PREVIEW(SquareRoot)
 SG_DEFINE_NODE_PREVIEW(Subtract)
