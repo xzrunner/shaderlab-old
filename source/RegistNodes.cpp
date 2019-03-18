@@ -1,5 +1,6 @@
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
+#include "shadergraph/node/StandardSurfaceOutput.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -311,6 +312,8 @@ REGIST_NODE_RTTI(Custom,                                                        
 )
 // anim
 REGIST_NODE_RTTI_DEFAULT(Skin)
+// master
+REGIST_NODE_RTTI_DEFAULT(StandardSurfaceOutput)
 
 }
 
