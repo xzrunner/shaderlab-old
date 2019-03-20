@@ -46,6 +46,8 @@
 #include <shaderweaver/node/FuncOutput.h>
 #include <shaderweaver/node/VertexShader.h>
 #include <shaderweaver/node/FragmentShader.h>
+#include <shaderweaver/node/Add.h>
+#include <shaderweaver/node/Multiply.h>
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -494,7 +496,19 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     }
 
 	// init
-	if (type == rttr::type::get<node::Hue>())
+    if (type == rttr::type::get<node::Add>())
+    {
+        auto& src = static_cast<const node::Add&>(node);
+        std::static_pointer_cast<sw::node::Add>(dst)->
+            SetInputPortCount(src.GetAllInput().size());
+    }
+    else if (type == rttr::type::get<node::Multiply>())
+    {
+        auto& src = static_cast<const node::Multiply&>(node);
+        std::static_pointer_cast<sw::node::Multiply>(dst)->
+            SetInputPortCount(src.GetAllInput().size());
+    }
+	else if (type == rttr::type::get<node::Hue>())
 	{
 		auto& src = static_cast<const node::Hue&>(node);
 		std::static_pointer_cast<sw::node::Hue>(dst)->
