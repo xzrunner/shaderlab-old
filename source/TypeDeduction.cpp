@@ -242,6 +242,7 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
 
     // pins desc changed
     bp::NodeLayout::UpdateNodeStyle(const_cast<bp::Node&>(node));
+    node.SetSizeChanged(true);
 }
 
 }
