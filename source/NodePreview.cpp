@@ -32,6 +32,7 @@ void NodePreview::Draw(const sm::Matrix2D& mt) const
 		return;
 	}
 
+    m_shader->Use();
 	auto model_mat = MatTrans(CalcNodePreviewMat(m_node, mt));
     if (m_draw_tex)
     {
@@ -68,7 +69,6 @@ bool NodePreview::Update(const bp::UpdateParams& params)
         m_shader = shader;
 
         m_shader->AddNotify(std::const_pointer_cast<pt2::WindowContext>(params.wc2));
-        m_shader->Use();
         return true;
     }
     else
