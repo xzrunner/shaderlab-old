@@ -51,7 +51,7 @@
 #include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
-#include <blueprint/node/GetLocalVar.h>
+#include <blueprint/node/GetReference.h>
 #include <blueprint/node/Function.h>
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
@@ -214,9 +214,9 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 
 	// prepare m_map2setnodes
     for (auto& n : all_nodes) {
-        if (n->get_type() == rttr::type::get<bp::node::SetLocalVar>()) {
-            auto set_node = std::static_pointer_cast<const bp::node::SetLocalVar>(n);
-            m_map2setnodes.insert({ set_node->GetVarName(), set_node });
+        if (n->get_type() == rttr::type::get<bp::node::SetReference>()) {
+            auto set_node = std::static_pointer_cast<const bp::node::SetReference>(n);
+            m_map2setnodes.insert({ set_node->GetName(), set_node });
         }
     }
 
@@ -436,10 +436,10 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	// create node
 	sw::NodePtr dst = nullptr;
 	auto type = node.get_type();
-    if (type == rttr::type::get<bp::node::GetLocalVar>())
+    if (type == rttr::type::get<bp::node::GetReference>())
     {
-        auto& get_node = static_cast<const bp::node::GetLocalVar&>(node);
-        auto itr = m_map2setnodes.find(get_node.GetVarName());
+        auto& get_node = static_cast<const bp::node::GetReference&>(node);
+        auto itr = m_map2setnodes.find(get_node.GetName());
         if (itr != m_map2setnodes.end()) {
             auto& conns = itr->second->GetAllInput()[0]->GetConnecting();
             if (!conns.empty()) {

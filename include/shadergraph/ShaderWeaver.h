@@ -5,7 +5,7 @@
 #include <unirender/VertexAttrib.h>
 #include <painting0/Shader.h>
 #include <blueprint/typedef.h>
-#include <blueprint/node/SetLocalVar.h>
+#include <blueprint/node/SetReference.h>
 
 #include <vector>
 
@@ -46,7 +46,7 @@ private:
 private:
 	bool m_debug_print;
 
-    std::map<std::string, std::shared_ptr<const bp::node::SetLocalVar>> m_map2setnodes;
+    std::map<std::string, std::shared_ptr<const bp::node::SetReference>> m_map2setnodes;
 
 	std::vector<sw::NodePtr> m_cached_nodes;
 
