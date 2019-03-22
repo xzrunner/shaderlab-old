@@ -327,7 +327,7 @@ public:
 		});
 	}
 
-	virtual void Draw(const sm::Matrix2D& mt) const override;
+	virtual void Draw(const sm::Matrix2D& mt, int lod_level) const override;
 
 	void  SetName(const std::string& name);
 	auto& GetName() const { return m_name; }

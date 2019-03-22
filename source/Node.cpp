@@ -18,9 +18,9 @@ Node::Node(const std::string& title, bool preview,
 	}
 }
 
-void Node::Draw(const sm::Matrix2D& mt) const
+void Node::Draw(const sm::Matrix2D& mt, int lod_level) const
 {
-	bp::Node::Draw(mt);
+	bp::Node::Draw(mt, lod_level);
 	if (m_preview) {
 		m_preview->Draw(mt);
 	}

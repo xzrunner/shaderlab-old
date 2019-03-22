@@ -327,9 +327,9 @@ void nodes_regist_rttr()
 namespace node
 {
 
-void Tex2DAsset::Draw(const sm::Matrix2D& mt) const
+void Tex2DAsset::Draw(const sm::Matrix2D& mt, int lod_level) const
 {
-	bp::Node::Draw(mt);
+	bp::Node::Draw(mt, lod_level);
 
 	if (m_img)
 	{
