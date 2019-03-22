@@ -3,6 +3,7 @@
 #include "shadergraph/node/StandardSurfaceOutput.h"
 
 #include <ee0/ReflectPropTypes.h>
+#include <blueprint/Pins.h>
 
 #include <js/RTTR.h>
 #include <painting2/RenderSystem.h>
@@ -326,6 +327,57 @@ void nodes_regist_rttr()
 
 namespace node
 {
+
+//////////////////////////////////////////////////////////////////////////
+// class ChannelMask
+//////////////////////////////////////////////////////////////////////////
+
+void ChannelMask::SetChannels(const PropMultiChannels& channels)
+{
+    m_channels = channels;
+
+    int dim = 0;
+    if (channels.channels & PropMultiChannels::CHANNEL_R) {
+        ++dim;
+    }
+    if (channels.channels & PropMultiChannels::CHANNEL_G) {
+        ++dim;
+    }
+    if (channels.channels & PropMultiChannels::CHANNEL_B) {
+        ++dim;
+    }
+    if (channels.channels & PropMultiChannels::CHANNEL_A) {
+        ++dim;
+    }
+    int type = 0;
+    switch (dim)
+    {
+    case 0:
+        type = bp::PINS_ANY_VAR;
+        break;
+    case 1:
+        type = PINS_VECTOR1;
+        break;
+    case 2:
+        type = PINS_VECTOR2;
+        break;
+    case 3:
+        type = PINS_VECTOR3;
+        break;
+    case 4:
+        type = PINS_VECTOR4;
+        break;
+    default:
+        assert(0);
+    }
+    assert(m_all_output.size() == 1);
+    m_all_output[0]->SetType(type);
+    m_all_output[0]->SetOldType(type);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// class Tex2DAsset
+//////////////////////////////////////////////////////////////////////////
 
 void Tex2DAsset::Draw(const sm::Matrix2D& mt, int lod_level) const
 {

@@ -61,15 +61,15 @@ private:                                                 \
 	PropBlendMode m_mode = sw::node::Blend::MODE_BURN;   \
 )
 SG_DEFINE_NODE_PREVIEW(Gray)
-SG_DEFINE_NODE(ChannelMask, true, false, false,                                    \
-	auto& GetChannels() const { return m_channels; }                               \
-	void SetChannels(const PropMultiChannels& channels) { m_channels = channels; } \
-private:                                                                           \
-	PropMultiChannels m_channels =                                                 \
-		PropMultiChannels::CHANNEL_R |                                             \
-		PropMultiChannels::CHANNEL_G |                                             \
-		PropMultiChannels::CHANNEL_B |                                             \
-		PropMultiChannels::CHANNEL_A;                                              \
+SG_DEFINE_NODE(ChannelMask, true, false, false,          \
+	auto& GetChannels() const { return m_channels; }     \
+	void SetChannels(const PropMultiChannels& channels); \
+private:                                                 \
+	PropMultiChannels m_channels =                       \
+		PropMultiChannels::CHANNEL_R |                   \
+		PropMultiChannels::CHANNEL_G |                   \
+		PropMultiChannels::CHANNEL_B |                   \
+		PropMultiChannels::CHANNEL_A;                    \
 )
 SG_DEFINE_NODE_PREVIEW(ColorMask)
 SG_DEFINE_NODE_PREVIEW(NormalBlend)
