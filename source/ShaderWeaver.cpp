@@ -292,8 +292,9 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 
 		// frag
 		frag_end = CreateWeaverNode(frag_node);
+
         // fixme
-        if (frag_end->get_type() == rttr::type::get<sw::node::Raymarching>()) {
+        if (frag_end && frag_end->get_type() == rttr::type::get<sw::node::Raymarching>()) {
             auto cam_pos = std::make_shared<sw::node::CameraPos>();
             m_cached_nodes.push_back(cam_pos);
             sw::make_connecting({ cam_pos, 0 }, { frag_end, sw::node::Raymarching::ID_CAM_POS });
@@ -395,8 +396,10 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 		assert(0);
 	}
 
-    m_frag_node = std::make_shared<sw::node::FragmentShader>();
-    sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
+    if (frag_end) {
+        m_frag_node = std::make_shared<sw::node::FragmentShader>();
+        sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
+    }
 }
 
 std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader2() const
