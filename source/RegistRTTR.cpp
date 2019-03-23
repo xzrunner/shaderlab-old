@@ -1,12 +1,21 @@
 #include "shadergraph/ReflectPropTypes.h"
 #include "shadergraph/RegistNodes.h"
 
+#include <ee0/ReflectPropTypes.h>
+
 #include <SM_Matrix.h>
 
 #include <rttr/registration.h>
 
 RTTR_REGISTRATION
 {
+
+rttr::registration::class_<sg::Node>("sg::node")
+.property("preview", &sg::Node::GetPreview, &sg::Node::SetPreview)
+(
+    rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Preview"))
+)
+;
 
 // sm
 rttr::registration::class_<sm::mat2>("sm_mat2")

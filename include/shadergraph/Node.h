@@ -16,6 +16,9 @@ public:
 	virtual void Draw(const n2::RenderParams& rp) const override;
 	virtual bool Update(const bp::UpdateParams& params) override;
 
+    void SetPreview(bool preview);
+    bool GetPreview() const;
+
 	struct PinsDesc
 	{
 		int         type;

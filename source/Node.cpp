@@ -39,6 +39,25 @@ bool Node::Update(const bp::UpdateParams& params)
 	return ret;
 }
 
+void Node::SetPreview(bool preview)
+{
+    if (GetPreview() == preview) {
+        return;
+    }
+
+    if (preview) {
+        m_preview = std::make_unique<NodePreview>(*this, false);
+    } else {
+        m_preview.reset();
+        int zz = 0;
+    }
+}
+
+bool Node::GetPreview() const
+{
+    return m_preview != nullptr;
+}
+
 void Node::InitPins(const std::vector<PinsDesc>& input,
 	                const std::vector<PinsDesc>& output)
 {
