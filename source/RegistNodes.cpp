@@ -280,7 +280,7 @@ REGIST_NODE_RTTI_DEFAULT(Not)
 REGIST_NODE_RTTI_DEFAULT(Or)
 REGIST_NODE_RTTI_DEFAULT(ViewMatrix)
 REGIST_NODE_RTTI_DEFAULT(WorldNormalVector)
-REGIST_NODE_RTTI_DEFAULT(Preview)
+REGIST_NODE_RTTI_DEFAULT(Relay)
 // uv
 REGIST_NODE_RTTI(Flipbook,                                                          \
 .property("invert", &sg::node::Flipbook::GetInvert, &sg::node::Flipbook::SetInvert) \

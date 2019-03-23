@@ -488,6 +488,8 @@ SG_DEFINE_NODE_DEFAULT(Torus)
 SG_DEFINE_NODE_DEFAULT(Box)
 SG_DEFINE_NODE_DEFAULT(EstimateNormal)
 SG_DEFINE_NODE_DEFAULT(PhongIllumination)
+// tools
+SG_DEFINE_NODE_PREVIEW(Relay)
 // utility
 SG_DEFINE_NODE_DEFAULT(And)
 SG_DEFINE_NODE_DEFAULT(Branch)
@@ -501,18 +503,6 @@ SG_DEFINE_NODE_DEFAULT(Not)
 SG_DEFINE_NODE_DEFAULT(Or)
 SG_DEFINE_NODE_DEFAULT(ViewMatrix)
 SG_DEFINE_NODE_DEFAULT(WorldNormalVector)
-class Preview : public Node
-{
-public:
-	Preview() : Node("Preview", true) {
-		InitPins({
-			{ PINS_DYNAMIC_VECTOR, "In" },
-		},{
-			{ PINS_DYNAMIC_VECTOR, "Out" },
-		});
-	}
-	RTTR_ENABLE(Node)
-}; // Preview
 // uv
 SG_DEFINE_NODE(Flipbook, true, false, false,                       \
 	auto& GetInvert() const { return m_invert; }                   \
