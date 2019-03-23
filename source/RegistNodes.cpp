@@ -7,6 +7,7 @@
 
 #include <js/RTTR.h>
 #include <painting2/RenderSystem.h>
+#include <node2/RenderSystem.h>
 #include <facade/Image.h>
 #include <facade/ResPool.h>
 
@@ -379,13 +380,13 @@ void ChannelMask::SetChannels(const PropMultiChannels& channels)
 // class Tex2DAsset
 //////////////////////////////////////////////////////////////////////////
 
-void Tex2DAsset::Draw(const sm::Matrix2D& mt, int lod_level) const
+void Tex2DAsset::Draw(const n2::RenderParams& rp) const
 {
-	bp::Node::Draw(mt, lod_level);
+	bp::Node::Draw(rp);
 
 	if (m_img)
 	{
-		auto model_mat = NodePreview::CalcNodePreviewMat(*this, mt);
+		auto model_mat = NodePreview::CalcNodePreviewMat(*this, rp.GetMatrix());
 		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), sm::rect(1, 1), model_mat);
 	}
 }

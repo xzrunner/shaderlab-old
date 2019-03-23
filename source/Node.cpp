@@ -3,8 +3,10 @@
 #include "shadergraph/Utility.h"
 #include "shadergraph/PinsType.h"
 
-#include <shaderweaver/Node.h>
 #include <blueprint/Pins.h>
+
+#include <shaderweaver/Node.h>
+#include <node2/RenderSystem.h>
 
 namespace sg
 {
@@ -18,11 +20,11 @@ Node::Node(const std::string& title, bool preview,
 	}
 }
 
-void Node::Draw(const sm::Matrix2D& mt, int lod_level) const
+void Node::Draw(const n2::RenderParams& rp) const
 {
-	bp::Node::Draw(mt, lod_level);
+	bp::Node::Draw(rp);
 	if (m_preview) {
-		m_preview->Draw(mt);
+		m_preview->Draw(rp.GetMatrix());
 	}
 }
 
