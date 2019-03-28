@@ -141,6 +141,7 @@ REGIST_NODE_RTTI(ViewDirection,                                                 
 )
 REGIST_NODE_RTTI_DEFAULT(IndirectDiffuseLighting)
 REGIST_NODE_RTTI_DEFAULT(IndirectSpecularLight)
+REGIST_NODE_RTTI_DEFAULT(LightAttenuation)
 REGIST_NODE_RTTI_DEFAULT(LightColor)
 REGIST_NODE_RTTI_DEFAULT(WorldSpaceLightDir)
 REGIST_NODE_RTTI(Matrix2,                                                    \
@@ -152,7 +153,18 @@ REGIST_NODE_RTTI(Matrix3,                                                    \
 REGIST_NODE_RTTI(Matrix4,                                                    \
 .property("mat", &sg::node::Matrix4::GetValue, &sg::node::Matrix4::SetValue)
 )
+REGIST_NODE_RTTI_DEFAULT(Color)
+REGIST_NODE_RTTI_DEFAULT(PI)
+REGIST_NODE_RTTI_DEFAULT(WorldBitangent)
+REGIST_NODE_RTTI_DEFAULT(WorldPosition)
+REGIST_NODE_RTTI_DEFAULT(WorldTangent)
+REGIST_NODE_RTTI_DEFAULT(VertexBitangent)
+REGIST_NODE_RTTI_DEFAULT(VertexNormal)
+REGIST_NODE_RTTI_DEFAULT(VertexTangent)
 REGIST_NODE_RTTI_DEFAULT(SampleTex2D)
+REGIST_NODE_RTTI_DEFAULT(SampleTex3D)
+REGIST_NODE_RTTI_DEFAULT(SampleTriplanar)
+REGIST_NODE_RTTI_DEFAULT(UnpackScaleNormal)
 REGIST_NODE_RTTI(Tex2DAsset,                                                                    \
 .property("name", &sg::node::Tex2DAsset::GetName, &sg::node::Tex2DAsset::SetName)               \
 (                                                                                               \
@@ -200,6 +212,7 @@ REGIST_NODE_RTTI_DEFAULT(Subtract)
 REGIST_NODE_RTTI_DEFAULT(DDX)
 REGIST_NODE_RTTI_DEFAULT(DDXY)
 REGIST_NODE_RTTI_DEFAULT(DDY)
+REGIST_NODE_RTTI_DEFAULT(FWidth)
 REGIST_NODE_RTTI_DEFAULT(InverseLerp)
 REGIST_NODE_RTTI_DEFAULT(Lerp)
 REGIST_NODE_RTTI_DEFAULT(Smoothstep)
@@ -210,6 +223,7 @@ REGIST_NODE_RTTI(MatrixConstruction,                                            
 )
 )
 REGIST_NODE_RTTI_DEFAULT(MatrixDeterminant)
+REGIST_NODE_RTTI_DEFAULT(MatrixInverse)
 REGIST_NODE_RTTI(MatrixSplit,                                                                     \
 .property("type", &sg::node::MatrixConstruction::GetType, &sg::node::MatrixConstruction::SetType) \
 (                                                                                                 \
@@ -248,6 +262,7 @@ REGIST_NODE_RTTI_DEFAULT(Distance)
 REGIST_NODE_RTTI_DEFAULT(DotProduct)
 REGIST_NODE_RTTI_DEFAULT(Projection)
 REGIST_NODE_RTTI_DEFAULT(Rejection)
+REGIST_NODE_RTTI_DEFAULT(TransformDirection)
 REGIST_NODE_RTTI_DEFAULT(ScaleAndOffset)
 // procedural
 REGIST_NODE_RTTI_DEFAULT(Checkerboard)
@@ -268,6 +283,8 @@ REGIST_NODE_RTTI_DEFAULT(Torus)
 REGIST_NODE_RTTI_DEFAULT(Box)
 REGIST_NODE_RTTI_DEFAULT(EstimateNormal)
 REGIST_NODE_RTTI_DEFAULT(PhongIllumination)
+// tools
+REGIST_NODE_RTTI_DEFAULT(Relay)
 // utility
 REGIST_NODE_RTTI_DEFAULT(And)
 REGIST_NODE_RTTI_DEFAULT(Branch)
@@ -280,7 +297,9 @@ REGIST_NODE_RTTI_DEFAULT(Not)
 REGIST_NODE_RTTI_DEFAULT(Or)
 REGIST_NODE_RTTI_DEFAULT(ViewMatrix)
 REGIST_NODE_RTTI_DEFAULT(WorldNormalVector)
-REGIST_NODE_RTTI_DEFAULT(Relay)
+REGIST_NODE_RTTI_DEFAULT(DecodeFloatRGBA)
+REGIST_NODE_RTTI_DEFAULT(EncodeFloatRGBA)
+REGIST_NODE_RTTI_DEFAULT(VertexToFragment)
 // uv
 REGIST_NODE_RTTI(Flipbook,                                                          \
 .property("invert", &sg::node::Flipbook::GetInvert, &sg::node::Flipbook::SetInvert) \

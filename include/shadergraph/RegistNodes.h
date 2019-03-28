@@ -284,6 +284,7 @@ private:                                                                        
 )
 SG_DEFINE_NODE_DEFAULT(IndirectDiffuseLighting)
 SG_DEFINE_NODE_DEFAULT(IndirectSpecularLight)
+SG_DEFINE_NODE_DEFAULT(LightAttenuation)
 SG_DEFINE_NODE_DEFAULT(LightColor)
 SG_DEFINE_NODE_DEFAULT(WorldSpaceLightDir)
 SG_DEFINE_NODE(Matrix2, false, false, false,                  \
@@ -313,7 +314,18 @@ private:                                                      \
     std::string m_name;                                       \
 	sm::mat4 m_val;                                           \
 )
+SG_DEFINE_NODE_DEFAULT(Color)
+SG_DEFINE_NODE_DEFAULT(PI)
+SG_DEFINE_NODE_DEFAULT(WorldBitangent)
+SG_DEFINE_NODE_DEFAULT(WorldPosition)
+SG_DEFINE_NODE_DEFAULT(WorldTangent)
+SG_DEFINE_NODE_DEFAULT(VertexBitangent)
+SG_DEFINE_NODE_DEFAULT(VertexNormal)
+SG_DEFINE_NODE_DEFAULT(VertexTangent)
 SG_DEFINE_NODE_PREVIEW(SampleTex2D)
+SG_DEFINE_NODE_PREVIEW(SampleTex3D)
+SG_DEFINE_NODE_PREVIEW(SampleTriplanar)
+SG_DEFINE_NODE_DEFAULT(UnpackScaleNormal)
 class Tex2DAsset : public Node
 {
 public:
@@ -420,6 +432,7 @@ SG_DEFINE_NODE_PREVIEW(Subtract)
 SG_DEFINE_NODE_DEFAULT(DDX)
 SG_DEFINE_NODE_DEFAULT(DDXY)
 SG_DEFINE_NODE_DEFAULT(DDY)
+SG_DEFINE_NODE_DEFAULT(FWidth)
 SG_DEFINE_NODE_PREVIEW(InverseLerp)
 SG_DEFINE_NODE_PREVIEW(Lerp)
 SG_DEFINE_NODE_PREVIEW(Smoothstep)
@@ -430,6 +443,7 @@ private:                                                \
 	MatrixType m_type = MatrixType::ROW;                \
 )
 SG_DEFINE_NODE_DEFAULT(MatrixDeterminant)
+SG_DEFINE_NODE_DEFAULT(MatrixInverse)
 SG_DEFINE_NODE(MatrixSplit, false, false, false,     \
 	void SetType(MatrixType type) { m_type = type; } \
 	MatrixType GetType() const { return m_type; }    \
@@ -468,6 +482,7 @@ SG_DEFINE_NODE_PREVIEW(Distance)
 SG_DEFINE_NODE_PREVIEW(DotProduct)
 SG_DEFINE_NODE_PREVIEW(Projection)
 SG_DEFINE_NODE_PREVIEW(Rejection)
+SG_DEFINE_NODE_PREVIEW(TransformDirection)
 SG_DEFINE_NODE_PREVIEW(ScaleAndOffset)
 // procedural
 SG_DEFINE_NODE_PREVIEW(Checkerboard)
@@ -503,6 +518,9 @@ SG_DEFINE_NODE_DEFAULT(Not)
 SG_DEFINE_NODE_DEFAULT(Or)
 SG_DEFINE_NODE_DEFAULT(ViewMatrix)
 SG_DEFINE_NODE_DEFAULT(WorldNormalVector)
+SG_DEFINE_NODE_DEFAULT(DecodeFloatRGBA)
+SG_DEFINE_NODE_DEFAULT(EncodeFloatRGBA)
+SG_DEFINE_NODE_DEFAULT(VertexToFragment)
 // uv
 SG_DEFINE_NODE(Flipbook, true, false, false,                       \
 	auto& GetInvert() const { return m_invert; }                   \
