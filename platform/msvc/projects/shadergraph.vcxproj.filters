@@ -70,6 +70,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h">
       <Filter>nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
+      <Filter>nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -116,6 +119,9 @@
       <Filter>pins</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\StandardSurfaceOutput.cpp">
+      <Filter>nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
       <Filter>nodes</Filter>
     </ClCompile>
   </ItemGroup>
