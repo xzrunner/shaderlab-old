@@ -73,6 +73,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
       <Filter>nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node\TexCubeAsset.h">
+      <Filter>nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
@@ -122,6 +125,9 @@
       <Filter>nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp">
+      <Filter>nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\node\TexCubeAsset.cpp">
       <Filter>nodes</Filter>
     </ClCompile>
   </ItemGroup>
