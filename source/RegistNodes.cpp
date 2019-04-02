@@ -1,15 +1,13 @@
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
 #include "shadergraph/node/StandardSurfaceOutput.h"
+#include "shadergraph/node/Tex2DAsset.h"
+#include "shadergraph/node/TexCubeAsset.h"
 
 #include <ee0/ReflectPropTypes.h>
 #include <blueprint/Pins.h>
 
 #include <js/RTTR.h>
-#include <painting2/RenderSystem.h>
-#include <node2/RenderSystem.h>
-#include <facade/Image.h>
-#include <facade/ResPool.h>
 
 #define REGIST_NODE_RTTI(name, prop)                          \
 	rttr::registration::class_<sg::node::name>("sg::"#name)   \
@@ -175,6 +173,18 @@ REGIST_NODE_RTTI(Tex2DAsset,                                                    
 	rttr::metadata(js::RTTR::FilePathTag(), true),                                              \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Filepath")),                          \
 	rttr::metadata(ee0::PropOpenFileTag(), ee0::PropOpenFile("*.png"))                          \
+)
+)
+REGIST_NODE_RTTI(TexCubeAsset,                                                                      \
+.property("name", &sg::node::TexCubeAsset::GetName, &sg::node::TexCubeAsset::SetName)               \
+(                                                                                                   \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Name"))                                   \
+)                                                                                                   \
+.property("filepath", &sg::node::TexCubeAsset::GetImagePath, &sg::node::TexCubeAsset::SetImagePath) \
+(                                                                                                   \
+	rttr::metadata(js::RTTR::FilePathTag(), true),                                                  \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Filepath")),                              \
+	rttr::metadata(ee0::PropOpenFileTag(), ee0::PropOpenFile("*.png"))                              \
 )
 )
 // master
@@ -395,37 +405,5 @@ void ChannelMask::SetChannels(const PropMultiChannels& channels)
     m_all_output[0]->SetOldType(type);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// class Tex2DAsset
-//////////////////////////////////////////////////////////////////////////
-
-void Tex2DAsset::Draw(const n2::RenderParams& rp) const
-{
-	bp::Node::Draw(rp);
-
-	if (m_img)
-	{
-		auto model_mat = NodePreview::CalcNodePreviewMat(*this, rp.GetMatrix());
-		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), sm::rect(1, 1), model_mat);
-	}
 }
-
-void Tex2DAsset::SetName(const std::string& name)
-{
-	m_name = name;
-	m_title = m_name;
-}
-
-void Tex2DAsset::SetImagePath(std::string filepath)
-{
-	m_img = facade::ResPool::Instance().Fetch<facade::Image>(std::move(filepath));
-}
-
-std::string Tex2DAsset::GetImagePath() const
-{
-	return m_img ? m_img->GetResPath() : "";
-}
-
-}
-
 }

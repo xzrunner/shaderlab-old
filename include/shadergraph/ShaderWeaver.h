@@ -1,17 +1,19 @@
 #pragma once
 
+#include <blueprint/typedef.h>
+#include <blueprint/node/SetReference.h>
+
 #include <shaderweaver/typedef.h>
 #include <shaderweaver/Node.h>
 #include <unirender/VertexAttrib.h>
 #include <painting0/Shader.h>
-#include <blueprint/typedef.h>
-#include <blueprint/node/SetReference.h>
+#include <painting3/GlobalIllumination.h>
 
 #include <vector>
 
 namespace bp { class Node; }
 namespace pt2 { class Shader; }
-namespace pt3 { class Shader; }
+namespace pt3 { class Shader; struct GlobalIllumination; }
 namespace sw { class Evaluator; }
 
 namespace sg
@@ -32,7 +34,8 @@ public:
 
 public:
 	ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
-		bool debug_print = false, const std::vector<bp::NodePtr>& all_nodes = std::vector<bp::NodePtr>());
+		bool debug_print = false, const std::vector<bp::NodePtr>& all_nodes = std::vector<bp::NodePtr>(),
+        const pt3::GlobalIllumination& gi = pt3::GlobalIllumination());
 
 	std::shared_ptr<pt2::Shader> CreateShader2() const;
 	std::shared_ptr<pt3::Shader> CreateShader3() const;

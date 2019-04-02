@@ -1,6 +1,8 @@
 #include "shadergraph/ShaderWeaver.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/node/Custom.h"
+#include "shadergraph/node/Tex2DAsset.h"
+#include "shadergraph/node/TexCubeAsset.h"
 
 #include <shaderweaver/node/ShaderUniform.h>
 #include <shaderweaver/node/ShaderInput.h>
@@ -9,6 +11,7 @@
 #include <shaderweaver/node/FragPosTrans.h>
 #include <shaderweaver/node/NormalTrans.h>
 #include <shaderweaver/node/PBR.h>
+#include <shaderweaver/node/IBL.h>
 #include <shaderweaver/node/Phong.h>
 #include <shaderweaver/node/Time.h>
 #include <shaderweaver/node/Hue.h>
@@ -48,6 +51,9 @@
 #include <shaderweaver/node/FragmentShader.h>
 #include <shaderweaver/node/Add.h>
 #include <shaderweaver/node/Multiply.h>
+#include <shaderweaver/node/Tonemap.h>
+#include <shaderweaver/node/GammaCorrect.h>
+#include <shaderweaver/node/SampleCube.h>
 
 #include <blueprint/Node.h>
 #include <blueprint/Pins.h>
@@ -60,10 +66,12 @@
 #include <shaderweaver/Evaluator.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
+#include <unirender/TextureCube.h>
 #include <painting2/Shader.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <facade/Image.h>
+#include <facade/ImageCube.h>
 
 #include <assert.h>
 
@@ -209,7 +217,8 @@ namespace sg
 {
 
 ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
-                           bool debug_print, const std::vector<bp::NodePtr>& all_nodes)
+                           bool debug_print, const std::vector<bp::NodePtr>& all_nodes,
+                           const pt3::GlobalIllumination& gi)
 	: m_debug_print(debug_print)
 {
     sw::NodePtr frag_end = nullptr;
@@ -337,7 +346,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
         // vert
         init_vert3d(m_cached_nodes, m_vert_nodes);
 
-        // frag
+        // PBR
         auto pbr = CreateWeaverNode(frag_node);
 
         auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
@@ -351,9 +360,64 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
         sw::make_connecting({ frag_in_pos, 0 }, { pbr, sw::node::PBR::ID_FRAG_POS });
         sw::make_connecting({ frag_in_nor, 0 }, { pbr, sw::node::PBR::ID_NORMAL });
         sw::make_connecting({ frag_in_tex, 0 }, { pbr, sw::node::PBR::ID_TEXCOORD });
-        sw::make_connecting({ cam_pos, 0 }, { pbr, sw::node::PBR::ID_CAM_POS });
+        sw::make_connecting({ cam_pos, 0 },     { pbr, sw::node::PBR::ID_CAM_POS });
 
-        frag_end = pbr;
+        sw::Node::PortAddr ambient_out;
+        // IBL
+        if (gi.irradiance_map)
+        {
+            auto ibl = std::make_shared<sw::node::IBL>();
+            m_cached_nodes.push_back(ibl);
+            sw::make_connecting({ pbr, sw::node::PBR::ID_N },         { ibl, sw::node::IBL::ID_N });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_V },         { ibl, sw::node::IBL::ID_V });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_F0 },        { ibl, sw::node::IBL::ID_F0 });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO },    { ibl, sw::node::IBL::ID_ALBEDO });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_METALLIC },  { ibl, sw::node::IBL::ID_METALLIC });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_ROUGHNESS }, { ibl, sw::node::IBL::ID_ROUGHNESS });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_AO },        { ibl, sw::node::IBL::ID_AO });
+
+            auto irr_map_name = sw::node::IBL::IrradianceMapName();
+            m_texture_names.push_back(irr_map_name);
+            m_texture_ids.push_back(gi.irradiance_map->GetTexID());
+            auto irradiance_map = std::make_shared<sw::node::ShaderUniform>();
+            irradiance_map->SetNameAndType(irr_map_name, sw::t_tex_cube);
+            m_cached_nodes.push_back(irradiance_map);
+            sw::make_connecting({ irradiance_map, 0 }, { ibl, sw::node::IBL::ID_IRRADIANCE_MAP });
+
+            ambient_out = { ibl, 0 };
+        }
+        else
+        {
+            // vec3 ambient = vec3(0.03) * albedo * ao;
+            auto ambient = std::make_shared<sw::node::Multiply>();
+            m_cached_nodes.push_back(ambient);
+            ambient->SetInputPortCount(3);
+            auto f = std::make_shared<sw::node::Vector1>("", 0.03f);
+            m_cached_nodes.push_back(f);
+            sw::make_connecting({ f, 0 },                          { ambient, 0 });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO }, { ambient, 1 });
+            sw::make_connecting({ pbr, sw::node::PBR::ID_AO },     { ambient, 2 });
+
+            ambient_out = { ambient, 0 };
+        }
+
+        // vec3 color = ambient + Lo;
+        auto color = std::make_shared<sw::node::Add>();
+        m_cached_nodes.push_back(color);
+        sw::make_connecting(ambient_out,                   { color, 0 });
+        sw::make_connecting({ pbr, sw::node::PBR::ID_Lo }, { color, 1 });
+
+        // HDR tonemapping
+        auto tonemap = std::make_shared<sw::node::Tonemap>();
+        m_cached_nodes.push_back(tonemap);
+        sw::make_connecting({ color, 0 }, { tonemap, 0 });
+
+        // gamma correct
+        auto gamma = std::make_shared<sw::node::GammaCorrect>();
+        m_cached_nodes.push_back(gamma);
+        sw::make_connecting({ tonemap, 0 }, { gamma, 0 });
+
+        frag_end = gamma;
     }
         break;
 	case SHADER_RAYMARCHING:
@@ -464,6 +528,11 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
         auto& tex2d = static_cast<const sg::node::Tex2DAsset&>(node);
 		dst = std::make_shared<sw::node::ShaderUniform>(tex2d.GetName(), sw::t_tex2d);
 	}
+    else if (type == rttr::type::get<sg::node::TexCubeAsset>())
+    {
+        auto& tex_cube = static_cast<const sg::node::TexCubeAsset&>(node);
+        dst = std::make_shared<sw::node::ShaderUniform>(tex_cube.GetName(), sw::t_tex_cube);
+    }
 	else
 	{
         auto src_type = type.get_name().to_string();
@@ -632,6 +701,17 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		auto& img = src.GetImage();
 		if (img) {
 			m_texture_ids.push_back(img->GetTexID());
+		}
+		std::static_pointer_cast<sw::node::ShaderUniform>(dst)->
+			SetNameAndType(src.GetName(), sw::t_tex2d);
+	}
+	else if (type == rttr::type::get<node::TexCubeAsset>())
+	{
+		auto& src = static_cast<const node::TexCubeAsset&>(node);
+		m_texture_names.push_back(src.GetName());
+		auto& img = src.GetImage();
+		if (img) {
+			m_texture_ids.push_back(img->GetTexture()->GetTexID());
 		}
 		std::static_pointer_cast<sw::node::ShaderUniform>(dst)->
 			SetNameAndType(src.GetName(), sw::t_tex2d);

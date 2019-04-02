@@ -1,6 +1,8 @@
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/Utility.h"
+#include "shadergraph/node/Tex2DAsset.h"
+#include "shadergraph/node/TexCubeAsset.h"
 
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -226,6 +228,12 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
         {
             auto var_name = Utility::CamelCaseToUnderscore(pins->GetName());
             std::static_pointer_cast<node::Tex2DAsset>(default_node)->SetName(var_name);
+        }
+            break;
+        case PINS_CUBE_MAP:
+        {
+            auto var_name = Utility::CamelCaseToUnderscore(pins->GetName());
+            std::static_pointer_cast<node::TexCubeAsset>(default_node)->SetName(var_name);
         }
             break;
 		case PINS_MATRIX2:
