@@ -384,6 +384,22 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
             m_cached_nodes.push_back(irradiance_map);
             sw::make_connecting({ irradiance_map, 0 }, { ibl, sw::node::IBL::ID_IRRADIANCE_MAP });
 
+            auto pre_map_name = sw::node::IBL::PrefilterMapName();
+            m_texture_names.push_back(pre_map_name);
+            m_texture_ids.push_back(gi.prefilter_map->GetTexID());
+            auto prefilter_map = std::make_shared<sw::node::ShaderUniform>();
+            prefilter_map->SetNameAndType(pre_map_name, sw::t_tex_cube);
+            m_cached_nodes.push_back(prefilter_map);
+            sw::make_connecting({ prefilter_map, 0 }, { ibl, sw::node::IBL::ID_PREFILTER_MAP });
+
+            auto brdf_lut_name = sw::node::IBL::BrdfLutName();
+            m_texture_names.push_back(brdf_lut_name);
+            m_texture_ids.push_back(gi.brdf_lut->TexID());
+            auto brdf_lut = std::make_shared<sw::node::ShaderUniform>();
+            brdf_lut->SetNameAndType(brdf_lut_name, sw::t_tex2d);
+            m_cached_nodes.push_back(brdf_lut);
+            sw::make_connecting({ brdf_lut, 0 }, { ibl, sw::node::IBL::ID_BRDF_LUT });
+
             ambient_out = { ibl, 0 };
         }
         else
