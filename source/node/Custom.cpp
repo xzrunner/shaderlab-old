@@ -15,6 +15,12 @@ Custom::Custom()
     InitPins("Custom");
 }
 
+void Custom::SetName(const std::string& name) 
+{ 
+    m_name = name; 
+    cpputil::StringHelper::ReplaceAll(m_name, " ", "");
+}
+
 void Custom::SetBodyStr(const std::string& str)
 {
     m_body_str = str;
@@ -27,7 +33,7 @@ void Custom::SetBodyStr(const std::string& str)
     std::vector<std::string> tokens;
     cpputil::StringHelper::Split(head, " ", tokens);
     assert(tokens.size() == 2);
-    auto ret_type = TransToPinsType(tokens[0]);
+    auto ret_type = StrToPinType(tokens[0]);
     if (ret_type >= 0) {
         outputs.push_back({ ret_type, "_out" });
     }
@@ -43,7 +49,7 @@ void Custom::SetBodyStr(const std::string& str)
         std::vector<std::string> tokens;
         cpputil::StringHelper::Split(p, " ", tokens);
         assert(tokens.size() == 2);
-        auto type = TransToPinsType(tokens[0]);
+        auto type = StrToPinType(tokens[0]);
         assert(type >= 0);
         inputs.push_back({ type, tokens[1] });
     }
@@ -72,7 +78,7 @@ void Custom::SetBodyStr(const std::string& str)
     Layout();
 }
 
-int Custom::TransToPinsType(const std::string& str)
+int Custom::StrToPinType(const std::string& str)
 {
     if (str == "void") {
         return -1;
@@ -96,9 +102,72 @@ int Custom::TransToPinsType(const std::string& str)
     }
 }
 
+std::string Custom::PinTypeToStr(int pin_type)
+{
+    std::string ret;
+    switch (pin_type)
+    {
+    case PINS_VECTOR1:
+        ret = "float";
+        break;
+    case PINS_VECTOR2:
+        ret = "vec2";
+        break;
+    case PINS_VECTOR3:
+        ret = "vec3";
+        break;
+    case PINS_VECTOR4:
+        ret = "vec4";
+        break;
+    case PINS_MATRIX2:
+        ret = "mat2";
+        break;
+    case PINS_MATRIX3:
+        ret = "mat3";
+        break;
+    case PINS_MATRIX4:
+        ret = "mat4";
+        break;
+    default:
+        assert(0);
+    }
+    return ret;
+}
+
 void Custom::ResetPorts(const std::vector<PinsDesc>& input, const std::vector<PinsDesc>& output)
 {
     InitPins(input, output);
+
+    if (!m_internal_str.empty() && m_body_str.empty()) {
+        m_body_str = GenBodyFromInernal(input, output);
+    }
+}
+
+std::string Custom::GenBodyFromInernal(const std::vector<PinsDesc>& input,
+                                       const std::vector<PinsDesc>& output) const
+{
+    std::string ret_type;
+    if (output.empty()) {
+        ret_type = "void";
+    } else {
+        ret_type = PinTypeToStr(output[0].type);
+    }
+
+    std::string params;
+    for (int i = 0, n = input.size(); i < n; ++i)
+    {
+        params += PinTypeToStr(input[i].type) + " " + input[i].name;
+        if (i != n - 1) {
+            params += ", ";
+        }
+    }
+
+    return cpputil::StringHelper::Format(R"(
+%s %s(%s)
+{
+    %s
+} 
+)", ret_type.c_str(), m_name.c_str(), params.c_str(), m_internal_str.c_str());
 }
 
 }

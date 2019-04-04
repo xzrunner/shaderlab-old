@@ -216,6 +216,11 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 namespace sg
 {
 
+ShaderWeaver::ShaderWeaver(const std::vector<bp::NodePtr>& all_nodes)
+{
+    PrepareSetRefNodes(all_nodes);
+}
+
 ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
                            bool debug_print, const std::vector<bp::NodePtr>& all_nodes,
                            const pt3::GlobalIllumination& gi)
@@ -223,13 +228,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
 {
     sw::NodePtr frag_end = nullptr;
 
-	// prepare m_map2setnodes
-    for (auto& n : all_nodes) {
-        if (n->get_type() == rttr::type::get<bp::node::SetReference>()) {
-            auto set_node = std::static_pointer_cast<const bp::node::SetReference>(n);
-            m_map2setnodes.insert({ set_node->GetName(), set_node });
-        }
-    }
+    PrepareSetRefNodes(all_nodes);
 
     switch (shader_type)
 	{
@@ -521,17 +520,29 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	// create node
 	sw::NodePtr dst = nullptr;
 	auto type = node.get_type();
-    if (type == rttr::type::get<bp::node::GetReference>())
+    if (type == rttr::type::get<bp::node::SetReference>()) 
+    {
+        auto& set_ref = static_cast<const bp::node::SetReference&>(node);
+        auto& conns = set_ref.GetAllInput()[0]->GetConnecting();
+        if (conns.empty()) {
+            return nullptr;
+        } else {
+            assert(conns.size() == 1 && conns[0]->GetFrom());
+            return CreateWeaverNode(conns[0]->GetFrom()->GetParent());
+        }
+    }
+    else if (type == rttr::type::get<bp::node::GetReference>())
     {
         auto& get_node = static_cast<const bp::node::GetReference&>(node);
         auto itr = m_map2setnodes.find(get_node.GetName());
-        if (itr != m_map2setnodes.end()) {
+        if (itr != m_map2setnodes.end()) 
+        {
             auto& conns = itr->second->GetAllInput()[0]->GetConnecting();
-            if (!conns.empty()) {
-                assert(conns.size() == 1);
-                auto& bp_from_port = conns[0]->GetFrom();
-                assert(bp_from_port);
-                return CreateWeaverNode(bp_from_port->GetParent());
+            if (conns.empty()) {
+                return nullptr;
+            } else {
+                assert(conns.size() == 1 && conns[0]->GetFrom());
+                return CreateWeaverNode(conns[0]->GetFrom()->GetParent());
             }
         }
     }
@@ -554,14 +565,17 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
         auto src_type = type.get_name().to_string();
         std::string dst_type;
         auto find_sg = src_type.find("sg::");
-        if (find_sg != std::string::npos) {
+        if (find_sg != std::string::npos) 
+        {
             dst_type = "sw::" + src_type.substr(find_sg + strlen("sg::"));
-        } else {
+        } 
+        else 
+        {
             if (src_type == "bp::Input") {
                 dst_type = "sw::FuncInput";
             } else if (src_type == "bp::Output") {
                 dst_type = "sw::FuncOutput";
-            }
+            } 
         }
         if (dst_type.empty()) {
             return nullptr;
@@ -869,6 +883,16 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     m_cached_nodes.push_back(dst);
 
 	return dst;
+}
+
+void ShaderWeaver::PrepareSetRefNodes(const std::vector<bp::NodePtr>& all_nodes)
+{
+    for (auto& n : all_nodes) {
+        if (n->get_type() == rttr::type::get<bp::node::SetReference>()) {
+            auto set_node = std::static_pointer_cast<const bp::node::SetReference>(n);
+            m_map2setnodes.insert({ set_node->GetName(), set_node });
+        }
+    }
 }
 
 bool ShaderWeaver::CreateFromNode(const bp::Node& node, int input_idx, sw::Node::PortAddr& from_port)

@@ -329,16 +329,21 @@ REGIST_NODE_RTTI_DEFAULT(Spherize)
 REGIST_NODE_RTTI_DEFAULT(TilingAndOffset)
 REGIST_NODE_RTTI_DEFAULT(Twirl)
 // tools
-REGIST_NODE_RTTI(Custom,                                                        \
-.property("head", &sg::node::Custom::GetHeadStr, &sg::node::Custom::SetHeadStr) \
-(                                                                               \
-	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("HeadStr")),           \
-    rttr::metadata(ee0::PropLongStringTag(), true)                              \
-)                                                                               \
-.property("body", &sg::node::Custom::GetBodyStr, &sg::node::Custom::SetBodyStr) \
-(                                                                               \
-	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("BodyStr")),           \
-    rttr::metadata(ee0::PropLongStringTag(), true)                              \
+REGIST_NODE_RTTI(Custom,                                                                    \
+.property("head", &sg::node::Custom::GetHeadStr, &sg::node::Custom::SetHeadStr)             \
+(                                                                                           \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("HeadStr")),                       \
+    rttr::metadata(ee0::PropLongStringTag(), true)                                          \
+)                                                                                           \
+.property("body", &sg::node::Custom::GetBodyStr, &sg::node::Custom::SetBodyStr)             \
+(                                                                                           \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("BodyStr")),                       \
+    rttr::metadata(ee0::PropLongStringTag(), true)                                          \
+)                                                                                           \
+.property("internal", &sg::node::Custom::GetInternalStr, &sg::node::Custom::SetInternalStr) \
+(                                                                                           \
+	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("InternalStr")),                   \
+    rttr::metadata(ee0::PropLongStringTag(), true)                                          \
 )
 )
 // anim
