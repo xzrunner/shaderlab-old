@@ -1,12 +1,13 @@
 #include "shadergraph/ShaderGraph.h"
 #include "shadergraph/NodeBuilder.h"
-#include "shadergraph/NodeHelper.h"
 #include "shadergraph/Node.h"
 #include "shadergraph/PinsCallback.h"
 #include "shadergraph/TypeDeduction.h"
 
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pins.h>
+#include <blueprint/NodeHelper.h>
+
 #include <shaderweaver/ShaderWeaver.h>
 
 namespace sg
@@ -35,7 +36,7 @@ void ShaderGraph::Init()
 		NodeBuilder::CreateDefaultInputs(nodes, node);
 	};
 	cb.on_connecting = [](bp::Pins& from, bp::Pins& to) {
-		NodeHelper::RemoveDefaultNode(to);
+		bp::NodeHelper::RemoveDefaultNode(to);
 	};
 	cb.on_connected = [](bp::Pins& from, bp::Pins& to) {
         TypeDeduction::DeduceConn(from, to);

@@ -34,9 +34,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h">
-      <Filter>node</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Node.h">
       <Filter>node</Filter>
     </ClInclude>
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
-      <Filter>node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\NodeHelper.cpp">
       <Filter>node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Node.cpp">

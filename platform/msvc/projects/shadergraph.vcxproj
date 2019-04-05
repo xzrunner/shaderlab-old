@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\NodeHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h" />
@@ -31,7 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Node.cpp" />
-    <ClCompile Include="..\..\..\source\NodeHelper.cpp" />
     <ClCompile Include="..\..\..\source\NodePreview.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp" />
     <ClCompile Include="..\..\..\source\node\Custom.cpp" />

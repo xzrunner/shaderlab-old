@@ -2,7 +2,6 @@
 #include "shadergraph/ReflectPropTypes.h"
 #include "shadergraph/RegistNodes.h"
 #include "shadergraph/TypeDeduction.h"
-#include "shadergraph/NodeHelper.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/ReflectPropTypes.h>
@@ -10,6 +9,7 @@
 #include <ee0/WxPropHelper.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/Connecting.h>
+#include <blueprint/NodeHelper.h>
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <blueprint/node/Function.h>
@@ -203,7 +203,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
             ee0::WxPropHelper::CreateProp(m_pg, ui_info, node, prop, [&](const std::string& filepath)
             {
                 if (m_node->get_type() == rttr::type::get<bp::node::Function>()) {
-                    NodeHelper::LoadFunctionNode(m_obj, m_node);
+                    bp::NodeHelper::LoadFunctionNode(m_obj, m_node);
                 }
                 m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
                 m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
