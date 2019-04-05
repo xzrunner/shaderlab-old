@@ -17,8 +17,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node\TexCubeAsset.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\PinsCallback.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\PinsType.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\PinCallback.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\PinType.h" />
     <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
@@ -36,7 +36,7 @@
     <ClCompile Include="..\..\..\source\node\StandardSurfaceOutput.cpp" />
     <ClCompile Include="..\..\..\source\node\Tex2DAsset.cpp" />
     <ClCompile Include="..\..\..\source\node\TexCubeAsset.cpp" />
-    <ClCompile Include="..\..\..\source\PinsCallback.cpp" />
+    <ClCompile Include="..\..\..\source\PinCallback.cpp" />
     <ClCompile Include="..\..\..\source\RegistNodes.cpp" />
     <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />

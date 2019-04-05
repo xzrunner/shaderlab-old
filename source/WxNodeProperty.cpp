@@ -27,31 +27,31 @@
 namespace
 {
 
-const wxChar* PINS_IDX_TITLE[] = { wxT("Unknown"), wxT("Bool"), wxT("Vec1"), wxT("Vec2"), wxT("Vec3"), wxT("Vec4"),
+const wxChar* PIN_IDX_TITLE[] = { wxT("Unknown"), wxT("Bool"), wxT("Vec1"), wxT("Vec2"), wxT("Vec3"), wxT("Vec4"),
                                    wxT("Mat2"), wxT("Mat3"), wxT("Mat4"), wxT("Tex2D"), /*wxT("Tex3D"), */wxT("TexCube"), NULL };
 
-const int PINS_IDX_TO_TYPE[] = {
-    bp::PINS_ANY_VAR,
+const int PIN_IDX_TO_TYPE[] = {
+    bp::PIN_ANY_VAR,
 
-    sg::PINS_BOOLEAN,
-    sg::PINS_VECTOR1,
-    sg::PINS_VECTOR2,
-    sg::PINS_VECTOR3,
-    sg::PINS_VECTOR4,
-    sg::PINS_MATRIX2,
-    sg::PINS_MATRIX3,
-    sg::PINS_MATRIX4,
-    sg::PINS_TEXTURE2D,
-//    sg::PINS_TEXTURE3D,
-    sg::PINS_CUBE_MAP,
+    sg::PIN_BOOLEAN,
+    sg::PIN_VECTOR1,
+    sg::PIN_VECTOR2,
+    sg::PIN_VECTOR3,
+    sg::PIN_VECTOR4,
+    sg::PIN_MATRIX2,
+    sg::PIN_MATRIX3,
+    sg::PIN_MATRIX4,
+    sg::PIN_TEXTURE2D,
+//    sg::PIN_TEXTURE3D,
+    sg::PIN_CUBE_MAP,
 };
 
-int PinsTypeToIdx(int type)
+int PinTypeToIdx(int type)
 {
-    const int num = sizeof(PINS_IDX_TO_TYPE) / sizeof(PINS_IDX_TO_TYPE[0]);
+    const int num = sizeof(PIN_IDX_TO_TYPE) / sizeof(PIN_IDX_TO_TYPE[0]);
     for (int i = 0; i < num; ++i)
     {
-        if (PINS_IDX_TO_TYPE[i] == type) {
+        if (PIN_IDX_TO_TYPE[i] == type) {
             return i;
         }
     }
@@ -90,12 +90,12 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
         if ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
             (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE))
         {
-			auto mode_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, PINS_IDX_TITLE);
+			auto mode_prop = new wxEnumProperty(ui_info.desc, wxPG_LABEL, PIN_IDX_TITLE);
 			auto mode = prop.get_value(node).get_value<int>();
             if (mode < 0) {
-                mode = bp::PINS_ANY_VAR;
+                mode = bp::PIN_ANY_VAR;
             }
-			mode_prop->SetValue(PinsTypeToIdx(mode));
+			mode_prop->SetValue(PinTypeToIdx(mode));
 			m_pg->Append(mode_prop);
 
             continue;
@@ -279,7 +279,7 @@ void WxNodeProperty::OnPropertyGridChanged(wxPropertyGridEvent& event)
             ((node_type == rttr::type::get<bp::node::Input>() && ui_info.desc == bp::node::Input::STR_TYPE) ||
              (node_type == rttr::type::get<bp::node::Output>() && ui_info.desc == bp::node::Output::STR_TYPE)))
         {
-            prop.set_value(m_node, PINS_IDX_TO_TYPE[wxANY_AS(val, int)]);
+            prop.set_value(m_node, PIN_IDX_TO_TYPE[wxANY_AS(val, int)]);
             // type deduce
             if (node_type == rttr::type::get<bp::node::Input>()) {
                 auto input = std::static_pointer_cast<bp::node::Input>(m_node);

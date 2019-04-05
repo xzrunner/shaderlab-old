@@ -1,8 +1,8 @@
 #include "shadergraph/node/Custom.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
 #include <cpputil/StringHelper.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 
 namespace sg
 {
@@ -25,7 +25,7 @@ void Custom::SetBodyStr(const std::string& str)
 {
     m_body_str = str;
 
-    std::vector<PinsDesc> inputs, outputs;
+    std::vector<PinDesc> inputs, outputs;
 
     // parse ret type and func name
     auto s_pos = str.find("(");
@@ -83,19 +83,19 @@ int Custom::StrToPinType(const std::string& str)
     if (str == "void") {
         return -1;
     } else if (str == "float") {
-        return PINS_VECTOR1;
+        return PIN_VECTOR1;
     } else if (str == "vec2") {
-        return PINS_VECTOR2;
+        return PIN_VECTOR2;
     } else if (str == "vec3") {
-        return PINS_VECTOR3;
+        return PIN_VECTOR3;
     } else if (str == "vec4") {
-        return PINS_VECTOR4;
+        return PIN_VECTOR4;
     } else if (str == "mat2") {
-        return PINS_MATRIX2;
+        return PIN_MATRIX2;
     } else if (str == "mat3") {
-        return PINS_MATRIX3;
+        return PIN_MATRIX3;
     } else if (str == "mat4") {
-        return PINS_MATRIX4;
+        return PIN_MATRIX4;
     } else {
         assert(0);
         return -1;
@@ -107,25 +107,25 @@ std::string Custom::PinTypeToStr(int pin_type)
     std::string ret;
     switch (pin_type)
     {
-    case PINS_VECTOR1:
+    case PIN_VECTOR1:
         ret = "float";
         break;
-    case PINS_VECTOR2:
+    case PIN_VECTOR2:
         ret = "vec2";
         break;
-    case PINS_VECTOR3:
+    case PIN_VECTOR3:
         ret = "vec3";
         break;
-    case PINS_VECTOR4:
+    case PIN_VECTOR4:
         ret = "vec4";
         break;
-    case PINS_MATRIX2:
+    case PIN_MATRIX2:
         ret = "mat2";
         break;
-    case PINS_MATRIX3:
+    case PIN_MATRIX3:
         ret = "mat3";
         break;
-    case PINS_MATRIX4:
+    case PIN_MATRIX4:
         ret = "mat4";
         break;
     default:
@@ -134,7 +134,7 @@ std::string Custom::PinTypeToStr(int pin_type)
     return ret;
 }
 
-void Custom::ResetPorts(const std::vector<PinsDesc>& input, const std::vector<PinsDesc>& output)
+void Custom::ResetPorts(const std::vector<PinDesc>& input, const std::vector<PinDesc>& output)
 {
     InitPins(input, output);
 
@@ -143,8 +143,8 @@ void Custom::ResetPorts(const std::vector<PinsDesc>& input, const std::vector<Pi
     }
 }
 
-std::string Custom::GenBodyFromInernal(const std::vector<PinsDesc>& input,
-                                       const std::vector<PinsDesc>& output) const
+std::string Custom::GenBodyFromInernal(const std::vector<PinDesc>& input,
+                                       const std::vector<PinDesc>& output) const
 {
     std::string ret_type;
     if (output.empty()) {

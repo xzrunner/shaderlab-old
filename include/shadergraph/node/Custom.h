@@ -24,15 +24,15 @@ public:
     auto& GetInternalStr() const { return m_internal_str; }
     void  SetInternalStr(const std::string& str) { m_internal_str = str; }
 
-    void ResetPorts(const std::vector<PinsDesc>& input,
-        const std::vector<PinsDesc>& output);
+    void ResetPorts(const std::vector<PinDesc>& input,
+        const std::vector<PinDesc>& output);
 
 private:
     static int StrToPinType(const std::string& str);
     static std::string PinTypeToStr(int pin_type);
 
-    std::string GenBodyFromInernal(const std::vector<PinsDesc>& input, 
-        const std::vector<PinsDesc>& output) const;
+    std::string GenBodyFromInernal(const std::vector<PinDesc>& input, 
+        const std::vector<PinDesc>& output) const;
 
 private:
     std::string m_name;

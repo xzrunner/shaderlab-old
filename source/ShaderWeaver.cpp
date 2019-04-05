@@ -56,7 +56,7 @@
 #include <shaderweaver/node/SampleCube.h>
 
 #include <blueprint/Node.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/node/GetReference.h>
@@ -104,45 +104,45 @@ uint32_t var_type_sg_to_sw(int type)
     uint32_t ret = 0;
     switch (type)
     {
-    case sg::PINS_BOOLEAN:
+    case sg::PIN_BOOLEAN:
         ret = sw::t_bool;
         break;
-    case sg::PINS_DYNAMIC_VECTOR:
+    case sg::PIN_DYNAMIC_VECTOR:
         ret = sw::t_d_vec;
         break;
-    case sg::PINS_VECTOR1:
+    case sg::PIN_VECTOR1:
         ret = sw::t_flt1;
         break;
-    case sg::PINS_VECTOR2:
+    case sg::PIN_VECTOR2:
         ret = sw::t_flt2;
         break;
-    case sg::PINS_VECTOR3:
+    case sg::PIN_VECTOR3:
         ret = sw::t_flt3;
         break;
-    case sg::PINS_VECTOR4:
+    case sg::PIN_VECTOR4:
         ret = sw::t_flt4;
         break;
-    case sg::PINS_COLOR:
+    case sg::PIN_COLOR:
         ret = sw::t_col3;
         break;
-    case sg::PINS_TEXTURE2D:
+    case sg::PIN_TEXTURE2D:
         ret = sw::t_tex2d;
         break;
-    case sg::PINS_CUBE_MAP:
+    case sg::PIN_CUBE_MAP:
         break;
-    case sg::PINS_DYNAMIC_MATRIX:
+    case sg::PIN_DYNAMIC_MATRIX:
         ret = sw::t_d_mat;
         break;
-    case sg::PINS_MATRIX2:
+    case sg::PIN_MATRIX2:
         ret = sw::t_mat2;
         break;
-    case sg::PINS_MATRIX3:
+    case sg::PIN_MATRIX3:
         ret = sw::t_mat3;
         break;
-    case sg::PINS_MATRIX4:
+    case sg::PIN_MATRIX4:
         ret = sw::t_mat4;
         break;
-    case sg::PINS_FUNCTION:
+    case sg::PIN_FUNCTION:
         ret = sw::t_func;
         break;
     }

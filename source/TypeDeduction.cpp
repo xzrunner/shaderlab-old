@@ -1,7 +1,7 @@
 #include "shadergraph/TypeDeduction.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <blueprint/Node.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/NodeLayout.h>
@@ -11,16 +11,16 @@
 namespace
 {
 
-bool SetPinsType(bp::Pins& pins, int type)
+bool SetPinType(bp::Pin& pin, int type)
 {
     assert(type >= 0);
 
-	if (pins.GetType() == type) {
+	if (pin.GetType() == type) {
 		return false;
 	}
 
-	pins.SetType(type);
-	for (auto& conn : pins.GetConnecting()) {
+	pin.SetType(type);
+	for (auto& conn : pin.GetConnecting()) {
 		conn->UpdateCurve();
 	}
 
@@ -32,7 +32,7 @@ bool SetPinsType(bp::Pins& pins, int type)
 namespace sg
 {
 
-void TypeDeduction::DeduceConn(const bp::Pins& p0, const bp::Pins& p1)
+void TypeDeduction::DeduceConn(const bp::Pin& p0, const bp::Pin& p1)
 {
 	int type0 = p0.GetType();
 	int type1 = p1.GetType();
@@ -44,39 +44,39 @@ void TypeDeduction::DeduceConn(const bp::Pins& p0, const bp::Pins& p1)
     int old_t1 = p1.GetOldType();
     int new_t0 = type0;
     int new_t1 = type1;
-    if (old_t0 == PINS_DYNAMIC_VECTOR || old_t1 == PINS_DYNAMIC_VECTOR)
+    if (old_t0 == PIN_DYNAMIC_VECTOR || old_t1 == PIN_DYNAMIC_VECTOR)
     {
-        if (old_t0 == PINS_DYNAMIC_VECTOR && old_t1 == PINS_DYNAMIC_VECTOR) {
-            int max = std::max((int)PINS_VECTOR1, std::min((int)PINS_VECTOR4, std::max(type0, type1)));
+        if (old_t0 == PIN_DYNAMIC_VECTOR && old_t1 == PIN_DYNAMIC_VECTOR) {
+            int max = std::max((int)PIN_VECTOR1, std::min((int)PIN_VECTOR4, std::max(type0, type1)));
             new_t0 = max;
             new_t1 = max;
-        } else if (old_t0 == PINS_DYNAMIC_VECTOR) {
+        } else if (old_t0 == PIN_DYNAMIC_VECTOR) {
             new_t0 = type1;
-        } else if (old_t1 == PINS_DYNAMIC_VECTOR) {
+        } else if (old_t1 == PIN_DYNAMIC_VECTOR) {
             new_t1 = type0;
         }
     }
-    else if (old_t0 == PINS_DYNAMIC_MATRIX || old_t1 == PINS_DYNAMIC_MATRIX)
+    else if (old_t0 == PIN_DYNAMIC_MATRIX || old_t1 == PIN_DYNAMIC_MATRIX)
     {
-        if (old_t0 == PINS_DYNAMIC_MATRIX && old_t1 == PINS_DYNAMIC_MATRIX) {
-            int max = std::max((int)PINS_MATRIX2, std::min((int)PINS_MATRIX4, std::max(type0, type1)));
+        if (old_t0 == PIN_DYNAMIC_MATRIX && old_t1 == PIN_DYNAMIC_MATRIX) {
+            int max = std::max((int)PIN_MATRIX2, std::min((int)PIN_MATRIX4, std::max(type0, type1)));
             new_t0 = max;
             new_t1 = max;
-        } else if (old_t0 == PINS_DYNAMIC_MATRIX) {
+        } else if (old_t0 == PIN_DYNAMIC_MATRIX) {
             new_t0 = type1;
-        } else if (old_t1 == PINS_DYNAMIC_MATRIX) {
+        } else if (old_t1 == PIN_DYNAMIC_MATRIX) {
             new_t1 = type0;
         }
     }
-    else if (old_t0 == bp::PINS_ANY_VAR || old_t1 == bp::PINS_ANY_VAR)
+    else if (old_t0 == bp::PIN_ANY_VAR || old_t1 == bp::PIN_ANY_VAR)
     {
-        if (old_t0 == bp::PINS_ANY_VAR && old_t1 == bp::PINS_ANY_VAR) {
+        if (old_t0 == bp::PIN_ANY_VAR && old_t1 == bp::PIN_ANY_VAR) {
             int max = std::max(type0, type1);
             new_t0 = max;
             new_t1 = max;
-        } else if (old_t0 == bp::PINS_ANY_VAR) {
+        } else if (old_t0 == bp::PIN_ANY_VAR) {
             new_t0 = type1;
-        } else if (old_t1 == bp::PINS_ANY_VAR) {
+        } else if (old_t1 == bp::PIN_ANY_VAR) {
             new_t1 = type0;
         }
 
@@ -91,10 +91,10 @@ void TypeDeduction::DeduceConn(const bp::Pins& p0, const bp::Pins& p1)
         }
     }
 
-    SetPinsType(const_cast<bp::Pins&>(p0), new_t0);
+    SetPinType(const_cast<bp::Pin&>(p0), new_t0);
     DeduceNode(p0.GetParent());
 
-    SetPinsType(const_cast<bp::Pins&>(p1), new_t1);
+    SetPinType(const_cast<bp::Pin&>(p1), new_t1);
     DeduceNode(p1.GetParent());
 }
 
@@ -117,13 +117,13 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
     int in_max_any = -1;
     for (int i = 0, n = inputs.size(); i < n; ++i)
     {
-        auto& pins = inputs[i];
-        auto old_type = pins->GetOldType();
-        if (old_type == PINS_DYNAMIC_VECTOR ||
-            old_type == PINS_DYNAMIC_MATRIX ||
-            old_type == bp::PINS_ANY_VAR)
+        auto& pin = inputs[i];
+        auto old_type = pin->GetOldType();
+        if (old_type == PIN_DYNAMIC_VECTOR ||
+            old_type == PIN_DYNAMIC_MATRIX ||
+            old_type == bp::PIN_ANY_VAR)
         {
-            auto& conns = pins->GetConnecting();
+            auto& conns = pin->GetConnecting();
             if (conns.empty())
             {
                 in_types[i] = old_type;
@@ -133,9 +133,9 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
                 assert(conns.size() == 1);
                 auto from = conns[0]->GetFrom();
                 auto from_type = from->GetType();
-                if (old_type == PINS_DYNAMIC_VECTOR && from_type >= PINS_VECTOR1 && from_type <= PINS_VECTOR4 ||
-                    old_type == PINS_DYNAMIC_MATRIX && from_type >= PINS_MATRIX2 && from_type <= PINS_MATRIX4 ||
-                    old_type == bp::PINS_ANY_VAR && from_type != bp::PINS_ANY_VAR) {
+                if (old_type == PIN_DYNAMIC_VECTOR && from_type >= PIN_VECTOR1 && from_type <= PIN_VECTOR4 ||
+                    old_type == PIN_DYNAMIC_MATRIX && from_type >= PIN_MATRIX2 && from_type <= PIN_MATRIX4 ||
+                    old_type == bp::PIN_ANY_VAR && from_type != bp::PIN_ANY_VAR) {
                     in_types[i] = from_type;
                 } else {
                     in_types[i] = old_type;
@@ -144,17 +144,17 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
 
             switch (old_type)
             {
-            case PINS_DYNAMIC_VECTOR:
+            case PIN_DYNAMIC_VECTOR:
                 if (in_types[i] > in_max_vec) {
                     in_max_vec = in_types[i];
                 }
                 break;
-            case PINS_DYNAMIC_MATRIX:
+            case PIN_DYNAMIC_MATRIX:
                 if (in_types[i] > in_max_mat) {
                     in_max_mat = in_types[i];
                 }
                 break;
-            case bp::PINS_ANY_VAR:
+            case bp::PIN_ANY_VAR:
                 if (in_types[i] > in_max_any) {
                     in_max_any = in_types[i];
                 }
@@ -171,17 +171,17 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
 
     for (int i = 0, n = inputs.size(); i < n; ++i)
     {
-        auto& pins = inputs[i];
-        auto old_type = pins->GetOldType();
+        auto& pin = inputs[i];
+        auto old_type = pin->GetOldType();
         switch (old_type)
         {
-        case PINS_DYNAMIC_VECTOR:
+        case PIN_DYNAMIC_VECTOR:
             in_types[i] = in_max_vec;
             break;
-        case PINS_DYNAMIC_MATRIX:
+        case PIN_DYNAMIC_MATRIX:
             in_types[i] = in_max_mat;
             break;
-        case bp::PINS_ANY_VAR:
+        case bp::PIN_ANY_VAR:
             in_types[i] = in_max_any;
             break;
         }
@@ -189,25 +189,25 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
 
     for (int i = 0, n = outputs.size(); i < n; ++i)
     {
-        auto& pins = outputs[i];
-        auto type = pins->GetType();
-        switch (pins->GetOldType())
+        auto& pin = outputs[i];
+        auto type = pin->GetType();
+        switch (pin->GetOldType())
         {
-        case PINS_DYNAMIC_VECTOR:
+        case PIN_DYNAMIC_VECTOR:
             if (in_max_vec < 0) {
                 out_types[i] = type;
             } else {
                 out_types[i] = in_max_vec;
             }
             break;
-        case PINS_DYNAMIC_MATRIX:
+        case PIN_DYNAMIC_MATRIX:
             if (in_max_mat < 0) {
                 out_types[i] = type;
             } else {
                 out_types[i] = in_max_mat;
             }
             break;
-        case bp::PINS_ANY_VAR:
+        case bp::PIN_ANY_VAR:
             if (in_max_any < 0) {
                 out_types[i] = type;
             } else {
@@ -221,7 +221,7 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
 
     for (int i = 0, n = inputs.size(); i < n; ++i)
     {
-        if (SetPinsType(*inputs[i], in_types[i]))
+        if (SetPinType(*inputs[i], in_types[i]))
         {
             auto& conns = inputs[i]->GetConnecting();
             for (auto& c : conns) {
@@ -231,7 +231,7 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
     }
     for (int i = 0, n = outputs.size(); i < n; ++i)
     {
-        if (SetPinsType(*outputs[i], out_types[i]))
+        if (SetPinType(*outputs[i], out_types[i]))
         {
             auto& conns = outputs[i]->GetConnecting();
             for (auto& c : conns) {
@@ -240,7 +240,7 @@ void TypeDeduction::DeduceNode(const bp::Node& node)
         }
     }
 
-    // pins desc changed
+    // pin desc changed
     bp::NodeLayout::UpdateNodeStyle(const_cast<bp::Node&>(node));
     node.SetSizeChanged(true);
 }

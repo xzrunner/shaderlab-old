@@ -11,7 +11,7 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/NodeLayout.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <shaderweaver/Node.h>
 #include <shaderweaver/node/Raymarching.h>
 
@@ -84,74 +84,74 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 
 	for (int i = 0, n = node.GetAllInput().size(); i < n; ++i)
 	{
-		auto& pins = node.GetAllInput()[i];
+		auto& pin = node.GetAllInput()[i];
 
         std::string default_type_str;
 
         auto default_val = ctor.get_metadata(i);
 
-        int pins_type = pins->GetType();
-        if (pins_type == PINS_DYNAMIC_VECTOR)
+        int pin_type = pin->GetType();
+        if (pin_type == PIN_DYNAMIC_VECTOR)
         {
             if (default_val.is_type<float>()) {
-                pins_type = PINS_VECTOR1;
+                pin_type = PIN_VECTOR1;
             } else if (default_val.is_type<sm::vec2>()) {
-                pins_type = PINS_VECTOR2;
+                pin_type = PIN_VECTOR2;
             } else if (default_val.is_type<sm::vec3>()) {
-                pins_type = PINS_VECTOR3;
+                pin_type = PIN_VECTOR3;
             } else if (default_val.is_type<sm::vec4>()) {
-                pins_type = PINS_VECTOR4;
+                pin_type = PIN_VECTOR4;
             } else {
                 assert(0);
             }
         }
-        else if (pins_type == PINS_DYNAMIC_MATRIX)
+        else if (pin_type == PIN_DYNAMIC_MATRIX)
         {
             if (default_val.is_type<sm::mat2>()) {
-                pins_type = PINS_MATRIX2;
+                pin_type = PIN_MATRIX2;
             } else if (default_val.is_type<sm::mat3>()) {
-                pins_type = PINS_MATRIX3;
+                pin_type = PIN_MATRIX3;
             } else if (default_val.is_type<sm::mat4>()) {
-                pins_type = PINS_MATRIX4;
+                pin_type = PIN_MATRIX4;
             } else {
                 assert(0);
             }
         }
 
-		switch (pins_type)
+		switch (pin_type)
 		{
-		case PINS_BOOLEAN:
+		case PIN_BOOLEAN:
 			default_type_str = rttr::type::get<node::Boolean>().get_name().to_string();
 			break;
-		case PINS_VECTOR1:
+		case PIN_VECTOR1:
 			default_type_str = rttr::type::get<node::Vector1>().get_name().to_string();
 			break;
-		case PINS_VECTOR2:
+		case PIN_VECTOR2:
 			if (imports[i].var.GetType().interp == sw::VT_TEX) {
 				default_type_str = rttr::type::get<node::UV>().get_name().to_string();
 			} else {
 				default_type_str = rttr::type::get<node::Vector2>().get_name().to_string();
 			}
 			break;
-		case PINS_VECTOR3: case PINS_COLOR:
+		case PIN_VECTOR3: case PIN_COLOR:
 			default_type_str = rttr::type::get<node::Vector3>().get_name().to_string();
 			break;
-		case PINS_VECTOR4:
+		case PIN_VECTOR4:
 			default_type_str = rttr::type::get<node::Vector4>().get_name().to_string();
 			break;
-		case PINS_TEXTURE2D:
+		case PIN_TEXTURE2D:
 			default_type_str = rttr::type::get<node::Tex2DAsset>().get_name().to_string();
 			break;
-		case PINS_MATRIX2:
+		case PIN_MATRIX2:
 			default_type_str = rttr::type::get<node::Matrix2>().get_name().to_string();
 			break;
-		case PINS_MATRIX3:
+		case PIN_MATRIX3:
 			default_type_str = rttr::type::get<node::Matrix3>().get_name().to_string();
 			break;
-		case PINS_MATRIX4:
+		case PIN_MATRIX4:
 			default_type_str = rttr::type::get<node::Matrix4>().get_name().to_string();
 			break;
-		case PINS_FUNCTION:
+		case PIN_FUNCTION:
         {
             auto method = t.get_method("QueryNesting");
             assert(method.is_valid());
@@ -161,7 +161,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
             default_type_str = "sg::" + default_type_str.substr(default_type_str.find("sw::") + strlen("sw::"));
         }
 			break;
-        case bp::PINS_ANY_VAR:
+        case bp::PIN_ANY_VAR:
             break;
 		default:
 			assert(0);
@@ -172,9 +172,9 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 		}
 
 		auto default_node = CreateDefault(nodes, node, i, default_type_str);
-		switch (pins_type)
+		switch (pin_type)
 		{
-		case PINS_BOOLEAN:
+		case PIN_BOOLEAN:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<bool>());
 				std::static_pointer_cast<node::Boolean>(default_node)->SetValue(
@@ -184,7 +184,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Boolean>(default_node)->SetValue(false);
 			}
 			break;
-		case PINS_VECTOR1:
+		case PIN_VECTOR1:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<float>());
 				std::static_pointer_cast<node::Vector1>(default_node)->SetValue(
@@ -194,7 +194,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector1>(default_node)->SetValue(0);
 			}
 			break;
-		case PINS_VECTOR2:
+		case PIN_VECTOR2:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::vec2>());
 				std::static_pointer_cast<node::Vector2>(default_node)->SetValue(
@@ -204,7 +204,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector2>(default_node)->SetValue(sm::vec2(0, 0));
 			}
 			break;
-		case PINS_VECTOR3: case PINS_COLOR:
+		case PIN_VECTOR3: case PIN_COLOR:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::vec3>());
 				std::static_pointer_cast<node::Vector3>(default_node)->SetValue(
@@ -214,7 +214,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector3>(default_node)->SetValue(sm::vec3(0, 0, 0));
 			}
 			break;
-		case PINS_VECTOR4:
+		case PIN_VECTOR4:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::vec4>());
 				std::static_pointer_cast<node::Vector4>(default_node)->SetValue(
@@ -224,19 +224,19 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Vector4>(default_node)->SetValue(sm::vec4(0, 0, 0, 0));
 			}
 			break;
-        case PINS_TEXTURE2D:
+        case PIN_TEXTURE2D:
         {
-            auto var_name = Utility::CamelCaseToUnderscore(pins->GetName());
+            auto var_name = Utility::CamelCaseToUnderscore(pin->GetName());
             std::static_pointer_cast<node::Tex2DAsset>(default_node)->SetName(var_name);
         }
             break;
-        case PINS_CUBE_MAP:
+        case PIN_CUBE_MAP:
         {
-            auto var_name = Utility::CamelCaseToUnderscore(pins->GetName());
+            auto var_name = Utility::CamelCaseToUnderscore(pin->GetName());
             std::static_pointer_cast<node::TexCubeAsset>(default_node)->SetName(var_name);
         }
             break;
-		case PINS_MATRIX2:
+		case PIN_MATRIX2:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::mat2>());
 				std::static_pointer_cast<node::Matrix2>(default_node)->SetValue(
@@ -246,7 +246,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Matrix2>(default_node)->SetValue(sm::mat2());
 			}
 			break;
-		case PINS_MATRIX3:
+		case PIN_MATRIX3:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::mat3>());
 				std::static_pointer_cast<node::Matrix3>(default_node)->SetValue(
@@ -256,7 +256,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Matrix3>(default_node)->SetValue(sm::mat3());
 			}
 			break;
-		case PINS_MATRIX4:
+		case PIN_MATRIX4:
 			if (default_val.is_valid()) {
 				assert(default_val.is_type<sm::mat4>());
 				std::static_pointer_cast<node::Matrix4>(default_node)->SetValue(
@@ -266,7 +266,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 				std::static_pointer_cast<node::Matrix4>(default_node)->SetValue(sm::mat4());
 			}
 			break;
-		case PINS_FUNCTION:
+		case PIN_FUNCTION:
 			break;
 		default:
 			assert(0);
@@ -293,7 +293,7 @@ bp::NodePtr NodeBuilder::CreateDefault(std::vector<n0::SceneNodePtr>& nodes, bp:
 {
 	const float dx = -65;
 
-	auto pos = bp::NodeLayout::GetPinsPos(parent, true, idx);
+	auto pos = bp::NodeLayout::GetPinPos(parent, true, idx);
 	pos.x += dx;
 
 	auto child = Create(nodes, type, pos, true);

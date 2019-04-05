@@ -19,18 +19,18 @@ public:
     void SetPreview(bool preview);
     bool GetPreview() const;
 
-	struct PinsDesc
+	struct PinDesc
 	{
 		int         type;
 		std::string name;
 	};
 
 protected:
-	void InitPins(const std::vector<PinsDesc>& input,
-		const std::vector<PinsDesc>& output);
+	void InitPins(const std::vector<PinDesc>& input,
+		const std::vector<PinDesc>& output);
 	void InitPins(const std::string& name);
 
-	void InitPinsImpl(const std::vector<PinsDesc>& pins,
+	void InitPinsImpl(const std::vector<PinDesc>& pins,
 		bool is_input);
 
 private:

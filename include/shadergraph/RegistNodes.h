@@ -2,7 +2,7 @@
 
 #include "shadergraph/Node.h"
 #include "shadergraph/ReflectPropTypes.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
 #include <shaderweaver/node/Blend.h>
 #include <cpputil/StringHelper.h>
@@ -335,9 +335,9 @@ public:
 		: Node("Sprite", false)
 	{
 		InitPins({
-			{ PINS_TEXTURE2D, "Tex" },
-			{ PINS_VECTOR3,   "Mul" },
-			{ PINS_VECTOR3,   "Add" },
+			{ PIN_TEXTURE2D, "Tex" },
+			{ PIN_VECTOR3,   "Mul" },
+			{ PIN_VECTOR3,   "Add" },
 		},{
 		});
 	}

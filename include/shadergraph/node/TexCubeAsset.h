@@ -1,7 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
 namespace facade { class ImageCube; }
 
@@ -19,7 +19,7 @@ public:
 	{
 		InitPins({
 		},{
-			{ PINS_CUBE_MAP, "Tex" }
+			{ PIN_CUBE_MAP, "Tex" }
 		});
 	}
 

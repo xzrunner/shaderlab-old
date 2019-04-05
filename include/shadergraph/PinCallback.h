@@ -3,6 +3,6 @@
 namespace sg
 {
 
-void InitPinsCallback();
+void InitPinCallback();
 
 }

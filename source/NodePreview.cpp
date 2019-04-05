@@ -9,7 +9,7 @@
 #include <painting2/RenderTargetCtx.h>
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <blueprint/NodeHelper.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>

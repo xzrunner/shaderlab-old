@@ -1,11 +1,11 @@
 #include "shadergraph/ShaderGraph.h"
 #include "shadergraph/NodeBuilder.h"
 #include "shadergraph/Node.h"
-#include "shadergraph/PinsCallback.h"
+#include "shadergraph/PinCallback.h"
 #include "shadergraph/TypeDeduction.h"
 
 #include <blueprint/NodeBuilder.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <blueprint/NodeHelper.h>
 
 #include <shaderweaver/ShaderWeaver.h>
@@ -26,7 +26,7 @@ ShaderGraph::ShaderGraph()
 	Init();
 	InitNodes();
 
-    InitPinsCallback();
+    InitPinCallback();
 }
 
 void ShaderGraph::Init()
@@ -35,13 +35,13 @@ void ShaderGraph::Init()
 	cb.on_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
 		NodeBuilder::CreateDefaultInputs(nodes, node);
 	};
-	cb.on_connecting = [](bp::Pins& from, bp::Pins& to) {
+	cb.on_connecting = [](bp::Pin& from, bp::Pin& to) {
 		bp::NodeHelper::RemoveDefaultNode(to);
 	};
-	cb.on_connected = [](bp::Pins& from, bp::Pins& to) {
+	cb.on_connected = [](bp::Pin& from, bp::Pin& to) {
         TypeDeduction::DeduceConn(from, to);
 	};
-    cb.on_disconnected = [](bp::Pins& from, bp::Pins& to) {
+    cb.on_disconnected = [](bp::Pin& from, bp::Pin& to) {
         TypeDeduction::DeduceNode(from.GetParent());
         TypeDeduction::DeduceNode(to.GetParent());
     };

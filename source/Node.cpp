@@ -1,9 +1,9 @@
 #include "shadergraph/Node.h"
 #include "shadergraph/NodePreview.h"
 #include "shadergraph/Utility.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 
 #include <shaderweaver/Node.h>
 #include <node2/RenderSystem.h>
@@ -58,8 +58,8 @@ bool Node::GetPreview() const
     return m_preview != nullptr;
 }
 
-void Node::InitPins(const std::vector<PinsDesc>& input,
-	                const std::vector<PinsDesc>& output)
+void Node::InitPins(const std::vector<PinDesc>& input,
+	                const std::vector<PinDesc>& output)
 {
 	InitPinsImpl(input, true);
 	InitPinsImpl(output, false);
@@ -86,7 +86,7 @@ void Node::InitPins(const std::string& name)
 		&& var_exports.is_type<std::vector<sw::Node::Port>>());
 	auto& exports = var_exports.get_value<std::vector<sw::Node::Port>>();
 
-	auto sw2sg = [](std::vector<PinsDesc>& dst, const std::vector<sw::Node::Port>& src)
+	auto sw2sg = [](std::vector<PinDesc>& dst, const std::vector<sw::Node::Port>& src)
 	{
 		dst.resize(src.size());
 		for (int i = 0, n = src.size(); i < n; ++i)
@@ -95,49 +95,49 @@ void Node::InitPins(const std::string& name)
 			auto& d = dst[i];
 			auto& t = s.var.GetType();
 			if (t.precision == sw::VT_BOOL) {
-				d.type = PINS_BOOLEAN;
+				d.type = PIN_BOOLEAN;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_1) {
-				d.type = PINS_VECTOR1;
+				d.type = PIN_VECTOR1;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_2) {
-				d.type = PINS_VECTOR2;
+				d.type = PIN_VECTOR2;
 			} else if (t.precision == sw::VT_FLT && t.dim == sw::VT_3) {
-				d.type = PINS_VECTOR3;
+				d.type = PIN_VECTOR3;
             } else if (t.precision == sw::VT_FLT && t.dim == sw::VT_4) {
-                d.type = PINS_VECTOR4;
+                d.type = PIN_VECTOR4;
             } else if (t.precision == sw::VT_FLT && t.dim == 0) {
-                d.type = PINS_DYNAMIC_VECTOR;
+                d.type = PIN_DYNAMIC_VECTOR;
 			} else if (t.interp == sw::VT_T2D) {
-				d.type = PINS_TEXTURE2D;
+				d.type = PIN_TEXTURE2D;
 			} else if (t.interp == sw::VT_TCUBE) {
-				d.type = PINS_CUBE_MAP;
+				d.type = PIN_CUBE_MAP;
 			} else if (t.interp == sw::VT_MAT && t.dim == sw::VT_2) {
-				d.type = PINS_MATRIX2;
+				d.type = PIN_MATRIX2;
 			} else if (t.interp == sw::VT_MAT && t.dim == sw::VT_3) {
-				d.type = PINS_MATRIX3;
+				d.type = PIN_MATRIX3;
             } else if (t.interp == sw::VT_MAT && t.dim == sw::VT_4) {
-                d.type = PINS_MATRIX4;
+                d.type = PIN_MATRIX4;
             } else if (t.interp == sw::VT_MAT && t.dim == 0) {
-                d.type = PINS_DYNAMIC_MATRIX;
+                d.type = PIN_DYNAMIC_MATRIX;
 			} else if (t.interp == sw::VT_FUNC) {
-				d.type = PINS_FUNCTION;
+				d.type = PIN_FUNCTION;
 			} else if (t.precision == 0 && t.dim == 0 && t.interp == 0) {
-                d.type = bp::PINS_ANY_VAR;
+                d.type = bp::PIN_ANY_VAR;
             }
-			// todo PINS_DYNAMIC_VECTOR PINS_COLOR PINS_DYNAMIC_MATRIX
+			// todo PIN_DYNAMIC_VECTOR PIN_COLOR PIN_DYNAMIC_MATRIX
 
 			auto& name = s.var.GetName();
 			d.name = PortNameFromVar(name);
 		}
 	};
 
-	std::vector<PinsDesc> input, output;
+	std::vector<PinDesc> input, output;
 	sw2sg(input, imports);
 	sw2sg(output, exports);
 
 	InitPins(input, output);
 }
 
-void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
+void Node::InitPinsImpl(const std::vector<PinDesc>& pins, bool is_input)
 {
 	auto& dst = is_input ? m_all_input : m_all_output;
 	dst.clear();
@@ -145,8 +145,8 @@ void Node::InitPinsImpl(const std::vector<PinsDesc>& pins, bool is_input)
 	int idx = 0;
 	for (auto& d : pins)
 	{
-		auto p = std::make_shared<bp::Pins>(is_input, idx++, d.type, d.name, *this);
-		if (!CheckPinsName(*p, dst)) {
+		auto p = std::make_shared<bp::Pin>(is_input, idx++, d.type, d.name, *this);
+		if (!CheckPinName(*p, dst)) {
 			assert(0);
 			return;
 		}

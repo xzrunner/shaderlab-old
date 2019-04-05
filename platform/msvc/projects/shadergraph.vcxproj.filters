@@ -52,12 +52,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
       <Filter>rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\PinsType.h">
-      <Filter>pins</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\PinsCallback.h">
-      <Filter>pins</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
       <Filter>trans</Filter>
     </ClInclude>
@@ -72,6 +66,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\TexCubeAsset.h">
       <Filter>nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\PinType.h">
+      <Filter>pins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\PinCallback.h">
+      <Filter>pins</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +106,6 @@
     <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp">
       <Filter>rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\PinsCallback.cpp">
-      <Filter>pins</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp">
       <Filter>trans</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\TexCubeAsset.cpp">
       <Filter>nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\PinCallback.cpp">
+      <Filter>pins</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 #include "shadergraph/node/TexCubeAsset.h"
 
 #include <ee0/ReflectPropTypes.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 
 #include <js/RTTR.h>
 
@@ -388,19 +388,19 @@ void ChannelMask::SetChannels(const PropMultiChannels& channels)
     switch (dim)
     {
     case 0:
-        type = bp::PINS_ANY_VAR;
+        type = bp::PIN_ANY_VAR;
         break;
     case 1:
-        type = PINS_VECTOR1;
+        type = PIN_VECTOR1;
         break;
     case 2:
-        type = PINS_VECTOR2;
+        type = PIN_VECTOR2;
         break;
     case 3:
-        type = PINS_VECTOR3;
+        type = PIN_VECTOR3;
         break;
     case 4:
-        type = PINS_VECTOR4;
+        type = PIN_VECTOR4;
         break;
     default:
         assert(0);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "shadergraph/Node.h"
-#include "shadergraph/PinsType.h"
+#include "shadergraph/PinType.h"
 
 namespace facade { class Image; }
 
@@ -19,7 +19,7 @@ public:
 	{
 		InitPins({
 		},{
-			{ PINS_TEXTURE2D, "Tex" }
+			{ PIN_TEXTURE2D, "Tex" }
 		});
 	}
 
