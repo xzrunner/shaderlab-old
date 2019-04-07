@@ -1,5 +1,7 @@
 #include "shadergraph/node/Tex2DAsset.h"
 
+#include <blueprint/NodeHelper.h>
+
 #include <painting2/RenderSystem.h>
 #include <node2/RenderSystem.h>
 #include <facade/Image.h>
@@ -16,7 +18,7 @@ void Tex2DAsset::Draw(const n2::RenderParams& rp) const
 
 	if (m_img)
 	{
-		auto model_mat = NodePreview::CalcNodePreviewMat(*this, rp.GetMatrix());
+		auto model_mat = bp::NodeHelper::CalcPreviewMat(*this, rp.GetMatrix());
 		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), sm::rect(1, 1), model_mat);
 	}
 }

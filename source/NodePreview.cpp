@@ -33,7 +33,7 @@ void NodePreview::Draw(const sm::Matrix2D& mt) const
 	}
 
     m_shader->Use();
-	auto model_mat = MatTrans(CalcNodePreviewMat(m_node, mt));
+	auto model_mat = sm::mat4(bp::NodeHelper::CalcPreviewMat(m_node, mt));
     if (m_draw_tex)
     {
         if (m_use_rt) {
@@ -78,21 +78,6 @@ bool NodePreview::Update(const bp::UpdateParams& params)
     }
 }
 
-sm::Matrix2D NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2D& mt)
-{
-	auto& style = node.GetStyle();
-	const float LEN = style.width;
-	sm::rect r;
-	r.xmin = -style.width * 0.5f;  r.xmax = r.xmin + LEN;
-	r.ymax = -style.height * 0.5f; r.ymin = r.ymax - LEN;
-
-	sm::Matrix2D ret = mt;
-	ret.x[0] *= r.Width();
-	ret.x[3] *= r.Height();
-	ret.x[4] += r.Center().x;
-	ret.x[5] += r.Center().y;
-	return ret;
-}
 void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
 {
     // draw texture to rt

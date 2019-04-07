@@ -21,9 +21,6 @@ public:
 	void Draw(const sm::Matrix2D& mt) const;
 	bool Update(const bp::UpdateParams& params);
 
-	static sm::Matrix2D CalcNodePreviewMat(const Node& node,
-		const sm::Matrix2D& mt);
-
 private:
     void DrawTextureWithRT(const sm::mat4& mt) const;
 
