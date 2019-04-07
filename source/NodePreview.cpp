@@ -93,19 +93,6 @@ sm::Matrix2D NodePreview::CalcNodePreviewMat(const Node& node, const sm::Matrix2
 	ret.x[5] += r.Center().y;
 	return ret;
 }
-
-sm::mat4 NodePreview::MatTrans(const sm::Matrix2D& mt)
-{
-	sm::mat4 ret;
-	ret.x[0]  = mt.x[0];
-	ret.x[1]  = mt.x[1];
-	ret.x[4]  = mt.x[2];
-	ret.x[5]  = mt.x[3];
-	ret.x[12] = mt.x[4];
-	ret.x[13] = mt.x[5];
-	return ret;
-}
-
 void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
 {
     // draw texture to rt

@@ -25,8 +25,6 @@ public:
 		const sm::Matrix2D& mt);
 
 private:
-	static sm::mat4 MatTrans(const sm::Matrix2D& mt);
-
     void DrawTextureWithRT(const sm::mat4& mt) const;
 
 private:
