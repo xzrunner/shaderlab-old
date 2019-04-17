@@ -93,7 +93,7 @@ void NodePreview::DrawTextureWithRT(const sm::mat4& mt) const
     {
         pt2::RenderTargetCtx ctx(ur_rc, m_shader, rt_mgr.WIDTH, rt_mgr.HEIGHT);
 
-        auto& uniform = m_shader->GetUniformName(pt0::U_RESOLUTION);
+        auto& uniform = m_shader->GetUniformName(pt0::UniformTypes::Resolution);
         if (!uniform.empty())
         {
             const float res[2] = {
