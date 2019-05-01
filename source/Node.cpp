@@ -49,7 +49,6 @@ void Node::SetPreview(bool preview)
         m_preview = std::make_unique<NodePreview>(*this, false);
     } else {
         m_preview.reset();
-        int zz = 0;
     }
 }
 
