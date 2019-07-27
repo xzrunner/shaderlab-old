@@ -206,7 +206,7 @@ void WxNodeProperty::LoadFromNode(const n0::SceneNodePtr& obj, const bp::NodePtr
                     bp::NodeHelper::LoadFunctionNode(m_obj, m_node);
                 }
                 m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-                m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+                m_sub_mgr->NotifyObservers(bp::MSG_BP_NODE_PROP_CHANGED);
             });
 		}
 	}
@@ -360,7 +360,7 @@ void WxNodeProperty::OnPropertyGridChanged(wxPropertyGridEvent& event)
     );
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-	m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+	m_sub_mgr->NotifyObservers(bp::MSG_BP_NODE_PROP_CHANGED);
 }
 
 }
