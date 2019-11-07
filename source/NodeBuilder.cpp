@@ -186,7 +186,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 			break;
 		case PIN_VECTOR1:
 			if (default_val.is_valid()) {
-				assert(default_val.is_type<float>());
+				assert(default_val.is_type<float>() || default_val.is_type<int>());
 				std::static_pointer_cast<node::Vector1>(default_node)->SetValue(
 					default_val.to_float()
 				);
