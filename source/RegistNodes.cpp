@@ -44,6 +44,7 @@ REGIST_NODE_RTTI(Blend,                                                  \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Mode"))        \
 )
 )
+REGIST_NODE_RTTI_DEFAULT(EdgeDetect)
 REGIST_NODE_RTTI_DEFAULT(Gray)
 REGIST_NODE_RTTI(ChannelMask,                                                                   \
 .property("channels", &sg::node::ChannelMask::GetChannels, &sg::node::ChannelMask::SetChannels) \

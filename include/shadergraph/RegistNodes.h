@@ -58,6 +58,7 @@ SG_DEFINE_NODE(Blend, true, false, false,                \
 private:                                                 \
 	PropBlendMode m_mode = sw::node::Blend::MODE_BURN;   \
 )
+SG_DEFINE_NODE_PREVIEW(EdgeDetect)
 SG_DEFINE_NODE_PREVIEW(Gray)
 SG_DEFINE_NODE(ChannelMask, true, false, false,          \
 	auto& GetChannels() const { return m_channels; }     \
