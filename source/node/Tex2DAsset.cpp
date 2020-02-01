@@ -3,6 +3,7 @@
 #include <blueprint/NodeHelper.h>
 
 #include <painting2/RenderSystem.h>
+#include <painting2/Texture.h>
 #include <node2/RenderSystem.h>
 #include <facade/Image.h>
 #include <facade/ResPool.h>
