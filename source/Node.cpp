@@ -1,10 +1,10 @@
 #include "shadergraph/Node.h"
 #include "shadergraph/NodePreview.h"
-#include "shadergraph/Utility.h"
 #include "shadergraph/PinType.h"
 
 #include <blueprint/Pin.h>
 
+#include <cpputil/Tools.h>
 #include <shaderweaver/Node.h>
 #include <node2/RenderSystem.h>
 
@@ -164,7 +164,7 @@ std::string Node::PortNameFromVar(const std::string& str)
 	} else if (str == "uv") {
 		return "UV";
     } else {
-        return Utility::UnderscoreToCamelCase(str);
+        return cpputil::UnderscoreToCamelCase(str);
     }
 }
 

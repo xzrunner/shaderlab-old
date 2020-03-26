@@ -10,9 +10,6 @@
     <Filter Include="nodes">
       <UniqueIdentifier>{93d0111d-b3b0-46b8-a29f-b28825f016d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="utility">
-      <UniqueIdentifier>{b596225b-9622-46e8-b566-0bb93c2c0c99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="rtti">
       <UniqueIdentifier>{4356cbf3-0b7a-41a5-b5bf-20286053899b}</UniqueIdentifier>
     </Filter>
@@ -42,9 +39,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h">
       <Filter>nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\Utility.h">
-      <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
       <Filter>rtti</Filter>
@@ -93,9 +87,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\node\Custom.cpp">
       <Filter>nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\Utility.cpp">
-      <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
       <Filter>rtti</Filter>
