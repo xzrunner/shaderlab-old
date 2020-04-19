@@ -13,7 +13,8 @@ public:
 	Node(const std::string& title, bool preview,
 		bool debug_print = false, bool use_rt = false);
 
-	virtual void Draw(const n2::RenderParams& rp) const override;
+	virtual void Draw(const ur2::Device& dev, ur2::Context& ctx,
+        const n2::RenderParams& rp) const override;
 	virtual bool Update(const bp::UpdateParams& params) override;
 
     void SetPreview(bool preview);

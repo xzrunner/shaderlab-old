@@ -46,6 +46,7 @@ REGIST_NODE_RTTI(Blend,                                                  \
 )
 REGIST_NODE_RTTI_DEFAULT(EdgeDetect)
 REGIST_NODE_RTTI_DEFAULT(Gray)
+REGIST_NODE_RTTI_DEFAULT(MinFilter)
 REGIST_NODE_RTTI(ChannelMask,                                                                   \
 .property("channels", &sg::node::ChannelMask::GetChannels, &sg::node::ChannelMask::SetChannels) \
 (                                                                                               \

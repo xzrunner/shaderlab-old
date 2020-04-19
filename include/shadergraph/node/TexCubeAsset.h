@@ -23,7 +23,8 @@ public:
 		});
 	}
 
-	virtual void Draw(const n2::RenderParams& rp) const override;
+	virtual void Draw(const ur2::Device& dev, ur2::Context& ctx,
+        const n2::RenderParams& rp) const override;
 
 	void  SetName(const std::string& name);
 	auto& GetName() const { return m_name; }

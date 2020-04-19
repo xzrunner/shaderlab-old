@@ -5,16 +5,15 @@
 
 #include <shaderweaver/typedef.h>
 #include <shaderweaver/Node.h>
-#include <unirender/VertexAttrib.h>
 #include <painting0/Shader.h>
 #include <painting3/GlobalIllumination.h>
 
 #include <vector>
 
 namespace bp { class Node; }
-namespace pt2 { class Shader; }
-namespace pt3 { class Shader; struct GlobalIllumination; }
+namespace pt3 { struct GlobalIllumination; }
 namespace sw { class Evaluator; }
+namespace ur2 { class ShaderProgram; }
 
 namespace sg
 {
@@ -38,8 +37,8 @@ public:
 		bool debug_print = false, const std::vector<bp::NodePtr>& all_nodes = std::vector<bp::NodePtr>(),
         const pt3::GlobalIllumination& gi = pt3::GlobalIllumination());
 
-	std::shared_ptr<pt2::Shader> CreateShader2() const;
-	std::shared_ptr<pt3::Shader> CreateShader3() const;
+	std::shared_ptr<ur2::ShaderProgram> CreateShader2() const;
+	std::shared_ptr<ur2::ShaderProgram> CreateShader3() const;
 
 	sw::NodePtr CreateWeaverNode(const bp::Node& node);
 
@@ -48,7 +47,7 @@ private:
 
 	bool CreateFromNode(const bp::Node& node, int input_idx, sw::Node::PortAddr& from_port);
 
-	pt0::Shader::Params CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const;
+//	pt0::Shader::Params CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const;
 
 private:
 	bool m_debug_print = false;
@@ -60,7 +59,7 @@ private:
 	std::vector<sw::NodePtr> m_vert_nodes;
 	sw::NodePtr m_frag_node = nullptr;
 
-	std::vector<ur::VertexAttrib> m_layout;
+//	std::vector<ur::VertexAttrib> m_layout;
 
 	// textures
 	std::vector<std::string> m_texture_names;

@@ -60,6 +60,7 @@ private:                                                 \
 )
 SG_DEFINE_NODE_PREVIEW(EdgeDetect)
 SG_DEFINE_NODE_PREVIEW(Gray)
+SG_DEFINE_NODE_PREVIEW(MinFilter)
 SG_DEFINE_NODE(ChannelMask, true, false, false,          \
 	auto& GetChannels() const { return m_channels; }     \
 	void SetChannels(const PropMultiChannels& channels); \

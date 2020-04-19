@@ -2,6 +2,7 @@
 
 #include <blueprint/NodeHelper.h>
 
+#include <unirender2/RenderState.h>
 #include <painting2/RenderSystem.h>
 #include <painting2/Texture.h>
 #include <node2/RenderSystem.h>
@@ -13,14 +14,16 @@ namespace sg
 namespace node
 {
 
-void Tex2DAsset::Draw(const n2::RenderParams& rp) const
+void Tex2DAsset::Draw(const ur2::Device& dev, ur2::Context& ctx,
+                      const n2::RenderParams& rp) const
 {
-	bp::Node::Draw(rp);
+	bp::Node::Draw(dev, ctx, rp);
 
 	if (m_img)
 	{
 		auto model_mat = bp::NodeHelper::CalcPreviewMat(*this, rp.GetMatrix());
-		pt2::RenderSystem::DrawTexture(*m_img->GetTexture(), sm::rect(1, 1), model_mat);
+        ur2::RenderState rs;
+		pt2::RenderSystem::DrawTexture(dev, ctx, rs, m_img->GetTexture(), sm::rect(1, 1), model_mat);
 	}
 }
 
@@ -32,7 +35,7 @@ void Tex2DAsset::SetName(const std::string& name)
 
 void Tex2DAsset::SetImagePath(std::string filepath)
 {
-	m_img = facade::ResPool::Instance().Fetch<facade::Image>(std::move(filepath));
+	m_img = facade::ResPool::Instance().Fetch<facade::Image>(filepath, nullptr);
 }
 
 std::string Tex2DAsset::GetImagePath() const

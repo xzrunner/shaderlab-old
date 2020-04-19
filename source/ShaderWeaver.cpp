@@ -64,9 +64,7 @@
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <shaderweaver/Evaluator.h>
-#include <unirender/Blackboard.h>
-#include <unirender/RenderContext.h>
-#include <unirender/TextureCube.h>
+#include <unirender2/Texture.h>
 #include <painting2/Shader.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
@@ -226,293 +224,297 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
                            const pt3::GlobalIllumination& gi)
 	: m_debug_print(debug_print)
 {
-    sw::NodePtr frag_end = nullptr;
+ //   sw::NodePtr frag_end = nullptr;
 
-    PrepareSetRefNodes(all_nodes);
+ //   PrepareSetRefNodes(all_nodes);
 
-    switch (shader_type)
-	{
-	case SHADER_SHAPE:
-	{
-		// layout
-		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 2, 4, 8, 0));
+ //   switch (shader_type)
+	//{
+	//case SHADER_SHAPE:
+	//{
+	//	// layout
+	//	m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 2, 4, 8, 0));
 
-		// vert
+	//	// vert
 
-		auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
-		m_cached_nodes.push_back(proj);
-		m_cached_nodes.push_back(view);
-		m_cached_nodes.push_back(model);
+	//	auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+	//	auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+	//	auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
+	//	m_cached_nodes.push_back(proj);
+	//	m_cached_nodes.push_back(view);
+	//	m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
-		m_cached_nodes.push_back(position);
+	//	auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
+	//	m_cached_nodes.push_back(position);
 
-		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
-		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
-		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
-		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
-		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
-        m_cached_nodes.push_back(pos_trans);
-        auto vert_end = std::make_shared<sw::node::VertexShader>();
-        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
-		m_vert_nodes.push_back(vert_end);
+	//	auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
+	//	sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
+	//	sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
+	//	sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
+	//	sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
+ //       m_cached_nodes.push_back(pos_trans);
+ //       auto vert_end = std::make_shared<sw::node::VertexShader>();
+ //       sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+	//	m_vert_nodes.push_back(vert_end);
 
-        frag_end = CreateWeaverNode(frag_node);
-	}
-		break;
-	case SHADER_SPRITE:
-	{
-		// layout
-		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 2, 4, 16, 0));
-		m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 16, 8));
+ //       frag_end = CreateWeaverNode(frag_node);
+	//}
+	//	break;
+	//case SHADER_SPRITE:
+	//{
+	//	// layout
+	//	m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 2, 4, 16, 0));
+	//	m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 16, 8));
 
-		// vert
+	//	// vert
 
-		auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
-		m_cached_nodes.push_back(proj);
-		m_cached_nodes.push_back(view);
-		m_cached_nodes.push_back(model);
+	//	auto proj  = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+	//	auto view  = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+	//	auto model = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
+	//	m_cached_nodes.push_back(proj);
+	//	m_cached_nodes.push_back(view);
+	//	m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
-		m_cached_nodes.push_back(position);
+	//	auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_pos2);
+	//	m_cached_nodes.push_back(position);
 
-        // gl_Position =  u_projection * u_view * u_model * a_pos;
-		auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
-		sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
-		sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
-		sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
-		sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
-        m_cached_nodes.push_back(pos_trans);
-        auto vert_end = std::make_shared<sw::node::VertexShader>();
-        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
-        m_vert_nodes.push_back(vert_end);
+ //       // gl_Position =  u_projection * u_view * u_model * a_pos;
+	//	auto pos_trans = std::make_shared<sw::node::PositionTrans>(2);
+	//	sw::make_connecting({ proj, 0 },     { pos_trans, sw::node::PositionTrans::ID_PROJ });
+	//	sw::make_connecting({ view, 0 },     { pos_trans, sw::node::PositionTrans::ID_VIEW });
+	//	sw::make_connecting({ model, 0 },    { pos_trans, sw::node::PositionTrans::ID_MODEL });
+	//	sw::make_connecting({ position, 0 }, { pos_trans, sw::node::PositionTrans::ID_POS });
+ //       m_cached_nodes.push_back(pos_trans);
+ //       auto vert_end = std::make_shared<sw::node::VertexShader>();
+ //       sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+ //       m_vert_nodes.push_back(vert_end);
 
-        // v_texcoord = a_texcoord;
-        auto a_texcoord = std::make_shared<sw::node::ShaderInput>(VERT_TEXCOORD_NAME, sw::t_uv);
-        auto v_texcoord = std::make_shared<sw::node::ShaderOutput>(FRAG_TEXCOORD_NAME, sw::t_uv);
-        sw::make_connecting({ a_texcoord, 0 }, { v_texcoord, 0 });
-        m_vert_nodes.push_back(v_texcoord);
-        m_cached_nodes.push_back(a_texcoord);
+ //       // v_texcoord = a_texcoord;
+ //       auto a_texcoord = std::make_shared<sw::node::ShaderInput>(VERT_TEXCOORD_NAME, sw::t_uv);
+ //       auto v_texcoord = std::make_shared<sw::node::ShaderOutput>(FRAG_TEXCOORD_NAME, sw::t_uv);
+ //       sw::make_connecting({ a_texcoord, 0 }, { v_texcoord, 0 });
+ //       m_vert_nodes.push_back(v_texcoord);
+ //       m_cached_nodes.push_back(a_texcoord);
 
-		// frag
-		frag_end = CreateWeaverNode(frag_node);
+	//	// frag
+	//	frag_end = CreateWeaverNode(frag_node);
 
-        // fixme
-        if (frag_end && frag_end->get_type() == rttr::type::get<sw::node::Raymarching>()) {
-            auto cam_pos = std::make_shared<sw::node::CameraPos>();
-            m_cached_nodes.push_back(cam_pos);
-            sw::make_connecting({ cam_pos, 0 }, { frag_end, sw::node::Raymarching::ID_CAM_POS });
-        }
-	}
-		break;
-	case SHADER_PHONG:
-	{
-		// layout
-		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
-		m_layout.push_back(ur::VertexAttrib(VERT_NORMAL_NAME,   3, 4, 32, 12));
-		m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 32, 24));
+ //       // fixme
+ //       if (frag_end && frag_end->get_type() == rttr::type::get<sw::node::Raymarching>()) {
+ //           auto cam_pos = std::make_shared<sw::node::CameraPos>();
+ //           m_cached_nodes.push_back(cam_pos);
+ //           sw::make_connecting({ cam_pos, 0 }, { frag_end, sw::node::Raymarching::ID_CAM_POS });
+ //       }
+	//}
+	//	break;
+	//case SHADER_PHONG:
+	//{
+	//	// layout
+	//	m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
+	//	m_layout.push_back(ur::VertexAttrib(VERT_NORMAL_NAME,   3, 4, 32, 12));
+	//	m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 32, 24));
 
-		// vert
-        init_vert3d(m_cached_nodes, m_vert_nodes);
+	//	// vert
+ //       init_vert3d(m_cached_nodes, m_vert_nodes);
 
-		// frag
-		auto phong = CreateWeaverNode(frag_node);
+	//	// frag
+	//	auto phong = CreateWeaverNode(frag_node);
 
-        auto cam_pos = std::make_shared<sw::node::CameraPos>();
-		auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
-		auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME, sw::t_nor3);
-        m_cached_nodes.push_back(cam_pos);
-		m_cached_nodes.push_back(frag_in_pos);
-		m_cached_nodes.push_back(frag_in_nor);
-        sw::make_connecting({ cam_pos, 0 }, { phong, sw::node::Phong::ID_VIEW_POS });
-		sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::ID_FRAG_POS });
-		sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::ID_NORMAL });
+ //       auto cam_pos = std::make_shared<sw::node::CameraPos>();
+	//	auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
+	//	auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME, sw::t_nor3);
+ //       m_cached_nodes.push_back(cam_pos);
+	//	m_cached_nodes.push_back(frag_in_pos);
+	//	m_cached_nodes.push_back(frag_in_nor);
+ //       sw::make_connecting({ cam_pos, 0 }, { phong, sw::node::Phong::ID_VIEW_POS });
+	//	sw::make_connecting({ frag_in_pos, 0 }, { phong, sw::node::Phong::ID_FRAG_POS });
+	//	sw::make_connecting({ frag_in_nor, 0 }, { phong, sw::node::Phong::ID_NORMAL });
 
-		frag_end = phong;
-	}
-		break;
-    case SHADER_PBR:
-    {
-		// layout
-		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
-		m_layout.push_back(ur::VertexAttrib(VERT_NORMAL_NAME,   3, 4, 32, 12));
-		m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 32, 24));
+	//	frag_end = phong;
+	//}
+	//	break;
+ //   case SHADER_PBR:
+ //   {
+	//	// layout
+	//	m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
+	//	m_layout.push_back(ur::VertexAttrib(VERT_NORMAL_NAME,   3, 4, 32, 12));
+	//	m_layout.push_back(ur::VertexAttrib(VERT_TEXCOORD_NAME, 2, 4, 32, 24));
 
-        // vert
-        init_vert3d(m_cached_nodes, m_vert_nodes);
+ //       // vert
+ //       init_vert3d(m_cached_nodes, m_vert_nodes);
 
-        // PBR
-        auto pbr = CreateWeaverNode(frag_node);
+ //       // PBR
+ //       auto pbr = CreateWeaverNode(frag_node);
 
-        auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
-        auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME,    sw::t_nor3);
-        auto frag_in_tex = std::make_shared<sw::node::ShaderInput>(FRAG_TEXCOORD_NAME,  sw::t_uv);
-        auto cam_pos = std::make_shared<sw::node::CameraPos>();
-        m_cached_nodes.push_back(frag_in_pos);
-        m_cached_nodes.push_back(frag_in_nor);
-        m_cached_nodes.push_back(frag_in_tex);
-        m_cached_nodes.push_back(cam_pos);
-        sw::make_connecting({ frag_in_pos, 0 }, { pbr, sw::node::PBR::ID_FRAG_POS });
-        sw::make_connecting({ frag_in_nor, 0 }, { pbr, sw::node::PBR::ID_NORMAL });
-        sw::make_connecting({ frag_in_tex, 0 }, { pbr, sw::node::PBR::ID_TEXCOORD });
-        sw::make_connecting({ cam_pos, 0 },     { pbr, sw::node::PBR::ID_CAM_POS });
+ //       auto frag_in_pos = std::make_shared<sw::node::ShaderInput>(FRAG_POSITION_NAME, sw::t_flt3);
+ //       auto frag_in_nor = std::make_shared<sw::node::ShaderInput>(FRAG_NORMAL_NAME,    sw::t_nor3);
+ //       auto frag_in_tex = std::make_shared<sw::node::ShaderInput>(FRAG_TEXCOORD_NAME,  sw::t_uv);
+ //       auto cam_pos = std::make_shared<sw::node::CameraPos>();
+ //       m_cached_nodes.push_back(frag_in_pos);
+ //       m_cached_nodes.push_back(frag_in_nor);
+ //       m_cached_nodes.push_back(frag_in_tex);
+ //       m_cached_nodes.push_back(cam_pos);
+ //       sw::make_connecting({ frag_in_pos, 0 }, { pbr, sw::node::PBR::ID_FRAG_POS });
+ //       sw::make_connecting({ frag_in_nor, 0 }, { pbr, sw::node::PBR::ID_NORMAL });
+ //       sw::make_connecting({ frag_in_tex, 0 }, { pbr, sw::node::PBR::ID_TEXCOORD });
+ //       sw::make_connecting({ cam_pos, 0 },     { pbr, sw::node::PBR::ID_CAM_POS });
 
-        sw::Node::PortAddr ambient_out;
-        // IBL
-        if (gi.irradiance_map)
-        {
-            auto ibl = std::make_shared<sw::node::IBL>();
-            m_cached_nodes.push_back(ibl);
-            sw::make_connecting({ pbr, sw::node::PBR::ID_N },         { ibl, sw::node::IBL::ID_N });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_V },         { ibl, sw::node::IBL::ID_V });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_F0 },        { ibl, sw::node::IBL::ID_F0 });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO },    { ibl, sw::node::IBL::ID_ALBEDO });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_METALLIC },  { ibl, sw::node::IBL::ID_METALLIC });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_ROUGHNESS }, { ibl, sw::node::IBL::ID_ROUGHNESS });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_AO },        { ibl, sw::node::IBL::ID_AO });
+ //       sw::Node::PortAddr ambient_out;
+ //       // IBL
+ //       if (gi.irradiance_map)
+ //       {
+ //           auto ibl = std::make_shared<sw::node::IBL>();
+ //           m_cached_nodes.push_back(ibl);
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_N },         { ibl, sw::node::IBL::ID_N });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_V },         { ibl, sw::node::IBL::ID_V });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_F0 },        { ibl, sw::node::IBL::ID_F0 });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO },    { ibl, sw::node::IBL::ID_ALBEDO });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_METALLIC },  { ibl, sw::node::IBL::ID_METALLIC });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_ROUGHNESS }, { ibl, sw::node::IBL::ID_ROUGHNESS });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_AO },        { ibl, sw::node::IBL::ID_AO });
 
-            auto irr_map_name = sw::node::IBL::IrradianceMapName();
-            m_texture_names.push_back(irr_map_name);
-            m_texture_ids.push_back(gi.irradiance_map->GetTexID());
-            auto irradiance_map = std::make_shared<sw::node::ShaderUniform>();
-            irradiance_map->SetNameAndType(irr_map_name, sw::t_tex_cube);
-            m_cached_nodes.push_back(irradiance_map);
-            sw::make_connecting({ irradiance_map, 0 }, { ibl, sw::node::IBL::ID_IRRADIANCE_MAP });
+ //           auto irr_map_name = sw::node::IBL::IrradianceMapName();
+ //           m_texture_names.push_back(irr_map_name);
+ //           m_texture_ids.push_back(gi.irradiance_map->GetTexID());
+ //           auto irradiance_map = std::make_shared<sw::node::ShaderUniform>();
+ //           irradiance_map->SetNameAndType(irr_map_name, sw::t_tex_cube);
+ //           m_cached_nodes.push_back(irradiance_map);
+ //           sw::make_connecting({ irradiance_map, 0 }, { ibl, sw::node::IBL::ID_IRRADIANCE_MAP });
 
-            auto pre_map_name = sw::node::IBL::PrefilterMapName();
-            m_texture_names.push_back(pre_map_name);
-            m_texture_ids.push_back(gi.prefilter_map->GetTexID());
-            auto prefilter_map = std::make_shared<sw::node::ShaderUniform>();
-            prefilter_map->SetNameAndType(pre_map_name, sw::t_tex_cube);
-            m_cached_nodes.push_back(prefilter_map);
-            sw::make_connecting({ prefilter_map, 0 }, { ibl, sw::node::IBL::ID_PREFILTER_MAP });
+ //           auto pre_map_name = sw::node::IBL::PrefilterMapName();
+ //           m_texture_names.push_back(pre_map_name);
+ //           m_texture_ids.push_back(gi.prefilter_map->GetTexID());
+ //           auto prefilter_map = std::make_shared<sw::node::ShaderUniform>();
+ //           prefilter_map->SetNameAndType(pre_map_name, sw::t_tex_cube);
+ //           m_cached_nodes.push_back(prefilter_map);
+ //           sw::make_connecting({ prefilter_map, 0 }, { ibl, sw::node::IBL::ID_PREFILTER_MAP });
 
-            auto brdf_lut_name = sw::node::IBL::BrdfLutName();
-            m_texture_names.push_back(brdf_lut_name);
-            m_texture_ids.push_back(gi.brdf_lut->TexID());
-            auto brdf_lut = std::make_shared<sw::node::ShaderUniform>();
-            brdf_lut->SetNameAndType(brdf_lut_name, sw::t_tex2d);
-            m_cached_nodes.push_back(brdf_lut);
-            sw::make_connecting({ brdf_lut, 0 }, { ibl, sw::node::IBL::ID_BRDF_LUT });
+ //           auto brdf_lut_name = sw::node::IBL::BrdfLutName();
+ //           m_texture_names.push_back(brdf_lut_name);
+ //           m_texture_ids.push_back(gi.brdf_lut->TexID());
+ //           auto brdf_lut = std::make_shared<sw::node::ShaderUniform>();
+ //           brdf_lut->SetNameAndType(brdf_lut_name, sw::t_tex2d);
+ //           m_cached_nodes.push_back(brdf_lut);
+ //           sw::make_connecting({ brdf_lut, 0 }, { ibl, sw::node::IBL::ID_BRDF_LUT });
 
-            ambient_out = { ibl, 0 };
-        }
-        else
-        {
-            // vec3 ambient = vec3(0.03) * albedo * ao;
-            auto ambient = std::make_shared<sw::node::Multiply>();
-            m_cached_nodes.push_back(ambient);
-            ambient->SetInputPortCount(3);
-            auto f = std::make_shared<sw::node::Vector1>("", 0.03f);
-            m_cached_nodes.push_back(f);
-            sw::make_connecting({ f, 0 },                          { ambient, 0 });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO }, { ambient, 1 });
-            sw::make_connecting({ pbr, sw::node::PBR::ID_AO },     { ambient, 2 });
+ //           ambient_out = { ibl, 0 };
+ //       }
+ //       else
+ //       {
+ //           // vec3 ambient = vec3(0.03) * albedo * ao;
+ //           auto ambient = std::make_shared<sw::node::Multiply>();
+ //           m_cached_nodes.push_back(ambient);
+ //           ambient->SetInputPortCount(3);
+ //           auto f = std::make_shared<sw::node::Vector1>("", 0.03f);
+ //           m_cached_nodes.push_back(f);
+ //           sw::make_connecting({ f, 0 },                          { ambient, 0 });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_ALBEDO }, { ambient, 1 });
+ //           sw::make_connecting({ pbr, sw::node::PBR::ID_AO },     { ambient, 2 });
 
-            ambient_out = { ambient, 0 };
-        }
+ //           ambient_out = { ambient, 0 };
+ //       }
 
-        // vec3 color = ambient + Lo;
-        auto color = std::make_shared<sw::node::Add>();
-        m_cached_nodes.push_back(color);
-        sw::make_connecting(ambient_out,                   { color, 0 });
-        sw::make_connecting({ pbr, sw::node::PBR::ID_Lo }, { color, 1 });
+ //       // vec3 color = ambient + Lo;
+ //       auto color = std::make_shared<sw::node::Add>();
+ //       m_cached_nodes.push_back(color);
+ //       sw::make_connecting(ambient_out,                   { color, 0 });
+ //       sw::make_connecting({ pbr, sw::node::PBR::ID_Lo }, { color, 1 });
 
-        // HDR tonemapping
-        auto tonemap = std::make_shared<sw::node::Tonemap>();
-        m_cached_nodes.push_back(tonemap);
-        sw::make_connecting({ color, 0 }, { tonemap, 0 });
+ //       // HDR tonemapping
+ //       auto tonemap = std::make_shared<sw::node::Tonemap>();
+ //       m_cached_nodes.push_back(tonemap);
+ //       sw::make_connecting({ color, 0 }, { tonemap, 0 });
 
-        // gamma correct
-        auto gamma = std::make_shared<sw::node::GammaCorrect>();
-        m_cached_nodes.push_back(gamma);
-        sw::make_connecting({ tonemap, 0 }, { gamma, 0 });
+ //       // gamma correct
+ //       auto gamma = std::make_shared<sw::node::GammaCorrect>();
+ //       m_cached_nodes.push_back(gamma);
+ //       sw::make_connecting({ tonemap, 0 }, { gamma, 0 });
 
-        frag_end = gamma;
-    }
-        break;
-	case SHADER_RAYMARCHING:
-	{
-		// layout
-		m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
+ //       frag_end = gamma;
+ //   }
+ //       break;
+	//case SHADER_RAYMARCHING:
+	//{
+	//	// layout
+	//	m_layout.push_back(ur::VertexAttrib(VERT_POSITION_NAME, 3, 4, 32, 0));
 
-		// vert
-		auto projection = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
-		auto view       = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
-		auto model      = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
-		m_cached_nodes.push_back(projection);
-		m_cached_nodes.push_back(view);
-		m_cached_nodes.push_back(model);
+	//	// vert
+	//	auto projection = std::make_shared<sw::node::ShaderUniform>(PROJ_MAT_NAME,  sw::t_mat4);
+	//	auto view       = std::make_shared<sw::node::ShaderUniform>(VIEW_MAT_NAME,  sw::t_mat4);
+	//	auto model      = std::make_shared<sw::node::ShaderUniform>(MODEL_MAT_NAME, sw::t_mat4);
+	//	m_cached_nodes.push_back(projection);
+	//	m_cached_nodes.push_back(view);
+	//	m_cached_nodes.push_back(model);
 
-		auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_flt3);
-		m_cached_nodes.push_back(position);
+	//	auto position = std::make_shared<sw::node::ShaderInput>(VERT_POSITION_NAME, sw::t_flt3);
+	//	m_cached_nodes.push_back(position);
 
-		auto pos_trans = std::make_shared<sw::node::PositionTrans>(4);
-		sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::ID_PROJ });
-		sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
-		sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
-		sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
-        m_cached_nodes.push_back(pos_trans);
-        auto vert_end = std::make_shared<sw::node::VertexShader>();
-        sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
-		m_vert_nodes.push_back(vert_end);
+	//	auto pos_trans = std::make_shared<sw::node::PositionTrans>(4);
+	//	sw::make_connecting({ projection, 0 }, { pos_trans, sw::node::PositionTrans::ID_PROJ });
+	//	sw::make_connecting({ view, 0 },       { pos_trans, sw::node::PositionTrans::ID_VIEW });
+	//	sw::make_connecting({ model, 0 },      { pos_trans, sw::node::PositionTrans::ID_MODEL });
+	//	sw::make_connecting({ position, 0 },   { pos_trans, sw::node::PositionTrans::ID_POS });
+ //       m_cached_nodes.push_back(pos_trans);
+ //       auto vert_end = std::make_shared<sw::node::VertexShader>();
+ //       sw::make_connecting({ pos_trans, 0 }, { vert_end, 0 });
+	//	m_vert_nodes.push_back(vert_end);
 
-		// frag
-		auto raymarching = CreateWeaverNode(frag_node);
+	//	// frag
+	//	auto raymarching = CreateWeaverNode(frag_node);
 
-        auto cam_pos = std::make_shared<sw::node::CameraPos>();
-        m_cached_nodes.push_back(cam_pos);
-        sw::make_connecting({ cam_pos, 0 }, { raymarching, sw::node::Raymarching::ID_CAM_POS });
+ //       auto cam_pos = std::make_shared<sw::node::CameraPos>();
+ //       m_cached_nodes.push_back(cam_pos);
+ //       sw::make_connecting({ cam_pos, 0 }, { raymarching, sw::node::Raymarching::ID_CAM_POS });
 
-		frag_end = raymarching;
-	}
-		break;
-	default:
-		assert(0);
-	}
+	//	frag_end = raymarching;
+	//}
+	//	break;
+	//default:
+	//	assert(0);
+	//}
 
-    if (frag_end) {
-        m_frag_node = std::make_shared<sw::node::FragmentShader>();
-        sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
-    }
+ //   if (frag_end) {
+ //       m_frag_node = std::make_shared<sw::node::FragmentShader>();
+ //       sw::make_connecting({ frag_end, 0 }, { m_frag_node, 0 });
+ //   }
 }
 
-std::shared_ptr<pt2::Shader> ShaderWeaver::CreateShader2() const
+std::shared_ptr<ur2::ShaderProgram> ShaderWeaver::CreateShader2() const
 {
-	sw::Evaluator vert(m_vert_nodes);
-	sw::Evaluator frag({ m_frag_node });
+	//sw::Evaluator vert(m_vert_nodes);
+	//sw::Evaluator frag({ m_frag_node });
 
-	if (m_debug_print) {
-		debug_print(vert, frag);
-	}
+	//if (m_debug_print) {
+	//	debug_print(vert, frag);
+	//}
 
-	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<pt2::Shader>(&rc, CreateShaderParams(vert, frag));
+	//auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+	//auto shader = std::make_shared<pt2::Shader>(&rc, CreateShaderParams(vert, frag));
 
-	shader->SetUsedTextures(m_texture_ids);
+	//shader->SetUsedTextures(m_texture_ids);
 
-	return shader;
+	//return shader;
+
+    return nullptr;
 }
 
-std::shared_ptr<pt3::Shader> ShaderWeaver::CreateShader3() const
+std::shared_ptr<ur2::ShaderProgram> ShaderWeaver::CreateShader3() const
 {
-	sw::Evaluator vert(m_vert_nodes);
-	sw::Evaluator frag({ m_frag_node });
+	//sw::Evaluator vert(m_vert_nodes);
+	//sw::Evaluator frag({ m_frag_node });
 
-	if (m_debug_print) {
-		debug_print(vert, frag);
-	}
+	//if (m_debug_print) {
+	//	debug_print(vert, frag);
+	//}
 
-	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<pt3::Shader>(&rc, CreateShaderParams(vert, frag));
+	//auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+	//auto shader = std::make_shared<pt3::Shader>(&rc, CreateShaderParams(vert, frag));
 
-	shader->SetUsedTextures(m_texture_ids);
+	//shader->SetUsedTextures(m_texture_ids);
 
-	return shader;
+	//return shader;
+
+    return nullptr;
 }
 
 sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
@@ -910,33 +912,33 @@ bool ShaderWeaver::CreateFromNode(const bp::Node& node, int input_idx, sw::Node:
     from_port.idx  = bp_from_port->GetPosIdx();
     return true;
 }
-
-pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const
-{
-	pt0::Shader::Params sp(m_texture_names, m_layout);
-	sp.vs = vert.GenShaderStr().c_str();
-	sp.fs = frag.GenShaderStr().c_str();
-
-	sp.uniform_names.Add(pt0::UniformTypes::ModelMat, MODEL_MAT_NAME);
-	sp.uniform_names.Add(pt0::UniformTypes::ViewMat,  VIEW_MAT_NAME);
-	sp.uniform_names.Add(pt0::UniformTypes::ProjMat,  PROJ_MAT_NAME);
-
-	if (vert.HasNodeType<sw::node::Time>() || frag.HasNodeType<sw::node::Time>()) {
-        sp.uniform_names.Add(pt0::UniformTypes::Time,       sw::node::Time::TimeName());
-        sp.uniform_names.Add(pt0::UniformTypes::SineTime,  sw::node::Time::SineTimeName());
-        sp.uniform_names.Add(pt0::UniformTypes::CosTime,   sw::node::Time::CosTimeName());
-        sp.uniform_names.Add(pt0::UniformTypes::DeltaiTme, sw::node::Time::DeltaTimeName());
-	}
-
-    if (vert.HasNodeType<sw::node::Raymarching>() || frag.HasNodeType<sw::node::Raymarching>()) {
-        sp.uniform_names.Add(pt0::UniformTypes::Resolution, sw::node::Raymarching::ResolutionName());
-    }
-
-    if (vert.HasNodeType<sw::node::CameraPos>() || frag.HasNodeType<sw::node::CameraPos>()) {
-        sp.uniform_names.Add(pt0::UniformTypes::CamPos, sw::node::CameraPos::CamPosName());
-    }
-
-	return sp;
-}
+//
+//pt0::Shader::Params ShaderWeaver::CreateShaderParams(const sw::Evaluator& vert, const sw::Evaluator& frag) const
+//{
+//	pt0::Shader::Params sp(m_texture_names, m_layout);
+//	sp.vs = vert.GenShaderStr().c_str();
+//	sp.fs = frag.GenShaderStr().c_str();
+//
+//	sp.uniform_names.Add(pt0::UniformTypes::ModelMat, MODEL_MAT_NAME);
+//	sp.uniform_names.Add(pt0::UniformTypes::ViewMat,  VIEW_MAT_NAME);
+//	sp.uniform_names.Add(pt0::UniformTypes::ProjMat,  PROJ_MAT_NAME);
+//
+//	if (vert.HasNodeType<sw::node::Time>() || frag.HasNodeType<sw::node::Time>()) {
+//        sp.uniform_names.Add(pt0::UniformTypes::Time,       sw::node::Time::TimeName());
+//        sp.uniform_names.Add(pt0::UniformTypes::SineTime,  sw::node::Time::SineTimeName());
+//        sp.uniform_names.Add(pt0::UniformTypes::CosTime,   sw::node::Time::CosTimeName());
+//        sp.uniform_names.Add(pt0::UniformTypes::DeltaiTme, sw::node::Time::DeltaTimeName());
+//	}
+//
+//    if (vert.HasNodeType<sw::node::Raymarching>() || frag.HasNodeType<sw::node::Raymarching>()) {
+//        sp.uniform_names.Add(pt0::UniformTypes::Resolution, sw::node::Raymarching::ResolutionName());
+//    }
+//
+//    if (vert.HasNodeType<sw::node::CameraPos>() || frag.HasNodeType<sw::node::CameraPos>()) {
+//        sp.uniform_names.Add(pt0::UniformTypes::CamPos, sw::node::CameraPos::CamPosName());
+//    }
+//
+//	return sp;
+//}
 
 }
