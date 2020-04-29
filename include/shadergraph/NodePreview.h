@@ -5,7 +5,7 @@
 
 #include <memory>
 
-namespace ur2 { class ShaderProgram; }
+namespace ur { class ShaderProgram; }
 namespace bp { struct UpdateParams; }
 
 namespace sg
@@ -29,7 +29,7 @@ private:
 	bool m_debug_print;
     bool m_use_rt;
 
-	std::shared_ptr<ur2::ShaderProgram> m_shader = nullptr;
+	std::shared_ptr<ur::ShaderProgram> m_shader = nullptr;
 	bool m_draw_tex = false;
 
 }; // NodePreview

@@ -72,7 +72,7 @@ WxNodeProperty::WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 	InitLayout();
 }
 
-void WxNodeProperty::LoadFromNode(const ur2::Device& dev, const n0::SceneNodePtr& obj,
+void WxNodeProperty::LoadFromNode(const ur::Device& dev, const n0::SceneNodePtr& obj,
                                   const bp::NodePtr& node)
 {
     m_obj = obj;

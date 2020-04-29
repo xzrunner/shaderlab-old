@@ -64,7 +64,7 @@
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <shaderweaver/Evaluator.h>
-#include <unirender2/Texture.h>
+#include <unirender/Texture.h>
 #include <painting2/Shader.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
@@ -479,7 +479,7 @@ ShaderWeaver::ShaderWeaver(ShaderType shader_type, const bp::Node& frag_node,
  //   }
 }
 
-std::shared_ptr<ur2::ShaderProgram> ShaderWeaver::CreateShader2() const
+std::shared_ptr<ur::ShaderProgram> ShaderWeaver::CreateShader2() const
 {
 	//sw::Evaluator vert(m_vert_nodes);
 	//sw::Evaluator frag({ m_frag_node });
@@ -498,7 +498,7 @@ std::shared_ptr<ur2::ShaderProgram> ShaderWeaver::CreateShader2() const
     return nullptr;
 }
 
-std::shared_ptr<ur2::ShaderProgram> ShaderWeaver::CreateShader3() const
+std::shared_ptr<ur::ShaderProgram> ShaderWeaver::CreateShader3() const
 {
 	//sw::Evaluator vert(m_vert_nodes);
 	//sw::Evaluator frag({ m_frag_node });

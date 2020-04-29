@@ -2,7 +2,7 @@
 
 #include <blueprint/NodeHelper.h>
 
-#include <unirender2/RenderState.h>
+#include <unirender/RenderState.h>
 #include <painting2/RenderSystem.h>
 #include <painting2/Texture.h>
 #include <node2/RenderSystem.h>
@@ -14,7 +14,7 @@ namespace sg
 namespace node
 {
 
-void Tex2DAsset::Draw(const ur2::Device& dev, ur2::Context& ctx,
+void Tex2DAsset::Draw(const ur::Device& dev, ur::Context& ctx,
                       const n2::RenderParams& rp) const
 {
 	bp::Node::Draw(dev, ctx, rp);
@@ -22,7 +22,7 @@ void Tex2DAsset::Draw(const ur2::Device& dev, ur2::Context& ctx,
 	if (m_img)
 	{
 		auto model_mat = bp::NodeHelper::CalcPreviewMat(*this, rp.GetMatrix());
-        ur2::RenderState rs;
+        ur::RenderState rs;
 		pt2::RenderSystem::DrawTexture(dev, ctx, rs, m_img->GetTexture(), sm::rect(1, 1), model_mat);
 	}
 }

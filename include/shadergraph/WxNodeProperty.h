@@ -18,7 +18,7 @@ class WxNodeProperty : public wxPanel
 public:
 	WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
-	void LoadFromNode(const ur2::Device& dev,
+	void LoadFromNode(const ur::Device& dev,
         const n0::SceneNodePtr& obj, const bp::NodePtr& node);
 
 private:

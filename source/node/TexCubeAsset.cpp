@@ -10,7 +10,7 @@ namespace sg
 namespace node
 {
 
-void TexCubeAsset::Draw(const ur2::Device& dev, ur2::Context& ctx,
+void TexCubeAsset::Draw(const ur::Device& dev, ur::Context& ctx,
                         const n2::RenderParams& rp) const
 {
 	bp::Node::Draw(dev, ctx, rp);

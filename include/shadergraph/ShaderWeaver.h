@@ -13,7 +13,7 @@
 namespace bp { class Node; }
 namespace pt3 { struct GlobalIllumination; }
 namespace sw { class Evaluator; }
-namespace ur2 { class ShaderProgram; }
+namespace ur { class ShaderProgram; }
 
 namespace sg
 {
@@ -37,8 +37,8 @@ public:
 		bool debug_print = false, const std::vector<bp::NodePtr>& all_nodes = std::vector<bp::NodePtr>(),
         const pt3::GlobalIllumination& gi = pt3::GlobalIllumination());
 
-	std::shared_ptr<ur2::ShaderProgram> CreateShader2() const;
-	std::shared_ptr<ur2::ShaderProgram> CreateShader3() const;
+	std::shared_ptr<ur::ShaderProgram> CreateShader2() const;
+	std::shared_ptr<ur::ShaderProgram> CreateShader3() const;
 
 	sw::NodePtr CreateWeaverNode(const bp::Node& node);
 
