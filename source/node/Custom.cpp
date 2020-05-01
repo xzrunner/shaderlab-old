@@ -1,10 +1,10 @@
-#include "shadergraph/node/Custom.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/node/Custom.h"
+#include "shaderlab/PinType.h"
 
 #include <cpputil/StringHelper.h>
 #include <blueprint/Pin.h>
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

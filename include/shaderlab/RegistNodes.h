@@ -1,13 +1,13 @@
 #pragma once
 
-#include "shadergraph/Node.h"
-#include "shadergraph/ReflectPropTypes.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/Node.h"
+#include "shaderlab/ReflectPropTypes.h"
+#include "shaderlab/PinType.h"
 
 #include <shaderweaver/node/Blend.h>
 #include <cpputil/StringHelper.h>
 
-namespace sg
+namespace shaderlab
 {
 
 void nodes_regist_rttr();

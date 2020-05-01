@@ -8,7 +8,7 @@
 namespace ur { class ShaderProgram; }
 namespace bp { struct UpdateParams; }
 
-namespace sg
+namespace shaderlab
 {
 
 class Node;

@@ -1,8 +1,8 @@
-#include "shadergraph/ShaderWeaver.h"
-#include "shadergraph/RegistNodes.h"
-#include "shadergraph/node/Custom.h"
-#include "shadergraph/node/Tex2DAsset.h"
-#include "shadergraph/node/TexCubeAsset.h"
+#include "shaderlab/ShaderWeaver.h"
+#include "shaderlab/RegistNodes.h"
+#include "shaderlab/node/Custom.h"
+#include "shaderlab/node/Tex2DAsset.h"
+#include "shaderlab/node/TexCubeAsset.h"
 
 #include <shaderweaver/node/ShaderUniform.h>
 #include <shaderweaver/node/ShaderInput.h>
@@ -102,45 +102,45 @@ uint32_t var_type_sg_to_sw(int type)
     uint32_t ret = 0;
     switch (type)
     {
-    case sg::PIN_BOOLEAN:
+    case shaderlab::PIN_BOOLEAN:
         ret = sw::t_bool;
         break;
-    case sg::PIN_DYNAMIC_VECTOR:
+    case shaderlab::PIN_DYNAMIC_VECTOR:
         ret = sw::t_d_vec;
         break;
-    case sg::PIN_VECTOR1:
+    case shaderlab::PIN_VECTOR1:
         ret = sw::t_flt1;
         break;
-    case sg::PIN_VECTOR2:
+    case shaderlab::PIN_VECTOR2:
         ret = sw::t_flt2;
         break;
-    case sg::PIN_VECTOR3:
+    case shaderlab::PIN_VECTOR3:
         ret = sw::t_flt3;
         break;
-    case sg::PIN_VECTOR4:
+    case shaderlab::PIN_VECTOR4:
         ret = sw::t_flt4;
         break;
-    case sg::PIN_COLOR:
+    case shaderlab::PIN_COLOR:
         ret = sw::t_col3;
         break;
-    case sg::PIN_TEXTURE2D:
+    case shaderlab::PIN_TEXTURE2D:
         ret = sw::t_tex2d;
         break;
-    case sg::PIN_CUBE_MAP:
+    case shaderlab::PIN_CUBE_MAP:
         break;
-    case sg::PIN_DYNAMIC_MATRIX:
+    case shaderlab::PIN_DYNAMIC_MATRIX:
         ret = sw::t_d_mat;
         break;
-    case sg::PIN_MATRIX2:
+    case shaderlab::PIN_MATRIX2:
         ret = sw::t_mat2;
         break;
-    case sg::PIN_MATRIX3:
+    case shaderlab::PIN_MATRIX3:
         ret = sw::t_mat3;
         break;
-    case sg::PIN_MATRIX4:
+    case shaderlab::PIN_MATRIX4:
         ret = sw::t_mat4;
         break;
-    case sg::PIN_FUNCTION:
+    case shaderlab::PIN_FUNCTION:
         ret = sw::t_func;
         break;
     }
@@ -211,7 +211,7 @@ void init_vert3d(std::vector<sw::NodePtr>& m_cached_nodes, std::vector<sw::NodeP
 
 }
 
-namespace sg
+namespace shaderlab
 {
 
 ShaderWeaver::ShaderWeaver(const std::vector<bp::NodePtr>& all_nodes)
@@ -552,24 +552,24 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
     {
         dst = std::make_shared<sw::node::Function>();
     }
-	else if (type == rttr::type::get<sg::node::Tex2DAsset>())
+	else if (type == rttr::type::get<shaderlab::node::Tex2DAsset>())
 	{
-        auto& tex2d = static_cast<const sg::node::Tex2DAsset&>(node);
+        auto& tex2d = static_cast<const shaderlab::node::Tex2DAsset&>(node);
 		dst = std::make_shared<sw::node::ShaderUniform>(tex2d.GetName(), sw::t_tex2d);
 	}
-    else if (type == rttr::type::get<sg::node::TexCubeAsset>())
+    else if (type == rttr::type::get<shaderlab::node::TexCubeAsset>())
     {
-        auto& tex_cube = static_cast<const sg::node::TexCubeAsset&>(node);
+        auto& tex_cube = static_cast<const shaderlab::node::TexCubeAsset&>(node);
         dst = std::make_shared<sw::node::ShaderUniform>(tex_cube.GetName(), sw::t_tex_cube);
     }
 	else
 	{
         auto src_type = type.get_name().to_string();
         std::string dst_type;
-        auto find_sg = src_type.find("sg::");
+        auto find_sg = src_type.find("shaderlab::");
         if (find_sg != std::string::npos)
         {
-            dst_type = "sw::" + src_type.substr(find_sg + strlen("sg::"));
+            dst_type = "sw::" + src_type.substr(find_sg + strlen("shaderlab::"));
         }
         else
         {

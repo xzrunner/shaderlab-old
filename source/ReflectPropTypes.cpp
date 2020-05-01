@@ -1,82 +1,82 @@
-#include "shadergraph/ReflectPropTypes.h"
+#include "shaderlab/ReflectPropTypes.h"
 
 #include <rttr/registration.h>
 
 RTTR_REGISTRATION
 {
 
-rttr::registration::enumeration<sg::PropAngleType>("sg_prop_angle_type")
+rttr::registration::enumeration<shaderlab::PropAngleType>("sg_prop_angle_type")
 (
-	rttr::value("deg", sg::PropAngleType::DEGREE),
-	rttr::value("rad", sg::PropAngleType::RADIAN)
-	//rttr::metadata(sg::PropAngleType::DEGREE, "Deg"),
-	//rttr::metadata(sg::PropAngleType::RADIAN, "Rad")
+	rttr::value("deg", shaderlab::PropAngleType::DEGREE),
+	rttr::value("rad", shaderlab::PropAngleType::RADIAN)
+	//rttr::metadata(shaderlab::PropAngleType::DEGREE, "Deg"),
+	//rttr::metadata(shaderlab::PropAngleType::RADIAN, "Rad")
 );
 
-rttr::registration::class_<sg::PropMultiChannels>("sg_prop_multi_channels")
-	.property("channels", &sg::PropMultiChannels::channels)
+rttr::registration::class_<shaderlab::PropMultiChannels>("sg_prop_multi_channels")
+	.property("channels", &shaderlab::PropMultiChannels::channels)
 ;
 
-rttr::registration::class_<sg::PropBlendMode>("sg_prop_blend_mode")
-	.property("mode", &sg::PropBlendMode::mode)
+rttr::registration::class_<shaderlab::PropBlendMode>("sg_prop_blend_mode")
+	.property("mode", &shaderlab::PropBlendMode::mode)
 ;
 
-rttr::registration::enumeration<sg::ChannelType>("sg_channel_type")
+rttr::registration::enumeration<shaderlab::ChannelType>("sg_channel_type")
 (
-	rttr::value("r", sg::ChannelType::R),
-	rttr::value("g", sg::ChannelType::G),
-	rttr::value("b", sg::ChannelType::B),
-	rttr::value("a", sg::ChannelType::A)
+	rttr::value("r", shaderlab::ChannelType::R),
+	rttr::value("g", shaderlab::ChannelType::G),
+	rttr::value("b", shaderlab::ChannelType::B),
+	rttr::value("a", shaderlab::ChannelType::A)
 );
-rttr::registration::class_<sg::PropChannelArray>("sg_prop_channel_array")
-	.property("channels", &sg::PropChannelArray::channels)
+rttr::registration::class_<shaderlab::PropChannelArray>("sg_prop_channel_array")
+	.property("channels", &shaderlab::PropChannelArray::channels)
 ;
 
-rttr::registration::enumeration<sg::ColorType>("sg_color_type")
+rttr::registration::enumeration<shaderlab::ColorType>("sg_color_type")
 (
-	rttr::value("rgb",    sg::ColorType::RGB),
-	rttr::value("linear", sg::ColorType::LINEAR),
-	rttr::value("hsv",    sg::ColorType::HSV)
+	rttr::value("rgb",    shaderlab::ColorType::RGB),
+	rttr::value("linear", shaderlab::ColorType::LINEAR),
+	rttr::value("hsv",    shaderlab::ColorType::HSV)
 );
-rttr::registration::class_<sg::PropColorTrans>("sg_prop_color_trans")
-	.property("from", &sg::PropColorTrans::from)
-	.property("to",   &sg::PropColorTrans::to)
+rttr::registration::class_<shaderlab::PropColorTrans>("sg_prop_color_trans")
+	.property("from", &shaderlab::PropColorTrans::from)
+	.property("to",   &shaderlab::PropColorTrans::to)
 ;
 
-rttr::registration::enumeration<sg::PropMathBaseType>("sg_prop_math_base_type")
+rttr::registration::enumeration<shaderlab::PropMathBaseType>("sg_prop_math_base_type")
 (
-	rttr::value("base_e",  sg::PropMathBaseType::BASE_E),
-	rttr::value("base_2",  sg::PropMathBaseType::BASE_2),
-	rttr::value("base_10", sg::PropMathBaseType::BASE_10)
+	rttr::value("base_e",  shaderlab::PropMathBaseType::BASE_E),
+	rttr::value("base_2",  shaderlab::PropMathBaseType::BASE_2),
+	rttr::value("base_10", shaderlab::PropMathBaseType::BASE_10)
 );
 
-rttr::registration::enumeration<sg::MatrixType>("sg_matrix_type")
+rttr::registration::enumeration<shaderlab::MatrixType>("sg_matrix_type")
 (
-	rttr::value("row",    sg::MatrixType::ROW),
-	rttr::value("column", sg::MatrixType::COLUMN)
+	rttr::value("row",    shaderlab::MatrixType::ROW),
+	rttr::value("column", shaderlab::MatrixType::COLUMN)
 );
 
-rttr::registration::enumeration<sg::CmpType>("sg_cmp_type")
+rttr::registration::enumeration<shaderlab::CmpType>("sg_cmp_type")
 (
-	rttr::value("equal",            sg::CmpType::EQUAL),
-	rttr::value("not_equal",        sg::CmpType::NOT_EQUAL),
-	rttr::value("less",             sg::CmpType::LESS),
-	rttr::value("less_or_equal",    sg::CmpType::LESS_OR_EQUAL),
-	rttr::value("greater",          sg::CmpType::GREATER),
-	rttr::value("greater_or_equal", sg::CmpType::GREATER_OR_EQUAL)
+	rttr::value("equal",            shaderlab::CmpType::EQUAL),
+	rttr::value("not_equal",        shaderlab::CmpType::NOT_EQUAL),
+	rttr::value("less",             shaderlab::CmpType::LESS),
+	rttr::value("less_or_equal",    shaderlab::CmpType::LESS_OR_EQUAL),
+	rttr::value("greater",          shaderlab::CmpType::GREATER),
+	rttr::value("greater_or_equal", shaderlab::CmpType::GREATER_OR_EQUAL)
 );
 
-rttr::registration::enumeration<sg::ViewSpace>("sg_view_space")
+rttr::registration::enumeration<shaderlab::ViewSpace>("sg_view_space")
 (
-	rttr::value("Object",  sg::ViewSpace::Object),
-	rttr::value("View",    sg::ViewSpace::View),
-	rttr::value("World",   sg::ViewSpace::World),
-	rttr::value("Tangent", sg::ViewSpace::Tangent)
+	rttr::value("Object",  shaderlab::ViewSpace::Object),
+	rttr::value("View",    shaderlab::ViewSpace::View),
+	rttr::value("World",   shaderlab::ViewSpace::World),
+	rttr::value("Tangent", shaderlab::ViewSpace::Tangent)
 );
 
 }
 
-namespace sg
+namespace shaderlab
 {
 void prop_types_regist_rttr()
 {

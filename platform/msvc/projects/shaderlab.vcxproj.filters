@@ -24,58 +24,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h">
+    <ClInclude Include="..\..\..\include\shaderlab\WxNodeProperty.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h">
+    <ClInclude Include="..\..\..\include\shaderlab\NodeBuilder.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\Node.h">
+    <ClInclude Include="..\..\..\include\shaderlab\Node.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h">
+    <ClInclude Include="..\..\..\include\shaderlab\NodePreview.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h">
+    <ClInclude Include="..\..\..\include\shaderlab\node\Custom.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h">
+    <ClInclude Include="..\..\..\include\shaderlab\RegistNodes.h">
       <Filter>rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h">
+    <ClInclude Include="..\..\..\include\shaderlab\ReflectPropTypes.h">
       <Filter>rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h">
+    <ClInclude Include="..\..\..\include\shaderlab\ShaderWeaver.h">
       <Filter>trans</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\TypeDeduction.h">
+    <ClInclude Include="..\..\..\include\shaderlab\TypeDeduction.h">
       <Filter>pins</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h">
+    <ClInclude Include="..\..\..\include\shaderlab\node\StandardSurfaceOutput.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h">
+    <ClInclude Include="..\..\..\include\shaderlab\node\Tex2DAsset.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\node\TexCubeAsset.h">
+    <ClInclude Include="..\..\..\include\shaderlab\node\TexCubeAsset.h">
       <Filter>nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\PinType.h">
+    <ClInclude Include="..\..\..\include\shaderlab\PinType.h">
       <Filter>pins</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\PinCallback.h">
+    <ClInclude Include="..\..\..\include\shaderlab\PinCallback.h">
       <Filter>pins</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shaderlab\ShaderLab.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp">
-      <Filter>script</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\NodeBuilder.cpp">
       <Filter>node</Filter>
     </ClCompile>
@@ -114,6 +110,10 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\PinCallback.cpp">
       <Filter>pins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ShaderLab.cpp" />
+    <ClCompile Include="..\..\..\source\wrap_ShaderLab.cpp">
+      <Filter>script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

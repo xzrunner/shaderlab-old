@@ -1,7 +1,7 @@
-#include "shadergraph/WxNodeProperty.h"
-#include "shadergraph/ReflectPropTypes.h"
-#include "shadergraph/RegistNodes.h"
-#include "shadergraph/TypeDeduction.h"
+#include "shaderlab/WxNodeProperty.h"
+#include "shaderlab/ReflectPropTypes.h"
+#include "shaderlab/RegistNodes.h"
+#include "shaderlab/TypeDeduction.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/ReflectPropTypes.h>
@@ -34,17 +34,17 @@ const wxChar* PIN_IDX_TITLE[] = { wxT("Unknown"), wxT("Bool"), wxT("Vec1"), wxT(
 const int PIN_IDX_TO_TYPE[] = {
     bp::PIN_ANY_VAR,
 
-    sg::PIN_BOOLEAN,
-    sg::PIN_VECTOR1,
-    sg::PIN_VECTOR2,
-    sg::PIN_VECTOR3,
-    sg::PIN_VECTOR4,
-    sg::PIN_MATRIX2,
-    sg::PIN_MATRIX3,
-    sg::PIN_MATRIX4,
-    sg::PIN_TEXTURE2D,
-//    sg::PIN_TEXTURE3D,
-    sg::PIN_CUBE_MAP,
+    shaderlab::PIN_BOOLEAN,
+    shaderlab::PIN_VECTOR1,
+    shaderlab::PIN_VECTOR2,
+    shaderlab::PIN_VECTOR3,
+    shaderlab::PIN_VECTOR4,
+    shaderlab::PIN_MATRIX2,
+    shaderlab::PIN_MATRIX3,
+    shaderlab::PIN_MATRIX4,
+    shaderlab::PIN_TEXTURE2D,
+//    shaderlab::PIN_TEXTURE3D,
+    shaderlab::PIN_CUBE_MAP,
 };
 
 int PinTypeToIdx(int type)
@@ -62,7 +62,7 @@ int PinTypeToIdx(int type)
 
 }
 
-namespace sg
+namespace shaderlab
 {
 
 WxNodeProperty::WxNodeProperty(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
@@ -116,10 +116,10 @@ void WxNodeProperty::LoadFromNode(const ur::Device& dev, const n0::SceneNodePtr&
 		{
 			const wxChar* CHANNEL_TYPES[] = { wxT("R"), wxT("G"), wxT("B"), wxT("A"), NULL };
 			const long    CHANNEL_VALUES[] = {
-				sg::PropMultiChannels::CHANNEL_R,
-				sg::PropMultiChannels::CHANNEL_G,
-				sg::PropMultiChannels::CHANNEL_B,
-				sg::PropMultiChannels::CHANNEL_A
+				shaderlab::PropMultiChannels::CHANNEL_R,
+				shaderlab::PropMultiChannels::CHANNEL_G,
+				shaderlab::PropMultiChannels::CHANNEL_B,
+				shaderlab::PropMultiChannels::CHANNEL_A
 			};
 			auto channels = prop.get_value(node).get_value<PropMultiChannels>().channels;
 			m_pg->Append(new wxFlagsProperty(ui_info.desc, wxPG_LABEL, CHANNEL_TYPES, CHANNEL_VALUES, channels));

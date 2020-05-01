@@ -16,19 +16,19 @@
 namespace
 {
 
-class ShaderGraph : public moon::Module
+class ShaderLab : public moon::Module
 {
 public:
 	virtual moon::ModuleTypeID TypeID() const override {
-		return moon::GetModuleTypeID<ShaderGraph>();
+		return moon::GetModuleTypeID<ShaderLab>();
 	}
 	virtual const char* GetName() const override {
 		return "moon.sg";
 	}
 
-}; // ShaderGraph
+}; // ShaderLab
 
-#define INSTANCE() (moon::Blackboard::Instance()->GetContext()->GetModuleMgr().GetModule<ShaderGraph>())
+#define INSTANCE() (moon::Blackboard::Instance()->GetContext()->GetModuleMgr().GetModule<ShaderLab>())
 
 moon::SceneNode* luax_checknode(lua_State* L, int idx)
 {
@@ -102,11 +102,11 @@ static const lua_CFunction types[] =
 	0
 };
 
-extern "C" int luaopen_moon_sg(lua_State* L)
+extern "C" int luaopen_moon_shaderlab(lua_State* L)
 {
-	ShaderGraph* instance = INSTANCE();
+	ShaderLab* instance = INSTANCE();
 	if (instance == nullptr) {
-		luax_catchexcept(L, [&](){ instance = new ShaderGraph(); });
+		luax_catchexcept(L, [&](){ instance = new ShaderLab(); });
 	} else {
 		instance->Retain();
 	}

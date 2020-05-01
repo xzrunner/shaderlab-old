@@ -1,8 +1,8 @@
-#include "shadergraph/ShaderGraph.h"
-#include "shadergraph/NodeBuilder.h"
-#include "shadergraph/Node.h"
-#include "shadergraph/PinCallback.h"
-#include "shadergraph/TypeDeduction.h"
+#include "shaderlab/ShaderLab.h"
+#include "shaderlab/NodeBuilder.h"
+#include "shaderlab/Node.h"
+#include "shaderlab/PinCallback.h"
+#include "shaderlab/TypeDeduction.h"
 
 #include <blueprint/NodeBuilder.h>
 #include <blueprint/Pin.h>
@@ -10,14 +10,14 @@
 
 #include <shaderweaver/ShaderWeaver.h>
 
-namespace sg
+namespace shaderlab
 {
 
-CU_SINGLETON_DEFINITION(ShaderGraph);
+CU_SINGLETON_DEFINITION(ShaderLab);
 
 extern void regist_rttr();
 
-ShaderGraph::ShaderGraph()
+ShaderLab::ShaderLab()
 {
 	sw::ShaderWeaver::Instance();
 
@@ -29,7 +29,7 @@ ShaderGraph::ShaderGraph()
     InitPinCallback();
 }
 
-void ShaderGraph::Init()
+void ShaderLab::Init()
 {
 	bp::NodeBuilder::Callback cb;
 	cb.on_created = [](bp::Node& node, std::vector<n0::SceneNodePtr>& nodes) {
@@ -48,7 +48,7 @@ void ShaderGraph::Init()
 	bp::NodeBuilder::Instance()->RegistCB(cb);
 }
 
-void ShaderGraph::InitNodes()
+void ShaderLab::InitNodes()
 {
 	auto list = rttr::type::get<Node>().get_derived_classes();
 	m_nodes.reserve(list.size());

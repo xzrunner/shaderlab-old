@@ -1,6 +1,6 @@
-#include "shadergraph/Node.h"
-#include "shadergraph/NodePreview.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/Node.h"
+#include "shaderlab/NodePreview.h"
+#include "shaderlab/PinType.h"
 
 #include <blueprint/Pin.h>
 
@@ -8,7 +8,7 @@
 #include <shaderweaver/Node.h>
 #include <node2/RenderSystem.h>
 
-namespace sg
+namespace shaderlab
 {
 
 Node::Node(const std::string& title, bool preview,

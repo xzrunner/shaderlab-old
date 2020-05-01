@@ -1,8 +1,8 @@
-#include "shadergraph/RegistNodes.h"
-#include "shadergraph/node/Custom.h"
-#include "shadergraph/node/StandardSurfaceOutput.h"
-#include "shadergraph/node/Tex2DAsset.h"
-#include "shadergraph/node/TexCubeAsset.h"
+#include "shaderlab/RegistNodes.h"
+#include "shaderlab/node/Custom.h"
+#include "shaderlab/node/StandardSurfaceOutput.h"
+#include "shaderlab/node/Tex2DAsset.h"
+#include "shaderlab/node/TexCubeAsset.h"
 
 #include <ee0/ReflectPropTypes.h>
 #include <blueprint/Pin.h>
@@ -10,7 +10,7 @@
 #include <js/RTTR.h>
 
 #define REGIST_NODE_RTTI(name, prop)                          \
-	rttr::registration::class_<sg::node::name>("sg::"#name)   \
+	rttr::registration::class_<shaderlab::node::name>("shaderlab::"#name)   \
 		.constructor<>()                                      \
 		prop                                                  \
 	;
@@ -24,13 +24,13 @@ RTTR_REGISTRATION
 // artistic
 REGIST_NODE_RTTI_DEFAULT(Contrast)
 REGIST_NODE_RTTI(Hue,                                                                  \
-.property("angle_type", &sg::node::Hue::GetAngleType, &sg::node::Hue::SetAngleType)    \
+.property("angle_type", &shaderlab::node::Hue::GetAngleType, &shaderlab::node::Hue::SetAngleType)    \
 (                                                                                      \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("PropAngleType"))             \
 )
 )
 REGIST_NODE_RTTI(InvertColors,                                                                     \
-.property("channels", &sg::node::InvertColors::GetChannels, &sg::node::InvertColors::SetChannels)  \
+.property("channels", &shaderlab::node::InvertColors::GetChannels, &shaderlab::node::InvertColors::SetChannels)  \
 (                                                                                                  \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Channels"))                              \
 )
@@ -39,7 +39,7 @@ REGIST_NODE_RTTI_DEFAULT(ReplaceColor)
 REGIST_NODE_RTTI_DEFAULT(Saturation)
 REGIST_NODE_RTTI_DEFAULT(WhiteBalance)
 REGIST_NODE_RTTI(Blend,                                                  \
-.property("mode", &sg::node::Blend::GetMode, &sg::node::Blend::SetMode)  \
+.property("mode", &shaderlab::node::Blend::GetMode, &shaderlab::node::Blend::SetMode)  \
 (                                                                        \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Mode"))        \
 )
@@ -48,7 +48,7 @@ REGIST_NODE_RTTI_DEFAULT(EdgeDetect)
 REGIST_NODE_RTTI_DEFAULT(Gray)
 REGIST_NODE_RTTI_DEFAULT(MinFilter)
 REGIST_NODE_RTTI(ChannelMask,                                                                   \
-.property("channels", &sg::node::ChannelMask::GetChannels, &sg::node::ChannelMask::SetChannels) \
+.property("channels", &shaderlab::node::ChannelMask::GetChannels, &shaderlab::node::ChannelMask::SetChannels) \
 (                                                                                               \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Channels"))                           \
 )
@@ -61,7 +61,7 @@ REGIST_NODE_RTTI_DEFAULT(NormalUnpack)
 REGIST_NODE_RTTI_DEFAULT(ColorAddMul)
 REGIST_NODE_RTTI_DEFAULT(ColorMap)
 REGIST_NODE_RTTI(ColorspaceConversion,                                                        \
-.property("type", &sg::node::ColorspaceConversion::GetType, &sg::node::ColorspaceConversion::SetType) \
+.property("type", &shaderlab::node::ColorspaceConversion::GetType, &shaderlab::node::ColorspaceConversion::SetType) \
 (                                                                                                     \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("ColTrans"))                                 \
 )
@@ -71,57 +71,57 @@ REGIST_NODE_RTTI_DEFAULT(HSVToRGB)
 // channel
 REGIST_NODE_RTTI_DEFAULT(Combine)
 REGIST_NODE_RTTI(Flip,                                                            \
-.property("channels", &sg::node::Flip::GetChannels, &sg::node::Flip::SetChannels) \
+.property("channels", &shaderlab::node::Flip::GetChannels, &shaderlab::node::Flip::SetChannels) \
 (                                                                                 \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Channels"))             \
 )
 )
 REGIST_NODE_RTTI_DEFAULT(Split)
 REGIST_NODE_RTTI(Swizzle,                                                               \
-.property("channels", &sg::node::Swizzle::GetChannels, &sg::node::Swizzle::SetChannels) \
+.property("channels", &shaderlab::node::Swizzle::GetChannels, &shaderlab::node::Swizzle::SetChannels) \
 (                                                                                       \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Channels"))                   \
 )
 )
 // input
 REGIST_NODE_RTTI(Boolean,                                                    \
-.property("val", &sg::node::Boolean::GetValue, &sg::node::Boolean::SetValue) \
+.property("val", &shaderlab::node::Boolean::GetValue, &shaderlab::node::Boolean::SetValue) \
 (                                                                            \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector1B"))        \
 )
 )
 REGIST_NODE_RTTI_DEFAULT(Time)
 REGIST_NODE_RTTI(Vector1,                                                  \
-.property("x", &sg::node::Vector1::GetValue, &sg::node::Vector1::SetValue) \
+.property("x", &shaderlab::node::Vector1::GetValue, &shaderlab::node::Vector1::SetValue) \
 (                                                                          \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector1"))       \
 )
 )
 REGIST_NODE_RTTI(Vector2,                                                    \
-.property("x", &sg::node::Vector2::GetX, &sg::node::Vector2::SetX)           \
-.property("y", &sg::node::Vector2::GetY, &sg::node::Vector2::SetY)           \
-.property("val", &sg::node::Vector2::GetValue, &sg::node::Vector2::SetValue) \
+.property("x", &shaderlab::node::Vector2::GetX, &shaderlab::node::Vector2::SetX)           \
+.property("y", &shaderlab::node::Vector2::GetY, &shaderlab::node::Vector2::SetY)           \
+.property("val", &shaderlab::node::Vector2::GetValue, &shaderlab::node::Vector2::SetValue) \
 (                                                                            \
 	rttr::metadata(js::RTTR::NoSerializeTag(), true),                        \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector2"))         \
 )
 )
 REGIST_NODE_RTTI(Vector3,                                                    \
-.property("x", &sg::node::Vector3::GetX, &sg::node::Vector3::SetX)           \
-.property("y", &sg::node::Vector3::GetY, &sg::node::Vector3::SetY)           \
-.property("z", &sg::node::Vector3::GetZ, &sg::node::Vector3::SetZ)           \
-.property("val", &sg::node::Vector3::GetValue, &sg::node::Vector3::SetValue) \
+.property("x", &shaderlab::node::Vector3::GetX, &shaderlab::node::Vector3::SetX)           \
+.property("y", &shaderlab::node::Vector3::GetY, &shaderlab::node::Vector3::SetY)           \
+.property("z", &shaderlab::node::Vector3::GetZ, &shaderlab::node::Vector3::SetZ)           \
+.property("val", &shaderlab::node::Vector3::GetValue, &shaderlab::node::Vector3::SetValue) \
 (                                                                            \
 	rttr::metadata(js::RTTR::NoSerializeTag(), true),                        \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector3"))         \
 )
 )
 REGIST_NODE_RTTI(Vector4,                                                    \
-.property("x", &sg::node::Vector4::GetX, &sg::node::Vector4::SetX)           \
-.property("y", &sg::node::Vector4::GetY, &sg::node::Vector4::SetY)           \
-.property("z", &sg::node::Vector4::GetZ, &sg::node::Vector4::SetZ)           \
-.property("w", &sg::node::Vector4::GetW, &sg::node::Vector4::SetW)           \
-.property("val", &sg::node::Vector4::GetValue, &sg::node::Vector4::SetValue) \
+.property("x", &shaderlab::node::Vector4::GetX, &shaderlab::node::Vector4::SetX)           \
+.property("y", &shaderlab::node::Vector4::GetY, &shaderlab::node::Vector4::SetY)           \
+.property("z", &shaderlab::node::Vector4::GetZ, &shaderlab::node::Vector4::SetZ)           \
+.property("w", &shaderlab::node::Vector4::GetW, &shaderlab::node::Vector4::SetW)           \
+.property("val", &shaderlab::node::Vector4::GetValue, &shaderlab::node::Vector4::SetValue) \
 (                                                                            \
 	rttr::metadata(js::RTTR::NoSerializeTag(), true),                        \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Vector4"))         \
@@ -130,11 +130,11 @@ REGIST_NODE_RTTI(Vector4,                                                    \
 REGIST_NODE_RTTI_DEFAULT(CameraPos)
 REGIST_NODE_RTTI_DEFAULT(UV)
 REGIST_NODE_RTTI(ViewDirection,                                                                                     \
-.property("view_space", &sg::node::ViewDirection::GetViewSpace, &sg::node::ViewDirection::SetViewSpace)             \
+.property("view_space", &shaderlab::node::ViewDirection::GetViewSpace, &shaderlab::node::ViewDirection::SetViewSpace)             \
 (                                                                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("ViewSpace"))                                              \
 )                                                                                                                   \
-.property("safe_normalize", &sg::node::ViewDirection::GetSafeNormalize, &sg::node::ViewDirection::SetSafeNormalize) \
+.property("safe_normalize", &shaderlab::node::ViewDirection::GetSafeNormalize, &shaderlab::node::ViewDirection::SetSafeNormalize) \
 (                                                                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("SafeNormalize"))                                          \
 )
@@ -145,13 +145,13 @@ REGIST_NODE_RTTI_DEFAULT(LightAttenuation)
 REGIST_NODE_RTTI_DEFAULT(LightColor)
 REGIST_NODE_RTTI_DEFAULT(WorldSpaceLightDir)
 REGIST_NODE_RTTI(Matrix2,                                                    \
-.property("mat", &sg::node::Matrix2::GetValue, &sg::node::Matrix2::SetValue)
+.property("mat", &shaderlab::node::Matrix2::GetValue, &shaderlab::node::Matrix2::SetValue)
 )
 REGIST_NODE_RTTI(Matrix3,                                                    \
-.property("mat", &sg::node::Matrix3::GetValue, &sg::node::Matrix3::SetValue)
+.property("mat", &shaderlab::node::Matrix3::GetValue, &shaderlab::node::Matrix3::SetValue)
 )
 REGIST_NODE_RTTI(Matrix4,                                                    \
-.property("mat", &sg::node::Matrix4::GetValue, &sg::node::Matrix4::SetValue)
+.property("mat", &shaderlab::node::Matrix4::GetValue, &shaderlab::node::Matrix4::SetValue)
 )
 REGIST_NODE_RTTI_DEFAULT(Color)
 REGIST_NODE_RTTI_DEFAULT(PI)
@@ -166,11 +166,11 @@ REGIST_NODE_RTTI_DEFAULT(SampleTex3D)
 REGIST_NODE_RTTI_DEFAULT(SampleTriplanar)
 REGIST_NODE_RTTI_DEFAULT(UnpackScaleNormal)
 REGIST_NODE_RTTI(Tex2DAsset,                                                                    \
-.property("name", &sg::node::Tex2DAsset::GetName, &sg::node::Tex2DAsset::SetName)               \
+.property("name", &shaderlab::node::Tex2DAsset::GetName, &shaderlab::node::Tex2DAsset::SetName)               \
 (                                                                                               \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Name"))                               \
 )                                                                                               \
-.property("filepath", &sg::node::Tex2DAsset::GetImagePath, &sg::node::Tex2DAsset::SetImagePath) \
+.property("filepath", &shaderlab::node::Tex2DAsset::GetImagePath, &shaderlab::node::Tex2DAsset::SetImagePath) \
 (                                                                                               \
 	rttr::metadata(js::RTTR::FilePathTag(), true),                                              \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Filepath")),                          \
@@ -178,11 +178,11 @@ REGIST_NODE_RTTI(Tex2DAsset,                                                    
 )
 )
 REGIST_NODE_RTTI(TexCubeAsset,                                                                      \
-.property("name", &sg::node::TexCubeAsset::GetName, &sg::node::TexCubeAsset::SetName)               \
+.property("name", &shaderlab::node::TexCubeAsset::GetName, &shaderlab::node::TexCubeAsset::SetName)               \
 (                                                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Name"))                                   \
 )                                                                                                   \
-.property("filepath", &sg::node::TexCubeAsset::GetImagePath, &sg::node::TexCubeAsset::SetImagePath) \
+.property("filepath", &shaderlab::node::TexCubeAsset::GetImagePath, &shaderlab::node::TexCubeAsset::SetImagePath) \
 (                                                                                                   \
 	rttr::metadata(js::RTTR::FilePathTag(), true),                                                  \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Filepath")),                              \
@@ -197,14 +197,14 @@ REGIST_NODE_RTTI_DEFAULT(Sprite)
 // math
 REGIST_NODE_RTTI_DEFAULT(Absolute)
 REGIST_NODE_RTTI(Exponential,                                                       \
-.property("type", &sg::node::Exponential::GetType, &sg::node::Exponential::SetType) \
+.property("type", &shaderlab::node::Exponential::GetType, &shaderlab::node::Exponential::SetType) \
 (                                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Base"))                   \
 )
 )
 REGIST_NODE_RTTI_DEFAULT(Length)
 REGIST_NODE_RTTI(Log,                                               \
-.property("type", &sg::node::Log::GetType, &sg::node::Log::SetType) \
+.property("type", &shaderlab::node::Log::GetType, &shaderlab::node::Log::SetType) \
 (                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Base"))   \
 )
@@ -229,7 +229,7 @@ REGIST_NODE_RTTI_DEFAULT(InverseLerp)
 REGIST_NODE_RTTI_DEFAULT(Lerp)
 REGIST_NODE_RTTI_DEFAULT(Smoothstep)
 REGIST_NODE_RTTI(MatrixConstruction,                                                              \
-.property("type", &sg::node::MatrixConstruction::GetType, &sg::node::MatrixConstruction::SetType) \
+.property("type", &shaderlab::node::MatrixConstruction::GetType, &shaderlab::node::MatrixConstruction::SetType) \
 (                                                                                                 \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Type"))                                 \
 )
@@ -237,7 +237,7 @@ REGIST_NODE_RTTI(MatrixConstruction,                                            
 REGIST_NODE_RTTI_DEFAULT(MatrixDeterminant)
 REGIST_NODE_RTTI_DEFAULT(MatrixInverse)
 REGIST_NODE_RTTI(MatrixSplit,                                                                     \
-.property("type", &sg::node::MatrixConstruction::GetType, &sg::node::MatrixConstruction::SetType) \
+.property("type", &shaderlab::node::MatrixConstruction::GetType, &shaderlab::node::MatrixConstruction::SetType) \
 (                                                                                                 \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Type"))                                 \
 )
@@ -314,7 +314,7 @@ REGIST_NODE_RTTI_DEFAULT(EncodeFloatRGBA)
 REGIST_NODE_RTTI_DEFAULT(VertexToFragment)
 // uv
 REGIST_NODE_RTTI(Flipbook,                                                          \
-.property("invert", &sg::node::Flipbook::GetInvert, &sg::node::Flipbook::SetInvert) \
+.property("invert", &shaderlab::node::Flipbook::GetInvert, &shaderlab::node::Flipbook::SetInvert) \
 (                                                                                   \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Invert"))                 \
 )
@@ -322,7 +322,7 @@ REGIST_NODE_RTTI(Flipbook,                                                      
 REGIST_NODE_RTTI_DEFAULT(PolarCoordinates)
 REGIST_NODE_RTTI_DEFAULT(RadialShear)
 REGIST_NODE_RTTI(Rotate,                                                               \
-.property("radians", &sg::node::Rotate::GetAngleType, &sg::node::Rotate::SetAngleType) \
+.property("radians", &shaderlab::node::Rotate::GetAngleType, &shaderlab::node::Rotate::SetAngleType) \
 (                                                                                      \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("PropAngleType"))             \
 )
@@ -332,17 +332,17 @@ REGIST_NODE_RTTI_DEFAULT(TilingAndOffset)
 REGIST_NODE_RTTI_DEFAULT(Twirl)
 // tools
 REGIST_NODE_RTTI(Custom,                                                                    \
-.property("head", &sg::node::Custom::GetHeadStr, &sg::node::Custom::SetHeadStr)             \
+.property("head", &shaderlab::node::Custom::GetHeadStr, &shaderlab::node::Custom::SetHeadStr)             \
 (                                                                                           \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("HeadStr")),                       \
     rttr::metadata(ee0::PropLongStringTag(), true)                                          \
 )                                                                                           \
-.property("body", &sg::node::Custom::GetBodyStr, &sg::node::Custom::SetBodyStr)             \
+.property("body", &shaderlab::node::Custom::GetBodyStr, &shaderlab::node::Custom::SetBodyStr)             \
 (                                                                                           \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("BodyStr")),                       \
     rttr::metadata(ee0::PropLongStringTag(), true)                                          \
 )                                                                                           \
-.property("internal", &sg::node::Custom::GetInternalStr, &sg::node::Custom::SetInternalStr) \
+.property("internal", &shaderlab::node::Custom::GetInternalStr, &shaderlab::node::Custom::SetInternalStr) \
 (                                                                                           \
 	rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("InternalStr")),                   \
     rttr::metadata(ee0::PropLongStringTag(), true)                                          \
@@ -355,7 +355,7 @@ REGIST_NODE_RTTI_DEFAULT(StandardSurfaceOutput)
 
 }
 
-namespace sg
+namespace shaderlab
 {
 
 void nodes_regist_rttr()

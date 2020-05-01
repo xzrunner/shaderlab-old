@@ -1,8 +1,8 @@
 #pragma once
 
-#include "shadergraph/Node.h"
+#include "shaderlab/Node.h"
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

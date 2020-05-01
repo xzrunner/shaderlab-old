@@ -1,7 +1,7 @@
-#include "shadergraph/NodeBuilder.h"
-#include "shadergraph/RegistNodes.h"
-#include "shadergraph/node/Tex2DAsset.h"
-#include "shadergraph/node/TexCubeAsset.h"
+#include "shaderlab/NodeBuilder.h"
+#include "shaderlab/RegistNodes.h"
+#include "shaderlab/node/Tex2DAsset.h"
+#include "shaderlab/node/TexCubeAsset.h"
 
 #include <cpputil/Tools.h>
 #include <node0/SceneNode.h>
@@ -15,7 +15,7 @@
 #include <shaderweaver/Node.h>
 #include <shaderweaver/node/Raymarching.h>
 
-namespace sg
+namespace shaderlab
 {
 
 bp::NodePtr NodeBuilder::Create(std::vector<n0::SceneNodePtr>& nodes, const std::string& type,
@@ -62,7 +62,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
 	// default from rttr
 
 	auto cls_name = type.get_name().to_string();
-	cls_name = "sw::" + cls_name.substr(cls_name.find("sg::") + strlen("sg::"));
+	cls_name = "sw::" + cls_name.substr(cls_name.find("shaderlab::") + strlen("shaderlab::"));
 	rttr::type t = rttr::type::get_by_name(cls_name);
 	if (!t.is_valid()) {
 		return;
@@ -158,7 +158,7 @@ void NodeBuilder::CreateDefaultInputs(std::vector<n0::SceneNodePtr>& nodes, bp::
             auto nest = method.invoke(var, imports[i].var.GetName());
             assert(nest.is_valid() && nest.is_type<std::string>());
             default_type_str = nest.get_value<std::string>();
-            default_type_str = "sg::" + default_type_str.substr(default_type_str.find("sw::") + strlen("sw::"));
+            default_type_str = "shaderlab::" + default_type_str.substr(default_type_str.find("sw::") + strlen("sw::"));
         }
 			break;
         case bp::PIN_ANY_VAR:

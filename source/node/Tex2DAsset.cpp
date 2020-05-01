@@ -1,4 +1,4 @@
-#include "shadergraph/node/Tex2DAsset.h"
+#include "shaderlab/node/Tex2DAsset.h"
 
 #include <blueprint/NodeHelper.h>
 
@@ -9,7 +9,7 @@
 #include <facade/Image.h>
 #include <facade/ResPool.h>
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

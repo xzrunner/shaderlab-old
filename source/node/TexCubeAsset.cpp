@@ -1,11 +1,11 @@
-#include "shadergraph/node/TexCubeAsset.h"
+#include "shaderlab/node/TexCubeAsset.h"
 
 #include <painting2/RenderSystem.h>
 #include <node2/RenderSystem.h>
 #include <facade/ImageCube.h>
 #include <facade/ResPool.h>
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace sg
+namespace shaderlab
 {
 
 class NodeBuilder

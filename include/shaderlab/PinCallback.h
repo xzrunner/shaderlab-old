@@ -1,6 +1,6 @@
 #pragma once
 
-namespace sg
+namespace shaderlab
 {
 
 void InitPinCallback();

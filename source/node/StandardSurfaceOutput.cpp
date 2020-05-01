@@ -1,9 +1,9 @@
-#include "shadergraph/node/StandardSurfaceOutput.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/node/StandardSurfaceOutput.h"
+#include "shaderlab/PinType.h"
 
 #include <blueprint/Pin.h>
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

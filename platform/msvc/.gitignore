@@ -1,5 +1,5 @@
-shadergraph/
+shaderlab/
 projects/*
 
-!projects/shadergraph.vcxproj
-!projects/shadergraph.vcxproj.filters
+!projects/shaderlab.vcxproj
+!projects/shaderlab.vcxproj.filters

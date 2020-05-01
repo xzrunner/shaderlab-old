@@ -11,21 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\shadergraph\Node.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\NodePreview.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Custom.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\StandardSurfaceOutput.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\Tex2DAsset.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\node\TexCubeAsset.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\PinCallback.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\PinType.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\RegistNodes.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\ReflectPropTypes.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\NodeBuilder.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\ShaderWeaver.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\TypeDeduction.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\WxNodeProperty.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\Node.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\NodePreview.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\node\Custom.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\node\StandardSurfaceOutput.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\node\Tex2DAsset.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\node\TexCubeAsset.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\PinCallback.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\PinType.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\RegistNodes.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\ReflectPropTypes.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\NodeBuilder.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\ShaderLab.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\ShaderWeaver.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\TypeDeduction.h" />
+    <ClInclude Include="..\..\..\include\shaderlab\WxNodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Node.cpp" />
@@ -42,10 +42,10 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
-    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
+    <ClCompile Include="..\..\..\source\ShaderLab.cpp" />
     <ClCompile Include="..\..\..\source\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\source\TypeDeduction.cpp" />
-    <ClCompile Include="..\..\..\source\wrap_ShaderGraph.cpp" />
+    <ClCompile Include="..\..\..\source\wrap_ShaderLab.cpp" />
     <ClCompile Include="..\..\..\source\WxNodeProperty.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +54,9 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>5.shadergraph</ProjectName>
+    <ProjectName>5.shaderlab</ProjectName>
     <ProjectGuid>{EC5783F3-431B-4FF0-BC6D-00137CAC8810}</ProjectGuid>
-    <RootNamespace>shadergraph</RootNamespace>
+    <RootNamespace>shaderlab</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -86,12 +86,12 @@
     <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\shadergraph\x86\Debug\</OutDir>
-    <IntDir>..\shadergraph\x86\Debug\obj\</IntDir>
+    <OutDir>..\shaderlab\x86\Debug\</OutDir>
+    <IntDir>..\shaderlab\x86\Debug\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\shadergraph\x86\Release\</OutDir>
-    <IntDir>..\shadergraph\x86\Release\obj\</IntDir>
+    <OutDir>..\shaderlab\x86\Release\</OutDir>
+    <IntDir>..\shaderlab\x86\Release\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

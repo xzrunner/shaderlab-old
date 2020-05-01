@@ -15,7 +15,7 @@ namespace pt3 { struct GlobalIllumination; }
 namespace sw { class Evaluator; }
 namespace ur { class ShaderProgram; }
 
-namespace sg
+namespace shaderlab
 {
 
 // shader graph -> shader weaver -> shader string

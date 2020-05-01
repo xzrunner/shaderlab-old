@@ -5,7 +5,7 @@
 #include <array>
 #include <string>
 
-namespace sg
+namespace shaderlab
 {
 
 enum class PropAngleType

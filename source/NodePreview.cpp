@@ -1,7 +1,7 @@
-#include "shadergraph/NodePreview.h"
-#include "shadergraph/ShaderWeaver.h"
-#include "shadergraph/Node.h"
-#include "shadergraph/RegistNodes.h"
+#include "shaderlab/NodePreview.h"
+#include "shaderlab/ShaderWeaver.h"
+#include "shaderlab/Node.h"
+#include "shaderlab/RegistNodes.h"
 
 #include <painting2/RenderSystem.h>
 #include <painting2/Shader.h>
@@ -14,7 +14,7 @@
 
 #include <queue>
 
-namespace sg
+namespace shaderlab
 {
 
 NodePreview::NodePreview(const Node& node, bool debug_print, bool use_rt)

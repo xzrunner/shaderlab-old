@@ -2,7 +2,7 @@
 
 namespace bp { class Pin; class Node; }
 
-namespace sg
+namespace shaderlab
 {
 
 class TypeDeduction

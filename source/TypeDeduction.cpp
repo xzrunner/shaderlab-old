@@ -1,5 +1,5 @@
-#include "shadergraph/TypeDeduction.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/TypeDeduction.h"
+#include "shaderlab/PinType.h"
 
 #include <blueprint/Pin.h>
 #include <blueprint/Node.h>
@@ -29,7 +29,7 @@ bool SetPinType(bp::Pin& pin, int type)
 
 }
 
-namespace sg
+namespace shaderlab
 {
 
 void TypeDeduction::DeduceConn(const bp::Pin& p0, const bp::Pin& p1)

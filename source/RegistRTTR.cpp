@@ -1,5 +1,5 @@
-#include "shadergraph/ReflectPropTypes.h"
-#include "shadergraph/RegistNodes.h"
+#include "shaderlab/ReflectPropTypes.h"
+#include "shaderlab/RegistNodes.h"
 
 #include <ee0/ReflectPropTypes.h>
 
@@ -8,8 +8,8 @@
 RTTR_REGISTRATION
 {
 
-rttr::registration::class_<sg::Node>("sg::node")
-.property("preview", &sg::Node::GetPreview, &sg::Node::SetPreview)
+rttr::registration::class_<shaderlab::Node>("shaderlab::node")
+.property("preview", &shaderlab::Node::GetPreview, &shaderlab::Node::SetPreview)
 (
     rttr::metadata(ee0::UIMetaInfoTag(), ee0::UIMetaInfo("Preview"))
 )
@@ -23,7 +23,7 @@ extern void regist_sm_rttr();
 extern void regist_pt0_rttr();
 }
 
-namespace sg
+namespace shaderlab
 {
 
 void regist_rttr()

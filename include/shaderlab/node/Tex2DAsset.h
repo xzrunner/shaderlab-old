@@ -1,11 +1,11 @@
 #pragma once
 
-#include "shadergraph/Node.h"
-#include "shadergraph/PinType.h"
+#include "shaderlab/Node.h"
+#include "shaderlab/PinType.h"
 
 namespace facade { class Image; }
 
-namespace sg
+namespace shaderlab
 {
 namespace node
 {

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "shadergraph/NodePreview.h"
+#include "shaderlab/NodePreview.h"
 
 #include <blueprint/Node.h>
 
-namespace sg
+namespace shaderlab
 {
 
 class Node : public bp::Node
